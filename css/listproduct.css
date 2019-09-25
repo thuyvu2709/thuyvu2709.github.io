@@ -1,0 +1,7 @@
+/*For image show in product list*/
+.card-body {
+	max-width:50%;float:left
+}
+.prodImage {
+	max-width:50%;
+}

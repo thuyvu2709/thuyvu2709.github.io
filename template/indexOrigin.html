@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Sheets API Quickstart</title>
+    <meta charset="utf-8" />
+    
+    <script type="text/javascript" src="jquery.min.js"></script> 
+
+
+  </head>
+  <body>
+    <!-- <script type="text/javascript" src="access.js"></script> -->
+
+
+    <p>Google Sheets API Quickstart</p>
+
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize_button" style="display: none;">Authorize</button>
+    <button id="signout_button" style="display: none;">Sign Out</button>
+
+    <button id="readdata" >read Data</button> <br/>
+
+    <button id="updatedata" >update Data</button> <br/>
+
+    <button id="insertdata" >insert Data</button> <br/>
+
+    <button id="deletedata" >delete Data</button> <br/>
+
+    <button id="scanbarcode" >Scan barcode</button> <br/>
+
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+
+
+    <script type="text/javascript" src="js/accesscopy.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+
+  </body>
+</html>

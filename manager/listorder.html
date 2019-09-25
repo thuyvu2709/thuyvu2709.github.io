@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Xách tay Thuỷ Vũ</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+  <script type="text/javascript">
+    var pageName = "listproduct";
+    var pageRole = "manager";
+  </script>
+</head>
+
+<body id="page-top">
+
+  <div id="headerInclude"></div>
+
+  <header class="minihead">
+  </header>
+  <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio">
+    <h2 class="text-center">Danh sách đơn hàng</h2>
+
+    <div class="btn btn-default">
+      Hiển thị đơn hàng
+      <select class="mdb-select md-form orderFilter">
+        <option value="PROCESSING">Đang xử lý</option>
+        <option value="COMPLETE">Đã hoàn thành</option>
+        <option value="ALL">Toàn bộ</option>
+      </select>
+    </div>
+    <div class="btn btn-default btnNormal addNewOrder"
+        style="float: right">
+        <a href="../barcode/neworder.html">
+          <span class="fas fa-plus"></span>
+        </a>
+    </div> 
+
+    <input type="text" id="orderSearchInput" class="form-control" placeholder="Tìm kiếm" />
+
+    <!-- <hr> -->
+
+
+
+    <div id="listOrder">
+
+<!--   <a href="#" class="list-group-item list-group-item-action"></a>
+ -->
+
+<!--     <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Collapsible Group Item #1
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <p>Mã đơn hàng:</p>
+            <p>Tên mặt hàng</p>
+            <p>Giá gốc</p>
+            <p>Giá bán</p>
+            <p>Số lượng</p>
+
+          </div>
+        </div>
+      </div> -->
+
+
+     </div> 
+
+  </section>
+
+  <!-- Modal -->
+   <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-sm">
+         <div class="modal-content">
+            <!--           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Thông tin</h4>
+               </div>
+               -->          
+            <div class="modal-body">
+               <p id="modelContent">Đã lưu mặt hàng</p>
+            </div>
+            <!-- <div class="modal-footer"> -->
+            <button type="button" class="btn btn-default" id="modalYes" data-dismiss="modal">Đồng ý</button>
+            <button type="button" class="btn btn-default" id="modalNo" data-dismiss="modal">Huỷ</button>
+
+            <!-- </div> -->
+         </div>
+      </div>
+   </div>
+
+
+  <div id="footerInclude"></div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="../js/jqBootstrapValidation.js"></script>
+  <script src="../js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="../js/freelancer.min.js"></script>
+
+  <script type="text/javascript" src="../js/common.js"></script>
+
+  <script type="text/javascript" src="../js/authorize.js"></script>
+
+  <script type="text/javascript" src="../js/listOrder.js"></script>
+
+  <script async defer src="https://apis.google.com/js/api.js"
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
+
+</body>
+
+</html>

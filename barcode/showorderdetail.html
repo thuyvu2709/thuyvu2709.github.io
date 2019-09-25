@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Xách tay Thuỷ Vũ</title>
+      <!-- Custom fonts for this theme -->
+      <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+      <!-- Theme CSS -->
+      <link href="../css/freelancer.css" rel="stylesheet">
+
+      <link href="../css/showorder.css" rel="stylesheet">
+
+      <script type="text/javascript">
+         var pageName = "neworder";
+         var pageRole = "manager";
+      </script>
+   </head>
+   <body id="page-top">
+
+      <header class="minihead">
+      </header>
+      <h1 class="text-center">
+        <a href="/index.html">
+          Xách tay Thuỷ Vũ - Góc Hàng Âu
+        </a>  
+      </h1>
+
+      <!-- Portfolio Section -->
+      <section class="page-section portfolio" id="portfolio">
+         <form class="needs-validation container" novalidate>
+            <div class="form-group row">
+               <label for="orderCode" class="col-sm-2 col-form-label">Mã đơn hàng</label>
+               <div class="col-sm-10">
+                  <label id="orderCode" class="form-control"></label>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerName" class="col-sm-2 col-form-label">Tên khách hàng</label>
+               <div class="col-sm-10">
+                  <label id="customerName" class="form-control"></label>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerAddress" class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
+               <div class="col-sm-10">
+                  <label id="customerAddress" class="form-control"></label>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerPhone" class="col-sm-2 col-form-label">Số điện thoại khách hàng</label>
+               <div class="col-sm-10">
+                  <label id="customerPhone" class="form-control"></label>
+               </div>
+            </div>
+
+<!-- table is here -->
+            <table style="width: 100%;border-collapse: collapse;">
+              <tr>
+                <th>STT</th>
+                <th>Tên hàng</th>
+                <th>Số lượng</th>
+                <th>Giá bán</th>
+              </tr>
+              <tbody id = "lsTable">
+                
+              </tbody>
+            </table>
+<!-- end table -->
+            <br/>
+            <div class="form-group row shippingCost">
+               <label for="shippingCost" class="col-sm-2 col-form-label">Phí giao hàng</label>
+               <div class="col-sm-10">
+                  <label id="shippingCost" class="form-control"></label>
+               </div>
+            </div>
+
+            <div class="form-group row" id="copyText">
+              <h5>Tổng tiền thanh toán : </h5>
+              <h5 id="totalPayIncludeShip">0</h5>
+            </div>
+
+            <h3>
+              <span class="fa fa-star checked" id="zoomin"></span>
+              Cảm ơn quý khách đã mua hàng của chúng tôi
+              <span class="fa fa-star checked" id="zoomout"></span>
+            </h3>
+
+         </form>
+
+         <hr>
+         <textarea id="textarea">hello</textarea>
+
+         <!-- Modal -->
+         <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+               <div class="modal-content">
+                  <!--           <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">Thông tin</h4>
+                     </div>
+                     -->          
+                  <div class="modal-body">
+                     <p id="modelContent">Đã lưu mặt hàng</p>
+                  </div>
+                  <!-- <div class="modal-footer"> -->
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <!-- </div> -->
+               </div>
+            </div>
+         </div>
+         <hr/>
+         <canvas id="picture" width="320" height="240"></canvas>
+      </section>
+      <!-- Footer -->
+      
+      <!-- Bootstrap core JavaScript -->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Contact Form JavaScript -->
+      <script src="../js/jqBootstrapValidation.js"></script>
+      <script src="../js/contact_me.js"></script>
+      <!-- Custom scripts for this template -->
+      <!-- <script src="../js/freelancer.min.js"></script> -->
+<!--       <script type="text/javascript" src="../js/verifyform.js"></script>
+
+
+      <script type="text/javascript" src="JOB.js"></script>
+      <script type="text/javascript" src="scanbarcodeIndex.js"></script> -->
+
+      <script type="text/javascript" src="showOrderDetail.js"></script>
+
+
+
+   </body>
+</html>

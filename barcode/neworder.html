@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Xách tay Thuỷ Vũ</title>
+      <!-- Custom fonts for this theme -->
+      <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+      <!-- Theme CSS -->
+      <link href="../css/freelancer.css" rel="stylesheet">
+      <script type="text/javascript">
+         var pageName = "neworder";
+         var pageRole = "manager";
+      </script>
+   </head>
+   <body id="page-top">
+    
+    <!-- Navigation -->
+    <div id="headerInclude"></div>
+
+      <header class="minihead">
+      </header>
+      <!-- Portfolio Section -->
+      <section class="page-section portfolio" id="portfolio">
+
+
+         <form class="needs-validation container" novalidate>
+             <h2> Thêm thông tin đơn hàng</h2>
+
+            <div class="form-group row">
+               <label for="orderCode" class="col-sm-2 col-form-label">Mã đơn hàng</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="orderCode" placeholder="Mã đơn hàng" >
+                  <!--           <div style='height: 0px;width:0px; overflow:hidden;'>
+                     <input id="scanBarcode" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />
+                     </div>
+                     <button class="btn btn-primary mb-2" id="btnScan">Quét mã vạch</button> -->
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerName" class="col-sm-2 col-form-label">Tên khách hàng</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="customerName" placeholder="Tên khách hàng" required>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerAddress" class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="customerAddress" placeholder="Địa chỉ khách hàng" required>
+               </div>
+            </div>
+            <div class="form-group row">
+               <label for="customerPhone" class="col-sm-2 col-form-label">Số điện thoại khách hàng</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="customerPhone" placeholder="Số điện thoại khách hàng" required>
+               </div>
+            </div>
+            <h3>Danh sách hàng mua</h3>
+            <div id="listProduct">
+               <div class="card">
+                  <div class="card-header" id="heading_0">
+                     <h5 class="mb-0">
+                        <button class="btn btn-link btnShowProduct btnProductName_0" data-toggle="collapse" data-target="#collapse_0" aria-expanded="false" aria-controls="collapse_0">
+                        Thêm hàng vào đơn hàng
+                        </button>
+                     </h5>
+                  </div>
+                  <div id="collapse_0" class="collapse show" aria-labelledby="heading_0" data-parent="#listProduct">
+                     <div class="card-body">
+                      <!-- start card body -->
+                        <div class="form-group row">
+                          <label for="productCode" class="col-sm-2 col-form-label">
+                            Mã sản phẩm
+                            <span class="fa fa-search btn btn-default btnSearchProduct_0"></span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control productCode_0" placeholder="Mã sản phẩm"/>
+                            <!-- <div style='height: 0px;width:0px; overflow:hidden;'>
+                              <input id="scanBarcode_0" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />
+                            </div>
+                            <button class="btn btn-primary mb-2 btnScan 0">Quét mã vạch</button> -->
+
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="productName" class="col-sm-2 col-form-label">Tên sản phẩm</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control productName_0" placeholder="Tên sản phẩm" required>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="productCount" class="col-sm-2 col-form-label">Số lượng</label>
+                          <div class="col-sm-10">
+                            <input type="number" class="form-control productCount_0" placeholder="0" required>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label for="productEstimateSellingVND" class="col-sm-2 col-form-label">Giá bán (VND) </label>
+                          <div class="col-sm-10">
+                            <input type="number" class="form-control productEstimateSellingVND_0" placeholder="0 VND">
+                          </div>
+                        </div>
+
+                        <div class="form-group column">
+                          <label class="col-sm-2 col-form-label">
+                            Tổng tiền:
+                            <p class="turnover_0">0</p>
+                          </label>
+<!--                           <label class="col-sm-2 col-form-label">
+                            Giá gốc (VND):
+                            <p class="productEstimateVND_0">0</p>
+                          </label>
+                          <label class="col-sm-2 col-form-label">
+                            Giá gốc (VND):
+                            <p class="productEstimateVND_0">0</p>
+                          </label> -->
+                        </div>
+                        <!-- end card body -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <br/>
+            <div class="form-group row">
+               <label for="customerName" class="col-sm-2 col-form-label">Phí giao hàng</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="shippingCost" placeholder="Phí giao hàng" required>
+               </div>
+            </div>
+            <div class="form-group row">
+              <h5>Tổng tiền hàng : </h5>
+              <h5 id="totalPay">0</h5>
+            </div>
+
+            <div class="form-group row">
+              <h5>Tổng tiền thanh toán (cả ship): </h5>
+              <h5 id="totalPayIncludeShip">0</h5>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlTextarea2">Thêm ghi chú</label>
+              <textarea class="form-control rounded-0" id="orderNode" rows="2"></textarea>
+            </div>
+
+
+            <div class="btn btn-primary mb-2" id="addNewOrder">Thêm đơn hàng</div>
+            <div class="btn btn-primary mb-2" id="btnPrintOrder">In đơn hàng</div>
+            <div class="btn btn-primary mb-2" id="btnRefresh">Thêm đơn hàng mới</div>
+            
+         </form>
+         <!-- Modal -->
+         <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm">
+               <div class="modal-content">
+                  <!--           <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                     <h4 class="modal-title">Thông tin</h4>
+                     </div>
+                     -->          
+                  <div class="modal-body">
+                     <div id="modelContent">Đã lưu mặt hàng</div>
+                  </div>
+                  <!-- <div class="modal-footer"> -->
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <!-- </div> -->
+               </div>
+            </div>
+         </div>
+
+        <div class="modal paddingNormal" tabindex="-1" role="dialog" id="myModal2">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body paddingNormal">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer paddingNormal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+         <hr/>
+         <canvas id="picture" width="320" height="240"></canvas>
+      </section>
+      
+      <div id="footerInclude"></div>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Contact Form JavaScript -->
+      <script src="../js/jqBootstrapValidation.js"></script>
+      <script src="../js/contact_me.js"></script>
+      <!-- Custom scripts for this template -->
+      <script src="../js/freelancer.min.js"></script>
+      <script type="text/javascript" src="../js/verifyform.js"></script>
+
+
+      <script type="text/javascript" src="JOB.js"></script>
+      <script type="text/javascript" src="scanbarcodeIndex.js"></script>
+
+      <script type="text/javascript" src="addNewOrder.js"></script>
+
+      <script type="text/javascript" src="../js/common.js"></script>
+
+      <script type="text/javascript" src="../js/authorize.js"></script>
+
+      <script async defer src="https://apis.google.com/js/api.js"
+         onload="this.onload=function(){};handleClientLoad()"
+         onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+
+   </body>
+</html>
