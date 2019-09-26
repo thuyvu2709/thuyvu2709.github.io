@@ -1,6 +1,8 @@
 var mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
-var roleSheet = '1mQPua5Rr8sDpYH7zQ37sTgiI2GmyoxMCiH9x78EhwTI';
+var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
 var shippingSheet = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+var hostname = window.location.hostname;
+var passDataLocalhost = (hostname == "localhost");
 
 function comeBackHomeToAuthorize(){
     $("#loadingSpin").hide();
@@ -25,6 +27,9 @@ function loadProductList(callback) {
 
   console.log("loadProductList:"+sheetrange);
 
+  if (passDataLocalhost) {
+    callback();
+  }
 
   if(!gapi.client.sheets) {
     callback();
@@ -47,6 +52,39 @@ function loadProductList(callback) {
   });
 }
 
+function loadImportScheduleList(callback) {
+  var spreadsheetId = mainSheetForProduct;
+  var indexColumnOfAllData = 3;
+  var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  console.log("loadImportScheduleList:"+sheetrange);
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("warehouse",JSON.stringify(dataset));
+
+      callback();
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 function getLatestOrderCode(callback) {
   var spreadsheetId = mainSheetForProduct;
 
@@ -55,6 +93,10 @@ function getLatestOrderCode(callback) {
   var indexColumnOfAllData = 1;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+  }
 
   if(!gapi.client.sheets) {
     callback();
@@ -91,6 +133,10 @@ function loadOrderList(callback) {
   var indexColumnOfAllData = 12;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
   if(!gapi.client.sheets) {
     callback();
     comeBackHomeToAuthorize();
@@ -121,6 +167,10 @@ function loadReport(callback) {
   var indexColumnOfAllData = 2;
   var sheetrange = 'Report!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
   if(!gapi.client.sheets) {
     callback();
     comeBackHomeToAuthorize();
@@ -149,6 +199,10 @@ function loadOrderListDetail(callback) {
   var spreadsheetId = mainSheetForProduct;
 
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
   if(!gapi.client.sheets) {
     callback();
     comeBackHomeToAuthorize();
@@ -173,32 +227,22 @@ function loadOrderListDetail(callback) {
   });
 }
 
-// var textarea = document.getElementById("textarea");
-// $(textarea).hide();
-
-// $(".copyPayment").click(function(){
-//     var allText =  "Thông tin chuyển khoản :\n"+
-//     "- Chủ tài khoản: Le Van Thanh \n"+
-//     "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
-//     "- Số tài khoản : 19034601990019 \n"+
-//     "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua";
-//     console.log("Copy");
-//     $(textarea).show();
-
-//     textarea.value = allText;
-
-//     textarea.select(); 
-//     textarea.setSelectionRange(0, 99999); /*For mobile devices*/
-//     document.execCommand("copy");
-
-//     $(textarea).hide();
-// })
 
 function appendOrderDetail(submitData,callback) {
   var numOfColumn = 10;
   var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = mainSheetForProduct;
 
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
@@ -224,6 +268,16 @@ function appendOrder(submitOrderData,callback) {
   var numOfColumn = 10;
   var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = mainSheetForProduct;
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
@@ -251,6 +305,16 @@ function appendProduct(dataAppendProduct, callback, callbackError) {
 
     var spreadsheetId = mainSheetForProduct;
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
         range: sheetrange,
@@ -275,6 +339,17 @@ function appendProduct(dataAppendProduct, callback, callbackError) {
 
 function editOrderDetail(dataEditOD, range, callback) {
   var spreadsheetId = mainSheetForProduct;
+
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.update({
       spreadsheetId: spreadsheetId,
@@ -304,6 +379,16 @@ function editOrder(dataEditOrder,range,callback){
 
   // console.log(sheetrange);
   
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
   gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: spreadsheetId,
         range: range,
@@ -331,6 +416,16 @@ function editProduct(dataEditP, range,callback, callbackError) {
   var spreadsheetId = mainSheetForProduct;
   // var sheetrange = range;
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
   gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: spreadsheetId,
         range: range,
@@ -355,6 +450,10 @@ function editProduct(dataEditP, range,callback, callbackError) {
 
 function getRoleList(callback) {
   var spreadsheetId = roleSheet;
+
+  if (passDataLocalhost) {
+    callback();
+  }
 
   if(!gapi.client.sheets) {
     callback();
@@ -412,6 +511,16 @@ function appendShipping(dataAppendShipping, callback, callbackError) {
 
     var spreadsheetId = shippingSheet;
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
         range: sheetrange,
@@ -440,6 +549,16 @@ function updateShipping(dataUpdateShipping, sheetrange, callback, callbackError)
 
     var spreadsheetId = shippingSheet;
 
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
     gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: spreadsheetId,
         range: sheetrange,
@@ -467,15 +586,25 @@ function getLatestShippingIndex(callback) {
 
   console.log("getLatestShippingIndex");
 
-  var indexColumnOfAllData = 1;
-  var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
-  var dataset = [];
+  if (passDataLocalhost) {
+    callback();
+  }
 
   if(!gapi.client.sheets) {
     callback();
     comeBackHomeToAuthorize();
     return;
   }
+
+  var indexColumnOfAllData = 1;
+  var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  // if(!gapi.client.sheets) {
+  //   callback();
+  //   comeBackHomeToAuthorize();
+  //   return;
+  // }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
@@ -498,6 +627,10 @@ function getOrderShipping(callback) {
   var indexColumnOfAllData = 6;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+  }
 
   if(!gapi.client.sheets) {
     callback();

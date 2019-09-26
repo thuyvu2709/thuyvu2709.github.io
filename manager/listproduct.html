@@ -35,6 +35,20 @@
   <!-- Portfolio Section -->
   <section class="page-section portfolio" id="portfolio">
     <h2 class="text-center">Danh sách mặt hàng</h2>
+    
+    <div class="btn btn-default">
+      Hiển thị theo đợt hàng
+      <select class="mdb-select md-form" id="importFilter">
+        <option value="-1">Toàn bộ</option>
+      </select>
+    </div>
+    <div class="btn btn-default btnNormal addNewProduct"
+        style="float: right">
+        <a href="../barcode/newproduct.html">
+          <span class="fas fa-plus"></span>
+        </a>
+    </div> 
+
     <input type="text" id="prodSearchInput" class="form-control" placeholder="Tìm kiếm" />
 
     <div id="listProduct">

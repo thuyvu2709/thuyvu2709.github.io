@@ -1,6 +1,6 @@
 
 var currentProduct = JSON.parse(localStorage.getItem("currentProduct"));
-
+console.log(currentProduct);
 
 $("#productCode").val(currentProduct.productCode);
 $("#productName").val(currentProduct.productName);
@@ -31,6 +31,27 @@ $("#totalCost").html(currentProduct.totalCost);
 $("#totalProfit").html(currentProduct.totalProfit);
 
 $("#prodImageLink").val(currentProduct.prodImageLink);
+
+$("#importSchedule").html("<option value='"+currentProduct.importCode+"'>"+currentProduct.importCode+"</option>")
+
+var triggerAfterLoad = function(){
+
+	loadImportScheduleList(function(){
+		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
+		console.log(importSLData);
+		$("#importSchedule").empty();
+		for (var e in importSLData) {
+			if (e ==0) {
+				continue;
+			}
+			if (importSLData[e][0] == currentProduct.importCode) {
+				$("#importSchedule").append("<option value='"+importSLData[e][0]+"' selected>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+			} else {
+				$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+			}
+		}
+	})
+}
 
 function editProductFn(){
 	var dataset = [];
@@ -65,6 +86,9 @@ function editProductFn(){
 	var prodImageLink = $("#prodImageLink").val();
 	var productIndex = currentProduct.productIndex;
 
+	var importCode = document.getElementById("importSchedule").value;
+	// console.log("importCode:"+importCode);
+
 	productWeight = productWeight ? productWeight : 0;
 	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
 	shipItalyFee = shipItalyFee ? shipItalyFee : 0;
@@ -78,6 +102,7 @@ function editProductFn(){
 	currentProduct = {
 		productIndex : productIndex,
 		productCode : productCode,
+		importCode : importCode,
 		productName : productName,
 		productCount : productCount,
 		productOriginalCostEur : productOriginalCostEur,
@@ -95,6 +120,9 @@ function editProductFn(){
 		prodImageLink : prodImageLink
 	}
 
+    localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
+
+
 	// console.log(productCode)
 	var proIndex = parseInt(productIndex) + 1;
 
@@ -102,8 +130,8 @@ function editProductFn(){
 
 	var dataEditP = [
                 [productCode, //0 A
-                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))"
-                "",
+                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),1)))",
+                importCode,
                 productName, //1 B
                 productCount, //2 C
                 productOriginalCostEur, //3 D

@@ -3,6 +3,22 @@
 // var sheetrange = 'Sheet1!A1:B1000';
 // console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
 
+var triggerAfterLoad = function(){
+
+	loadImportScheduleList(function(){
+		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
+		console.log(importSLData);
+		$("#importSchedule").empty();
+		$("#importSchedule").append("<option disabled selected>Chọn đợt hàng</option>");
+		for (var e in importSLData) {
+			if (e ==0) {
+				continue;
+			}
+			$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+		}
+	})
+}
+
 function addNewProduct(){
 	$("#loadingSpin").show();
 
@@ -38,6 +54,9 @@ function addNewProduct(){
 
 	var prodImageLink = $("#prodImageLink").val();
 
+	var importCode = document.getElementById("importSchedule").value;
+
+
 	productWeight = productWeight ? productWeight : 0;
 	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
 	shipItalyFee = shipItalyFee ? shipItalyFee : 0;
@@ -51,8 +70,8 @@ function addNewProduct(){
 
 	var dataAppendProduct = [
                 [productCode, //0 A
-                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))",//1 B
-                "0", //2 C
+                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),1)))",//1 B
+                importCode, //2 C
                 productName, //3 D
                 productCount, //4 E
                 productOriginalCostEur, //5 F

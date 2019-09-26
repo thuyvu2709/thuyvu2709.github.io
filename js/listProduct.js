@@ -1,42 +1,3 @@
-// filterSheet.js
-
-// var sheetrange = 'Sheet1!A:A';
-// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
-
-// my_range = {
-//     'sheetId': spreadsheetId,
-//     'startRowIndex': 10000,
-//     'startColumnIndex': 0,
-// }
-
-// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-// var indexColumnOfAllData = 15;
-// var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
-// var dataset = [];
-
-
-// gapi.client.sheets.spreadsheets.values.get({
-//     spreadsheetId: spreadsheetId,
-//     range: sheetrange,
-// }).then(function(response) {
-//     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-//     dataset = response.result.values;
-//     showList(dataset);
-// }, function(response) {
-//     console.log('Error: ' + response.result.error.message);
-// });
-
-// function showList(data) {
-
-// $(".text-center").click(function(){
-//   loadProductList(function(){
-//       // $("#loadingSpin").hide();
-//       console.log("Gooo");
-//       loadProductListHtml();
-//   })
-// });
-
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -44,6 +5,20 @@ var triggerAfterLoad = function(){
   loadProductList(function(){
       console.log("Gooo");
       loadProductListHtml();
+
+      loadImportScheduleList(function(){
+          var importSLData = JSON.parse(localStorage.getItem("warehouse"));
+          console.log(importSLData);
+          $("#importFilter").empty();
+          $("#importFilter").append("<option selected value='-1'>Toàn bộ</option>");
+      
+          for (var e in importSLData) {
+            if (e ==0) {
+              continue;
+            }
+            $("#importFilter").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+          }
+      })
   })
 }
 
@@ -65,6 +40,14 @@ function loadProductListHtml(){
     if (searchText) {
       if (!(data[e][0].toUpperCase().includes(searchText.toUpperCase()) 
         || data[e][3].toUpperCase().includes(searchText.toUpperCase()))) {
+        continue;
+      }
+    }
+
+    var importCode = document.getElementById("importFilter").value;
+
+    if (importCode != -1) {
+      if (importCode != data[e][2]) {
         continue;
       }
     }
@@ -148,17 +131,9 @@ $("#prodSearchInput").keyup(function(){
   loadProductListHtml();
 });
 
-// var searchInput = document.getElementById("prodSearchInput");
+$("#importFilter").change(function(){
+  console.log("importFilter:");
+  $("#prodSearchInput").val("");
+  loadProductListHtml();
+})
 
-// // Get the offset position of the navbar
-// var stickySearchInput = searchInput.offsetTop;
-
-// window.onscroll = function() {
-//   console.log("scroll:"+window.pageYOffset+" "+stickySearchInput+" "+ (window.pageYOffset - stickySearchInput))
-//   if (window.pageYOffset > stickySearchInput-100) {
-//     console.log("sticky");
-//     searchInput.classList.add("sticky");
-//   } else {
-//     searchInput.classList.remove("sticky");
-//   }
-// };

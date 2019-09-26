@@ -1,10 +1,11 @@
 // addNewProduct.js
 
-productList = JSON.parse(localStorage.getItem("productList"));
+var productList = JSON.parse(localStorage.getItem("productList"));
 
 // orderCode = localStorage.getItem("orderCode");
 
-currentOrder = {};
+var currentOrder = {};
+var importSLData = {};
 
 var triggerAfterLoad = function(){
 	
@@ -15,56 +16,24 @@ var triggerAfterLoad = function(){
 	loadProductList(function(){
 		productList = JSON.parse(localStorage.getItem("productList"));
 
-		getLatestOrderCode(function(){
-			$("#loadingSpin").hide();
-			orderCode = localStorage.getItem("orderCode");
-			$("#orderCode").val(orderCode);
-		})
+		$("#loadingSpin").hide();
 	});
+
+	getLatestOrderCode(function(){
+		orderCode = localStorage.getItem("orderCode");
+		$("#orderCode").val(orderCode);
+	})
+
+	loadImportScheduleList(function(){
+		importSLData = JSON.parse(localStorage.getItem("warehouse"));
+	})
 };
 
-// function getLatestOrderCode(callback) {
-//   var indexColumnOfAllData = 1;
-//   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
-//   var dataset = [];
-
-//   // console.log(gapi.client.sheets);
-
-//   if(!gapi.client.sheets) {
-//   	callback();
-//   	comeBackHomeToAuthorize();
-//   	return;
-//   }
-
-//   gapi.client.sheets.spreadsheets.values.get({
-//       spreadsheetId: spreadsheetId,
-//       range: sheetrange,
-//   }).then(function(response) {
-//       console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-//       dataset = response.result.values;
-//       // showList(dataset);
-//       var latestCode = parseFloat(dataset[dataset.length-1][0].split("_").pop())+1;
-
-//       localStorage.setItem("orderCode","DONHANG_"+latestCode);
-
-//       // window.productList = dataset;
-//       callback();
-//   }, function(response) {
-//       console.log('Error: ' + response.result.error.message);
-//   });
-// }
-
-console.log(orderCode);
 
 var numOfProType = 1;
 
 $("#btnRefresh").hide();
 $("#btnPrintOrder").hide();
-
-// $(document).ready(function(){
-// 	console.log("Test");
-// 	window.scrollTo(0,0);
-// });
 
 
 function addNewFormOfProduct(currentIndex){
@@ -103,6 +72,16 @@ function addNewFormOfProduct(currentIndex){
 
               '</div>'+
             '</div>'+
+
+			'<div class="form-group row">'+
+			'  <label for="importCode" class="col-sm-2 col-form-label">Đợt hàng</label>'+
+			'    <div class="col-sm-10">'+
+			'      <select class="mdb-select md-form importScheduleGeneral importSchedule_'+e+'"'+
+			'        style="width: 100%">'+
+			'        <option disabled>Chọn đợt hàng</option>'+
+			'      </select>'+
+			'    </div>'+
+			'</div>'+
 
             '<div class="form-group row">'+
               '<label for="productName" class="col-sm-2 col-form-label">Tên sản phẩm</label>'+
@@ -185,7 +164,7 @@ function searchForm(){
 		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
-            '<button class="btn btn-link searchProductChoose searchProductBtn_'+index+'">'+
+            '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
               productList[e][1] + " | " + productList[e][3] +
             '</button>'+
           // '</h5>'+
@@ -195,15 +174,18 @@ function searchForm(){
 
 	$("#myModal2 .searchProductChoose").click(function(){
 		var lsClass = $(this).attr("class").split(" ");
+
 		var index = lsClass.pop().split("_").pop();
-		var indexInStore = lsClass.pop().pop().split("_").pop();
+		var indexInStore = lsClass.pop().split("_").pop();
+		// console.log(lsClass);
+		console.log("searchProductChoose:"+index+" "+indexInStore);
 
 		var productIndex = parseInt(index);
-		var productCode = $(this).html().split(" ")[0];
+		// var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
+		// console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
-		$(".productCode_"+index).val(productCode);
+		// $(".productCode_"+index).val(productCode);
 
 		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
@@ -249,15 +231,18 @@ function filterInSearchForm(index,searchText){
 
 	$("#myModal2 .searchProductChoose").click(function(){
 		var lsClass = $(this).attr("class").split(" ");
+
 		var index = lsClass.pop().split("_").pop();
-		var indexInStore = lsClass.pop().pop().split("_").pop();
+		var indexInStore = lsClass.pop().split("_").pop();
+		// console.log(lsClass);
+		console.log("searchProductChoose:"+index+" "+indexInStore);
 
 		var productIndex = parseInt(index);
-		var productCode = $(this).html().split(" ")[0];
+		// var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
+		// console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
-		$(".productCode_"+index).val(productCode);
+		// $(".productCode_"+index).val(productCode);
 
 		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
@@ -266,14 +251,53 @@ function filterInSearchForm(index,searchText){
 
 function triggerNextProcessNewOrder(productIndex, productCode, productIndexInStore){
 	var index = -1;
+	var importCode = 0;
 	if (productIndexInStore) {
 		index = parseInt(productIndexInStore);
-	} else {
-		for(e in productList) {
-			if (productList[e][0] == productCode) {
-				index = e;
+		productCode = productList[index][0];
+		$(".productCode_"+productIndex).val(productCode);
+		$(".importSchedule_"+productIndex).empty();
+		importCode = productList[index][2];
+		// if (lsImportCode.length > 1) {
+		for (var e in importSLData) {
+			if (importSLData[e][0] == importCode) {
+				$(".importSchedule_"+productIndex).append("<option selected value='"+index+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+				continue;
 			}
 		}
+	} else {
+		var lsImportCode = [];
+		for(var e in productList) {
+			if (productList[e][0] == productCode) {
+				index = e;
+				importCode = productList[e][2];
+				lsImportCode.push({
+					productIndexInStore : e,
+					importCode : productList[e][2]
+				});
+			}
+		}
+		$(".importSchedule_"+productIndex).empty();
+		// if (lsImportCode.length > 1) {
+		for (var e in importSLData) {
+			if (importSLData[e][0] == importCode) {
+				$(".importSchedule_"+productIndex).append("<option selected value='"+index+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+				continue;
+			}
+			for (var e1 in lsImportCode) {
+				if (importSLData[e][0] == lsImportCode[e1].importCode) {
+					$(".importSchedule_"+productIndex).append("<option value='"+lsImportCode[e1].productIndexInStore+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+				}
+			}
+		}
+		// }
+		$(".importScheduleGeneral").change(function(){
+			var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+			productIndex = parseInt(productIndex);
+			productIndexInStore = document.getElementsByClassName($(this).attr("class"))[0].value;
+			console.log(productIndex+" "+productIndexInStore);
+			triggerNextProcessNewOrder(productIndex,"",productIndexInStore);
+		})
 	}
 	if (index == -1) {
 	    // $("#modelContent").html("Không tìm thấy mặt hàng");
@@ -382,7 +406,7 @@ function addDetailOrder() {
 			orderCode,
 			$(".productCode_"+i).val(),
 			"0",
-			"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))"
+			"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
 			$(".productName_"+i).val(),
 			$(".productCount_"+i).val(),
 			$(".productEstimateSellingVND_"+i).val(),
