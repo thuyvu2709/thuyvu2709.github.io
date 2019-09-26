@@ -1,14 +1,5 @@
 // addNewProduct.js
 
-// var sheetrange = 'Sheet1!A1:B1000';
-// console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
-
-
-// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-// var indexColumnOfAllData = 15;
-// var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
-// var dataset = [];
-
 productList = JSON.parse(localStorage.getItem("productList"));
 
 // orderCode = localStorage.getItem("orderCode");
@@ -101,7 +92,7 @@ function addNewFormOfProduct(currentIndex){
             '<div class="form-group row">'+
               '<label for="productCode" class="col-sm-2 col-form-label">'+
               	'Mã sản phẩm'+
-              	'<span class="fa fa-search btn btn-default btnSearchProduct_'+e+'"></span>'+
+              	'<span class="fa fa-search btn btn-default btnSearchProductGeneral btnSearchProduct_'+e+'"></span>'+
           	  '</label>'+
               '<div class="col-sm-10">'+
                 '<input type="text" class="form-control productCode_'+e+'" placeholder="Mã sản phẩm">'+
@@ -191,11 +182,11 @@ function searchForm(){
 			continue;
 		}
 
-		$(".modal-body").append('<div class="card">'+
+		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
             '<button class="btn btn-link searchProductChoose searchProductBtn_'+index+'">'+
-              productList[e][0] + " | " + productList[e][1] +
+              productList[e][1] + " | " + productList[e][3] +
             '</button>'+
           // '</h5>'+
         // '</div>'+
@@ -203,16 +194,18 @@ function searchForm(){
 	}
 
 	$("#myModal2 .searchProductChoose").click(function(){
-		var index = $(this).attr("class").split(" ").pop().split("_").pop();
+		var lsClass = $(this).attr("class").split(" ");
+		var index = lsClass.pop().split("_").pop();
+		var indexInStore = lsClass.pop().pop().split("_").pop();
 
 		var productIndex = parseInt(index);
 		var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index);
+		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
-		$("#myModal2 .productCode_"+index).val(productCode);
+		$(".productCode_"+index).val(productCode);
 
-		triggerNextProcessNewOrder(productIndex, productCode);
+		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
 	})
 
@@ -231,49 +224,55 @@ function searchForm(){
 }
 
 function filterInSearchForm(index,searchText){
-	$(".modal-body").empty();
+	$("#myModal2  .modal-body").empty();
 
 	for(e in productList) {
 		if (e == 0) {
 			continue;
 		}
 		if (searchText) {
-			if (!(productList[e][0].toUpperCase().includes(searchText.toUpperCase()) 
-				|| productList[e][1].toUpperCase().includes(searchText.toUpperCase()))) {
+			if (!(productList[e][1].toUpperCase().includes(searchText.toUpperCase()) 
+				|| productList[e][3].toUpperCase().includes(searchText.toUpperCase()))) {
 				continue;
 			}
 		}
-		$(".modal-body").append('<div class="card">'+
+		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
-            '<button class="btn btn-link searchProductChoose searchProductBtn_'+index+'">'+
-              productList[e][0] + " | " + productList[e][1] +
+            '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
+              productList[e][1] + " | " + productList[e][3] +
             '</button>'+
           // '</h5>'+
         // '</div>'+
       '</div>')
 	}
 
-	$(".searchProductChoose").click(function(){
-		var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	$("#myModal2 .searchProductChoose").click(function(){
+		var lsClass = $(this).attr("class").split(" ");
+		var index = lsClass.pop().split("_").pop();
+		var indexInStore = lsClass.pop().pop().split("_").pop();
 
 		var productIndex = parseInt(index);
 		var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index);
+		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
 		$(".productCode_"+index).val(productCode);
 
-		triggerNextProcessNewOrder(productIndex, productCode);
+		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
 	})
 }
 
-function triggerNextProcessNewOrder(productIndex, productCode){
+function triggerNextProcessNewOrder(productIndex, productCode, productIndexInStore){
 	var index = -1;
-	for(e in productList) {
-		if (productList[e][0] == productCode) {
-			index = e;
+	if (productIndexInStore) {
+		index = parseInt(productIndexInStore);
+	} else {
+		for(e in productList) {
+			if (productList[e][0] == productCode) {
+				index = e;
+			}
 		}
 	}
 	if (index == -1) {
@@ -282,11 +281,11 @@ function triggerNextProcessNewOrder(productIndex, productCode){
 	    return;
 	}
 
-	$(".productName_"+productIndex).val(productList[index][1]);
+	$(".productName_"+productIndex).val(productList[index][3]);
 	$(".productCount_"+productIndex).val(1);
-	$(".productEstimateSellingVND_"+productIndex).val(productList[index][10])
-	$(".btnProductName_"+productIndex).html(productList[index][1]);
-	$(".turnover_"+productIndex).html(productList[index][10]);
+	$(".productEstimateSellingVND_"+productIndex).val(productList[index][12])
+	// $(".btnProductName_"+productIndex).html(productList[index][3]);
+	$(".turnover_"+productIndex).html(productList[index][12]);
 
 	totalPay = 0;
 	for (var i = 0; i < numOfProType; i++) { 
@@ -300,7 +299,7 @@ function triggerNextProcessNewOrder(productIndex, productCode){
 
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
 
-	$(".btnProductName_"+productIndex).html(productList[index][1] + " | " + 1 + " | " + productList[index][10] + " | " + productList[index][10]);
+	$(".btnProductName_"+productIndex).html(productList[index][3] + " | " + 1 + " | " + productList[index][12] + " | " + productList[index][12]);
 
 	addNewFormOfProduct(productIndex);
 };
@@ -396,30 +395,6 @@ function addDetailOrder() {
 
 	currentOrder.prodListOrder = prodListOrder;
 
-	// console.log(prodListOrder);
-
-	// var numOfColumn = 7;
-	// var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn);
-	// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
-
-	// gapi.client.sheets.spreadsheets.values.append({
- //        spreadsheetId: spreadsheetId,
- //        range: sheetrange,
- //        valueInputOption: "USER_ENTERED",
- //        resource: {
- //            "majorDimension": "ROWS",
- //            "values": submitData
- //        }
- //    }).then(function(response) {
- //        var result = response.result;
- //    	console.log(`${result.updatedCells} cells updated.`);
-	// 	finishOrder();
- //        // addDetailOrder();
-
- //    }, function(response) {
- //        appendPre('Error: ' + response.result.error.message);
- //    });
  	appendOrderDetail(submitData,finishOrder);
 }
 

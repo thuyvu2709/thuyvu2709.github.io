@@ -1,16 +1,5 @@
 // addNewProduct.js
 
-// var sheetrange = 'Sheet1!A1:B1000';
-// console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
-
-
-// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-// var indexColumnOfAllData = 15;
-// var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
-// var dataset = [];
-
-var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
 var sheetOrder = "Order";
 var sheetOrderDetail = "OrderDetail";
 
@@ -253,7 +242,7 @@ function searchForm(){
 			continue;
 		}
 
-		$(".modal-body").append('<div class="card">'+
+		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
             '<button class="btn btn-link searchProductChoose searchProductBtn_'+index+'">'+
@@ -265,16 +254,18 @@ function searchForm(){
 	}
 
 	$("#myModal2 .searchProductChoose").click(function(){
-		var index = $(this).attr("class").split(" ").pop().split("_").pop();
+		var lsClass = $(this).attr("class").split(" ");
+		var index = lsClass.pop().split("_").pop();
+		var indexInStore = lsClass.pop().pop().split("_").pop();
 
 		var productIndex = parseInt(index);
 		var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index);
+		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
 		$(".productCode_"+index).val(productCode);
 
-		triggerNextProcessNewOrder(productIndex, productCode);
+		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
 	})
 
@@ -285,7 +276,6 @@ function searchForm(){
 	$("#myModal2 .modal-body").css('overflow','scroll');
 
 	$('#myModal2').modal('toggle');
-	
 	$("#myModal2 .searchInputProduct_"+index+"").keyup(function(){
 		var index = $(this).attr("class").split(" ").pop().split("_").pop();
 		filterInSearchForm(index,$(this).val());
@@ -294,7 +284,7 @@ function searchForm(){
 }
 
 function filterInSearchForm(index,searchText){
-	$(".modal-body").empty();
+	$("#myModal2  .modal-body").empty();
 
 	for(e in productList) {
 		if (e == 0) {
@@ -306,10 +296,10 @@ function filterInSearchForm(index,searchText){
 				continue;
 			}
 		}
-		$(".modal-body").append('<div class="card">'+
+		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
-            '<button class="btn btn-link searchProductChoose searchProductBtn_'+index+'">'+
+            '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
               productList[e][1] + " | " + productList[e][3] +
             '</button>'+
           // '</h5>'+
@@ -317,27 +307,33 @@ function filterInSearchForm(index,searchText){
       '</div>')
 	}
 
-	$(".searchProductChoose").click(function(){
-		var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	$("#myModal2 .searchProductChoose").click(function(){
+		var lsClass = $(this).attr("class").split(" ");
+		var index = lsClass.pop().split("_").pop();
+		var indexInStore = lsClass.pop().pop().split("_").pop();
 
 		var productIndex = parseInt(index);
 		var productCode = $(this).html().split(" ")[0];
 
-		console.log("this is productCode:"+productCode+" index:"+index);
+		console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
 
 		$(".productCode_"+index).val(productCode);
 
-		triggerNextProcessNewOrder(productIndex, productCode);
+		triggerNextProcessNewOrder(productIndex, "", indexInStore);
 		$('#myModal2').modal('hide');
 	})
 }
 
 
-function triggerNextProcessNewOrder(productIndex, productCode){
+function triggerNextProcessNewOrder(productIndex, productCode, productIndexInStore){
 	var index = -1;
-	for(e in productList) {
-		if (productList[e][0] == productCode) {
-			index = e;
+	if (productIndexInStore) {
+		index = parseInt(productIndexInStore);
+	} else {
+		for(e in productList) {
+			if (productList[e][0] == productCode) {
+				index = e;
+			}
 		}
 	}
 	if (index == -1) {
@@ -346,18 +342,15 @@ function triggerNextProcessNewOrder(productIndex, productCode){
 	    return;
 	}
 
-	$(".productName_"+productIndex).val(productList[index][1]);
+	$(".productName_"+productIndex).val(productList[index][3]);
 	$(".productCount_"+productIndex).val(1);
-	$(".productEstimateSellingVND_"+productIndex).val(productList[index][10])
-	$(".btnProductName_"+productIndex).html(productList[index][1]+" | 1 | "+productList[index][10]+" | "+productList[index][10]);
-			// $(".btnProductName_"+productIndex).html($(".productName_"+productIndex).val() + " | " + productCount + " | " + productEstimateSellingVND + " | " + turnover);
-
-	$(".turnover_"+productIndex).html(productList[index][10]);
+	$(".productEstimateSellingVND_"+productIndex).val(productList[index][12])
+	// $(".btnProductName_"+productIndex).html(productList[index][3]);
+	$(".turnover_"+productIndex).html(productList[index][12]);
 
 	totalPay = 0;
 	for (var i = 0; i < numOfProType; i++) { 
-		var toi = $(".turnover_"+i).html() ? $(".turnover_"+i).html() : 0;
-		totalPay = totalPay + parseFloat(toi);
+		totalPay = totalPay + parseFloat($(".turnover_"+i).html());
 	}
 	$("#totalPay").html(totalPay);
 	shippingCost = $("#shippingCost").val();
@@ -367,9 +360,9 @@ function triggerNextProcessNewOrder(productIndex, productCode){
 
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
 
-	// $(".btnProductName_"+productIndex).html($(".productName_"+productIndex).val() + " | " + productCount + " | " + productEstimateSellingVND + " | " + turnover);
+	$(".btnProductName_"+productIndex).html(productList[index][3] + " | " + 1 + " | " + productList[index][12] + " | " + productList[index][12]);
 
-	addNewFormOfProduct(parseInt(productIndex));
+	addNewFormOfProduct(productIndex);
 };
 
 $( "input" ).keyup(inputKeyupfunction);

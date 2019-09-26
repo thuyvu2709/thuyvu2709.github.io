@@ -33,10 +33,6 @@ $("#totalProfit").html(currentProduct.totalProfit);
 $("#prodImageLink").val(currentProduct.prodImageLink);
 
 function editProductFn(){
-	var numOfColumn = 17;
-
-	var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
 	var dataset = [];
 
 	var productCode = $("#productCode").val();
@@ -106,6 +102,8 @@ function editProductFn(){
 
 	var dataEditP = [
                 [productCode, //0 A
+                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))"
+                "",
                 productName, //1 B
                 productCount, //2 C
                 productOriginalCostEur, //3 D
@@ -116,12 +114,12 @@ function editProductFn(){
                 otherFee, //8 I
                 productEstimateVND, //9 J
                 productEstimateSellingVND, //10 K
-				"=INDIRECT(ADDRESS(ROW();11)) - INDIRECT(ADDRESS(ROW();10))", //11 L
-				"=INDIRECT(ADDRESS(ROW();11))*INDIRECT(ADDRESS(ROW();3))", //12 M
-				"=INDIRECT(ADDRESS(ROW();10))*INDIRECT(ADDRESS(ROW();3))", //13 N
-				"=INDIRECT(ADDRESS(ROW();13)) - INDIRECT(ADDRESS(ROW();14))", //14 O
-				"=INDIRECT(ADDRESS(ROW();3)) - SUMIF(OrderDetail!B:B;INDIRECT(ADDRESS(ROW();1));OrderDetail!D:D)", //15 P
-				"=INDIRECT(ADDRESS(ROW();10)) * INDIRECT(ADDRESS(ROW();16))", //16 Q
+				"=INDIRECT(ADDRESS(ROW(),13)) - INDIRECT(ADDRESS(ROW(),12))", //11 L
+				"=INDIRECT(ADDRESS(ROW(),13))*INDIRECT(ADDRESS(ROW(),5))", //12 M
+				"=INDIRECT(ADDRESS(ROW(),12))*INDIRECT(ADDRESS(ROW(),5))", //13 N
+				"=INDIRECT(ADDRESS(ROW(),15)) - INDIRECT(ADDRESS(ROW(),16))", //14 O
+				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //15 P
+				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //16 Q
 				prodImageLink
                 ]
             ];

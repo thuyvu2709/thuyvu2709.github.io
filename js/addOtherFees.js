@@ -8,8 +8,6 @@ function addOtherFee(){
 	var numOfColumnOtherFee = 3;
 	var sheetrange = 'otherFees!A1:'+ String.fromCharCode(65+numOfColumnOtherFee);
 
-	var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
 
 	var feeName = $("#feeName").val();
 	var feeCost = $("#feeCost").val();

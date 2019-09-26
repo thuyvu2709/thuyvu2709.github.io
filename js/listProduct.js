@@ -49,7 +49,7 @@ var triggerAfterLoad = function(){
 
 function loadProductListHtml(){
   data = JSON.parse(localStorage.getItem("productList"));
-  var indexColumnOfAllData = 17;
+  var indexColumnOfAllData = 19;
 
   // console.log(data);
 
@@ -64,34 +64,36 @@ function loadProductListHtml(){
 
     if (searchText) {
       if (!(data[e][0].toUpperCase().includes(searchText.toUpperCase()) 
-        || data[e][1].toUpperCase().includes(searchText.toUpperCase()))) {
+        || data[e][3].toUpperCase().includes(searchText.toUpperCase()))) {
         continue;
       }
     }
 
     var imageDiv = "";
-    if (data[e][17]) {
-      imageDiv = '<img class="prodImage" src="'+data[e][17]+'" alt="'+data[e][1]+'" />';
+    if (data[e][19]) {
+      imageDiv = '<img class="prodImage" src="'+data[e][19]+'" alt="'+data[e][3]+'" />';
     }
 		$("#listProduct").append('<div class="card">'+
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
-              e+" - "+data[e][1] +
+              e+" - "+data[e][3] +
             '</button>'+
           '</h5>'+
         '</div>'+
 
         '<div id="collapse'+e+'" class="collapse imageContainer" aria-labelledby="heading'+e+'" data-parent="#listProduct">'+
           '<div class="card-body">'+
-  	        '<p>Mã đơn hàng:'+data[e][0]+'</p>'+
-            '<p>Giá gốc:'+data[e][3]+' EUR</p>'+
-            '<p>Giá gốc:'+data[e][9]+' VND</p>'+
-            '<p>Giá bán:'+data[e][10]+' VND</p>'+
-            '<p>Số lượng:'+data[e][2]+'</p>'+
-            '<p>Cân nặng:'+data[e][4]+'</p>'+
-            '<p>Lãi xuất/SP:'+data[e][11]+'</p>'+
-            '<p>Hàng tồn:'+data[e][15]+'</p>'+
+  	        '<p>Mã hàng:'+data[e][0]+'</p>'+
+            // '<p>Mã hàng tham chiếu:'+data[e][1]+'</p>'+
+            '<p>Mã đợt hàng:'+data[e][2]+'</p>'+
+            '<p>Giá gốc:'+data[e][5]+' EUR</p>'+
+            '<p>Giá gốc:'+data[e][11]+' VND</p>'+
+            '<p>Giá bán:'+data[e][12]+' VND</p>'+
+            '<p>Số lượng:'+data[e][4]+'</p>'+
+            '<p>Cân nặng:'+data[e][6]+'</p>'+
+            '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
+            '<p>Hàng tồn:'+data[e][17]+'</p>'+
             '<div class="btn editproductelement product_'+e+'" style="border: 1px solid black;margin-left:10px;">Sửa mặt hàng</div>'+
           '</div>'+
           imageDiv+
@@ -113,23 +115,25 @@ function loadProductListHtml(){
     var currentProduct = {
       productIndex : productIndex,
       productCode : data[productIndex][0],
-      productName : data[productIndex][1],
-      productCount : data[productIndex][2],
-      productOriginalCostEur : data[productIndex][3],
-      productWeight : data[productIndex][4],
-      shipInternationalFee : data[productIndex][5],
-      shipItalyFee : data[productIndex][6],
-      shipVietnamFee : data[productIndex][7],
-      otherFee : data[productIndex][8],
-      productEstimateVND : data[productIndex][9],
-      productEstimateSellingVND : data[productIndex][10],
-      profitPerOneProduct : data[productIndex][11],
-      turnover : data[productIndex][12],
-      totalCost : data[productIndex][13],
-      totalProfit : data[productIndex][14],
-      numOfRest : data[productIndex][15],
-      totalPayOfRest : data[productIndex][16],
-      prodImageLink : data[productIndex][17]
+      productRefCode : data[productIndex][1],
+      importCode : data[productIndex][2],
+      productName : data[productIndex][3],
+      productCount : data[productIndex][4],
+      productOriginalCostEur : data[productIndex][5],
+      productWeight : data[productIndex][6],
+      shipInternationalFee : data[productIndex][7],
+      shipItalyFee : data[productIndex][8],
+      shipVietnamFee : data[productIndex][9],
+      otherFee : data[productIndex][10],
+      productEstimateVND : data[productIndex][11],
+      productEstimateSellingVND : data[productIndex][12],
+      profitPerOneProduct : data[productIndex][13],
+      turnover : data[productIndex][14],
+      totalCost : data[productIndex][15],
+      totalProfit : data[productIndex][16],
+      numOfRest : data[productIndex][17],
+      totalPayOfRest : data[productIndex][18],
+      prodImageLink : data[productIndex][19]
     }
 
     localStorage.setItem("currentProduct",JSON.stringify(currentProduct));

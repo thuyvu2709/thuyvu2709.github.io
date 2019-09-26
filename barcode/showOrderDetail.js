@@ -1,14 +1,5 @@
 // addNewProduct.js
 
-// var sheetrange = 'Sheet1!A1:B1000';
-// console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
-
-
-// var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-// var indexColumnOfAllData = 15;
-// var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
-// var dataset = [];
-
 
 currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 

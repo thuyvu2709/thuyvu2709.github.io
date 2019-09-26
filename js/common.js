@@ -1,3 +1,7 @@
+var mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
+var roleSheet = '1mQPua5Rr8sDpYH7zQ37sTgiI2GmyoxMCiH9x78EhwTI';
+var shippingSheet = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+
 function comeBackHomeToAuthorize(){
     $("#loadingSpin").hide();
     console.log("Need to comeBackHomeToAuthorize");
@@ -14,7 +18,7 @@ function comeBackHomeToAuthorize(){
 }
 
 function loadProductList(callback) {
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
   var indexColumnOfAllData = 19;
   var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
@@ -44,7 +48,7 @@ function loadProductList(callback) {
 }
 
 function getLatestOrderCode(callback) {
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
   console.log("getLatestOrderCode");
 
@@ -81,7 +85,7 @@ function getLatestOrderCode(callback) {
 function loadOrderList(callback) {
 
   console.log("loadOrderList");
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
 
   var indexColumnOfAllData = 12;
@@ -112,7 +116,7 @@ function loadReport(callback) {
 
   console.log("loadReport");
   
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
   var indexColumnOfAllData = 2;
   var sheetrange = 'Report!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -142,7 +146,7 @@ function loadOrderListDetail(callback) {
 
   console.log("loadOrderListDetail");
 
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
 
   if(!gapi.client.sheets) {
@@ -151,7 +155,7 @@ function loadOrderListDetail(callback) {
     return;
   }
 
-  var indexColumnOfAllData = 6;
+  var indexColumnOfAllData = 10;
   var sheetrange = 'OrderDetail!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   gapi.client.sheets.spreadsheets.values.get({
@@ -191,9 +195,9 @@ function loadOrderListDetail(callback) {
 // })
 
 function appendOrderDetail(submitData,callback) {
-  var numOfColumn = 11;
+  var numOfColumn = 10;
   var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn);
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
 
   gapi.client.sheets.spreadsheets.values.append({
@@ -219,7 +223,7 @@ function appendOrderDetail(submitData,callback) {
 function appendOrder(submitOrderData,callback) {
   var numOfColumn = 10;
   var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn);
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
   gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
@@ -245,7 +249,7 @@ function appendProduct(dataAppendProduct, callback, callbackError) {
     var numOfColumn = 19;
     var sheetrange = 'Product!A1:'+ String.fromCharCode(65+numOfColumn);
 
-    var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+    var spreadsheetId = mainSheetForProduct;
 
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
@@ -270,7 +274,7 @@ function appendProduct(dataAppendProduct, callback, callbackError) {
 }
 
 function editOrderDetail(dataEditOD, range, callback) {
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
 
   gapi.client.sheets.spreadsheets.values.update({
       spreadsheetId: spreadsheetId,
@@ -295,7 +299,7 @@ function editOrderDetail(dataEditOD, range, callback) {
 
 function editOrder(dataEditOrder,range,callback){
   
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
   // var sheetrange = range;
 
   // console.log(sheetrange);
@@ -324,7 +328,7 @@ function editProduct(dataEditP, range,callback, callbackError) {
   
   console.log("editProduct");
 
-  var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+  var spreadsheetId = mainSheetForProduct;
   // var sheetrange = range;
 
   gapi.client.sheets.spreadsheets.values.update({
@@ -350,7 +354,7 @@ function editProduct(dataEditP, range,callback, callbackError) {
 }
 
 function getRoleList(callback) {
-  var spreadsheetId = '1mQPua5Rr8sDpYH7zQ37sTgiI2GmyoxMCiH9x78EhwTI';
+  var spreadsheetId = roleSheet;
 
   if(!gapi.client.sheets) {
     callback();
@@ -406,7 +410,7 @@ function appendShipping(dataAppendShipping, callback, callbackError) {
     var numOfColumn = 6;
     var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn);
 
-    var spreadsheetId = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+    var spreadsheetId = shippingSheet;
 
     gapi.client.sheets.spreadsheets.values.append({
         spreadsheetId: spreadsheetId,
@@ -434,7 +438,7 @@ function updateShipping(dataUpdateShipping, sheetrange, callback, callbackError)
     // var numOfColumn = 5;
     // var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn);
 
-    var spreadsheetId = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+    var spreadsheetId = shippingSheet;
 
     gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: spreadsheetId,
@@ -459,7 +463,7 @@ function updateShipping(dataUpdateShipping, sheetrange, callback, callbackError)
 }
 
 function getLatestShippingIndex(callback) {
-  var spreadsheetId = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+  var spreadsheetId = shippingSheet;
 
   console.log("getLatestShippingIndex");
 
@@ -487,7 +491,7 @@ function getLatestShippingIndex(callback) {
 }
 
 function getOrderShipping(callback) {
-  var spreadsheetId = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+  var spreadsheetId = shippingSheet;
 
   console.log("getOrderShipping");
 

@@ -9,7 +9,7 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
-  loadProductList(function(){
+  // loadProductList(function(){
     // console.log("1")
     loadOrderList(function(){
           // console.log("2")
@@ -19,7 +19,7 @@ var triggerAfterLoad = function(){
           loadOrderListHtml();
       })
     })
-  })
+  // })
 }
 
 function loadOrderListHtml() {
@@ -114,7 +114,7 @@ function loadOrderListHtml() {
             valueInputOption: "USER_ENTERED",
             resource: {
                 "majorDimension": "ROWS",
-                "values": [["","","","","","","",""]]
+                "values": [["","","","","","","","","","",""]]
             }
           }).then(function(response) {
             
@@ -145,7 +145,7 @@ function loadOrderListHtml() {
       valueInputOption: "USER_ENTERED",
       resource: {
           "majorDimension": "ROWS",
-          "values": [["","","","","","","","","","",""]]
+          "values": [["","","","","","","","","","","","",""]]
       }
     }).then(function(response) {
       
@@ -218,11 +218,14 @@ function loadOrderListHtml() {
       if (orderListDetail[e][0] == orderCode){
         prodListOrder[prodIndex] = {
           productCode : orderListDetail[e][1],
-          productName : orderListDetail[e][2],
-          productCount : orderListDetail[e][3],
-          productEstimateSellingVND : orderListDetail[e][4],
-          turnover : orderListDetail[e][5],
-          orderDetailIndex : e
+          importCode : orderListDetail[e][2],
+          productRefCode : orderListDetail[e][3],
+          productName : orderListDetail[e][4],
+          productCount : orderListDetail[e][5],
+          productEstimateSellingVND : orderListDetail[e][6],
+          turnover : orderListDetail[e][7],
+          available : orderListDetail[e][8],
+          orderDetailIndex : e,
         }
         prodIndex++;
       }

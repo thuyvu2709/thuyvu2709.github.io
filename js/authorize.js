@@ -15,9 +15,6 @@ var SCOPES = "https://www.googleapis.com/auth/spreadsheets "+
 var authorizeButton = document.getElementById('authorize_button');
 // var signoutButton = document.getElementById('signout_button');
 
-var sheetrange = 'Sheet1!A1:B10000';
-var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-
 var dataset = [];
 
 var numOfColumn = 14;
