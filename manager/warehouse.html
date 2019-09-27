@@ -17,63 +17,46 @@
 
   <!-- Theme CSS -->
   <link href="../css/freelancer.css" rel="stylesheet">
+  <link href="../css/listproduct.css" rel="stylesheet">
 
   <script type="text/javascript">
-    var pageName = "othermanage";
+    var pageName = "warehouse";
     var pageRole = "manager";
   </script>
 </head>
 
 <body id="page-top">
 
-  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="/index.html">Xách tay Thuỷ Vũ - Góc Hàng Âu</a>
-      
-    </div>
-  </nav>
+  <!-- Navigation -->
+  <div id="headerInclude"></div>
 
   <header class="minihead">
   </header>
   <!-- Portfolio Section -->
   <section class="page-section portfolio" id="portfolio">
-    <h2 class="text-center">Quản lý thông tin khác</h2>
-    <div id="listOrder">
+    <h2 class="text-center">Quản lý kho hàng</h2>
+    
+    <div class="btn btn-default">
+      Hiển thị: 
+      <select class="mdb-select md-form" id="importFilter">
+        <option value="-1">Toàn bộ</option>
+      </select>
+    </div>
+    <div class="btn btn-default btnNormal addNewProduct"
+        style="float: right">
+        <a href="../barcode/newproduct.html">
+          <span class="fas fa-plus"></span>
+        </a>
+    </div> 
 
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="barcode/neworder.html">Thêm chi phí khác</a>
-            </button>
-          </h5>
-        </div>
-      </div>
+    <input type="text" id="warehouseSearchInput" class="form-control" placeholder="Tìm kiếm" />
 
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="../shipper">Quản lý giao hàng</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="warehouse.html">Quản lý kho hàng</a>
-            </button>
-          </h5>
-        </div>
-      </div>
+    <div id="listSchedule">
 
     </div> 
 
   </section>
-  
+
   <!-- Footer -->
   <div id="footerInclude"></div>
 
@@ -91,16 +74,16 @@
   <!-- Custom scripts for this template -->
   <script src="../js/freelancer.min.js"></script>
 
-  <!-- <script type="text/javascript" src="js/common.js"></script> -->
+  <script type="text/javascript" src="../js/common.js"></script>
 
-  <!-- <script type="text/javascript" src="js/authorize.js"></script> -->
+  <script type="text/javascript" src="../js/authorize.js"></script>
 
-  <!-- <script type="text/javascript" src="js/listOrder.js"></script> -->
+  <script type="text/javascript" src="../js/warehouse.js"></script>
 
-<!--   <script async defer src="https://apis.google.com/js/api.js"
+  <script async defer src="https://apis.google.com/js/api.js"
   onload="this.onload=function(){};handleClientLoad()"
   onreadystatechange="if (this.readyState === 'complete') this.onload()">
-  </script> -->
+  </script>
 
 </body>
 

@@ -1,8 +1,45 @@
 var mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
 var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
-var shippingSheet = '1oPfxrbF1sHAYjCRNZFJsH4L4x7JYLkSuqwnzsEF3mUI';
+var shippingSheet = '1sN3aFKDTAjPJNNSHX2TssCY5S0mwcbmtJe4AyBAMtMY';
 var hostname = window.location.hostname;
 var passDataLocalhost = (hostname == "localhost");
+
+var historyPath = [];
+try {
+  historyPath = JSON.parse(localStorage.getItem("historyPath"));
+} catch(e) {
+  historyPath = [];
+}
+
+saveHistory();
+
+function saveHistory(){
+  var currentHref = window.location.pathname;
+  // console.log(window.location);
+  // console.log(currentHref);
+  console.log(historyPath);
+  
+  if (historyPath[historyPath.length-1] == currentHref) {
+    return;
+  }
+
+  historyPath.push(currentHref);
+  // console.log(historyPath);
+
+  localStorage.setItem("historyPath",JSON.stringify(historyPath));
+}
+function cleanHistory() {
+  // var last = historyPath.pop();
+  localStorage.setItem("historyPath",JSON.stringify([historyPath.pop()]));
+}
+function backPage() {
+  console.log("back");
+  historyPath.pop();
+  var backHref = historyPath.pop();
+  localStorage.setItem("historyPath",JSON.stringify(historyPath));
+
+  window.location = backHref;
+}
 
 function comeBackHomeToAuthorize(){
     $("#loadingSpin").hide();
@@ -600,11 +637,11 @@ function getLatestShippingIndex(callback) {
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  // if(!gapi.client.sheets) {
-  //   callback();
-  //   comeBackHomeToAuthorize();
-  //   return;
-  // }
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
@@ -624,7 +661,7 @@ function getOrderShipping(callback) {
 
   console.log("getOrderShipping");
 
-  var indexColumnOfAllData = 6;
+  var indexColumnOfAllData = 8;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
@@ -646,6 +683,41 @@ function getOrderShipping(callback) {
       dataset = response.result.values;
 
       localStorage.setItem("ordershipping",JSON.stringify(dataset));
+
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
+function getTaskList(callback) {
+  var spreadsheetId = shippingSheet;
+
+  console.log("getTaskList");
+
+  var indexColumnOfAllData = 5;
+  var sheetrange = 'Task!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+
+      localStorage.setItem("tasklist",JSON.stringify(dataset));
 
 
       callback(dataset);

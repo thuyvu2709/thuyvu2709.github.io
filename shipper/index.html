@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Quản lý hàng hoá</title>
+  <title>Quản lý giao hàng</title>
 
   <!-- Custom fonts for this theme -->
   <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +38,20 @@
     <div class="container">
 
       <!-- Portfolio Section Heading -->
-      <h2 class="text-center">Quản lý giao hàng</h2>
+      <h2 class="text-center maintitle">Quản lý giao hàng</h2>
+
+      <div class="btn btn-default">
+        Hiển thị
+        <select class="mdb-select md-form orderFilter">
+          <option value="PROCESSING">Đơn hàng đang xử lý</option>
+          <option value="COMPLETED">Đơn hàng đã hoàn thành</option>
+          <option value="ALL">Xem toàn bộ đơn hàng</option>
+          <option value="TASK">Nhiệm vụ</option>
+          <option value="REPORT">Báo cáo</option>
+
+        </select>
+      </div>
+
       <div id="listShippingOrder">
       </div>
     </div>
@@ -68,7 +81,6 @@
   <script src="../js/freelancer.min.js"></script>
 
   <script type="text/javascript" src="../js/common.js"></script>
-
 
   <script type="text/javascript" src="../js/authorize.js"></script>
 

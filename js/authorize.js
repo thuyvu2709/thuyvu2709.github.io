@@ -39,9 +39,9 @@ if (userRole) {
 
 $("#footerInclude").load("../common/footer.html");
 
-// if (pageName == "index") {
-//     $("#footerInclude").load("common/footer.html");
-// }
+if (pageName == userRole) {
+    cleanHistory();
+}
 
 
 function appendPre(log) {
@@ -129,7 +129,6 @@ function updateSigninStatus(isSignedIn) {
 
     console.log("updateSigninStatus:"+isSignedIn);
     if (isSignedIn) {
-        // routing();
         checkRole();
     } else {
         console.log("Problem with sign in");
@@ -203,7 +202,6 @@ function routing(page) {
         // alert("move to page:"+page)
         window.location = "/"+page;
     } else {
-        console.log("Work with sign in");
         if (userRole == "manager") {
             updateTitle();
         }

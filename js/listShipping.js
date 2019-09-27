@@ -1,28 +1,46 @@
 var lsOrder;
+var lsTask;
 
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
   // var lsOrderset = JSON.parse(localStorage.getItem("ordershipping"));
-
-  // console.log(lsOrderset);
+  // var lsTaskset =  JSON.parse(localStorage.getItem("tasklist"));
+  
   getOrderShipping(function(lsOrderset){
       $("#loadingSpin").hide();
-      console.log("Gooo");
       lsOrder = lsOrderset;
       loadOrderShippingListHtml(lsOrder);
-  })
+      getTaskList(function(lsTaskset){
+        lsTask = lsTaskset;
+      })
+  });
 }
 
-        // $(document).ready(function () {
-      
-      //DatePicker Example
-      // $('#datetimepicker').datetimepicker();
+// $(".text-center").click(function(){
+//   getOrderShipping(function(lsOrderset){
+//       lsOrder = lsOrderset;
+//       loadOrderShippingListHtml(lsOrder);
+//       getTaskList(function(lsTaskset){
+//         lsTask = lsTaskset;
+//       })
+//   });
+// })
+
+// $(document).ready(function () {
+
+//DatePicker Example
+// $('#datetimepicker').datetimepicker();
 // });
 
+var mode = "PROCESSING";
 
 function loadOrderShippingListHtml(lsOrder) {
+
+  $("#listShippingOrder").empty();
+  // $(".maintitle").html("Quản lý giao hàng");
+
 
   var userRole = JSON.parse(localStorage.getItem("userRole"));
 
@@ -30,11 +48,19 @@ function loadOrderShippingListHtml(lsOrder) {
     if (e == 0) {
       continue;
     }
-    if (lsOrder[e][4] == "COMPLETED") {
-      continue;
-    }
+
     if (!lsOrder[e][0]) {
       continue;
+    }
+
+    if (mode == "PROCESSING") {
+      if (lsOrder[e][4] == "COMPLETED") {
+        continue;
+      }
+    } else if (mode == "COMPLETED") {
+      if (lsOrder[e][4] != "COMPLETED") {
+        continue;
+      }
     }
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -56,6 +82,11 @@ function loadOrderShippingListHtml(lsOrder) {
     '   </div>'+
     '<hr/>';
 
+    var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>';
+
+    if (lsOrder[e][6]) {
+      completeButton = '<div class="btn btn-default btnNormal" style="margin:10px 10px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
+    }
 
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
@@ -80,7 +111,7 @@ function loadOrderShippingListHtml(lsOrder) {
               '</div>'+
               '<br/>'+
               '<div class="btn btn-default btnNormal detail order_'+e+'" style="margin-top:10px;">Xem chi tiết</div>'+
-              '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>'+
+              completeButton +
               deleteButton +
             '</div>'+
           '</div>'+
@@ -121,7 +152,7 @@ function deleteShipRequest() {
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
   var dataUpdateShipping = [
-    ["","","","","",""]
+    ["","","","","","",""]
   ];
   var sheetrange = 'Shipping!A'+actualOrderIndex+':F'+actualOrderIndex;
 
@@ -144,13 +175,20 @@ function showDetail(){
 function shipComplete(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
-  var dataUpdateShipping = [
-    ["COMPLETED"]
-  ];
-  var sheetrange = 'Shipping!E'+actualOrderIndex+':E'+actualOrderIndex;
+
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+
+  var sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
   var emailId = lsOrder[orderIndex][5];
   console.log("Reply : email:"+emailId);
+
+  var dataUpdateShipping = [
+    ["COMPLETED", emailId, dateTime]
+  ];
 
   $("#loadingSpin").show();
 
@@ -184,3 +222,121 @@ function shipComplete(){
     console.log("Something wrong");
   })
 }
+
+function shippingReport(){
+  $("#listShippingOrder").empty();
+  $("#listShippingOrder").html("Báo cáo giao hàng");
+}
+
+function showTask(){
+  $("#listShippingOrder").empty();
+  $(".maintitle").html("Quản lý nhiệm vụ");
+
+  var userRole = JSON.parse(localStorage.getItem("userRole"));
+
+  for(e in lsTask) {
+    if (e == 0) {
+      continue;
+    }
+
+    if (!lsTask[e][0]) {
+      continue;
+    }
+
+    if (lsTask[e][3]) {
+      continue;
+    }
+
+    var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal delete order_'+e+'" style="margin:10px 0 0;">Xoá</div>' : "";
+
+    var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>';
+
+    $("#listShippingOrder").append(
+        // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
+        '<div class="card cardElement_'+e+'">'+
+          '<div class="card-header" id="heading_"'+e+'>'+
+            '<h5 class="mb-0">'+
+              '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+                lsTask[e][0]+' | '+lsTask[e][1] +
+              '</button>'+
+            '</h5>'+
+          '</div>'+
+
+          '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listShippingOrder">'+
+            '<div class="card-body">'+
+              '<div class="task content">'+
+                // '<textarea class="field-textarea form-control taskContent_'+e+'" readonly>'+
+                  lsTask[e][2] +
+                // '</textarea>'+
+              '</div>'+
+              '<hr/>' +
+              completeButton +
+              deleteButton +
+            '</div>'+
+          '</div>'+
+        '</div>'
+      )
+      // $('.taskContent_'+e).height( $('.taskContent_'+e)[0].scrollHeight );
+      // console.log($('.taskContent_'+e)[0].scrollHeight)
+  }
+
+  $(".complete").click(taskComplete)
+  $(".delete").click(deleteTask);
+}
+
+function deleteTask() {
+  var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualTaskIndex = parseInt(orderIndex) + 1;
+  var dataUpdateTask = [
+    ["","","","",""]
+  ];
+  var sheetrange = 'Task!A'+actualOrderIndex+':E'+actualOrderIndex;
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+     $("#loadingSpin").hide();
+     $(".cardElement_"+orderIndex).remove();
+  })
+}
+
+function taskComplete(){
+  var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualTaskIndex = parseInt(orderIndex) + 1;
+
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+
+  var sheetrange = 'Task!D'+actualTaskIndex+':E'+actualTaskIndex;
+
+  var dataUpdateTask = [
+    ["COMPLETED", dateTime]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateTask, sheetrange, function(){
+    
+    $(".cardElement_"+orderIndex).remove();
+    $("#loadingSpin").hide();
+
+  },function(){
+    console.log("Something wrong");
+  })
+}
+
+
+$(".orderFilter").change(function(){
+  console.log("orderFilter:");;
+  mode = document.getElementsByClassName($(this).attr("class"))[0].value;
+  if (mode == "PROCESSING" || mode == "COMPLETED" || mode == "ALL") {
+    loadOrderShippingListHtml(lsOrder);
+  } else if (mode == "TASK") {
+    showTask();
+  } else if (mode == "REPORT") {
+    $(".maintitle").html("Báo cáo");
+    shippingReport();
+  }
+})
