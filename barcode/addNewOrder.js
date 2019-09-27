@@ -401,11 +401,12 @@ function addDetailOrder() {
 		prodListOrder[i].productCount = $(".productCount_"+i).val();
 		prodListOrder[i].productEstimateSellingVND = $(".productEstimateSellingVND_"+i).val();
 		prodListOrder[i].turnover = $(".turnover_"+i).html();
+		prodListOrder[i].importCode = document.getElementsByClassName("importSchedule_"+i)[0].value;
 
 		submitData.push([
 			orderCode,
 			$(".productCode_"+i).val(),
-			"0",
+			document.getElementsByClassName("importSchedule_"+i)[0].value,
 			"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
 			$(".productName_"+i).val(),
 			$(".productCount_"+i).val(),
