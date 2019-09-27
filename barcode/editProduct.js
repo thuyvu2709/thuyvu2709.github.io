@@ -34,6 +34,8 @@ $("#prodImageLink").val(currentProduct.prodImageLink);
 
 $("#importSchedule").html("<option value='"+currentProduct.importCode+"'>"+currentProduct.importCode+"</option>")
 
+var mode = "edit";//"duplicate"
+
 var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
@@ -154,19 +156,36 @@ function editProductFn(){
     
 	$("#loadingSpin").show();
 
-    editProduct(dataEditP, sheetrange,function(){
-		$("#loadingSpin").hide();
+	if (mode == "edit") {
+	    editProduct(dataEditP, sheetrange,function(){
+			$("#loadingSpin").hide();
 
-		localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
+			localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
 
-	    $("#modelContent").html("Đã sửa mặt hàng");
-	    $('#myModal').modal('toggle');
-    }, function(){
-		$("#loadingSpin").hide();
+		    $("#modelContent").html("Đã sửa mặt hàng");
+		    $('#myModal').modal('toggle');
+	    }, function(){
+			$("#loadingSpin").hide();
 
-	    $("#modelContent").html("Có lỗi, không thể lưu");
-	    $('#myModal').modal('toggle');
-    })
+		    $("#modelContent").html("Có lỗi, không thể lưu");
+		    $('#myModal').modal('toggle');
+	    })
+	} else if (mode == "duplicate"){
+		appendProduct(dataEditP, function(){
+			$("#loadingSpin").hide();
+
+			$(".btnModal").click(function(){
+				location.reload();
+			})
+			$("#modelContent").html("Đã lưu mặt hàng");
+			$('#myModal').modal('toggle');
+		}, function(){
+			$("#loadingSpin").hide();
+
+			$("#modelContent").html("Có lỗi, không thể lưu");
+			$('#myModal').modal('toggle');
+		}); 
+	}
 
 	// gapi.client.sheets.spreadsheets.values.update({
  //        spreadsheetId: spreadsheetId,
@@ -266,6 +285,10 @@ $( "input" ).keyup(function() {
 
 });
 
+$("#btnDuplicate").click(function(){
+	mode = "duplicate";
+	$("#pageMode").html("Thêm mặt hàng");
+})
 
 $('#btnAddImage').click(function() {
 	// $("#picture").css.visibility = "visible";
