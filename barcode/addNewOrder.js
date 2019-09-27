@@ -172,27 +172,32 @@ function searchForm(){
       '</div>')
 	}
 
-	$("#myModal2 .searchProductChoose").click(function(){
-		var lsClass = $(this).attr("class").split(" ");
+	$("#myModal2 .searchProductChoose").click(searchProductChooseInForm);
 
-		var index = lsClass.pop().split("_").pop();
-		var indexInStore = lsClass.pop().split("_").pop();
-		// console.log(lsClass);
-		console.log("searchProductChoose:"+index+" "+indexInStore);
-
-		var productIndex = parseInt(index);
-		// var productCode = $(this).html().split(" ")[0];
-
-		// console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
-
-		// $(".productCode_"+index).val(productCode);
-
-		triggerNextProcessNewOrder(productIndex, "", indexInStore);
-		$('#myModal2').modal('hide');
-	})
-
+	var filterImportInSearch = "";
 	
-	$("#myModal2 .modal-title").html('<input type="text" class="form-control searchInputProduct_'+index+'" placeholder="Tìm kiếm">')
+	var lsImportCodeSearchProduct = "";
+	for (e in importSLData) {
+		if (e ==0 ) continue;
+		lsImportCodeSearchProduct += ("<option value='"+e+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+	}
+
+	$("#myModal2 .modal-title").html(
+		'<input type="text" class="form-control searchInputProdText searchInputProduct_'+index+'" placeholder="Tìm kiếm">'+
+		// '<div class="btn btn-default">'+
+		'<select class="mdb-select md-form importSearchProductFilter" style="width:100%">'+
+			'<option value="-1" selected>Toàn bộ đợt hàng</option>'+
+			lsImportCodeSearchProduct +
+		'</select>'
+    	// '</div>'
+	)
+
+	$("#myModal2 .importSearchProductFilter").change(function(){
+		$("#myModal2 .searchInputProdText").val("");
+		var index = $("#myModal2 .searchInputProdText").attr("class").split(" ").pop().split("_").pop();
+
+		filterInSearchForm(index,"");
+	})
 
 	$("#myModal2 .modal-body").css('max-height','300px');
 	$("#myModal2 .modal-body").css('overflow','scroll');
@@ -203,6 +208,20 @@ function searchForm(){
 		filterInSearchForm(index,$(this).val());
 	})
 
+}
+
+function searchProductChooseInForm(){
+	var lsClass = $(this).attr("class").split(" ");
+
+	var index = lsClass.pop().split("_").pop();
+	var indexInStore = lsClass.pop().split("_").pop();
+	// console.log(lsClass);
+	console.log("searchProductChoose:"+index+" "+indexInStore);
+
+	var productIndex = parseInt(index);
+
+	triggerNextProcessNewOrder(productIndex, "", indexInStore);
+	$('#myModal2').modal('hide');
 }
 
 function filterInSearchForm(index,searchText){
@@ -218,6 +237,12 @@ function filterInSearchForm(index,searchText){
 				continue;
 			}
 		}
+		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
+		if (importCode != -1) {
+			if (productList[e][2] != importCode) {
+				continue;
+			}
+		}
 		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
@@ -229,24 +254,7 @@ function filterInSearchForm(index,searchText){
       '</div>')
 	}
 
-	$("#myModal2 .searchProductChoose").click(function(){
-		var lsClass = $(this).attr("class").split(" ");
-
-		var index = lsClass.pop().split("_").pop();
-		var indexInStore = lsClass.pop().split("_").pop();
-		// console.log(lsClass);
-		console.log("searchProductChoose:"+index+" "+indexInStore);
-
-		var productIndex = parseInt(index);
-		// var productCode = $(this).html().split(" ")[0];
-
-		// console.log("this is productCode:"+productCode+" index:"+index+" "+indexInStore);
-
-		// $(".productCode_"+index).val(productCode);
-
-		triggerNextProcessNewOrder(productIndex, "", indexInStore);
-		$('#myModal2').modal('hide');
-	})
+	$("#myModal2 .searchProductChoose").click(searchProductChooseInForm);
 }
 
 function triggerNextProcessNewOrder(productIndex, productCode, productIndexInStore){
