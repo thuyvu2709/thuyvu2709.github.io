@@ -37,11 +37,11 @@ function loadOrderListHtml() {
     }
 
     if (status == 'PROCESSING') {
-      if (data[e][8] == "PAID" && data[e][9] == "SHIPPED") {
+      if (data[e][8] == "PAID" && data[e][11]) {
         continue;
       }
     } if (status == 'COMPLETE') {
-      if (!(data[e][8] == "PAID" && data[e][9] == "SHIPPED")) {
+      if (!(data[e][8] == "PAID" && data[e][11])) {
         continue;
       }
     }
