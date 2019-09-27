@@ -47,17 +47,18 @@ function loadOrderListHtml() {
     }
 
     var optionPaid;
+    var iconPaid = "";
     if (data[e][8] == "PAID") {
       optionPaid = '<option value="paid">Đã thanh toán</option>';
+      iconPaid = ' | <i class="fas fa-dollar-sign"></i>';
     } else {
       optionPaid = '<option value="unpaid">Đã đặt hàng</option><option value="paid">Đã thanh toán</option>'
     }
 
     var optionShip;
-    if (data[e][9] == "SHIPPED") {
-      optionShip = '<option value="shipped">Đã giao hàng</option>';
-    } else {
-      optionShip = '<option value="unshipped">Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
+    var iconShip = "";
+    if (data[e][11]) {
+      iconShip = ' | <i class="fas fa-motorcycle"></i>';
     }
 
     var searchText = $("#orderSearchInput").val();
@@ -68,13 +69,21 @@ function loadOrderListHtml() {
       }
     }
 
+    var orderReady = "";
+    if (data[e][9] == 1) {
+      orderReady = "borderMustard"
+    }
+
   	$("#listOrder").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
-            '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e][0]+' | '+data[e][2]+' | '+data[e][5] +
+            '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+              data[e][0]+' | '+data[e][2] +
+              // ' | '+data[e][5] + 
+              iconShip +
+              iconPaid +
             '</button>'+
           '</h5>'+
         '</div>'+
@@ -83,9 +92,6 @@ function loadOrderListHtml() {
           '<div class="card-body">'+
             '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
-            '</select>'+
-            '<select class="mdb-select md-form selectShip selectShipStatus_'+e+'">'+
-              optionShip +
             '</select>'+
             // '<label class="mdb-main-label">Đã đặt hàng</label>'+
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+

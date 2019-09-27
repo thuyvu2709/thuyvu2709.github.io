@@ -401,13 +401,16 @@ function addDetailOrder() {
 		prodListOrder[i].productCount = $(".productCount_"+i).val();
 		prodListOrder[i].productEstimateSellingVND = $(".productEstimateSellingVND_"+i).val();
 		prodListOrder[i].turnover = $(".turnover_"+i).html();
-		prodListOrder[i].importCode = document.getElementsByClassName("importSchedule_"+i)[0].value;
+
+		var productIndexInStore = document.getElementsByClassName("importSchedule_"+i)[0].value;		
+		productIndexInStore = parseInt(productIndexInStore);
+		prodListOrder[i].importCode = productList[productIndexInStore][2];
 
 		submitData.push([
 			orderCode,
 			$(".productCode_"+i).val(),
-			document.getElementsByClassName("importSchedule_"+i)[0].value,
-			"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
+			prodListOrder[i].importCode,
+			'=CONCATENATE(INDIRECT(ADDRESS(ROW(),2)),"_",INDIRECT(ADDRESS(ROW(),3)))',
 			$(".productName_"+i).val(),
 			$(".productCount_"+i).val(),
 			$(".productEstimateSellingVND_"+i).val(),
@@ -478,11 +481,11 @@ $("#addNewOrder").click(function(){
                 customerName,
                 customerAddress,
                 "'"+customerPhone,
-                "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!F:F)",
+                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
 				shippingCost,
 				"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
                 "ORDERED",
-                "",
+                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode
                 ]
             ]

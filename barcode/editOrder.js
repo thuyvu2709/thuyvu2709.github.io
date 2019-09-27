@@ -491,7 +491,7 @@ function inputKeyupfunction() {
 
 function addDetailOrder() {
 	console.log("addDetailOrder");
-	var numOfColumn = 7;
+	var numOfColumn = 10;
 	// var sheetrange = 'Test2!A1:'+ String.fromCharCode(65+numOfColumn);
 
     //for append
@@ -527,14 +527,17 @@ function addDetailOrder() {
 		prodListOrder[i].productCount = $(".productCount_"+i).val();
 		prodListOrder[i].productEstimateSellingVND = $(".productEstimateSellingVND_"+i).val();
 		prodListOrder[i].turnover = $(".turnover_"+i).html();
-		prodListOrder[i].importCode = document.getElementsByClassName("importSchedule_"+i)[0].value;
+
+		var productIndexInStore = document.getElementsByClassName("importSchedule_"+i)[0].value;		
+		productIndexInStore = parseInt(productIndexInStore);
+		prodListOrder[i].importCode = productList[productIndexInStore][2];
 
 		if (isAppend){
 			submitDataAppend.push([
 				orderCode,
 				$(".productCode_"+i).val(),
-				document.getElementsByClassName("importSchedule_"+i)[0].value,
-				"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
+				prodListOrder[i].importCode,
+				'=CONCATENATE(INDIRECT(ADDRESS(ROW(),2)),"_",INDIRECT(ADDRESS(ROW(),3)))',
 				$(".productName_"+i).val(),
 				$(".productCount_"+i).val(),
 				$(".productEstimateSellingVND_"+i).val(),
@@ -547,7 +550,7 @@ function addDetailOrder() {
 			submitDataEdit.push([
 				orderCode,
 				$(".productCode_"+i).val(),
-				document.getElementsByClassName("importSchedule_"+i)[0].value,
+				prodListOrder[i].importCode,
 				"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
 				$(".productName_"+i).val(),
 				$(".productCount_"+i).val(),
@@ -631,44 +634,8 @@ function addDetailOrder() {
 		}
 	}
 
-	// var fDelete = function (){
-	// 	gapi.client.sheets.spreadsheets.values.clear({
-	//         spreadsheetId: spreadsheetId,
-	// 		range : "Test!A1:E1"
-	//     }).then(function(response) {
-	//         var result = response.result;
-	//     	console.log(`${result.updatedCells} cells updated.`);
-	// 		// finishOrder();
-	//         // addDetailOrder();
-	//         fEdit();
-
-	//     }, function(response) {
-	//         appendPre('Error: ' + response.result.error.message);
-	//     });
-	// }
 
 	if (submitDataAppend.length > 0){
-		// var numOfColumn = 6;
-		// var sheetrange = sheetOrderDetail+'!A1:'+ String.fromCharCode(65+numOfColumn);
-
-		// gapi.client.sheets.spreadsheets.values.append({
-	 //        spreadsheetId: spreadsheetId,
-	 //        range: sheetrange,
-	 //        valueInputOption: "USER_ENTERED",
-	 //        resource: {
-	 //            "majorDimension": "ROWS",
-	 //            "values": submitDataAppend
-	 //        }
-	 //    }).then(function(response) {
-	 //        var result = response.result;
-	 //    	console.log(`${result.updatedCells} cells updated.`);
-		// 	// finishOrder();
-	 //        // addDetailOrder();
-	 //        fEdit();
-
-	 //    }, function(response) {
-	 //        appendPre('Error: ' + response.result.error.message);
-	 //    });
 
 	 	appendOrderDetail(submitDataAppend,function(){
 	 		fEdit();
@@ -746,11 +713,11 @@ $("#editOrder").click(function(){
                 customerName,
                 customerAddress,
                 "'"+customerPhone,
-                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!F:F)",
+                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
 				shippingCost,
 				"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
 				paymentStatus,
-				shippingStatus,
+				"=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode
                 ]
             ];
