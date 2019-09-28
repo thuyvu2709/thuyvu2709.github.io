@@ -45,6 +45,8 @@ function loadOrderShippingListHtml(lsOrder) {
 
 
   var userRole = JSON.parse(localStorage.getItem("userRole"));
+  
+  totalShippingCost = 0
 
   for(e in lsOrder) {
     if (e == 0) {
