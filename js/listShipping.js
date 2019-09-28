@@ -304,7 +304,7 @@ function deleteTask() {
 
   $("#loadingSpin").show();
 
-  updateShipping(dataUpdateShipping, sheetrange, function(){
+  updateShipping(dataUpdateTask, sheetrange, function(){
      $("#loadingSpin").hide();
      $(".cardElement_"+taskIndex).remove();
   })
