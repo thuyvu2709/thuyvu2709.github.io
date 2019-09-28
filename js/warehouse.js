@@ -1,32 +1,27 @@
 
-var url = new URL(window.location.href);
-var status = "PROCESSING";
+var warehouseData;
+// var triggerAfterLoad = function(){
 
-var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
-var sheetOrder = "Order";
+//   $("#loadingSpin").show();
 
-var triggerAfterLoad = function(){
+//   loadWarehouse(function(){
+//     $("#loadingSpin").hide();
+//     console.log("Gooo");
+    loadWarehouseHtml();
+//   })
+// }
 
-  $("#loadingSpin").show();
+$(".text-center").click(function(){
+  loadWarehouse(function(){
+    console.log("Gooo");
+    loadWarehouseHtml();
+  })
+})
 
-  // loadProductList(function(){
-    // console.log("1")
-    loadOrderList(function(){
-          // console.log("2")
-      loadOrderListDetail(function(){
-          $("#loadingSpin").hide();
-          console.log("Gooo");
-          loadOrderListHtml();
-      })
-    })
-  // })
-}
-
-function loadOrderListHtml() {
-  data = JSON.parse(localStorage.getItem("orderList"));
-  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
-
-  $("#listOrder").empty();
+function loadWarehouseHtml() {
+  data = JSON.parse(localStorage.getItem("warehouse"));
+  warehouseData = data;
+  $("#listSchedule").empty();
   // console.log(data);
   for(e in data) {
     if (e == 0) {
@@ -36,288 +31,95 @@ function loadOrderListHtml() {
       continue;
     }
 
-    if (status == 'PROCESSING') {
-      if (data[e][8] == "PAID" && data[e][11]) {
-        continue;
-      }
-    } if (status == 'COMPLETE') {
-      if (!(data[e][8] == "PAID" && data[e][11])) {
-        continue;
-      }
-    }
-
-    var optionPaid;
-    var iconPaid = "";
-    if (data[e][8] == "PAID") {
-      optionPaid = '<option value="paid">Đã thanh toán</option>';
-      iconPaid = ' | <i class="fas fa-dollar-sign"></i>';
+    var scheduleStatus = data[e][2];
+    var cardBody = "";
+    if (scheduleStatus == 0) {
+      cardBody = '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div>';
     } else {
-      optionPaid = '<option value="unpaid">Đã đặt hàng</option><option value="paid">Đã thanh toán</option>'
+      cardBody = '<div class="btn btn-default btnNormal" >Hàng tồn:'+data[e][4]+'</div>';      
     }
-
-    var optionShip;
-    var iconShip = "";
-    if (data[e][11]) {
-      iconShip = ' | <i class="fas fa-motorcycle"></i>';
-    }
-
-    var searchText = $("#orderSearchInput").val();
-    var titleString = data[e][0]+' | '+data[e][2]+' | '+data[e][5];
-    if (searchText) {
-      if (!titleString.toUpperCase().includes(searchText.toUpperCase())){
-        continue;
-      }
-    }
-
-    var orderReady = "";
-    if (data[e][9] == 1) {
-      orderReady = "borderMustard"
-    }
-
-  	$("#listOrder").append(
+  	$("#listSchedule").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
-            '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e][0]+' | '+data[e][2] +
-              // ' | '+data[e][5] + 
-              iconShip +
-              iconPaid +
+            '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+              data[e][0]+' | '+data[e][1] +
             '</button>'+
           '</h5>'+
         '</div>'+
 
-        '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listOrder">'+
+        '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listSchedule">'+
           '<div class="card-body">'+
-            '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
-              optionPaid +
-            '</select>'+
-            // '<label class="mdb-main-label">Đã đặt hàng</label>'+
-            // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
-            '<div class="btn orderelement order_'+e+'" style="border: 1px solid black;margin-left:10px;">Chi tiết</div>'+
-            '<div class="btn deleteelement order_'+e+'" style="border: 1px solid black;margin-left:10px;">Xoá đơn hàng</div>'+
+            cardBody +
+            '<hr/>'+
+            '<div class="btn btn-default btnNormal editWH_'+e+'" >Sửa</div>'+
           '</div>'+
         '</div>'+
       '</div>'
       )
+
+    $(".checkImport_"+e).click(requestToCheckProducts);
+    $(".editWH_"+e).click(editWarehouse);
   }
-
-
-
-  function removeOrderDetail(orderCode, callback){
-    var numOfColumn = 5;
-    // console.log("length:"+orderListDetail.length);
-    var scanOrderDetail = function (index) {
-      if (index < orderListDetail.length) {
-        // console.log(orderListDetail[index][0] + " "+orderCode);
-        if (orderListDetail[index][0] == orderCode) {
-          console.log(orderListDetail[index][0]+" "+index+" <>")
-          var realIndex = index + 1;
-          gapi.client.sheets.spreadsheets.values.update({
-            spreadsheetId: spreadsheetId,
-            range : "OrderDetail!A"+realIndex+":F"+realIndex,
-            valueInputOption: "USER_ENTERED",
-            resource: {
-                "majorDimension": "ROWS",
-                "values": [["","","","","","","","","","",""]]
-            }
-          }).then(function(response) {
-            
-            var result = response.result;
-            console.log(`${result.updatedCells} cells updated.`);
-            
-            scanOrderDetail(index+1);
-
-          }, function(response) {
-            appendPre('Error: ' + response.result.error.message);
-          });
-        } else {
-          scanOrderDetail(index+1);
-        }
-      } else {
-        callback();
-        return;
-      }
-    }
-    scanOrderDetail(0);
-  }
-
-  function removeOrder(orderIndex, callback) {
-
-    gapi.client.sheets.spreadsheets.values.update({
-      spreadsheetId: spreadsheetId,
-      range : "Order!A"+orderIndex+":M"+orderIndex,
-      valueInputOption: "USER_ENTERED",
-      resource: {
-          "majorDimension": "ROWS",
-          "values": [["","","","","","","","","","","","",""]]
-      }
-    }).then(function(response) {
-      
-      var result = response.result;
-      console.log(`${result.updatedCells} cells updated.`);
-      
-      callback();
-
-    }, function(response) {
-      appendPre('Error: ' + response.result.error.message);
-    });
-
-    
-  }
-
-  $(".deleteelement").click(function(){
-    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-    console.log("delete:"+orderIndex);
-
-    var deleteTrigger = function() {
-      $("#loadingSpin").show();
-
-      // $(".btnOrder_"+orderIndex).prop('disabled', true);
-      // $("#collapse"+orderIndex).collapse();
-      orderIndex = parseInt(orderIndex);
-      if (orderIndex) {
-        var orderCode = data[orderIndex][0];
-        console.log("delete orderCode:"+orderCode);
-
-        removeOrderDetail(orderCode,function(){
-            removeOrder(orderIndex+1,function(){
-              $(".cardElement_"+orderIndex).remove();
-              $("#loadingSpin").hide();
-            })
-        })
-      }
-    }
-
-    $("#modelContent").html("Bạn có chắc chắn muốn xoá không");
-    $("#modalYes").click(function(){
-      deleteTrigger();
-    })
-    $('#myModal').modal('toggle');
-  })
-
-  $(".orderelement").click(function(){
-    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-    // console.log($(this));
-    var orderCode = data[orderIndex][0];
-    var currentOrder = {
-      orderCode : orderCode,
-      orderDate : data[orderIndex][1],
-      customerName : data[orderIndex][2],
-      customerAddress : data[orderIndex][3],
-      customerPhone : data[orderIndex][4],
-      totalPay : data[orderIndex][5],
-      shippingCost : data[orderIndex][6],
-      totalPayIncludeShip : data[orderIndex][7],
-      paymentStatus : data[orderIndex][8],
-      shippingStatus : data[orderIndex][9],
-      orderNode : data[orderIndex][10],
-      shipIndex : data[orderIndex][11],
-      emailId : data[orderIndex][12],
-      orderIndex : orderIndex
-    }
-
-    var prodListOrder = {};
-    var prodIndex = 0;
-    for (e in orderListDetail) {
-      if (orderListDetail[e][0] == orderCode){
-        prodListOrder[prodIndex] = {
-          productCode : orderListDetail[e][1],
-          importCode : orderListDetail[e][2],
-          productRefCode : orderListDetail[e][3],
-          productName : orderListDetail[e][4],
-          productCount : orderListDetail[e][5],
-          productEstimateSellingVND : orderListDetail[e][6],
-          turnover : orderListDetail[e][7],
-          available : orderListDetail[e][8],
-          orderDetailIndex : e,
-        }
-        prodIndex++;
-      }
-    }
-
-    currentOrder.prodListOrder = prodListOrder;
-
-    localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
-
-    window.location = "../barcode/showorder.html";
-  })
-
-
-  $(".orderelementdetail").click(function(){
-    
-  })
-
-  $(".selectPayment").change(function(){
-    console.log("selectPayment:");;
-    var line = $(this).attr("class").split(" ").pop().split("_").pop();
-
-    console.log("selectPayment:"+$(this).attr("class").split(" ").pop().split("_").pop())
-    console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
-    var value = document.getElementsByClassName($(this).attr("class"))[0].value;
-    
-    line = parseInt(line) + 1;
-
-    var column = 8; //for ship
-    $("#loadingSpin").show();
-    updateOrderStatus(line,column,value.toUpperCase(), function(){
-      $("#loadingSpin").hide();
-    });
-  })
-
-
-  $(".selectShip").change(function(){
-    var line = $(this).attr("class").split(" ").pop().split("_").pop();
-
-    console.log("selectShip:"+$(this).attr("class").split(" ").pop().split("_").pop())
-    console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
-    var value = document.getElementsByClassName($(this).attr("class"))[0].value;
-    
-    line = parseInt(line) + 1;
-
-    var column = 9; //for ship
-    $("#loadingSpin").show();
-    updateOrderStatus(line,column,value.toUpperCase(), function(){
-      $("#loadingSpin").hide();
-    });
-  })
-
-  function updateOrderStatus(line, column, value, callback) {
-    var sheetrange = sheetOrder+'!'+String.fromCharCode(65+column) + line+":"+String.fromCharCode(65+column) + line;
-    console.log(sheetrange);
-    gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: spreadsheetId,
-        range: sheetrange,
-        valueInputOption: "USER_ENTERED",
-        resource: {
-            "majorDimension": "ROWS",
-            "values": [
-                [
-                  value
-                ]
-            ]
-        }
-    }).then(function(response) {
-        var result = response.result;
-        callback();
-    }, function(response) {
-        appendPre('Error: ' + response.result.error.message);
-    });
-  }
-
 };
 
+function editWarehouse() {
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var realIndex = parseInt(importIndex) - 1;
+  var currentImport = {
+    importIndex : realIndex,
+    importCode : warehouseData[importIndex][0],
+    importName : warehouseData[importIndex][1],
+    importStatus : warehouseData[importIndex][2],
+    importShippingFee : warehouseData[importIndex][3]
+  }
 
-$(".orderFilter").change(function(){
-  console.log("orderFilter:");;
-  status = document.getElementsByClassName($(this).attr("class"))[0].value;
-  loadOrderListHtml();
-})
+  localStorage.setItem("currentImport",JSON.stringify(currentImport));
+  window.location = "editImportSchedule.html";
+}
+function requestToCheckProducts(){
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  importIndex = parseInt(importIndex);
+  var importCode = warehouseData[importIndex][0];
+  console.log(importCode);
+  var title = "Kiểm tra "+warehouseData[importIndex][1]
+  $("#loadingSpin").show();
 
+  var content = "<hr/>";
+  loadProductList(function(productList){
+    // var productList = JSON.parse(localStorage.getItem("productList"));
+    console.log("loadProductList");
+    for (e in productList) {
+      if (productList[e][2] == importCode) {
+        content += productList[e][3]+" : "+productList[e][4] + "<br/>";
+      }
+    }
+    content += "<hr/>"
 
-$("#orderSearchInput").keyup(function(){
-  var searchText = $(this).val();
-  console.log("search:"+searchText);
-  loadOrderListHtml();
-});
+    getLatestTaskCode(function(taskCode){
+      console.log("getLatestTaskCode");
+      var submitTaskData = [
+        [taskCode, title, content, "", ""]
+      ]
+      appendTask(submitTaskData, function(){
+        console.log("appendTask");
+
+        var dataEditWarehouse = [
+          [1]
+        ]
+        var actualIndexInSheet = importIndex +1;
+        var range = "Warehouse!C"+actualIndexInSheet+":C"+actualIndexInSheet;
+        
+        editWarehouse(dataEditWarehouse, range, function(){
+          
+          console.log("editWarehouse");
+          $("#loadingSpin").hide();
+
+        })
+
+      })
+    })
+
+  })
+}

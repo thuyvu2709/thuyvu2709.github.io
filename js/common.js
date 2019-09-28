@@ -66,6 +66,7 @@ function loadProductList(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -83,7 +84,7 @@ function loadProductList(callback) {
       // showList(dataset);
       localStorage.setItem("productList",JSON.stringify(dataset));
 
-      callback();
+      callback(dataset);
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });
@@ -91,7 +92,7 @@ function loadProductList(callback) {
 
 function loadImportScheduleList(callback) {
   var spreadsheetId = mainSheetForProduct;
-  var indexColumnOfAllData = 3;
+  var indexColumnOfAllData = 5;
   var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
@@ -99,6 +100,7 @@ function loadImportScheduleList(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -133,6 +135,7 @@ function getLatestOrderCode(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -159,6 +162,82 @@ function getLatestOrderCode(callback) {
   });
 }
 
+function getLatestTaskCode(callback) {
+  var spreadsheetId = shippingSheet;
+
+  console.log("getLatestTaskCode");
+
+  var indexColumnOfAllData = 1;
+  var sheetrange = 'Task!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
+      var latestCode = parseFloat(dataset[dataset.length-1][0])+1;
+
+      // localStorage.setItem("taskCode","DONHANG_"+latestCode);
+
+      callback(latestCode);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
+
+function getLatestImportCode(callback) {
+  var spreadsheetId = shippingSheet;
+
+  console.log("getLatestTaskCode");
+
+  var indexColumnOfAllData = 1;
+  var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
+      var latestCode = parseFloat(dataset[dataset.length-1][0])+1;
+
+      // localStorage.setItem("taskCode","DONHANG_"+latestCode);
+
+      callback(latestCode);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
 
 
 function loadOrderList(callback) {
@@ -172,6 +251,7 @@ function loadOrderList(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -206,6 +286,7 @@ function loadReport(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -238,6 +319,7 @@ function loadOrderListDetail(callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -264,6 +346,42 @@ function loadOrderListDetail(callback) {
   });
 }
 
+function loadWarehouse(callback) {
+
+  console.log("loadWarehouse");
+
+  var spreadsheetId = mainSheetForProduct;
+
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  var indexColumnOfAllData = 5;
+  var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("warehouse",JSON.stringify(dataset));
+
+      callback();
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 
 function appendOrderDetail(submitData,callback) {
   var numOfColumn = 10;
@@ -273,6 +391,7 @@ function appendOrderDetail(submitData,callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -308,6 +427,7 @@ function appendOrder(submitOrderData,callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -323,6 +443,79 @@ function appendOrder(submitOrderData,callback) {
         resource: {
             "majorDimension": "ROWS",
             "values": submitOrderData
+        }
+    }).then(function(response) {
+        var result = response.result;
+      // console.log(`${result.updatedCells} cells updated.`);
+      // $("#modelContent").html("Đã lưu đơn hàng");
+      // $('#myModal').modal('toggle');
+        callback();
+
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+}
+
+function appendTask(submitTaskData,callback) {
+  var numOfColumn = 4;
+  var sheetrange = 'Task!A1:'+ String.fromCharCode(65+numOfColumn);
+  var spreadsheetId = shippingSheet;
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        range: sheetrange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": submitTaskData
+        }
+    }).then(function(response) {
+        var result = response.result;
+      // console.log(`${result.updatedCells} cells updated.`);
+      // $("#modelContent").html("Đã lưu đơn hàng");
+      // $('#myModal').modal('toggle');
+        callback();
+
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+}
+
+
+function appendWarehouse(submitImportData,callback) {
+  var numOfColumn = 4;
+  var sheetrange = 'Warehouse!A1:'+ String.fromCharCode(65+numOfColumn);
+  var spreadsheetId = mainSheetForProduct;
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        range: sheetrange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": submitImportData
         }
     }).then(function(response) {
         var result = response.result;
@@ -445,6 +638,44 @@ function editOrder(dataEditOrder,range,callback){
         appendPre('Error: ' + response.result.error.message);
     });
 }
+
+function editWarehouse(dataEditWarehouse,range,callback){
+  
+  var spreadsheetId = mainSheetForProduct;
+  // var sheetrange = range;
+
+  // console.log(sheetrange);
+  
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": dataEditOrder
+        }
+    }).then(function(response) {
+        var result = response.result;
+      // console.log(`${result.updatedCells} cells updated.`);
+      // $("#modelContent").html("Đã lưu đơn hàng");
+      // $('#myModal').modal('toggle');
+        callback();
+
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+}
+
 
 function editProduct(dataEditP, range,callback, callbackError) {
   
