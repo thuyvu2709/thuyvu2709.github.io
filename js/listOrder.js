@@ -4,6 +4,7 @@ var status = "PROCESSING";
 
 var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
 var sheetOrder = "Order";
+var lsOrderShipping;
 
 var triggerAfterLoad = function(){
 
@@ -17,6 +18,10 @@ var triggerAfterLoad = function(){
           $("#loadingSpin").hide();
           console.log("Gooo");
           loadOrderListHtml();
+      })
+
+      getOrderShipping(function(lsOrderset){
+        lsOrderShipping = lsOrderset;
       })
     })
   // })
@@ -49,16 +54,23 @@ function loadOrderListHtml() {
     var optionPaid;
     var iconPaid = "";
     if (data[e][8] == "PAID") {
-      optionPaid = '<option value="paid">Đã thanh toán</option>';
+      optionPaid = '<option value="PAID" selected>Đã thanh toán</option><option value="ORDERED">Đã đặt hàng</option>';
       iconPaid = ' | <i class="fas fa-dollar-sign"></i>';
     } else {
-      optionPaid = '<option value="unpaid">Đã đặt hàng</option><option value="paid">Đã thanh toán</option>'
+      optionPaid = '<option value="ORDERED" selected>Đã đặt hàng</option><option value="PAID">Đã thanh toán</option>'
     }
 
     var optionShip;
     var iconShip = "";
     if (data[e][11]) {
       iconShip = ' | <i class="fas fa-motorcycle"></i>';
+
+      var shipIndex = parseInt(data[e][11]);
+      if(lsOrderShipping[shipIndex][4] == "COMPLETED") {
+        optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
+      } else {
+        optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
+      }
     }
 
     var searchText = $("#orderSearchInput").val();
@@ -92,6 +104,9 @@ function loadOrderListHtml() {
           '<div class="card-body">'+
             '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
+            '</select>'+
+            '<select class="mdb-select md-form selectShip selectShipStatus_'+e+'">'+
+              optionShip +
             '</select>'+
             // '<label class="mdb-main-label">Đã đặt hàng</label>'+
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
@@ -261,50 +276,33 @@ function loadOrderListHtml() {
 
     var column = 8; //for ship
     $("#loadingSpin").show();
-    updateOrderStatus(line,column,value.toUpperCase(), function(){
+    updateOrderStatus(line,column,value, function(){
       $("#loadingSpin").hide();
     });
   })
 
 
   $(".selectShip").change(function(){
-    var line = $(this).attr("class").split(" ").pop().split("_").pop();
 
     console.log("selectShip:"+$(this).attr("class").split(" ").pop().split("_").pop())
     console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
     var value = document.getElementsByClassName($(this).attr("class"))[0].value;
     
-    line = parseInt(line) + 1;
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var shipIndex = parseInt(data[orderIndex][11]);
 
-    var column = 9; //for ship
+    var dataUpdateShipping = [
+      ["COMPLETED"]
+    ];
+    var sheetrange = 'Shipping!E'+shipIndex+':E'+shipIndex;
+
     $("#loadingSpin").show();
-    updateOrderStatus(line,column,value.toUpperCase(), function(){
-      $("#loadingSpin").hide();
-    });
-  })
 
-  function updateOrderStatus(line, column, value, callback) {
-    var sheetrange = sheetOrder+'!'+String.fromCharCode(65+column) + line+":"+String.fromCharCode(65+column) + line;
-    console.log(sheetrange);
-    gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: spreadsheetId,
-        range: sheetrange,
-        valueInputOption: "USER_ENTERED",
-        resource: {
-            "majorDimension": "ROWS",
-            "values": [
-                [
-                  value
-                ]
-            ]
-        }
-    }).then(function(response) {
-        var result = response.result;
-        callback();
-    }, function(response) {
-        appendPre('Error: ' + response.result.error.message);
-    });
-  }
+    updateShipping(dataUpdateShipping, sheetrange, function(){
+      $("#loadingSpin").hide();
+    })
+
+  })
 
 };
 

@@ -36,6 +36,8 @@ var triggerAfterLoad = function(){
 
 var mode = "PROCESSING";
 
+var totalShippingCost = 0;
+
 function loadOrderShippingListHtml(lsOrder) {
 
   $("#listShippingOrder").empty();
@@ -61,6 +63,9 @@ function loadOrderShippingListHtml(lsOrder) {
       if (lsOrder[e][4] != "COMPLETED") {
         continue;
       }
+    }
+    if (lsOrder[e][4] == "COMPLETED") {
+      totalShippingCost += lsOrder[e][7]
     }
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -225,7 +230,7 @@ function shipComplete(){
 
 function shippingReport(){
   $("#listShippingOrder").empty();
-  $("#listShippingOrder").html("Báo cáo giao hàng");
+  $("#listShippingOrder").html(totalShippingCost);
 }
 
 function showTask(){

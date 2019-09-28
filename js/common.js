@@ -774,7 +774,7 @@ function getCurrentUser() {
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
-    var numOfColumn = 6;
+    var numOfColumn = 7;
     var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn);
 
     var spreadsheetId = shippingSheet;
@@ -886,6 +886,32 @@ function getLatestShippingIndex(callback) {
       console.log('Error: ' + response.result.error.message);
   });
 }
+
+function updateOrderStatus(line, column, value, callback) {
+    var spreadsheetId = mainSheetForProduct;
+
+    var sheetrange = 'Order!'+String.fromCharCode(65+column) + line+":"+String.fromCharCode(65+column) + line;
+    console.log(sheetrange);
+    gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheetId,
+        range: sheetrange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": [
+                [
+                  value
+                ]
+            ]
+        }
+    }).then(function(response) {
+        var result = response.result;
+        callback();
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+  }
+
 
 function getOrderShipping(callback) {
   var spreadsheetId = shippingSheet;

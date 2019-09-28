@@ -135,7 +135,9 @@ $("#requestShipping").click(function(){
 						"'"+currentOrder.customerPhone,
 						JSON.stringify(currentOrder),
 						"Requested",
-						emailId
+						emailId,
+						"",
+						currentOrder.shippingCost
 					]
 				];
 				appendShipping(dataAppendShipping, function(){
