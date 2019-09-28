@@ -17,7 +17,9 @@ function saveHistory(){
   var currentHref = window.location.pathname;
   // console.log(window.location);
   // console.log(currentHref);
-  console.log(historyPath);
+  if (!historyPath) {
+    historyPath = [];
+  };
   
   if (historyPath[historyPath.length-1] == currentHref) {
     return;
