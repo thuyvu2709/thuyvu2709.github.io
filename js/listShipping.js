@@ -316,6 +316,9 @@ function taskComplete(){
 
   var sheetrange = 'Task!D'+actualTaskIndex+':E'+actualTaskIndex;
 
+  lsOrder[taskIndex][4] = "COMPLETED";
+  lsOrder[taskIndex][5] = dateTime;
+
   var dataUpdateTask = [
     ["COMPLETED", dateTime]
   ];
