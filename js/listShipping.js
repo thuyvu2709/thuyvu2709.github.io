@@ -296,7 +296,7 @@ function showTask(){
 
 function deleteTask() {
   var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  var actualTaskIndex = parseInt(orderIndex) + 1;
+  var actualTaskIndex = parseInt(taskIndex) + 1;
   var dataUpdateTask = [
     ["","","","",""]
   ];
@@ -306,7 +306,7 @@ function deleteTask() {
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
      $("#loadingSpin").hide();
-     $(".cardElement_"+orderIndex).remove();
+     $(".cardElement_"+taskIndex).remove();
   })
 }
 
