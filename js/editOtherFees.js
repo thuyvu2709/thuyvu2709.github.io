@@ -53,7 +53,6 @@ function editOtherFee(){
 
     editDataInSheet(mainSheetForProduct, sheetrange, data,
         function() {
-            console.log(`${result.updatedCells} cells updated.`);
     	    $("#modelContent").html("Đã lưu thông tin");
     	    $('#myModal').modal('toggle');
 
