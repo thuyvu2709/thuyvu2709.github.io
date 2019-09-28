@@ -66,7 +66,7 @@ function loadOtherFeeHtml() {
             'Email: '+data[e][4]+'<br/>'+
             '<hr/>'+
             '<div class="btn btn-default btnNormal editFee_'+e+'" >Sửa</div>'+
-            '<div class="btn btn-default btnNormal deleteFee_'+e+'" >Sửa</div>'+
+            '<div class="btn btn-default btnNormal deleteFee_'+e+'" style="padding-left : 10px">Xoá</div>'+
 
           '</div>'+
         '</div>'+
