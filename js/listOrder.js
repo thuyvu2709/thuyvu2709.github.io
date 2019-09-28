@@ -133,11 +133,11 @@ function loadOrderListHtml() {
           var realIndex = index + 1;
           gapi.client.sheets.spreadsheets.values.update({
             spreadsheetId: spreadsheetId,
-            range : "OrderDetail!A"+realIndex+":F"+realIndex,
+            range : "OrderDetail!A"+realIndex+":K"+realIndex,
             valueInputOption: "USER_ENTERED",
             resource: {
                 "majorDimension": "ROWS",
-                "values": [["","","","","","","","","","",""]]
+                "values": [["","","","","","","","","",""]]
             }
           }).then(function(response) {
             
