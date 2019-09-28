@@ -1,16 +1,29 @@
-// addNewProduct.js
+var triggerAfterLoad = function(){
 
-// var sheetrange = 'Sheet1!A1:B1000';
-// console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
+    var roles = JSON.parse(localStorage.getItem("roles"));
+
+    $("#employeeId").empty();
+    $("#employeeId").append("<option selected disabled>Chọn nhân viên</option>")
+
+    for (var e in roles) {
+        if (e ==0) {
+            continue;
+        }
+        $("#employeeId").append('<option value="'+roles[e][0]+'">'+roles[e][2]+' - '+roles[e][0]+'</option>')
+    }
+}
 
 function addOtherFee(){
 	console.log("addOtherFee")
 	var numOfColumnOtherFee = 3;
-	var sheetrange = 'otherFees!A1:'+ String.fromCharCode(65+numOfColumnOtherFee);
+	var sheetrange = 'otherFees!A:'+ String.fromCharCode(65+numOfColumnOtherFee);
 
 
-	var feeName = $("#feeName").val();
+	var feeName  = document.getElementById("feeName").value;
+    var employeeId = document.getElementById("employeeId").value;
+
 	var feeCost = $("#feeCost").val();
+    var feeContent = $("#feeContent").val();
 
 
 	// console.log(productCode)
@@ -21,7 +34,7 @@ function addOtherFee(){
 	var dateTime = date+' '+time;
 
 	gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: spreadsheetId,
+        spreadsheetId: mainSheetForProduct,
         range: sheetrange,
         valueInputOption: "USER_ENTERED",
         resource: {
@@ -30,7 +43,9 @@ function addOtherFee(){
                 [
                 	dateTime,
                 	feeName,
-                	feeCost
+                	feeCost,
+                    feeContent,
+                    employeeId
                 ]
             ]
         }

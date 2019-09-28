@@ -37,8 +37,13 @@
       <div class="form-group row">
         <label for="feeName" class="col-sm-2 col-form-label">Tên chi phí</label>
           <div class="col-sm-10">
-          <input type="text" class="form-control" id="feeName" placeholder="Tên sản phẩm" required>
-        </div>
+            <select class="mdb-select md-form" id="feeName" style="width: 100%">
+              <option selected disabled>Chọn loại chi phí</option>
+              <option value="Lương">Lương</option>
+              <option value="Tiền điện thoại">Tiền điện thoại</option>
+              <option value="Đồ bọc hàng">Đồ bọc hàng</option>
+            </select>
+          </div>
       </div>
 
       <div class="form-group row">
@@ -48,7 +53,23 @@
         </div>
       </div>
 
-      <div class="btn btn-primary mb-2" id="addNewFee">     Thêm thông tin chi phí
+      <div class="form-group row">
+        <label for="feeCost" class="col-sm-2 col-form-label">Nội dung</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="feeContent" placeholder="Nội dung" required>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="feeName" class="col-sm-2 col-form-label">Nhân viên</label>
+          <div class="col-sm-10">
+            <select class="mdb-select md-form" id="employeeId" style="width: 100%">
+              
+            </select>
+          </div>
+      </div>
+
+      <div class="btn btn-primary mb-2" id="addNewFee">Thêm thông tin chi phí
       </div>
     
     </form>
@@ -91,7 +112,7 @@
 
   <script type="text/javascript" src="../js/verifyform.js"></script>
 
-
+  <script type="text/javascript" src="../js/common.js"></script>
 
   <script type="text/javascript" src="../js/authorize.js"></script>
 

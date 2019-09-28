@@ -731,7 +731,7 @@ function getRoleList(callback) {
     return;
   }
 
-  var indexColumnOfAllData = 2;
+  var indexColumnOfAllData = 3;
   var sheetrange = 'Roles!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   gapi.client.sheets.spreadsheets.values.get({
@@ -742,6 +742,37 @@ function getRoleList(callback) {
       dataset = response.result.values;
       // showList(dataset);
       localStorage.setItem("roles",JSON.stringify(dataset));
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
+function loadOtherFee(callback) {
+  var spreadsheetId = mainSheetForProduct;
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  var indexColumnOfAllData = 4;
+  var sheetrange = 'OtherFees!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("otherFees",JSON.stringify(dataset));
 
       callback(dataset);
   }, function(response) {
@@ -1044,4 +1075,28 @@ function removeSpecialAlias(str){
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/đ/g, "d")
       .replace(/Đ/g, "D");
+}
+
+function parseDate(str) {//2019-9-4 16:19:31
+  var sdate = str.split(" ")[0];
+  var stime = str.split(" ")[1];
+
+  var syear = sdate.split("-")[0];
+  var smonth =sdate.split("-")[1];
+  var sday =sdate.split("-")[2];
+
+  var shour = stime.split(":")[0];
+  var smin = stime.split(":")[1];
+  var ssec = stime.split(":")[2];
+  return {
+    date : sdate,
+    time : stime,
+    year : syear,
+    month : smonth,
+    day : sday,
+    hour : shour,
+    min : smin,
+    sec : ssec,
+    monthyear : month+"-"+year
+  }
 }

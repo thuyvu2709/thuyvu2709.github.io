@@ -62,18 +62,21 @@ function loadOrderListHtml() {
 
     var optionShip;
     var iconShip = "";
-    if (data[e][11]) {
-      iconShip = ' | <i class="fas fa-motorcycle"></i>';
 
+    if (data[e][11]) {
       var shipIndex = parseInt(data[e][11]);
       if (!(lsOrderShipping[shipIndex])){
         console.log("Error at:");
         console.log(data[e]);
-      }
-      if(lsOrderShipping[shipIndex][4] == "COMPLETED") {
-        optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
+      } else if (lsOrderShipping[shipIndex][0] == data[e][0]) {
+        iconShip = ' | <i class="fas fa-motorcycle"></i>';
+        if(lsOrderShipping[shipIndex][4] == "COMPLETED") {
+          optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
+        } else {
+          optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
+        }
       } else {
-        optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
+        optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
       }
     } else {
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'

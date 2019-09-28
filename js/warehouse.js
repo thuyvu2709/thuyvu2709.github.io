@@ -1,22 +1,22 @@
 
 var warehouseData;
-// var triggerAfterLoad = function(){
+var triggerAfterLoad = function(){
 
-//   $("#loadingSpin").show();
+  $("#loadingSpin").show();
 
-//   loadWarehouse(function(){
-//     $("#loadingSpin").hide();
-//     console.log("Gooo");
-    loadWarehouseHtml();
-//   })
-// }
-
-$(".text-center").click(function(){
   loadWarehouse(function(){
+    $("#loadingSpin").hide();
     console.log("Gooo");
     loadWarehouseHtml();
   })
-})
+}
+
+// $(".text-center").click(function(){
+//   loadWarehouse(function(){
+//     console.log("Gooo");
+//     loadWarehouseHtml();
+//   })
+// })
 
 function loadWarehouseHtml() {
   data = JSON.parse(localStorage.getItem("warehouse"));
