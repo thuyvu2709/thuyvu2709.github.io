@@ -10743,7 +10743,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .masthead {
-  padding-top: calc(6rem + 74px);
+  padding-top: calc(6rem + 0px);
   padding-bottom: 6rem;
 }
 
