@@ -141,7 +141,7 @@ function loadOrderListHtml() {
             valueInputOption: "USER_ENTERED",
             resource: {
                 "majorDimension": "ROWS",
-                "values": [["","","","","","","","","",""]]
+                "values": [["","","","","","","","","","",""]]
             }
           }).then(function(response) {
             
