@@ -103,7 +103,7 @@ function deleteOtherFee() {
   var realIndex = feeIndex + 1;
 
   var numOfColumnOtherFee = 4;
-  var sheetrange = 'otherFees!A'+feeIndex+':'+ String.fromCharCode(65+numOfColumnOtherFee)+''+feeIndex;
+  var sheetrange = 'otherFees!A'+realIndex+':'+ String.fromCharCode(65+numOfColumnOtherFee)+''+realIndex;
   var data= [
     ["","","","",""]
   ]
