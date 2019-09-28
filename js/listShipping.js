@@ -312,7 +312,7 @@ function deleteTask() {
 
 function taskComplete(){
   var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  var actualTaskIndex = parseInt(orderIndex) + 1;
+  var actualTaskIndex = parseInt(taskIndex) + 1;
 
   var today = new Date();
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -321,8 +321,8 @@ function taskComplete(){
 
   var sheetrange = 'Task!D'+actualTaskIndex+':E'+actualTaskIndex;
 
-  lsOrder[taskIndex][4] = "COMPLETED";
-  lsOrder[taskIndex][5] = dateTime;
+  lsTask[taskIndex][4] = "COMPLETED";
+  lsTask[taskIndex][5] = dateTime;
 
   var dataUpdateTask = [
     ["COMPLETED", dateTime]
@@ -332,7 +332,7 @@ function taskComplete(){
 
   updateShipping(dataUpdateTask, sheetrange, function(){
     
-    $(".cardElement_"+orderIndex).remove();
+    $(".cardElement_"+taskIndex).remove();
     $("#loadingSpin").hide();
 
   },function(){
