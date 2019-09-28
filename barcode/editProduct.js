@@ -132,7 +132,7 @@ function editProductFn(){
 
 	var dataEditP = [
                 [productCode, //0 A
-                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),1)))",
+                '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))',//1 B
                 importCode,
                 productName, //1 B
                 productCount, //2 C

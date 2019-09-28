@@ -55,6 +55,10 @@ function loadOrderShippingListHtml(lsOrder) {
       continue;
     }
 
+    if (lsOrder[e][4] == "COMPLETED") {
+      totalShippingCost += parseInt(lsOrder[e][7])
+    }
+
     if (mode == "PROCESSING") {
       if (lsOrder[e][4] == "COMPLETED") {
         continue;
@@ -63,9 +67,6 @@ function loadOrderShippingListHtml(lsOrder) {
       if (lsOrder[e][4] != "COMPLETED") {
         continue;
       }
-    }
-    if (lsOrder[e][4] == "COMPLETED") {
-      totalShippingCost += parseInt(lsOrder[e][7])
     }
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");

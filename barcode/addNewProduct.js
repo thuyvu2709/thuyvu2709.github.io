@@ -70,7 +70,7 @@ function addNewProduct(){
 
 	var dataAppendProduct = [
                 [productCode, //0 A
-                "=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),1)))",//1 B
+                '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))',//1 B
                 importCode, //2 C
                 productName, //3 D
                 productCount, //4 E
