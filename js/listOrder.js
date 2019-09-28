@@ -4,7 +4,6 @@ var status = "PROCESSING";
 
 var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
 var sheetOrder = "Order";
-var lsOrderShipping;
 
 var triggerAfterLoad = function(){
 
@@ -21,7 +20,6 @@ var triggerAfterLoad = function(){
       })
 
       getOrderShipping(function(lsOrderset){
-        lsOrderShipping = lsOrderset;
       })
     })
   // })
@@ -30,7 +28,7 @@ var triggerAfterLoad = function(){
 function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
-
+  lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#listOrder").empty();
   // console.log(data);
   for(e in data) {
@@ -71,6 +69,8 @@ function loadOrderListHtml() {
       } else {
         optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
       }
+    } else {
+      optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
     }
 
     var searchText = $("#orderSearchInput").val();
@@ -300,6 +300,8 @@ function loadOrderListHtml() {
 
     updateShipping(dataUpdateShipping, sheetrange, function(){
       $("#loadingSpin").hide();
+    }, function(){
+      console.log("Something worng");
     })
 
   })
