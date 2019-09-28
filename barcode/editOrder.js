@@ -60,8 +60,16 @@ function fillListOfProduct(prodListOrder) {
 
 	$("#listProduct").empty();
 
-	for (e in prodListOrder) {
+	for (var e in prodListOrder) {
 		// console.log(e)
+
+		var productIndexInStore = -1;
+		for(var e1 in productList) {
+			if (productList[e1][1] == prodListOrder[e].productRefCode) {
+				productIndexInStore = e1;
+			}
+		}
+
 		$("#listProduct").append('<div class="card">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
@@ -101,7 +109,7 @@ function fillListOfProduct(prodListOrder) {
 			'    <div class="col-sm-10">'+
 			'      <select class="mdb-select md-form importScheduleGeneral importSchedule_'+e+'"'+
 			'        style="width: 100%">'+
-			'        <option selected>'+prodListOrder[e].importCode+'</option>'+
+			'        <option selected value="'+productIndexInStore+'">'+prodListOrder[e].importCode+'</option>'+
 			'      </select>'+
 			'    </div>'+
 			'</div>'+
@@ -140,6 +148,7 @@ function fillListOfProduct(prodListOrder) {
 
 		$(".btnSearchProduct_"+e).click(searchForm);
 	}
+
 	console.log(e);
 	numOfProType = parseInt(e)+1;
 	addNewFormOfProduct(numOfProType-1);
@@ -328,7 +337,7 @@ function searchProductChooseInForm(){
 function filterInSearchForm(index,searchText){
 	$("#myModal2  .modal-body").empty();
 
-	for(e in productList) {
+	for(var e in productList) {
 		if (e == 0) {
 			continue;
 		}
@@ -537,6 +546,8 @@ function addDetailOrder() {
 
 		var productIndexInStore = document.getElementsByClassName("importSchedule_"+i)[0].value;		
 		productIndexInStore = parseInt(productIndexInStore);
+		console.log(productIndexInStore);
+		console.log(productList[productIndexInStore]);
 		prodListOrder[i].importCode = productList[productIndexInStore][2];
 
 		if (isAppend){
