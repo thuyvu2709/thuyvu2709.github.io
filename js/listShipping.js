@@ -169,6 +169,8 @@ function deleteShipRequest() {
   updateShipping(dataUpdateShipping, sheetrange, function(){
      $("#loadingSpin").hide();
      $(".cardElement_"+orderIndex).remove();
+  }, function(){
+    console.log("Something wrong");
   })
 }
 
