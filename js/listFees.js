@@ -109,7 +109,9 @@ function deleteOtherFee() {
   ]
   editDataInSheet(mainSheetForProduct, sheetrange, data,
         function() {
-          console.log("remove fee")
+          console.log("remove fee");
+          $(".cardElement_"+feeIndex).remove();
+
         }, function(response) {
             // appendPre('Error: ' + response.result.error.message);
             console.log("some thing wrong");
