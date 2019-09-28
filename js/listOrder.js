@@ -291,17 +291,25 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var shipIndex = parseInt(data[orderIndex][11]);
 
-    var dataUpdateShipping = [
-      ["COMPLETED"]
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+
+    var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
+
+    var dataUpdateTask = [
+      ["COMPLETED", dateTime]
     ];
-    var sheetrange = 'Shipping!E'+shipIndex+':E'+shipIndex;
 
     $("#loadingSpin").show();
 
-    updateShipping(dataUpdateShipping, sheetrange, function(){
+    updateShipping(dataUpdateTask, sheetrange, function(){
+      
       $("#loadingSpin").hide();
-    }, function(){
-      console.log("Something worng");
+
+    },function(){
+      console.log("Something wrong");
     })
 
   })
