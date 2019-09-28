@@ -752,15 +752,15 @@ function getRoleList(callback) {
 function loadOtherFee(callback) {
   var spreadsheetId = mainSheetForProduct;
 
-  if (passDataLocalhost) {
-    callback();
-  }
+  // if (passDataLocalhost) {
+  //   callback();
+  // }
 
-  if(!gapi.client.sheets) {
-    callback();
-    comeBackHomeToAuthorize();
-    return;
-  }
+  // if(!gapi.client.sheets) {
+  //   callback();
+  //   comeBackHomeToAuthorize();
+  //   return;
+  // }
 
   var indexColumnOfAllData = 4;
   var sheetrange = 'OtherFees!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -1010,6 +1010,40 @@ function getTaskList(callback) {
   });
 }
 
+function editDataInSheet(spreadsheets, sheetrange, data, callback, callbackError){
+  gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheets,
+        range: sheetrange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": data
+        }
+    }).then(function(response) {
+      callback();
+    }, function(response) {
+        // appendPre('Error: ' + response.result.error.message);
+      callbackError();
+    });
+}
+
+function appendDataInSheet(spreadsheets, sheetrange, data, callback, callbackError){
+  gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheets,
+        range: sheetrange,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": data
+        }
+    }).then(function(response) {
+      callback();
+    }, function(response) {
+        // appendPre('Error: ' + response.result.error.message);
+      callbackError();
+    });
+}
+
 function sendEmail(headers_obj, message, callback){
     // var email = '';
 
@@ -1097,6 +1131,6 @@ function parseDate(str) {//2019-9-4 16:19:31
     hour : shour,
     min : smin,
     sec : ssec,
-    monthyear : month+"-"+year
+    monthyear : smonth+"-"+syear
   }
 }

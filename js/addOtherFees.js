@@ -15,7 +15,7 @@ var triggerAfterLoad = function(){
 
 function addOtherFee(){
 	console.log("addOtherFee")
-	var numOfColumnOtherFee = 3;
+	var numOfColumnOtherFee = 4;
 	var sheetrange = 'otherFees!A:'+ String.fromCharCode(65+numOfColumnOtherFee);
 
 

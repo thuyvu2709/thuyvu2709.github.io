@@ -1,24 +1,24 @@
 
 var otherFeeData;
 var username;
-var triggerAfterLoad = function(){
+// var triggerAfterLoad = function(){
 
-  $("#loadingSpin").show();
+//   $("#loadingSpin").show();
 
-  loadOtherFee(function(){
-    $("#loadingSpin").hide();
-    convertUserName();  
-    console.log("Gooo");
-    loadOtherFeeHtml();
-  })
-}
-
-// $(".text-center").click(function(){
-//   loadotherFee(function(){
+//   loadOtherFee(function(){
+//     $("#loadingSpin").hide();
+//     convertUserName();  
 //     console.log("Gooo");
-//     loadotherFeeHtml();
+//     loadOtherFeeHtml();
 //   })
-// })
+// }
+
+$(".text-center").click(function(){
+  // triggerAfterLoadx();
+  convertUserName();  
+  console.log("Gooo");
+  loadOtherFeeHtml();
+})
 
 function convertUserName(){
   var roles = JSON.parse(localStorage.getItem("roles"));
@@ -50,41 +50,68 @@ function loadOtherFeeHtml() {
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              parseDate(data[e][0]).monthyear+' | '+data[e][2] + ' - '+username[data[e][4]].name
+              parseDate(data[e][0]).monthyear+' | '+data[e][2] + ' - '+username[data[e][4]].name +
             '</button>'+
           '</h5>'+
         '</div>'+
 
-        '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listSchedule">'+
+        '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listFees">'+
           '<div class="card-body">'+
             'Thời gian: '+data[e][0]+'<br/>'+
             'Tên chi phí: '+data[e][1]+'<br/>'+
-            'Loại chi phí: '+data[e][2]+'<br/>'+
-            'Nhân viên: '+data[e][3]+'<br/>'+
-
+            'Số tiền: '+data[e][2]+'<br/>'+
+            'Nội dung: '+data[e][3]+'<br/>'+
+            'Nhân viên: '+username[data[e][4]].name+'<br/>'+
+            'Nhiệm vụ: '+username[data[e][4]].role+'<br/>'+
+            'Email: '+data[e][4]+'<br/>'+
             '<hr/>'+
-            '<div class="btn btn-default btnNormal editWH_'+e+'" >Sửa</div>'+
+            '<div class="btn btn-default btnNormal editFee_'+e+'" >Sửa</div>'+
+            '<div class="btn btn-default btnNormal deleteFee_'+e+'" >Sửa</div>'+
+
           '</div>'+
         '</div>'+
       '</div>'
       )
 
-    $(".checkImport_"+e).click(requestToCheckProducts);
-    $(".editWH_"+e).click(editotherFee);
+    $(".editFee_"+e).click(editOtherFee);
+    $(".deleteFee_"+e).click(deleteOtherFee);
+
   }
 };
 
 function editOtherFee() {
-  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  var realIndex = parseInt(importIndex) - 1;
-  var currentImport = {
-    importIndex : realIndex,
-    importCode : otherFeeData[importIndex][0],
-    importName : otherFeeData[importIndex][1],
-    importStatus : otherFeeData[importIndex][2],
-    importShippingFee : otherFeeData[importIndex][3]
+  var feeIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  feeIndex = parseInt(feeIndex);
+  var realIndex = feeIndex + 1;
+  var currentFee = {
+    feeIndex : realIndex,
+    feeTime : otherFeeData[feeIndex][0],
+    feeName : otherFeeData[feeIndex][1],
+    feeCost : otherFeeData[feeIndex][2],
+    feeContent : otherFeeData[feeIndex][3],
+    employeeName : username[otherFeeData[feeIndex][4]].name,
+    employeeId : otherFeeData[feeIndex][4]
   }
 
-  localStorage.setItem("currentImport",JSON.stringify(currentImport));
-  window.location = "editImportSchedule.html";
+  localStorage.setItem("currentFee",JSON.stringify(currentFee));
+  window.location = "editOtherFees.html";
+}
+
+function deleteOtherFee() {
+  var feeIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  feeIndex = parseInt(feeIndex);
+  var realIndex = feeIndex + 1;
+
+  var numOfColumnOtherFee = 4;
+  var sheetrange = 'otherFees!A'+feeIndex+':'+ String.fromCharCode(65+numOfColumnOtherFee)+''+feeIndex;
+  var data= [
+    ["","","","",""]
+  ]
+  editDataInSheet(mainSheetForProduct, sheetrange, data,
+        function() {
+          console.log("remove fee")
+        }, function(response) {
+            // appendPre('Error: ' + response.result.error.message);
+            console.log("some thing wrong");
+        });
 }
