@@ -162,7 +162,7 @@ function deleteShipRequest() {
   var dataUpdateShipping = [
     ["","","","","","",""]
   ];
-  var sheetrange = 'Shipping!A'+actualOrderIndex+':F'+actualOrderIndex;
+  var sheetrange = 'Shipping!A'+actualOrderIndex+':H'+actualOrderIndex;
 
   $("#loadingSpin").show();
 
