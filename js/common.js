@@ -664,7 +664,7 @@ function editWarehouse(dataEditWarehouse,range,callback){
         valueInputOption: "USER_ENTERED",
         resource: {
             "majorDimension": "ROWS",
-            "values": dataEditOrder
+            "values": dataEditWarehouse
         }
     }).then(function(response) {
         var result = response.result;

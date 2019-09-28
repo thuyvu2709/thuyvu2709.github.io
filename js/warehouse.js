@@ -60,11 +60,11 @@ function loadWarehouseHtml() {
       )
 
     $(".checkImport_"+e).click(requestToCheckProducts);
-    $(".editWH_"+e).click(editWarehouse);
+    $(".editWH_"+e).click(editWarehouseFn);
   }
 };
 
-function editWarehouse() {
+function editWarehouseFn() {
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var realIndex = parseInt(importIndex) - 1;
   var currentImport = {
