@@ -65,7 +65,7 @@ function loadOrderShippingListHtml(lsOrder) {
       }
     }
     if (lsOrder[e][4] == "COMPLETED") {
-      totalShippingCost += lsOrder[e][7]
+      totalShippingCost += parseInt(lsOrder[e][7])
     }
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
