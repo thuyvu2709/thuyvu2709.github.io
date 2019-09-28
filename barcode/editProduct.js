@@ -127,7 +127,7 @@ function editProductFn(){
 
 	// console.log(productCode)
 	var proIndex = parseInt(productIndex) + 1;
-
+	var numOfColumn = 19;
 	var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
 	var dataEditP = [
