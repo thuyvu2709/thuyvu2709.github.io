@@ -1,24 +1,24 @@
 
 var otherFeeData;
 var username;
-// var triggerAfterLoad = function(){
+var triggerAfterLoad = function(){
 
-//   $("#loadingSpin").show();
+  $("#loadingSpin").show();
 
-//   loadOtherFee(function(){
-//     $("#loadingSpin").hide();
-//     convertUserName();  
-//     console.log("Gooo");
-//     loadOtherFeeHtml();
-//   })
-// }
+  loadOtherFee(function(){
+    $("#loadingSpin").hide();
+    convertUserName();  
+    console.log("Gooo");
+    loadOtherFeeHtml();
+  })
+}
 
-$(".text-center").click(function(){
-  // triggerAfterLoadx();
-  convertUserName();  
-  console.log("Gooo");
-  loadOtherFeeHtml();
-})
+// $(".text-center").click(function(){
+//   // triggerAfterLoadx();
+//   convertUserName();  
+//   console.log("Gooo");
+//   loadOtherFeeHtml();
+// })
 
 function convertUserName(){
   var roles = JSON.parse(localStorage.getItem("roles"));
