@@ -558,7 +558,7 @@ function addDetailOrder() {
 				orderCode,
 				$(".productCode_"+i).val(),
 				prodListOrder[i].importCode,
-				"=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),'_',INDIRECT(ADDRESS(ROW(),2)))",
+				'=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
 				$(".productName_"+i).val(),
 				$(".productCount_"+i).val(),
 				$(".productEstimateSellingVND_"+i).val(),
