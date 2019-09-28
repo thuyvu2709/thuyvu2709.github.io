@@ -2,7 +2,7 @@
 var url = new URL(window.location.href);
 var status = "PROCESSING";
 
-var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
+var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
 
 var triggerAfterLoad = function(){
