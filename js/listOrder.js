@@ -14,12 +14,14 @@ var triggerAfterLoad = function(){
     loadOrderList(function(){
           // console.log("2")
       loadOrderListDetail(function(){
+
+        getOrderShipping(function(lsOrderset){
+
           $("#loadingSpin").hide();
           console.log("Gooo");
           loadOrderListHtml();
-      })
+        })
 
-      getOrderShipping(function(lsOrderset){
       })
     })
   // })
