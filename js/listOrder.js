@@ -66,6 +66,10 @@ function loadOrderListHtml() {
       iconShip = ' | <i class="fas fa-motorcycle"></i>';
 
       var shipIndex = parseInt(data[e][11]);
+      if (!(lsOrderShipping[shipIndex])){
+        console.log("Error at:");
+        console.log(data[e]);
+      }
       if(lsOrderShipping[shipIndex][4] == "COMPLETED") {
         optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
       } else {
