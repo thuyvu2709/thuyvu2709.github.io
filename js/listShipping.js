@@ -300,7 +300,7 @@ function deleteTask() {
   var dataUpdateTask = [
     ["","","","",""]
   ];
-  var sheetrange = 'Task!A'+actualOrderIndex+':E'+actualOrderIndex;
+  var sheetrange = 'Task!A'+actualTaskIndex+':E'+actualTaskIndex;
 
   $("#loadingSpin").show();
 
