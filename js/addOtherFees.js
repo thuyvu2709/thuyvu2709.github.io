@@ -60,6 +60,4 @@ function addOtherFee(){
     });
 }
 
-$('body').on('click', '#addNewFee', function() {
-     addOtherFee();
-})
+$("#addNewFee").click(addOtherFee);
