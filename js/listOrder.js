@@ -72,7 +72,7 @@ function loadOrderListHtml() {
         optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
       }
     } else {
-      optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
+      optionShip = ''
     }
 
     var searchText = $("#orderSearchInput").val();
