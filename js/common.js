@@ -870,17 +870,11 @@ function getLatestShippingIndex(callback) {
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  if(!gapi.client.sheets) {
-    callback();
-    comeBackHomeToAuthorize();
-    return;
-  }
-
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: sheetrange,
   }).then(function(response) {
-      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
 
       callback(dataset.length);
