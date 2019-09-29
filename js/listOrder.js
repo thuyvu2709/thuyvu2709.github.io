@@ -57,11 +57,11 @@ function loadOrderListHtml() {
     }
 
     if (status == 'PROCESSING') {
-      if (data[e][8] == "PAID" && data[e][11]) {
+      if (data[e][8] == "PAID" && orderShipStatus[data[e][0]]) {
         continue;
       }
     } if (status == 'COMPLETE') {
-      if (!(data[e][8] == "PAID" && data[e][11])) {
+      if (!(data[e][8] == "PAID" && orderShipStatus[data[e][0]])) {
         continue;
       }
     }
