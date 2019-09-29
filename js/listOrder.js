@@ -242,7 +242,7 @@ function loadOrderListHtml() {
     // console.log($(this));
     var orderCode = data[orderIndex][0];
     var shipIndex = -1;
-    if (orderShipStatus[data[e][0]]){
+    if (orderShipStatus[data[orderIndex][0]]){
       shipIndex = orderShipStatus[data[orderIndex][0]].sindex
     }
     var currentOrder = {
