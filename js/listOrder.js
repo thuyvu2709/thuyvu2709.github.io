@@ -10,8 +10,8 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
-  // loadProductList(function(){
-    // console.log("1")
+  loadProductList(function(){
+    console.log("1")
     loadOrderList(function(){
           // console.log("2")
       loadOrderListDetail(function(){
@@ -25,12 +25,13 @@ var triggerAfterLoad = function(){
 
       })
     })
-  // })
+  })
 }
 
 function parseOrderShipping(){
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
-
+  // console.log(lsOrderShipping);
+  orderShipStatus = {};
   for (var e in lsOrderShipping) {
     if (e == 0) {
       continue;
@@ -42,8 +43,10 @@ function parseOrderShipping(){
       status : lsOrderShipping[e][4],
       sindex : (e+1)
     }
+    // console.log(orderShipStatus[lsOrderShipping[e][0]]);
   }
-  console.log(orderShipStatus);
+  // console.log(orderShipStatus)
+  // console.log(orderShipStatus["DONHANG_50"]);
 }
 
 function loadOrderListHtml() {
@@ -52,7 +55,7 @@ function loadOrderListHtml() {
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#listOrder").empty();
   // console.log(data);
-  for(e in data) {
+  for(var e in data) {
     if (e == 0) {
       continue;
     }
