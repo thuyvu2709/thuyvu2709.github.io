@@ -17,7 +17,7 @@ var triggerAfterLoad = function(){
       loadOrderListDetail(function(){
 
         getOrderShipping(function(lsOrderset){
-          getOrderShipping();
+          parseOrderShipping();
           $("#loadingSpin").hide();
           console.log("Gooo");
           loadOrderListHtml();
@@ -28,7 +28,7 @@ var triggerAfterLoad = function(){
   // })
 }
 
-function getOrderShipping(){
+function parseOrderShipping(){
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
 
   for (var e in lsOrderShipping) {
