@@ -106,50 +106,61 @@ $("#requestShipping").click(function(){
 	// var receiver = "kenkreck1004@gmail.com";
 	// var cc = "levanthanh3005@gmail.com";
 	$("#loadingSpin").show();
-	var roles = getSpecificRoles();
-	var receiver = roles["shipper"];
-	var cc = roles["manager"];
-	console.log(receiver);
-	console.log(cc);
-	sendOrderViaEmail(receiver, cc,currentOrder, function(e){
-		console.log("Sent");
-		console.log(e);
-		console.log("Email id:"+e.id+" can do reply email here");
-		var emailId = e.id;
-		var orderIndex = parseInt(currentOrder.orderIndex)+1;
+	// var roles = getSpecificRoles();
+	// var receiver = roles["shipper"];
+	// var cc = roles["manager"];
+	// console.log(receiver);
+	// console.log(cc);
+	// sendOrderViaEmail(receiver, cc,currentOrder, function(e){
+	// 	console.log("Sent");
+	// 	console.log(e);
+	// 	console.log("Email id:"+e.id+" can do reply email here");
+	// 	var emailId = e.id;
+	// 	var orderIndex = parseInt(currentOrder.orderIndex)+1;
 		
-		getLatestShippingIndex(function(shipIndex){
-			var dataEditOrder = [
-				[
-					shipIndex,
-					emailId
-				]
-			];
-			var range = 'Order!L'+orderIndex +":M"+ orderIndex;
+	// 	getLatestShippingIndex(function(shipIndex){
+	// 		var dataEditOrder = [
+	// 			[
+	// 				shipIndex,
+	// 				emailId
+	// 			]
+	// 		];
+	// 		var range = 'Order!L'+orderIndex +":M"+ orderIndex;
 
-			editOrder(dataEditOrder,range,function(){
-				var dataAppendShipping = [
-					[
-						currentOrder.orderCode,
-						currentOrder.customerAddress,
-						"'"+currentOrder.customerPhone,
-						JSON.stringify(currentOrder),
-						"Requested",
-						emailId,
-						"",
-						currentOrder.shippingCost
-					]
-				];
-				appendShipping(dataAppendShipping, function(){
-					console.log("Done request shipping")
-					$("#loadingSpin").hide();
-				},function(){
-					console.log("Something wrong");
-					$("#loadingSpin").hide();
-				})
-			});
+	// 		editOrder(dataEditOrder,range,function(){
+
+	var dataShipping = [
+		[
+			currentOrder.orderCode,
+			currentOrder.customerAddress,
+			"'"+currentOrder.customerPhone,
+			JSON.stringify(currentOrder),
+			"Requested",
+			emailId,
+			"",
+			currentOrder.shippingCost
+		]
+	];
+	if(currentOrder.shipIndex == -1) {	 
+
+		appendShipping(dataShipping, function(){
+			console.log("Done request shipping")
+			$("#loadingSpin").hide();
+		},function(){
+			console.log("Something wrong");
+			$("#loadingSpin").hide();
 		})
-	});
+	} else {
+		var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':H'+currentOrder.shipIndex;
+		updateShipping(dataShipping, sheetrange, function(){
+			console.log("updated");
+		}, function(){
+			console.log("Something wrong");
+		})
+	}
+	// 		});
+	// 	})
+	// });
 
 })
 

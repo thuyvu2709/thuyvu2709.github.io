@@ -4,6 +4,7 @@ var status = "PROCESSING";
 
 var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
+var orderShipStatus =[];
 
 var triggerAfterLoad = function(){
 
@@ -16,7 +17,7 @@ var triggerAfterLoad = function(){
       loadOrderListDetail(function(){
 
         getOrderShipping(function(lsOrderset){
-
+          getOrderShipping();
           $("#loadingSpin").hide();
           console.log("Gooo");
           loadOrderListHtml();
@@ -25,6 +26,20 @@ var triggerAfterLoad = function(){
       })
     })
   // })
+}
+
+function getOrderShipping(){
+  lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
+
+  for (var e in lsOrderShipping) {
+    if (e == 0) {
+      continue;
+    }
+    orderShipStatus[lsOrderShipping[e][0]] = {
+      status : lsOrderShipping[e][4],
+      index : (e+1)
+    }
+  }
 }
 
 function loadOrderListHtml() {
@@ -63,21 +78,15 @@ function loadOrderListHtml() {
     var optionShip;
     var iconShip = "";
 
-    if (data[e][11]) {
-      var shipIndex = parseInt(data[e][11]);
-      if (!(lsOrderShipping[shipIndex])){
-        console.log("Error at:");
-        console.log(data[e]);
-      } else if (lsOrderShipping[shipIndex][0] == data[e][0]) {
-        iconShip = ' | <i class="fas fa-motorcycle"></i>';
-        if(lsOrderShipping[shipIndex][4] == "COMPLETED") {
-          optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
-        } else {
-          optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
-        }
+    if (orderShipStatus[data[e][0]]) {
+
+      iconShip = ' | <i class="fas fa-motorcycle"></i>';
+      if(orderShipStatus[data[e][0]].status == "COMPLETED") {
+        optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
       } else {
-        optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
+        optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="shipped">Đã giao hàng</option>'
       }
+
     } else {
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
     }
@@ -225,6 +234,10 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     // console.log($(this));
     var orderCode = data[orderIndex][0];
+    var shipIndex = -1;
+    if (orderShipStatus[data[e][0]]){
+      shipIndex = orderShipStatus[data[e][0]].index
+    }
     var currentOrder = {
       orderCode : orderCode,
       orderDate : data[orderIndex][1],
@@ -237,7 +250,7 @@ function loadOrderListHtml() {
       paymentStatus : data[orderIndex][8],
       shippingStatus : data[orderIndex][9],
       orderNode : data[orderIndex][10],
-      shipIndex : data[orderIndex][11],
+      shipIndex : shipIndex,
       emailId : data[orderIndex][12],
       orderIndex : orderIndex
     }
