@@ -40,7 +40,7 @@ function parseOrderShipping(){
     }
     orderShipStatus[lsOrderShipping[e][0]] = {
       status : lsOrderShipping[e][4],
-      index : (e+1)
+      sindex : (e+1)
     }
   }
 }
@@ -239,7 +239,7 @@ function loadOrderListHtml() {
     var orderCode = data[orderIndex][0];
     var shipIndex = -1;
     if (orderShipStatus[data[e][0]]){
-      shipIndex = orderShipStatus[data[e][0]].index
+      shipIndex = orderShipStatus[data[e][0]].sindex
     }
     var currentOrder = {
       orderCode : orderCode,
