@@ -153,7 +153,8 @@ $("#requestShipping").click(function(){
 	} else {
 		var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':H'+currentOrder.shipIndex;
 		updateShipping(dataShipping, sheetrange, function(){
-			console.log("updated");
+			console.log("updated:"+currentOrder.shipIndex);
+			$("#loadingSpin").hide();
 		}, function(){
 			console.log("Something wrong");
 		})

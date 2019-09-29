@@ -35,6 +35,9 @@ function parseOrderShipping(){
     if (e == 0) {
       continue;
     }
+    if (!lsOrderShipping[e][0]){
+      continue;
+    }
     orderShipStatus[lsOrderShipping[e][0]] = {
       status : lsOrderShipping[e][4],
       index : (e+1)
