@@ -117,8 +117,7 @@ function loadOrderListHtml() {
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e][0]+' | '+data[e][2] +
-              // ' | '+data[e][5] + 
+              data[e][0]+' | '+data[e][2] + ' | '+data[e][5] + 
               iconShip +
               iconPaid +
             '</button>'+
