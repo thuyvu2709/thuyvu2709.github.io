@@ -752,15 +752,15 @@ function getRoleList(callback) {
 function loadOtherFee(callback) {
   var spreadsheetId = mainSheetForProduct;
 
-  // if (passDataLocalhost) {
-  //   callback();
-  // }
+  if (passDataLocalhost) {
+    callback();
+  }
 
-  // if(!gapi.client.sheets) {
-  //   callback();
-  //   comeBackHomeToAuthorize();
-  //   return;
-  // }
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   var indexColumnOfAllData = 4;
   var sheetrange = 'OtherFees!A:'+String.fromCharCode(65+indexColumnOfAllData);
