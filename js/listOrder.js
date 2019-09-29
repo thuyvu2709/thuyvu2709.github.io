@@ -41,7 +41,7 @@ function parseOrderShipping(){
     }
     orderShipStatus[lsOrderShipping[e][0]] = {
       status : lsOrderShipping[e][4],
-      sindex : (e+1)
+      sindex : (parseInt(e)+1)
     }
     // console.log(orderShipStatus[lsOrderShipping[e][0]]);
   }
