@@ -43,6 +43,7 @@ function parseOrderShipping(){
       sindex : (e+1)
     }
   }
+  console.log(orderShipStatus);
 }
 
 function loadOrderListHtml() {
@@ -239,7 +240,7 @@ function loadOrderListHtml() {
     var orderCode = data[orderIndex][0];
     var shipIndex = -1;
     if (orderShipStatus[data[e][0]]){
-      shipIndex = orderShipStatus[data[e][0]].sindex
+      shipIndex = orderShipStatus[data[orderIndex][0]].sindex
     }
     var currentOrder = {
       orderCode : orderCode,
@@ -314,7 +315,7 @@ function loadOrderListHtml() {
     var value = document.getElementsByClassName($(this).attr("class"))[0].value;
     
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-    var shipIndex = parseInt(data[orderIndex][11]);
+    var shipIndex = orderShipStatus[data[orderIndex][0]].sindex;
 
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
