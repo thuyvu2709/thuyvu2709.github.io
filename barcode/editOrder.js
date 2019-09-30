@@ -706,7 +706,7 @@ $("#editOrder").click(function(){
 
 	var shippingCost = $("#shippingCost").val();
 	shippingCost = shippingCost ? shippingCost : 0;
-
+	var shipIndex = currentOrder.shipIndex;
 	currentOrder  = {
 		orderCode : orderCode,//
 		customerName : customerName,//
@@ -719,7 +719,8 @@ $("#editOrder").click(function(){
 		orderIndex: orderIndex,//
 		orderNode : orderNode,
 		paymentStatus : paymentStatus,
-		shippingStatus : shippingStatus
+		shippingStatus : shippingStatus,
+		shipIndex : shipIndex
 	}
 
 	console.log(orderCode);
@@ -736,10 +737,11 @@ $("#editOrder").click(function(){
 				"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
 				paymentStatus,
 				"=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
-				orderNode
+				orderNode,
+				shipIndex
                 ]
             ];
-
+    var numOfColumn = 11;
 	var sheetrange = sheetOrder+'!A'+orderIndex +":"+ String.fromCharCode(65+numOfColumn) + orderIndex;
 
     editOrder(dataEditOrder, sheetrange, function(){
