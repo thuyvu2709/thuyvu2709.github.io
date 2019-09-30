@@ -173,6 +173,7 @@ $("#editOrder").click(function(){
 
 $("#printOrder").click(function(){
 	$(".controlOrder").hide();
+	$("#orderPrintHeader").show();
 	window.print();
 	$(".controlOrder").show();
 
