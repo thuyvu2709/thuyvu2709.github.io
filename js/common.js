@@ -949,15 +949,15 @@ function getOrderShipping(callback) {
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  if (passDataLocalhost) {
-    callback();
-  }
+  // if (passDataLocalhost) {
+  //   callback();
+  // }
 
-  if(!gapi.client.sheets) {
-    callback();
-    comeBackHomeToAuthorize();
-    return;
-  }
+  // if(!gapi.client.sheets) {
+  //   callback();
+  //   comeBackHomeToAuthorize();
+  //   return;
+  // }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,

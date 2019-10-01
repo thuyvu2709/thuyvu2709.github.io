@@ -2,6 +2,9 @@
 $("#footerInclude").load("../common/footer.html");
 
 currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
+
+// console.log(currentOrder);
+
 $("#orderCode").html(currentOrder.orderCode);
 $("#customerName").html(currentOrder.customerName);
 
@@ -13,6 +16,9 @@ $("#customerAddress").html(
 $("#customerPhone").html(
 	'<a href="tel:'+currentOrder.customerPhone+'">'+currentOrder.customerPhone+'</a>'
 );
+
+$("#totalPay").html(currentOrder.totalPay);
+
 $("#shippingCost").html(currentOrder.shippingCost);
 
 $("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);

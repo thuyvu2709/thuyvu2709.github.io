@@ -1,5 +1,6 @@
 var lsOrder;
 var lsTask;
+var lsOrderDetail;
 
 var triggerAfterLoad = function(){
 
@@ -11,22 +12,44 @@ var triggerAfterLoad = function(){
   getOrderShipping(function(lsOrderset){
       $("#loadingSpin").hide();
       lsOrder = lsOrderset;
-      loadOrderShippingListHtml(lsOrder);
+      readOrderDetail(loadOrderShippingListHtml);
       getTaskList(function(lsTaskset){
         lsTask = lsTaskset;
       })
   });
 }
 
-// $(".text-center").click(function(){
-//   getOrderShipping(function(lsOrderset){
-//       lsOrder = lsOrderset;
-//       loadOrderShippingListHtml(lsOrder);
-//       getTaskList(function(lsTaskset){
-//         lsTask = lsTaskset;
-//       })
-//   });
-// })
+$(".text-center").click(function(){
+  // getOrderShipping(function(lsOrderset){
+  //     lsOrder = lsOrderset;
+  //     loadOrderShippingListHtml(lsOrder);
+  //     getTaskList(function(lsTaskset){
+  //       lsTask = lsTaskset;
+  //     })
+  // });
+  triggerAfterLoadX();
+})
+
+function readOrderDetail(callback){
+  // console.log("userRole:"+userRole);
+  if (userRole!="manager") {
+    callback();
+    return;
+  }
+  lsOrderDetail = {}
+  for (var e in lsOrder){
+    if (e == 0) {
+      continue;
+    }
+
+    if (!lsOrder[e][0]) {
+      continue;
+    }
+    lsOrderDetail[lsOrder[e][0]] = JSON.parse(lsOrder[e][3]);
+  }
+  // console.log(lsOrderDetail);
+  callback();
+}
 
 // $(document).ready(function () {
 
@@ -38,7 +61,7 @@ var mode = "PROCESSING";
 
 var totalShippingCost = 0;
 
-function loadOrderShippingListHtml(lsOrder) {
+function loadOrderShippingListHtml() {
 
   $("#listShippingOrder").empty();
   // $(".maintitle").html("Quản lý giao hàng");
@@ -96,13 +119,19 @@ function loadOrderShippingListHtml(lsOrder) {
       completeButton = '<div class="btn btn-default btnNormal" style="margin:10px 10px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
     }
 
+    var title = lsOrder[e][0]+' | '+lsOrder[e][1];
+    if (userRole=="manager") {
+      // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1]
+    }
+
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
         '<div class="card cardElement_'+e+'">'+
           '<div class="card-header" id="heading_"'+e+'>'+
             '<h5 class="mb-0">'+
               '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-                lsOrder[e][0]+' | '+lsOrder[e][1] +
+                title +
               '</button>'+
             '</h5>'+
           '</div>'+
