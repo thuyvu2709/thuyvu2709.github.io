@@ -59,7 +59,7 @@ for (i in prodListOrder){
 	}
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
-    "<td>"+prodListOrder[i].productName+"</td>"+
+    "<td><a href='"+prodListOrder[i].productImage+"'>"+prodListOrder[i].productName+"</a></td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
   "</tr>")

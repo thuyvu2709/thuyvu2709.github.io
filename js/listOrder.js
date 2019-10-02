@@ -5,6 +5,7 @@ var status = "PROCESSING";
 var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
 var orderShipStatus =[];
+var listProductParse = {};
 
 var triggerAfterLoad = function(){
 
@@ -47,6 +48,16 @@ function parseOrderShipping(){
   }
   // console.log(orderShipStatus)
   // console.log(orderShipStatus["DONHANG_50"]);
+}
+
+function parseProduct(){
+  listProductParse = {};
+  var productList = JSON.parse(localStorage.getItem("productList"));
+  for (var e in productList) {
+    listProductParse[productList[e][1]] = {
+      image : productList[e][19]
+    }
+  }
 }
 
 function loadOrderListHtml() {
@@ -275,6 +286,7 @@ function loadOrderListHtml() {
           turnover : orderListDetail[e][7],
           available : orderListDetail[e][8],
           orderDetailIndex : e,
+          productImage : listProductParse[orderListDetail[e][3]]
         }
         prodIndex++;
       }
