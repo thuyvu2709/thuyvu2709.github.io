@@ -19,6 +19,7 @@ var triggerAfterLoad = function(){
 
         getOrderShipping(function(lsOrderset){
           parseOrderShipping();
+          parseProduct();
           $("#loadingSpin").hide();
           console.log("Gooo");
           loadOrderListHtml();
