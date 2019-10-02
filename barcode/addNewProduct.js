@@ -16,6 +16,9 @@ var triggerAfterLoad = function(){
 			}
 			$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
 		}
+		getLatestProductCode(function(code){
+			$("#productCode").val(code);
+		})
 	})
 }
 

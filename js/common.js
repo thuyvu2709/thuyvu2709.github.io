@@ -126,6 +126,44 @@ function loadImportScheduleList(callback) {
   });
 }
 
+function getLatestProductCode(callback) {
+  var spreadsheetId = mainSheetForProduct;
+
+  console.log("getLatestProductCode");
+
+  var indexColumnOfAllData = 1;
+  var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
+      var latestCode = parseFloat(dataset[dataset.length-1][0])+1;
+
+      localStorage.setItem("productLatestCode",latestCode);
+
+      callback(latestCode);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 function getLatestOrderCode(callback) {
   var spreadsheetId = mainSheetForProduct;
 
