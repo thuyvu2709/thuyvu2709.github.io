@@ -287,7 +287,7 @@ function loadOrderListHtml() {
           turnover : orderListDetail[e][7],
           available : orderListDetail[e][8],
           orderDetailIndex : e,
-          productImage : listProductParse[orderListDetail[e][3]]
+          productImage : listProductParse[orderListDetail[e][3]].image
         }
         prodIndex++;
       }
