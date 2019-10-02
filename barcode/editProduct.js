@@ -288,6 +288,8 @@ $( "input" ).keyup(function() {
 $("#btnDuplicate").click(function(){
 	mode = "duplicate";
 	$("#pageMode").html("Thêm mặt hàng");
+    window.scrollTo(0, 0);
+    $("#editProduct").html("Thêm mặt hàng");
 })
 
 $('#btnAddImage').click(function() {
