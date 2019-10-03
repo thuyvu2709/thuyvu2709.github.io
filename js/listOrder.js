@@ -269,7 +269,7 @@ function loadOrderListHtml() {
       shippingStatus : data[orderIndex][9],
       orderNode : data[orderIndex][10],
       shipIndex : shipIndex,
-      emailId : data[orderIndex][12],
+      otherCost : data[orderIndex][12],
       orderIndex : orderIndex
     }
 

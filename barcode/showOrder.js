@@ -35,7 +35,7 @@ if (!currentOrder.shippingCost) {
 
 $("#orderNode").html((currentOrder.orderNode ? currentOrder.orderNode : ""));
 $("#orderNode").height( $("#orderNode")[0].scrollHeight );
-
+$("#otherCost").html(currentOrder.otherCost);
 
 allText = "Mã đơn hàng: "+currentOrder.orderCode +"\n"+
 "Tên khách hàng:"+currentOrder.customerName+"\n"+
@@ -136,7 +136,7 @@ $("#requestShipping").click(function(){
 			"'"+currentOrder.customerPhone,
 			JSON.stringify(currentOrder),
 			"Requested",
-			"",
+			currentOrder.otherCost,
 			"",
 			currentOrder.shippingCost
 		]

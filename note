@@ -4,13 +4,5 @@ Hỏi thuỷ có muốn tính lại phí ship để ra giá thực tế lại ko
 
 Tìm hiểu ems
 
-Test task manage, quản lý đợt hàng, yêu cầu kiểm hàng, test product, edit product, 
-
-Check cùng an danh sách hàng đã gửi
-
-
-An lấy hàng của bác quyến đã thu tiền chưa
-
-Xử lý ngoại lệ lúc refer cái shipping order
-
-Thêm quản lý lương nhân viên
+Test quản lý đợt hàng : fail
+Thêm phần chi phí khách trong order and shipping order

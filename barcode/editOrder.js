@@ -704,6 +704,8 @@ $("#editOrder").click(function(){
 
 	var totalPayIncludeShip = $("#totalPayIncludeShip").html();
 
+	var otherCost = $("#otherCost").val();
+
 	var shippingCost = $("#shippingCost").val();
 	shippingCost = shippingCost ? shippingCost : 0;
 	var shipIndex = currentOrder.shipIndex;
@@ -720,7 +722,8 @@ $("#editOrder").click(function(){
 		orderNode : orderNode,
 		paymentStatus : paymentStatus,
 		shippingStatus : shippingStatus,
-		shipIndex : shipIndex
+		shipIndex : shipIndex,
+		otherCost: otherCost
 	}
 
 	console.log(orderCode);
@@ -738,10 +741,11 @@ $("#editOrder").click(function(){
 				paymentStatus,
 				"=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
-				shipIndex
+				shipIndex,
+				otherCost
                 ]
             ];
-    var numOfColumn = 11;
+    var numOfColumn = 12;
 	var sheetrange = sheetOrder+'!A'+orderIndex +":"+ String.fromCharCode(65+numOfColumn) + orderIndex;
 
     editOrder(dataEditOrder, sheetrange, function(){

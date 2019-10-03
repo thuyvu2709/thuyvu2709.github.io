@@ -32,6 +32,8 @@ $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED
 
 $("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
 
+$("#otherCost").html(currentOrder.otherCost);
+
 if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }

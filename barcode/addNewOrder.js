@@ -468,6 +468,7 @@ $("#addNewOrder").click(function(){
 	var shippingCost = $("#shippingCost").val();
 
 	var orderNode = $("#orderNode").val();
+	var otherCost = $("#otherCost").val();
 
 	shippingCost = shippingCost ? shippingCost : 0;
 
@@ -494,49 +495,13 @@ $("#addNewOrder").click(function(){
 				"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
                 "ORDERED",
                 "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
-				orderNode
+				orderNode,
+				"",
+				otherCost
                 ]
             ]
 
     appendOrder(submitOrderData,addDetailOrder);
-
-	// addDetailOrder();
-
-	// var numOfColumn = 10;
-	// var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn);
-
-
-	// gapi.client.sheets.spreadsheets.values.append({
- //        spreadsheetId: spreadsheetId,
- //        range: sheetrange,
- //        valueInputOption: "USER_ENTERED",
- //        resource: {
- //            "majorDimension": "ROWS",
- //            "values": [
- //                [orderCode,
- //                orderDate,
- //                customerName,
- //                customerAddress,
- //                "'"+customerPhone,
- //                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!F:F)",
-	// 			shippingCost,
-	// 			"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
- //                "ORDERED",
- //                "",
-	// 			orderNode
- //                ]
- //            ]
- //        }
- //    }).then(function(response) {
- //        var result = response.result;
- //    	// console.log(`${result.updatedCells} cells updated.`);
-	//     // $("#modelContent").html("Đã lưu đơn hàng");
-	//     // $('#myModal').modal('toggle');
- //        addDetailOrder();
-
- //    }, function(response) {
- //        appendPre('Error: ' + response.result.error.message);
- //    });
 })
 
 $("#btnRefresh").click(function(){
