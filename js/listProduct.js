@@ -60,7 +60,7 @@ function loadProductListHtml(){
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
-              data[e][0]+" ("+data[e][2]+") - "+data[e][3] +
+              data[e][0]+" ("+data[e][2]+") - "+data[e][3] + " - " +data[e][17]
             '</button>'+
           '</h5>'+
         '</div>'+
