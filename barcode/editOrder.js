@@ -296,8 +296,10 @@ function searchForm(){
 		'<input type="text" class="form-control searchInputProdText searchInputProduct_'+index+'" placeholder="Tìm kiếm">'+
 		// '<div class="btn btn-default">'+
 		'<select class="mdb-select md-form importSearchProductFilter" style="width:100%">'+
-			'<option value="-1" selected>Toàn bộ đợt hàng</option>'+
+			'<option value="-1" selected>Hàng có sẵn</option>'+
 			lsImportCodeSearchProduct +
+			'<option value="-2">Hàng đã bán hết</option>'+
+			'<option value="-3">Toàn bộ</option>'+
 		'</select>'
     	// '</div>'
 	)
@@ -348,16 +350,26 @@ function filterInSearchForm(index,searchText){
 			}
 		}
 		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
-		if (importCode != -1) {
-			if (productList[e][2] != importCode) {
-				continue;
-			}
+
+		if (importCode > -1) {
+		  if (importCode != productList[e][2]) {
+		    continue;
+		  }
+		} else if (importCode == -1) {
+		  if (productList[e][17] == 0) {
+		    continue;
+		  }
+		} else if (importCode == -2) {
+		  if (productList[e][17] != 0) {
+		    continue;
+		  }
 		}
+
 		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
             '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
-              productList[e][1] + " | " + productList[e][3] +
+              productList[e][1]+" ("+productList[e][2]+") | " + productList[e][3] +
             '</button>'+
           // '</h5>'+
         // '</div>'+
