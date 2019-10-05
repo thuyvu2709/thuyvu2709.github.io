@@ -242,7 +242,7 @@ function getLatestTaskCode(callback) {
 
 
 function getLatestImportCode(callback) {
-  var spreadsheetId = shippingSheet;
+  var spreadsheetId = mainSheetForProduct;
 
   console.log("getLatestTaskCode");
 

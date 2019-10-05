@@ -11,11 +11,13 @@ var triggerAfterLoad = function(){
 
 function addNewImport(){
 	var submitImportData = [
+      [
         $("#importCode").val(),
         $("#importName").val(),
         0,
         $("#importShippingFee").val(),
         "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)"
+      ]
     ]
     
     $("#loadingSpin").show();
