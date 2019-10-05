@@ -493,7 +493,8 @@ $("#addNewOrder").click(function(){
 		totalPay : totalPay,
 		orderDate : orderDate,
 		totalPayIncludeShip : totalPayIncludeShip,
-		orderNode : orderNode
+		orderNode : orderNode,
+		otherCost : otherCost
 	}
 
 	var submitOrderData = [
