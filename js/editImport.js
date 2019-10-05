@@ -23,7 +23,7 @@ function editImport(){
     
     var indexColumnOfAllData = 4;
 
-    var sheetrange = 'Warehouse!A:'+currentImport.importIndex+':'+String.fromCharCode(65+indexColumnOfAllData)+''+currentImport.importIndex;
+    var sheetrange = 'Warehouse!A'+currentImport.importIndex+':'+String.fromCharCode(65+indexColumnOfAllData)+''+currentImport.importIndex;
 
     editWarehouse(submitImportData, sheetrange,function(){
         $("#loadingSpin").hide();
