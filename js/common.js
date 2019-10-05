@@ -522,7 +522,7 @@ function appendTask(submitTaskData,callback) {
         }
     }).then(function(response) {
         var result = response.result;
-      // console.log(`${result.updatedCells} cells updated.`);
+        console.log(`${result.updatedCells} cells updated.`);
       // $("#modelContent").html("Đã lưu đơn hàng");
       // $('#myModal').modal('toggle');
         callback();
