@@ -482,6 +482,7 @@ $("#addNewOrder").click(function(){
 	var orderNode = $("#orderNode").val();
 	var otherCost = $("#otherCost").val();
 
+	otherCost = otherCost ? otherCost : 0;
 	shippingCost = shippingCost ? shippingCost : 0;
 
 	currentOrder  = {

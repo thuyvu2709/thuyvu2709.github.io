@@ -719,7 +719,10 @@ $("#editOrder").click(function(){
 	var otherCost = $("#otherCost").val();
 
 	var shippingCost = $("#shippingCost").val();
+
+	otherCost = otherCost ? otherCost : 0;
 	shippingCost = shippingCost ? shippingCost : 0;
+
 	var shipIndex = currentOrder.shipIndex;
 	currentOrder  = {
 		orderCode : orderCode,//

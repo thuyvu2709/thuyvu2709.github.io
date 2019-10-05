@@ -81,7 +81,7 @@ function loadOrderShippingListHtml() {
     }
 
     if (lsOrder[e][4] == "COMPLETED") {
-      totalShippingCost += parseInt(lsOrder[e][7])
+      totalShippingCost += parseInt(lsOrder[e][7]) + parseInt(lsOrder[e][5])
     }
 
     if (mode == "PROCESSING") {
