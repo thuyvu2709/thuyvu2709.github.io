@@ -23,9 +23,9 @@ function editImport(){
     
     var indexColumnOfAllData = 4;
 
-    var sheetrange = 'Warehouse!A:'+currentImport.importIndex+':'+String.fromCharCode(65+indexColumnOfAllData)+currentImport.importIndex;
+    var sheetrange = 'Warehouse!A:'+currentImport.importIndex+':'+String.fromCharCode(65+indexColumnOfAllData)+''+currentImport.importIndex;
 
-    editWarehouse(submitImportData,function(){
+    editWarehouse(submitImportData, sheetrange,function(){
         $("#loadingSpin").hide();
         // $("#modelContent").html("Đã lưu thông tin");
         // $('#myModal').modal('toggle');

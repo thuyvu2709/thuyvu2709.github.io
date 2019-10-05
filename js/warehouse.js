@@ -66,7 +66,7 @@ function loadWarehouseHtml() {
 
 function editWarehouseFn() {
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  var realIndex = parseInt(importIndex) - 1;
+  var realIndex = parseInt(importIndex) + 1;
   var currentImport = {
     importIndex : realIndex,
     importCode : warehouseData[importIndex][0],
