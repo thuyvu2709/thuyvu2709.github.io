@@ -10,11 +10,13 @@ $("#importShippingFee").val(currentImport.importShippingFee);
 
 function editImport(){
 	var submitImportData = [
-        $("#importCode").val(),
-        $("#importName").val(),
-        currentImport.importStatus,
-        $("#importShippingFee").val(),
-        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)"
+        [
+            $("#importCode").val(),
+            $("#importName").val(),
+            currentImport.importStatus,
+            $("#importShippingFee").val(),
+            "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)"
+        ]
     ]
     
     $("#loadingSpin").show();
