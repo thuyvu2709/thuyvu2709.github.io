@@ -141,7 +141,7 @@ $("#requestShipping").click(function(){
 			currentOrder.shippingCost
 		]
 	];
-	if(currentOrder.shipIndex == -1) {	 
+	if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {	 
 
 		appendShipping(dataShipping, function(){
 			console.log("Done request shipping")
