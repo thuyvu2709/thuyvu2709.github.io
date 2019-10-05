@@ -21,7 +21,7 @@ function editImport(){
     
     $("#loadingSpin").show();
     
-    var indexColumnOfAllData = 5;
+    var indexColumnOfAllData = 4;
 
     var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
