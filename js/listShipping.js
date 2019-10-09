@@ -242,40 +242,40 @@ function shipComplete(){
 
   var sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
-  var emailId = lsOrder[orderIndex][5];
+  var otherCost = lsOrder[orderIndex][5];
   console.log("Reply : email:"+emailId);
 
   var dataUpdateShipping = [
-    ["COMPLETED", emailId, dateTime]
+    ["COMPLETED", otherCost, dateTime]
   ];
 
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-    // $(".cardElement_"+orderIndex).remove();
-    // // $("#loadingSpin").show();
+    // // $(".cardElement_"+orderIndex).remove();
+    // // // $("#loadingSpin").show();
 
-    var roles = getSpecificRoles();
-    var receiver = roles["manager"];
-    var cc = roles["shipper"];
-    console.log(receiver);
-    console.log(cc);
+    // var roles = getSpecificRoles();
+    // var receiver = roles["manager"];
+    // var cc = roles["shipper"];
+    // console.log(receiver);
+    // console.log(cc);
 
-    var emailContent = "Hoàn thành";
-    // var subject = lsOrder[orderIndex][0] + " - " +removeSpecialAlias(lsOrder[orderIndex][1]).toUpperCase();
-    var subject = lsOrder[orderIndex][0] + " -  COMPLETED"; 
+    // var emailContent = "Hoàn thành";
+    // // var subject = lsOrder[orderIndex][0] + " - " +removeSpecialAlias(lsOrder[orderIndex][1]).toUpperCase();
+    // var subject = lsOrder[orderIndex][0] + " -  COMPLETED"; 
 
-    var headers_obj = {
-            'To': receiver,
-            'CC' : cc,
-            'Subject': subject,
-            'In-Reply-To': emailId
-          };
+    // var headers_obj = {
+    //         'To': receiver,
+    //         'CC' : cc,
+    //         'Subject': subject,
+    //         'In-Reply-To': emailId
+    //       };
 
-    sendEmail(headers_obj,emailContent, function(){
+    // sendEmail(headers_obj,emailContent, function(){
       $(".cardElement_"+orderIndex).remove();
       $("#loadingSpin").hide();
-    });
+    // });
 
   },function(){
     console.log("Something wrong");

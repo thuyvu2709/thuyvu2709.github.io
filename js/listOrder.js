@@ -340,7 +340,7 @@ function loadOrderListHtml() {
     var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
 
     var dataUpdateTask = [
-      ["COMPLETED", dateTime]
+      [value,orderShipStatus[data[orderIndex][0]].otherCost, dateTime]
     ];
 
     $("#loadingSpin").show();
