@@ -243,7 +243,7 @@ function shipComplete(){
   var sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
   var otherCost = lsOrder[orderIndex][5];
-  console.log("Reply : email:"+emailId);
+  // console.log("Reply : email:"+emailId);
 
   var dataUpdateShipping = [
     ["COMPLETED", otherCost, dateTime]
