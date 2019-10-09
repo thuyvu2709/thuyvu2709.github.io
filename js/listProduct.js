@@ -5,7 +5,7 @@ var importCode = url.searchParams.get("importCode");
 console.log("importCode:"+importCode);
 
 if (!importCode) {
-  importCode = -1;
+  importCode = -3;
 }
 
 var triggerAfterLoad = function(){
@@ -58,6 +58,9 @@ function loadProductListHtml(){
 
 	for(e in data) {
     if (e == 0) {
+      continue;
+    }
+    if (!data[e][0]) {
       continue;
     }
 
