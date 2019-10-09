@@ -53,11 +53,19 @@ for (i in prodListOrder){
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
     // "<td>"+prodListOrder[i].productName+"</td>"+
-    "<td><a href='"+prodListOrder[i].productImage+"'>"+prodListOrder[i].productName+"</a></td>"+
+    "<td class='showImage borderMustard image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
   "</tr>")
 }
+
+$(".showImage").click(function(){
+	var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	index = parseInt(index);
+	// console.log("AA"+index);
+	$("#myModal .modal-body").html('<img style="width:100%" src="'+prodListOrder[index].productImage+'" />')
+    $('#myModal').modal('toggle');
+})
 
 var zoom = 1;
 

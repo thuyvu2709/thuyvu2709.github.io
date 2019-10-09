@@ -26,6 +26,17 @@ var triggerAfterLoad = function(){
   })
 }
 
+$(".text-center").click(function(){
+  // getOrderShipping(function(lsOrderset){
+  //     lsOrder = lsOrderset;
+  //     loadOrderShippingListHtml(lsOrder);
+  //     getTaskList(function(lsTaskset){
+  //       lsTask = lsTaskset;
+  //     })
+  // });
+  triggerAfterLoad();
+})
+
 function loadProductListHtml(){
   data = JSON.parse(localStorage.getItem("productList"));
   var indexColumnOfAllData = 19;
