@@ -59,7 +59,7 @@ for (i in prodListOrder){
 	}
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
-    "<td><a href='"+prodListOrder[i].productImage+"'>"+prodListOrder[i].productName+"</a></td>"+
+    "<td class='showImage borderMustard image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
   "</tr>")
@@ -74,6 +74,14 @@ allText = allText + (currentOrder.paymentStatus == "PAID" ? "Khách hàng đã t
 allText = allText + (currentOrder.orderNode ? "Chú ý:"+currentOrder.orderNode : "");
 
 var zoom = 1;
+
+$(".showImage").click(function(){
+	var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	index = parseInt(index);
+	// console.log("AA"+index);
+	$("#myModal .modal-body").html('<img style="width:100%" src="'+prodListOrder[index].productImage+'" />')
+    $('#myModal').modal('toggle');
+})
 
 $("#zoomin").click(function(){
 	console.log(document.body.style.zoom);
