@@ -337,7 +337,8 @@ function loadOrderListHtml() {
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' '+time;
 
-    var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
+    // var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
+    var sheetrange = 'Shipping!E'+shipIndex+':G'+shipIndex;
 
     var dataUpdateTask = [
       [value,orderShipStatus[data[orderIndex][0]].otherCost, dateTime]
