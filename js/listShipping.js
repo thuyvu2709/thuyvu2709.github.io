@@ -2,7 +2,7 @@ var lsOrder;
 var lsTask;
 var lsOrderDetail;
 
-var triggerAfterLoad = function(){
+var triggerAfterLoadX = function(){
 
   $("#loadingSpin").show();
 
@@ -27,7 +27,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoad();
+  triggerAfterLoadX();
 })
 
 function readOrderDetail(callback){
@@ -133,6 +133,15 @@ function loadOrderShippingListHtml() {
       title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1]
     }
 
+    var orderDetailBrief = "<hr/>";
+    var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
+    for (o in prodListOrder) {
+      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
+    }
+    console.log(prodListOrder[o]);
+    orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
+    orderDetailBrief+="<hr/>";
+
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
         '<div class="card cardElement_'+e+'">'+
@@ -155,6 +164,7 @@ function loadOrderShippingListHtml() {
               '  <a href="http://maps.google.com/maps?q='+address+'"><span class="fas fa-address-card"></span>'+lsOrder[e][1]+'</a>'+
               '</div>'+
               '<br/>'+
+              orderDetailBrief+
               '<div class="btn btn-default btnNormal detail order_'+e+'" style="margin-top:10px;">Xem chi tiết</div>'+
               preparedButton +
               completeButton +
