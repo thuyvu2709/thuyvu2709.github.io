@@ -54,6 +54,7 @@ function loadWarehouseHtml() {
             cardBody +
             '<hr/>'+
             '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 0px 10px 0px 0px">Sửa</div>'+
+            '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 0px 10px 0px 0px">Xoá</div>'+
             '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" >Xem danh sách hàng</div>'+
           '</div>'+
         '</div>'+
@@ -63,6 +64,7 @@ function loadWarehouseHtml() {
     $(".checkImport_"+e).click(requestToCheckProducts);
     $(".editWH_"+e).click(editWarehouseFn);
     $(".viewProductInWH_"+e).click(viewProductInWH);
+    $(".deleteWH_"+e).click(deleteWH);
   }
 };
 
@@ -128,6 +130,29 @@ function requestToCheckProducts(){
 
       })
     })
+
+  })
+}
+
+function deleteWH(){
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  importIndex = parseInt(importIndex);
+  var importCode = warehouseData[importIndex][0];
+  console.log(importCode);
+
+  $("#loadingSpin").show();
+
+  var actualIndexInSheet = importIndex +1;
+  var range = "Warehouse!A"+actualIndexInSheet+":E"+actualIndexInSheet;
+
+  var dataEditWarehouse = [
+    ["","","","",""]
+  ]
+
+  editWarehouse(dataEditWarehouse, range, function(){
+    
+    console.log("delete Warehouse");
+    $("#loadingSpin").hide();
 
   })
 }
