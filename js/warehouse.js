@@ -92,7 +92,7 @@ function requestToCheckProducts(){
     console.log("loadProductList");
     for (e in productList) {
       if (productList[e][2] == importCode) {
-        content += productList[e][3]+" : "+productList[e][4] + "<br/>";
+        content += "<a href='"+productList[e][19]+"'>"+productList[e][3]+" : "+productList[e][4] + "</a><br/>";
       }
     }
     content += "<hr/>"
