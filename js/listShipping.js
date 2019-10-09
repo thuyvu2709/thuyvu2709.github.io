@@ -2,7 +2,7 @@ var lsOrder;
 var lsTask;
 var lsOrderDetail;
 
-var triggerAfterLoad = function(){
+var triggerAfterLoadX = function(){
 
   $("#loadingSpin").show();
 
@@ -96,7 +96,7 @@ function loadOrderShippingListHtml() {
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
-    var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal delete order_'+e+'" style="margin:10px 0 0;">Xoá</div>' : "";
+    var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal delete order_'+e+'" style="margin:10px 10px 0;">Xoá</div>' : "";
 
     var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
 
@@ -113,10 +113,18 @@ function loadOrderShippingListHtml() {
     '   </div>'+
     '<hr/>';
 
-    var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>';
+    var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 0px 0;">Hoàn thành</div>';
 
     if (lsOrder[e][6]) {
-      completeButton = '<div class="btn btn-default btnNormal" style="margin:10px 10px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
+      completeButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 0px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
+    }
+
+    var preparedButton = '<div class="btn btn-default btnNormal prepared preparedOrder_'+e+'" style="margin:10px 10px 0;">Đã chuẩn bị</div><br/>';
+    var orderReady = "";
+    if (lsOrder[e][8]) {
+      // console.log(lsOrder[e][8]);
+      orderReady = "borderMustard"
+      preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
     }
 
     var title = lsOrder[e][0]+' | '+lsOrder[e][1];
@@ -128,9 +136,9 @@ function loadOrderShippingListHtml() {
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
         '<div class="card cardElement_'+e+'">'+
-          '<div class="card-header" id="heading_"'+e+'>'+
+          '<div class="card-header" id="heading_'+e+'">'+
             '<h5 class="mb-0">'+
-              '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+              '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
                 title +
               '</button>'+
             '</h5>'+
@@ -148,6 +156,7 @@ function loadOrderShippingListHtml() {
               '</div>'+
               '<br/>'+
               '<div class="btn btn-default btnNormal detail order_'+e+'" style="margin-top:10px;">Xem chi tiết</div>'+
+              preparedButton +
               completeButton +
               deleteButton +
             '</div>'+
@@ -160,6 +169,7 @@ function loadOrderShippingListHtml() {
   $(".detail").click(showDetail);
   $(".delete").click(deleteShipRequest);
   $('.datetimepicker').datetimepicker();
+  $('.prepared').click(shipPrepared);
 
   $(".btnChooseShippingSchedule").hide();
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
@@ -257,6 +267,38 @@ function shipComplete(){
       $("#loadingSpin").hide();
     });
 
+  },function(){
+    console.log("Something wrong");
+  })
+}
+
+function shipPrepared(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+
+  var sheetrange = 'Shipping!I'+actualOrderIndex+':I'+actualOrderIndex;
+
+  var emailId = lsOrder[orderIndex][5];
+  console.log("Reply : email:"+emailId);
+
+  var dataUpdateShipping = [
+    [dateTime]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+      // $(".cardElement_"+orderIndex).remove();
+      $(".btnOrder_"+orderIndex).addClass("borderMustard");
+      $(".preparedOrder_"+orderIndex).addClass("borderMustard");
+      // console.log($(".preparedOrder_"+orderIndex));
+      $(".preparedOrder_"+orderIndex).html("Đã chuẩn bị lúc:"+dateTime);
+      $("#loadingSpin").hide();
   },function(){
     console.log("Something wrong");
   })
