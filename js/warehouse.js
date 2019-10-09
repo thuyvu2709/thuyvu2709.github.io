@@ -53,7 +53,8 @@ function loadWarehouseHtml() {
           '<div class="card-body">'+
             cardBody +
             '<hr/>'+
-            '<div class="btn btn-default btnNormal editWH_'+e+'" >Sửa</div>'+
+            '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 0px 10px 0px 0px">Sửa</div>'+
+            '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" >Xem danh sách hàng</div>'+
           '</div>'+
         '</div>'+
       '</div>'
@@ -61,8 +62,15 @@ function loadWarehouseHtml() {
 
     $(".checkImport_"+e).click(requestToCheckProducts);
     $(".editWH_"+e).click(editWarehouseFn);
+    $(".viewProductInWH_"+e).click(viewProductInWH);
   }
 };
+
+function viewProductInWH() {
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  // console.log(warehouseData[importIndex]);
+  window.location="listproduct.html?importCode="+warehouseData[importIndex][0];
+}
 
 function editWarehouseFn() {
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();

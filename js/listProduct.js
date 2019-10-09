@@ -1,3 +1,13 @@
+console.log(window.location);
+var url = new URL(window.location.href);
+var importCode = url.searchParams.get("importCode");
+
+console.log("importCode:"+importCode);
+
+if (!importCode) {
+  importCode = -1;
+}
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -10,7 +20,7 @@ var triggerAfterLoad = function(){
           var importSLData = JSON.parse(localStorage.getItem("warehouse"));
           console.log(importSLData);
           $("#importFilter").empty();
-          $("#importFilter").append("<option selected value='-1'>Hàng có sẵn</option>");
+          $("#importFilter").append("<option value='-1'>Hàng có sẵn</option>");
       
           for (var e in importSLData) {
             if (e ==0) {
@@ -21,7 +31,7 @@ var triggerAfterLoad = function(){
 
           $("#importFilter").append("<option value='-2'>Hàng đã bán hết</option>");
           $("#importFilter").append("<option value='-3'>Toàn bộ</option>");
-
+          $("#importFilter").val(importCode);
       })
   })
 }
@@ -36,6 +46,7 @@ $(".text-center").click(function(){
   // });
   triggerAfterLoad();
 })
+// console.log(c);
 
 function loadProductListHtml(){
   data = JSON.parse(localStorage.getItem("productList"));
@@ -59,7 +70,7 @@ function loadProductListHtml(){
       }
     }
 
-    var importCode = document.getElementById("importFilter").value;
+    // var importCode = document.getElementById("importFilter").value;
 
     if (importCode > -1) {
       if (importCode != data[e][2]) {
@@ -155,8 +166,11 @@ $("#prodSearchInput").keyup(function(){
 });
 
 $("#importFilter").change(function(){
-  console.log("importFilter:");
+  // console.log("importFilter:");
   $("#prodSearchInput").val("");
+
+  importCode = document.getElementById("importFilter").value;
+
   loadProductListHtml();
 })
 

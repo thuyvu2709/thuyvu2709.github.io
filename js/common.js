@@ -66,16 +66,16 @@ function loadProductList(callback) {
 
   console.log("loadProductList:"+sheetrange);
 
-  // if (passDataLocalhost) {
-  //   callback();
-  //   return;
-  // }
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
 
-  // if(!gapi.client.sheets) {
-  //   callback();
-  //   comeBackHomeToAuthorize();
-  //   return;
-  // }
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
