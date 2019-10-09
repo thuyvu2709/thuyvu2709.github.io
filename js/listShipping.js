@@ -115,7 +115,7 @@ function loadOrderShippingListHtml() {
 
     var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 0px 0;">Hoàn thành</div>';
 
-    if (lsOrder[e][6]) {
+    if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
       completeButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 0px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
     }
 
