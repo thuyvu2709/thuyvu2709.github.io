@@ -2,7 +2,7 @@ var lsOrder;
 var lsTask;
 var lsOrderDetail;
 
-var triggerAfterLoadX = function(){
+var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
@@ -27,7 +27,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoadX();
+  triggerAfterLoad();
 })
 
 function readOrderDetail(callback){
