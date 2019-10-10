@@ -160,6 +160,9 @@ function searchForm(){
 		if (e == 0) {
 			continue;
 		}
+		if (!productList[e][0]) {
+			continue;
+		}
 
 		$("#myModal2 .modal-body").append('<div class="card">'+
         // '<div class="card-header">'+
@@ -231,6 +234,9 @@ function filterInSearchForm(index,searchText){
 
 	for(e in productList) {
 		if (e == 0) {
+			continue;
+		}
+		if (!productList[e][0]) {
 			continue;
 		}
 		if (searchText) {
