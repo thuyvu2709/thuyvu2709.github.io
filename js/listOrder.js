@@ -46,6 +46,9 @@ function filterOrderWithProdRefCode(){
       orderWithProdRef.push(orderListDetail[e][0]);
     }
   }
+  if (orderWithProdRef.length == 0) {
+    orderWithProdRef.push("$$$");
+  }
 }
 
 // $(".text-center").click(function(){
