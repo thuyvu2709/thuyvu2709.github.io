@@ -7,7 +7,7 @@ var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
-		console.log(importSLData);
+		// console.log(importSLData);
 		$("#importSchedule").empty();
 		$("#importSchedule").append("<option disabled selected>Chọn đợt hàng</option>");
 		for (var e in importSLData) {
