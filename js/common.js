@@ -1206,7 +1206,6 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
 
 
   var splitAddNewOrder = function (callbackSplitAddNew) {
-    orderCode = localStorage.getItem("orderCode");
 
     var submitOrderData = [
         [
@@ -1260,6 +1259,7 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
   }
 
   getLatestOrderCode(function(){
+    orderCode = localStorage.getItem("orderCode");
     prepareProdListOrder();
     splitAddNewOrder(function(){
       fRemove();
