@@ -57,11 +57,13 @@ for (i in prodListOrder){
 	if (prodListOrder[i].delete) {
 		continue;
 	}
+	var isAvailable = prodListOrder[i].available == 1 ? "borderMustard" : "";
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
-    "<td class='showImage borderMustard image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
+    "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
+    // "<td>"+prodListOrder[i].available+"</td>"+
   "</tr>")
 	allText = allText + 
 		(parseInt(i)+1)+"-"+prodListOrder[i].productName+" (Số lượng:"+prodListOrder[i].productCount+")\n"
@@ -111,66 +113,7 @@ $("#copyText").click(function(){
 })
 
 $("#requestShipping").click(function(){
-	// var receiver = "kenkreck1004@gmail.com";
-	// var cc = "levanthanh3005@gmail.com";
-	$("#loadingSpin").show();
-	// var roles = getSpecificRoles();
-	// var receiver = roles["shipper"];
-	// var cc = roles["manager"];
-	// console.log(receiver);
-	// console.log(cc);
-	// sendOrderViaEmail(receiver, cc,currentOrder, function(e){
-	// 	console.log("Sent");
-	// 	console.log(e);
-	// 	console.log("Email id:"+e.id+" can do reply email here");
-	// 	var emailId = e.id;
-	// 	var orderIndex = parseInt(currentOrder.orderIndex)+1;
-		
-	// 	getLatestShippingIndex(function(shipIndex){
-	// 		var dataEditOrder = [
-	// 			[
-	// 				shipIndex,
-	// 				emailId
-	// 			]
-	// 		];
-	// 		var range = 'Order!L'+orderIndex +":M"+ orderIndex;
-
-	// 		editOrder(dataEditOrder,range,function(){
-
-	var dataShipping = [
-		[
-			currentOrder.orderCode,
-			currentOrder.customerAddress,
-			"'"+currentOrder.customerPhone,
-			JSON.stringify(currentOrder),
-			"Requested",
-			currentOrder.otherCost,
-			"",
-			currentOrder.shippingCost
-		]
-	];
-	if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {	 
-
-		appendShipping(dataShipping, function(){
-			console.log("Done request shipping")
-			$("#loadingSpin").hide();
-		},function(){
-			console.log("Something wrong");
-			$("#loadingSpin").hide();
-		})
-	} else {
-		var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':H'+currentOrder.shipIndex;
-		updateShipping(dataShipping, sheetrange, function(){
-			console.log("updated:"+currentOrder.shipIndex);
-			$("#loadingSpin").hide();
-		}, function(){
-			console.log("Something wrong");
-		})
-	}
-	// 		});
-	// 	})
-	// });
-
+	requestShipping();
 })
 
 

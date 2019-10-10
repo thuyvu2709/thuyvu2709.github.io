@@ -30,6 +30,14 @@ var triggerAfterLoad = function(){
   })
 }
 
+// $(".text-center").click(function(){
+//   parseOrderShipping();
+//   parseProduct();
+//   $("#loadingSpin").hide();
+//   console.log("Gooo");
+//   loadOrderListHtml();
+// })
+
 function parseOrderShipping(){
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   // console.log(lsOrderShipping);
@@ -146,8 +154,13 @@ function loadOrderListHtml() {
             '</select>'+
             // '<label class="mdb-main-label">Đã đặt hàng</label>'+
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
-            '<div class="btn orderelement order_'+e+'" style="border: 1px solid black;margin-left:10px;">Chi tiết</div>'+
-            '<div class="btn deleteelement order_'+e+'" style="border: 1px solid black;margin-left:10px;">Xoá đơn hàng</div>'+
+            '<hr/>'+
+            '<div class="btn orderelement order_'+e+'" style="border: 1px solid black;margin:5px">Chi tiết</div>'+
+            '<div class="btn deleteelement order_'+e+'" style="border: 1px solid black;margin:5px;">Xoá đơn hàng</div>'+
+            '<div class="btn editorder order_'+e+'" style="border: 1px solid black;margin:5px;">Sửa đơn hàng</div>'+
+            '<hr/>'+
+            '<div class="btn requestshipping order_'+e+'" style="border: 1px solid black;margin:5px;">Yêu cầu giao hàng</div>'+
+            '<div class="btn splitorder order_'+e+'" style="border: 1px solid black;margin:5px;">Tách đơn hàng có sẵn</div>'+
           '</div>'+
         '</div>'+
       '</div>'
@@ -248,8 +261,7 @@ function loadOrderListHtml() {
     $('#myModal').modal('toggle');
   })
 
-  $(".orderelement").click(function(){
-    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  function getOrder(orderIndex) {
     // console.log($(this));
     var orderCode = data[orderIndex][0];
     var shipIndex = -1;
@@ -285,9 +297,11 @@ function loadOrderListHtml() {
           productCount : orderListDetail[e][5],
           productEstimateSellingVND : orderListDetail[e][6],
           turnover : orderListDetail[e][7],
-          available : orderListDetail[e][8],
+          totalPay : orderListDetail[e][8],
+          profit : orderListDetail[e][9],
+          available : orderListDetail[e][10],
           orderDetailIndex : e,
-          productImage : listProductParse[orderListDetail[e][3]].image
+          productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : ""
         }
         prodIndex++;
       }
@@ -296,13 +310,43 @@ function loadOrderListHtml() {
     currentOrder.prodListOrder = prodListOrder;
 
     localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+    return currentOrder;
+  }
 
+  $(".orderelement").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    getOrder(orderIndex);
     window.location = "../barcode/showorder.html";
   })
 
+  $(".splitorder").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var currentOrder=getOrder(orderIndex);
+
+    $("#loadingSpin").show();
+
+    splitOrderAvailable(currentOrder,function(){
+      location.reload();
+    });
+
+    // window.location = "../barcode/showorder.html";
+  })
 
   $(".orderelementdetail").click(function(){
     
+  })
+
+  $(".editorder").click(function(){
+    // console.log("AAA");
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var currentOrder=getOrder(orderIndex);
+    window.location = "../barcode/editorder.html"
+  })
+
+  $(".requestshipping").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var currentOrder=getOrder(orderIndex);
+    requestShipping(currentOrder);
   })
 
   $(".selectPayment").change(function(){

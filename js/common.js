@@ -987,15 +987,15 @@ function getOrderShipping(callback) {
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  // if (passDataLocalhost) {
-  //   callback();
-  // }
+  if (passDataLocalhost) {
+    callback();
+  }
 
-  // if(!gapi.client.sheets) {
-  //   callback();
-  //   comeBackHomeToAuthorize();
-  //   return;
-  // }
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
@@ -1129,6 +1129,138 @@ function getSpecificRoles(){
     "manager" : manager,
     "marketer" :marketer
   }
+}
+
+function requestShipping(currentOrder){
+  $("#loadingSpin").show();
+
+  var dataShipping = [
+    [
+      currentOrder.orderCode,
+      currentOrder.customerAddress,
+      "'"+currentOrder.customerPhone,
+      JSON.stringify(currentOrder),
+      "Requested",
+      currentOrder.otherCost,
+      "",
+      currentOrder.shippingCost
+    ]
+  ];
+  if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
+    appendShipping(dataShipping, function(){
+      console.log("Done request shipping")
+      $("#loadingSpin").hide();
+    },function(){
+      console.log("Something wrong");
+      $("#loadingSpin").hide();
+    })
+  } else {
+    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':H'+currentOrder.shipIndex;
+    updateShipping(dataShipping, sheetrange, function(){
+      console.log("updated:"+currentOrder.shipIndex);
+      $("#loadingSpin").hide();
+    }, function(){
+      console.log("Something wrong");
+    })
+  }
+}
+
+function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
+  // $("#loadingSpin").show();
+  //Add new order
+  var orderCode;
+
+  var dataProdListOrderReady = [];
+  var dataProfListOrderRemoveSplit = [];
+  var dataRangeRemoveSplit = []
+  var prodListOrder = currentOrder.prodListOrder;
+  var numOfColumnOrderDetail = 10;
+  for (e in prodListOrder) {
+    if (prodListOrder[e].available == 1) {
+      // prodListOrderReady.push(prodListOrder[e]);
+      dataProdListOrderReady.push([
+        orderCode,
+        prodListOrder[e].productCode,
+        prodListOrder[e].importCode,
+        '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+        prodListOrder[e].productName,
+        prodListOrder[e].productCount,
+        prodListOrder[e].productEstimateSellingVND,
+        "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
+        "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
+        "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
+        "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
+      ])
+
+      // dataProfListOrderRemoveSplit.push([
+      //   "","","","","","","","","","",""
+      // ])
+      var orderDetailIndex = parseInt(prodListOrder[e].orderDetailIndex) + 1;
+
+      dataRangeRemoveSplit.push("OrderDetail!A"+orderDetailIndex+":"+String.fromCharCode(65+numOfColumnOrderDetail)+orderDetailIndex);
+    }
+  }
+
+
+  var splitAddNewOrder = function (callbackSplitAddNew) {
+    orderCode = localStorage.getItem("orderCode");
+
+    var submitOrderData = [
+        [
+          orderCode,
+          currentOrder.orderDate,
+          currentOrder.customerName,
+          currentOrder.customerAddress,
+          "'"+currentOrder.customerPhone,
+          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+          currentOrder.shippingCost,
+          "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
+          "ORDERED",
+          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+          currentOrder.orderNode,
+          "",
+          currentOrder.otherCost
+        ]
+    ]
+
+    appendOrder(submitOrderData,function(){
+      appendOrderDetail(dataProdListOrderReady,callbackSplitAddNew);
+    });
+  }
+
+  var fRemove = function(){
+    console.log("fEdit")
+    if (dataRangeRemoveSplit.length > 0) {
+      // var numOfColumn = 6;
+
+      var updateOneByOne = function (index) {
+        if (index<dataRangeRemoveSplit.length) {
+
+          console.log("Remove:");
+          console.log(dataRangeRemoveSplit[index])
+
+          var dataEditOD = [
+            ["","","","","","","","","","",""]
+          ] 
+          
+          editOrderDetail(dataEditOD, dataRangeRemoveSplit[index], function(){
+            updateOneByOne(index+1);
+          })
+
+        } else {
+          callbackSplitOrderMain();
+          return;
+        }
+      }
+      updateOneByOne(0);
+    }
+  }
+
+  getLatestOrderCode(function(){
+    splitAddNewOrder(function(){
+      fRemove();
+    });
+  })
 }
 
 function b64EncodeUnicode(str) {
