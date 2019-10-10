@@ -154,7 +154,14 @@ function getLatestProductCode(callback) {
       dataset = response.result.values;
       // showList(dataset);
       // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
-      var latestCode = parseFloat(dataset[dataset.length-1][0])+1;
+      var latestCode = 0;
+      for (var e in dataset) {
+        var code = parseInt(dataset[e][0]);
+        if (latestCode < code) {
+          latestCode = code; 
+        }
+      }
+      latestCode = latestCode+1;
 
       localStorage.setItem("productLatestCode",latestCode);
 
