@@ -284,34 +284,34 @@ function shipComplete(){
 
 function shipPrepared(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  var actualOrderIndex = parseInt(orderIndex) + 1;
+  // var actualOrderIndex = parseInt(orderIndex) + 1;
 
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
+  // var today = new Date();
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // var dateTime = date+' '+time;
 
-  var sheetrange = 'Shipping!I'+actualOrderIndex+':I'+actualOrderIndex;
+  // var sheetrange = 'Shipping!I'+actualOrderIndex+':I'+actualOrderIndex;
 
-  var emailId = lsOrder[orderIndex][5];
-  console.log("Reply : email:"+emailId);
+  // var emailId = lsOrder[orderIndex][5];
+  // console.log("Reply : email:"+emailId);
 
-  var dataUpdateShipping = [
-    [dateTime]
-  ];
+  // var dataUpdateShipping = [
+  //   [dateTime]
+  // ];
 
-  $("#loadingSpin").show();
+  // $("#loadingSpin").show();
 
-  updateShipping(dataUpdateShipping, sheetrange, function(){
+  // updateShipping(dataUpdateShipping, sheetrange, function(){
       // $(".cardElement_"+orderIndex).remove();
       $(".btnOrder_"+orderIndex).addClass("borderMustard");
       $(".preparedOrder_"+orderIndex).addClass("borderMustard");
       // console.log($(".preparedOrder_"+orderIndex));
-      $(".preparedOrder_"+orderIndex).html("Đã chuẩn bị lúc:"+dateTime);
-      $("#loadingSpin").hide();
-  },function(){
-    console.log("Something wrong");
-  })
+      $(".preparedOrder_"+orderIndex).html("Đã chuẩn bị");
+  //     $("#loadingSpin").hide();
+  // },function(){
+  //   console.log("Something wrong");
+  // })
 }
 
 function shippingReport(){
