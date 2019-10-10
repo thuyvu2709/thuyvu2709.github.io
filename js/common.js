@@ -196,7 +196,7 @@ function getLatestOrderCode(callback) {
 
       localStorage.setItem("orderCode","DONHANG_"+latestCode);
 
-      callback(latestCode);
+      callback();
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });
@@ -1175,35 +1175,38 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
   var dataRangeRemoveSplit = []
   var prodListOrder = currentOrder.prodListOrder;
   var numOfColumnOrderDetail = 10;
-  for (e in prodListOrder) {
-    if (prodListOrder[e].available == 1) {
-      // prodListOrderReady.push(prodListOrder[e]);
-      dataProdListOrderReady.push([
-        orderCode,
-        prodListOrder[e].productCode,
-        prodListOrder[e].importCode,
-        '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
-        prodListOrder[e].productName,
-        prodListOrder[e].productCount,
-        prodListOrder[e].productEstimateSellingVND,
-        "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
-        "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
-        "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-        "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
-      ])
 
-      // dataProfListOrderRemoveSplit.push([
-      //   "","","","","","","","","","",""
-      // ])
-      var orderDetailIndex = parseInt(prodListOrder[e].orderDetailIndex) + 1;
+  function prepareProdListOrder(){
+    for (var e in prodListOrder) {
+      if (prodListOrder[e].available == 1) {
+        // prodListOrderReady.push(prodListOrder[e]);
+        dataProdListOrderReady.push([
+          orderCode,
+          prodListOrder[e].productCode,
+          prodListOrder[e].importCode,
+          '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+          prodListOrder[e].productName,
+          prodListOrder[e].productCount,
+          prodListOrder[e].productEstimateSellingVND,
+          "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
+          "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
+        ])
 
-      dataRangeRemoveSplit.push("OrderDetail!A"+orderDetailIndex+":"+String.fromCharCode(65+numOfColumnOrderDetail)+orderDetailIndex);
+        // dataProfListOrderRemoveSplit.push([
+        //   "","","","","","","","","","",""
+        // ])
+        var orderDetailIndex = parseInt(prodListOrder[e].orderDetailIndex) + 1;
+
+        dataRangeRemoveSplit.push("OrderDetail!A"+orderDetailIndex+":"+String.fromCharCode(65+numOfColumnOrderDetail)+orderDetailIndex);
+      }
     }
   }
 
 
   var splitAddNewOrder = function (callbackSplitAddNew) {
-    // orderCode = localStorage.getItem("orderCode");
+    orderCode = localStorage.getItem("orderCode");
 
     var submitOrderData = [
         [
@@ -1256,9 +1259,8 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
     }
   }
 
-  getLatestOrderCode(function(latestCode){
-    orderCode = latestCode;
-    console.log("New order code:"+orderCode);
+  getLatestOrderCode(function(){
+    prepareProdListOrder();
     splitAddNewOrder(function(){
       fRemove();
     });
