@@ -115,6 +115,7 @@ function loadProductListHtml(){
             '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
             '<p>Hàng tồn:'+data[e][17]+'</p>'+
             '<div class="btn editproductelement product_'+e+'" style="border: 1px solid black;margin-left:10px;">Sửa mặt hàng</div>'+
+            '<div class="btn showorder product_'+e+'" style="border: 1px solid black;margin-left:10px;">Xem đơn hàng</div>'+
           '</div>'+
           imageDiv+
         '</div>'+
@@ -123,9 +124,14 @@ function loadProductListHtml(){
 
 
   $(".editproductelement").click(editProduct);
-
+  $(".showorder").click(showOrder);
   $("#loadingSpin").hide();
 
+  function showOrder(){
+    var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    productIndex = parseInt(productIndex);
+    window.location = "listorder.html?prodRefCodeFilter="+data[productIndex][1];
+  }
   function editProduct() {
     var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     productIndex = parseInt(productIndex);

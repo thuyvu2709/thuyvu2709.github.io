@@ -1,11 +1,13 @@
 
-var url = new URL(window.location.href);
 var status = "PROCESSING";
 
 var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
 var orderShipStatus =[];
 var listProductParse = {};
+
+
+var url = new URL(window.location.href);
 
 var triggerAfterLoad = function(){
 
@@ -16,7 +18,7 @@ var triggerAfterLoad = function(){
     loadOrderList(function(){
           // console.log("2")
       loadOrderListDetail(function(){
-
+        filterOrderWithProdRefCode();
         getOrderShipping(function(lsOrderset){
           parseOrderShipping();
           parseProduct();
@@ -28,6 +30,22 @@ var triggerAfterLoad = function(){
       })
     })
   })
+}
+
+var orderWithProdRef = [];
+function filterOrderWithProdRefCode(){
+  var prodRefCodeFilter = url.searchParams.get("prodRefCodeFilter");
+  if (!prodRefCodeFilter) {
+    return;
+  }
+  status = "REQUESTED";
+  $("#orderFilter").val(status);
+  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  for (var e in orderListDetail) {
+    if (orderListDetail[e][3] == prodRefCodeFilter) {
+      orderWithProdRef.push(orderListDetail[e][0]);
+    }
+  }
 }
 
 // $(".text-center").click(function(){
@@ -89,6 +107,12 @@ function loadOrderListHtml() {
       }
     } if (status == 'COMPLETE') {
       if (!(data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED")) {
+        continue;
+      }
+    }
+
+    if (orderWithProdRef.length>0) {
+      if (!orderWithProdRef.includes(data[e][0])){
         continue;
       }
     }
@@ -404,7 +428,8 @@ function loadOrderListHtml() {
 
 
 $(".orderFilter").change(function(){
-  console.log("orderFilter:");;
+  console.log("orderFilter:");
+  orderWithProdRef = [];
   status = document.getElementsByClassName($(this).attr("class"))[0].value;
   loadOrderListHtml();
 })
