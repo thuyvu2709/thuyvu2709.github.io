@@ -44,7 +44,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoad();
+  triggerAfterLoadX();
 })
 // console.log(c);
 

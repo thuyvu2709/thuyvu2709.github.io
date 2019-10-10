@@ -196,7 +196,7 @@ function getLatestOrderCode(callback) {
 
       localStorage.setItem("orderCode","DONHANG_"+latestCode);
 
-      callback();
+      callback(latestCode);
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });
@@ -1203,7 +1203,7 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
 
 
   var splitAddNewOrder = function (callbackSplitAddNew) {
-    orderCode = localStorage.getItem("orderCode");
+    // orderCode = localStorage.getItem("orderCode");
 
     var submitOrderData = [
         [
@@ -1256,7 +1256,9 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
     }
   }
 
-  getLatestOrderCode(function(){
+  getLatestOrderCode(function(latestCode){
+    orderCode = latestCode;
+    console.log("New order code:"+orderCode);
     splitAddNewOrder(function(){
       fRemove();
     });
