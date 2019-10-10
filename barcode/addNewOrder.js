@@ -246,7 +246,7 @@ function filterInSearchForm(index,searchText){
 			}
 		}
 		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
-
+		importCode = parseInt(importCode);
 		if (importCode > -1) {
 		  if (importCode != productList[e][2]) {
 		    continue;
