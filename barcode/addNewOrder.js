@@ -182,7 +182,7 @@ function searchForm(){
 	var lsImportCodeSearchProduct = "";
 	for (e in importSLData) {
 		if (e ==0 ) continue;
-		lsImportCodeSearchProduct += ("<option value='"+e+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+		lsImportCodeSearchProduct += ("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
 	}
 
 	$("#myModal2 .modal-title").html(
@@ -246,7 +246,7 @@ function filterInSearchForm(index,searchText){
 			}
 		}
 		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
-		importCode = parseInt(importCode);
+		// importCode = parseInt(importCode);
 		console.log("Dot hang:"+importCode);
 		if (importCode > -1) {
 		  if (importCode != productList[e][2]) {

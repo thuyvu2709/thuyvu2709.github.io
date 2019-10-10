@@ -292,7 +292,7 @@ function searchForm(){
 	var lsImportCodeSearchProduct = "";
 	for (e in importSLData) {
 		if (e ==0 ) continue;
-		lsImportCodeSearchProduct += ("<option value='"+e+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+		lsImportCodeSearchProduct += ("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
 	}
 
 	$("#myModal2 .modal-title").html(
