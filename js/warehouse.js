@@ -117,7 +117,7 @@ function requestToCheckProducts(){
     for (e in productList) {
       if (productList[e][2] == importCode) {
         // content += "<a href='"+productList[e][19]+"'>"+productList[e][3]+" : "+productList[e][4] + "</a><br/>";
-        content = '<tr>'+
+        content += '<tr>'+
         '    <td>'+
         '      <div class="prodShippingName">'+productList[e][3]+' : '+productList[e][4] + '</div>'+
         '      <img class="prodShippingImage" src="'+productList[e][19]+'"/>'+
