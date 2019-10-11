@@ -138,7 +138,7 @@ function loadOrderShippingListHtml() {
     for (o in prodListOrder) {
       orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
     }
-    console.log(prodListOrder[o]);
+    // console.log(prodListOrder[o]);
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
