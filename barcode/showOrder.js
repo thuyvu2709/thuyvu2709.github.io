@@ -113,7 +113,7 @@ $("#copyText").click(function(){
 })
 
 $("#requestShipping").click(function(){
-	requestShipping();
+	requestShipping(currentOrder);
 })
 
 
