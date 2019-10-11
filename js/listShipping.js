@@ -32,10 +32,10 @@ $(".text-center").click(function(){
 
 function readOrderDetail(callback){
   // console.log("userRole:"+userRole);
-  if (userRole!="manager") {
-    callback();
-    return;
-  }
+  // if (userRole!="manager") {
+  //   callback();
+  //   return;
+  // }
   lsOrderDetail = {}
   for (var e in lsOrder){
     if (e == 0) {
