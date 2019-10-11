@@ -96,16 +96,36 @@ function requestToCheckProducts(){
   var title = "Kiểm tra "+warehouseData[importIndex][1]
   $("#loadingSpin").show();
 
-  var content = "<hr/>";
+  var content = "<table>";
   loadProductList(function(productList){
     // var productList = JSON.parse(localStorage.getItem("productList"));
     console.log("loadProductList");
+//     <table>
+  // <tr>
+  //   <td>
+  //     <div class="prodShippingName">Blackmore evening primrose : 1</div>
+  //     <img class="prodShippingImage" src='https://i.imgur.com/zOnD0oa.jpg'/>
+  //   </td>
+  // </tr>
+//   <tr>
+//     <td>
+//       <div class="prodShippingName">Blackmore evening primrose : 1</div>
+//       <img class="prodShippingImage" src='https://i.imgur.com/zOnD0oa.jpg'/>
+//     </td>
+//   </tr>
+// </table>
     for (e in productList) {
       if (productList[e][2] == importCode) {
-        content += "<a href='"+productList[e][19]+"'>"+productList[e][3]+" : "+productList[e][4] + "</a><br/>";
+        // content += "<a href='"+productList[e][19]+"'>"+productList[e][3]+" : "+productList[e][4] + "</a><br/>";
+        content = '<tr>'+
+        '    <td>'+
+        '      <div class="prodShippingName">'+productList[e][3]+' : '+productList[e][4] + '</div>'+
+        '      <img class="prodShippingImage" src="'+productList[e][19]+'"/>'+
+        '    </td>'+
+        '  </tr>';
       }
     }
-    content += "<hr/>"
+    content += "<table/>"
 
     getLatestTaskCode(function(taskCode){
       console.log("getLatestTaskCode");
