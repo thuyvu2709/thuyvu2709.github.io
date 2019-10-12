@@ -126,7 +126,7 @@ function loadOrderListHtml() {
       optionPaid = '<option value="PAID" selected>Đã thanh toán</option><option value="ORDERED">Đã đặt hàng</option>';
       iconPaid = ' | <i class="fas fa-dollar-sign"></i>';
     } else {
-      optionPaid = '<option value="ORDERED" selected>Đã đặt hàng</option><option value="PAID">Đã thanh toán</option>'
+      optionPaid = '<option value="ORDERED" selected>Chưa thanh toán</option><option value="PAID">Đã thanh toán</option>'
     }
 
     var optionShip;
