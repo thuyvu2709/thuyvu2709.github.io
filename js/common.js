@@ -852,10 +852,10 @@ function getCurrentUser() {
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
-    var numOfColumn = 7;
-    var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn);
+  var numOfColumn = 7;
+  var sheetrange = 'Shipping!A:'+ String.fromCharCode(65+numOfColumn);
 
-    var spreadsheetId = shippingSheet;
+  var spreadsheetId = shippingSheet;
 
   if (passDataLocalhost) {
     callback();
