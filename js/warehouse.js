@@ -149,7 +149,17 @@ function requestToCheckProducts(){
   var title = "Kiểm tra "+warehouseData[importIndex][1]
   $("#loadingSpin").show();
 
-  var content = "<table>";
+  var address = warehouseData[importIndex][6] ? warehouseData[importIndex][6].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+") : "";
+
+  var content ='<div>Thông tin nhận hàng:</div><br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              '  <a href="tel:'+warehouseData[importIndex][5]+'"><span class="fas fa-phone"></span>'+warehouseData[importIndex][5]+'</a>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default btnNormal" style="margin-top:10px;">'+
+              '  <a href="http://maps.google.com/maps?q='+address+'"><span class="fas fa-address-card"></span>'+warehouseData[importIndex][6]+'</a>'+
+              '</div>';
+  content+= "<table>";
   loadProductList(function(productList){
     // var productList = JSON.parse(localStorage.getItem("productList"));
     console.log("loadProductList");
