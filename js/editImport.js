@@ -33,7 +33,7 @@ function editImport(){
             currentImport.importStatus,
             $("#importShippingFee").val(),
             "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)",
-            $("#receiverPhone").val(),
+            "'"+$("#receiverPhone").val(),
             $("#receiverAddress").val(),
             $("#receiverName").val(),
             $("#bankingAccountNumber").val(),
