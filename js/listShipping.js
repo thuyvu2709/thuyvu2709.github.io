@@ -321,7 +321,6 @@ function shippingReport(){
 
 function showTask(){
   $("#listShippingOrder").empty();
-  $(".maintitle").html("Quản lý nhiệm vụ");
 
   var userRole = JSON.parse(localStorage.getItem("userRole"));
 
@@ -426,8 +425,10 @@ $(".orderFilter").change(function(){
   console.log("orderFilter:");;
   mode = document.getElementsByClassName($(this).attr("class"))[0].value;
   if (mode == "PROCESSING" || mode == "COMPLETED" || mode == "ALL") {
+    $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
   } else if (mode == "TASK") {
+    $(".maintitle").html("Quản lý nhiệm vụ");
     showTask();
   } else if (mode == "REPORT") {
     $(".maintitle").html("Báo cáo");
