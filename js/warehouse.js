@@ -12,10 +12,7 @@ var triggerAfterLoad = function(){
 }
 
 // $(".text-center").click(function(){
-//   loadWarehouse(function(){
-//     console.log("Gooo");
-//     loadWarehouseHtml();
-//   })
+//   triggerAfterLoadX();
 // })
 
 function loadWarehouseHtml() {
@@ -33,10 +30,7 @@ function loadWarehouseHtml() {
 
     var scheduleStatus = data[e][2];
     var cardBody = "";
-    cardBody+="<div>"+
-              " Nhận hàng: "+data[e][5]+" | "+data[e][6] + "<br/>"+
-              " Thanh toán: "+data[e][7]+" | "+data[e][8]+ "|" + data[e][9]+"<br/>"+ 
-              "</div>";
+
     if (scheduleStatus == 0) {
       cardBody += '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div>';
     } else {
@@ -56,10 +50,11 @@ function loadWarehouseHtml() {
         '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listSchedule">'+
           '<div class="card-body">'+
             cardBody +
+            '<div class="btn btn-default btnNormal showWH_'+e+'" style="margin : 5px">Xem</div>'+
             '<hr/>'+
-            '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 0px 10px 0px 0px">Sửa</div>'+
-            '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 0px 10px 0px 0px">Xoá</div>'+
-            '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" >Xem danh sách hàng</div>'+
+            '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 5px">Sửa</div>'+
+            '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 5px">Xoá</div>'+
+            '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" style="margin : 5px">Xem danh sách hàng</div>'+
           '</div>'+
         '</div>'+
       '</div>'
@@ -69,8 +64,57 @@ function loadWarehouseHtml() {
     $(".editWH_"+e).click(editWarehouseFn);
     $(".viewProductInWH_"+e).click(viewProductInWH);
     $(".deleteWH_"+e).click(deleteWH);
+    $(".showWH_"+e).click(showWH);
   }
 };
+
+function showWH(){
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  // var modalBody ="<div>"+
+  //       " Nhận hàng: "+data[e][5]+" | "+data[e][6] + "<br/>"+
+  //       " Thanh toán: "+data[e][7]+" | "+data[e][8]+ "|" + data[e][9]+"<br/>"+ 
+  //       "</div>";
+  var address = warehouseData[importIndex][6] ? warehouseData[importIndex][6].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+") : "";
+
+  var modalBody = '<div>Thông tin nhận hàng:</div><br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              '  <a href="tel:'+warehouseData[importIndex][5]+'"><span class="fas fa-phone"></span>'+warehouseData[importIndex][5]+'</a>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default btnNormal" style="margin-top:10px;">'+
+              '  <a href="http://maps.google.com/maps?q='+address+'"><span class="fas fa-address-card"></span>'+warehouseData[importIndex][6]+'</a>'+
+              '</div>'+
+              '<div>Thông tin chuyển khoản:</div><br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              ' <input class="banking bankingReceiver" readonly value="'+warehouseData[importIndex][7]+'"/>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              ' <input class="banking bankingNumber" readonly value="'+warehouseData[importIndex][8]+'"/>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              ' <input class="banking bankingName" readonly value="'+warehouseData[importIndex][9]+'"/>'+
+              '</div>'
+              ;
+  $("#myModal .modal-body").html(modalBody);
+
+  $(".banking").click(copyData);
+
+  $('#myModal').modal('toggle');
+}
+
+function copyData(){
+  console.log($(this).attr("class"));
+
+  var copyText = document.getElementsByClassName($(this).attr("class"))[0];
+
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+  /*For mobile devices*/
+  document.execCommand("copy");
+}
 
 function viewProductInWH() {
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -167,10 +211,10 @@ function deleteWH(){
   $("#loadingSpin").show();
 
   var actualIndexInSheet = importIndex +1;
-  var range = "Warehouse!A"+actualIndexInSheet+":E"+actualIndexInSheet;
+  var range = "Warehouse!A"+actualIndexInSheet+":J"+actualIndexInSheet;
 
   var dataEditWarehouse = [
-    ["","","","",""]
+    ["","","","","","","","","",""]
   ]
 
   editWarehouse(dataEditWarehouse, range, function(){
