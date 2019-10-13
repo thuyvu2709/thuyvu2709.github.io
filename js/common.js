@@ -541,7 +541,7 @@ function appendTask(submitTaskData,callback) {
 
 
 function appendWarehouse(submitImportData,callback) {
-  var numOfColumn = 4;
+  var numOfColumn = 9;
   var sheetrange = 'Warehouse!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = mainSheetForProduct;
 

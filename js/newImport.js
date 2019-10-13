@@ -16,7 +16,12 @@ function addNewImport(){
         $("#importName").val(),
         0,
         $("#importShippingFee").val(),
-        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)"
+        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)",
+        $("#receiverPhone").val(),
+        $("#receiverAddress").val(),
+        $("#receiverName").val(),
+        $("#bankingAccountNumber").val(),
+        $("#bankingName").val()
       ]
     ]
     

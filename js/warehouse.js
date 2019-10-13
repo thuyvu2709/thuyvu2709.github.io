@@ -130,7 +130,12 @@ function editWarehouseFn() {
     importCode : warehouseData[importIndex][0],
     importName : warehouseData[importIndex][1],
     importStatus : warehouseData[importIndex][2],
-    importShippingFee : warehouseData[importIndex][3]
+    importShippingFee : warehouseData[importIndex][3],
+    receiverPhone: warehouseData[importIndex][5],
+    receiverAddress: warehouseData[importIndex][6],
+    receiverName: warehouseData[importIndex][7],
+    bankingAccountNumber: warehouseData[importIndex][8],
+    bankingName: warehouseData[importIndex][9]
   }
 
   localStorage.setItem("currentImport",JSON.stringify(currentImport));
