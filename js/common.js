@@ -411,7 +411,7 @@ function loadWarehouse(callback) {
     return;
   }
 
-  var indexColumnOfAllData = 5;
+  var indexColumnOfAllData = 9;
   var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   gapi.client.sheets.spreadsheets.values.get({

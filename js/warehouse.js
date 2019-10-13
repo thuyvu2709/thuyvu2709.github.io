@@ -33,10 +33,14 @@ function loadWarehouseHtml() {
 
     var scheduleStatus = data[e][2];
     var cardBody = "";
+    cardBody+="<div>"+
+              " Nhận hàng: "+data[e][5]+" | "+data[e][6] + "<br/>"+
+              " Thanh toán: "+data[e][7]+" | "+data[e][8]+ "|" + data[e][9]+"<br/>"+ 
+              "</div>";
     if (scheduleStatus == 0) {
-      cardBody = '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div>';
+      cardBody += '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div>';
     } else {
-      cardBody = '<div class="btn btn-default btnNormal" >Hàng tồn:'+data[e][4]+'</div>';      
+      cardBody += '<div class="btn btn-default btnNormal" >Hàng tồn:'+data[e][4]+'</div>';      
     }
   	$("#listSchedule").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
