@@ -30,7 +30,7 @@ $("#orderNode").height( $("#orderNode")[0].scrollHeight );
 
 $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED" ? "Đã giao" : "Chưa giao hàng"));
 
-$("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
+$("#paymentStatus").html((currentOrder.paymentStatus == "PAID" ? "Khách đã thanh toán đủ" : "Khách chưa thanh toán"));
 
 $("#otherCost").html(currentOrder.otherCost);
 
