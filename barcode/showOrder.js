@@ -132,28 +132,9 @@ $("#printOrder").click(function(){
 
 })
 
-// function getLatestOrderCode(callback) {
-//   var indexColumnOfAllData = 1;
-//   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
-//   var dataset = [];
-
-//   gapi.client.sheets.spreadsheets.values.get({
-//       spreadsheetId: spreadsheetId,
-//       range: sheetrange,
-//   }).then(function(response) {
-//       console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-//       dataset = response.result.values;
-//       // showList(dataset);
-//       var latestCode = parseFloat(dataset[dataset.length-1][0].split("_").pop())+1;
-
-//       localStorage.setItem("orderCode","DONHANG_"+latestCode);
-
-//       // window.productList = dataset;
-//       callback();
-//   }, function(response) {
-//       console.log('Error: ' + response.result.error.message);
-//   });
-// }
+$("#simplify").click(function(){
+	$(".simply").hide();
+});
 
 $("#createNewOrder").click(function(){
 	// $("#loadingSpin").show();

@@ -38,26 +38,26 @@
       <section class="page-section portfolio" id="portfolio">
          <form class="needs-validation container" novalidate>
             <div class="row">
-               <label for="orderCode" class="col-sm-2 col-form-label">Mã đơn hàng</label>
-               <div class="col-sm-3">
+               <label for="orderCode" class="col-sm-2 col-form-label simply">Mã đơn hàng</label>
+               <div class="col-sm">
                   <label id="orderCode" class="form-control"></label>
                </div>
             </div>
             <div class="row">
-               <label for="customerName" class="col-sm-2 col-form-label">Tên khách hàng</label>
+               <label for="customerName" class="col-sm-2 col-form-label simply">Tên khách hàng</label>
                <div class="col-sm-10">
                   <label id="customerName" class="form-control"></label>
                </div>
             </div>
             <div class="row">
-               <label for="customerAddress" class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
+               <label for="customerAddress" class="col-sm-2 col-form-label simply">Địa chỉ khách hàng</label>
                <div class="col-sm-10">
                   <label id="customerAddress" class="form-control"></label>
                </div>
             </div>
             <div class="row">
-               <label for="customerPhone" class="col-sm-2 col-form-label">Sđt</label>
-               <div class="col-sm-2">
+               <label for="customerPhone" class="col-sm-2 col-form-label simply">Số điện thoại</label>
+               <div class="col-sm-10">
                   <label id="customerPhone" class="form-control"></label>
                </div>
             </div>
@@ -76,7 +76,9 @@
               </tbody>
             </table>
 <!-- end table -->
-            <br/>
+            <div class="simply">
+              <br/>
+            </div>
             <div class="row shippingCost">
                <label for="shippingCost" class="col-sm-2 col-form-label">Phí giao hàng</label>
                <div class="col-sm-10">
@@ -84,14 +86,14 @@
                </div>
             </div>
 
-            <div class="row">
+            <div class="row simply">
                <label for="customerName" class="col-sm-2 col-form-label">Chi phí khác</label>
                <div class="col-sm-10">
                   <label id="otherCost" class="form-control"></label>
                </div>
             </div>
 
-            <div class="row shippingCost">
+            <div class="row shippingCost simply">
                <label for="node" class="col-sm-2 col-form-label">Ghi chú</label>
                <div class="col-sm-10">
                   <textarea id="orderNode" class="field-textarea form-control" readonly></textarea>
@@ -103,18 +105,18 @@
               <h5 id="totalPayIncludeShip">0</h5>
             </div>
 
-            <h3 class="text-center">
+            <h5 class="text-center">
               <span class="fa fa-star checked" id="zoomin"></span>
               Cảm ơn quý khách đã mua hàng của chúng tôi
               <span class="fa fa-star checked" id="zoomout"></span>
-            </h3>
+            </h5>
          </form>
 
          
       </section>
 
       <!-- <hr> -->
-      <div class="form-group controlOrder" >
+      <div class="form-group controlOrder simply" >
         <hr/>
         <h3 class="text-center">Quản lý</h3>
         <label class="form-control" id="paymentStatus"></label>
@@ -135,6 +137,9 @@
           </div>
 
           <div class="btn btn-default col-sm" style="border: 1px solid black" id="requestShipping">Yêu cầu giao hàng
+          </div>
+
+          <div class="btn btn-default col-sm" style="border: 1px solid black" id="simplify">Tối giản
           </div>
 
         </div>
