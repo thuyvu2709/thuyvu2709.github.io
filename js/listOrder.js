@@ -14,7 +14,7 @@ var triggerAfterLoad = function(){
   $("#loadingSpin").show();
 
   loadProductList(function(){
-    console.log("1")
+    // console.log("1")
     loadOrderList(function(){
           // console.log("2")
       loadOrderListDetail(function(){
@@ -138,6 +138,7 @@ function loadOrderListHtml() {
       if(orderShipStatus[data[e][0]].status == "COMPLETED") {
         optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
       } else {
+        iconShip = ' | <i class="fas fa-motorcycle" style="color:red"></i>';
         optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="COMPLETED">Đã giao hàng</option>'
       }
 
