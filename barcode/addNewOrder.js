@@ -127,10 +127,16 @@ function addNewFormOfProduct(currentIndex){
 	  totalPay = totalPay + parseFloat($(".turnover_"+i).html());
 	}
 	$("#totalPay").html(totalPay);
+
 	var shippingCost = $("#shippingCost").val();
 	shippingCost = shippingCost ? shippingCost : 0;
 
 	$("#totalPayIncludeShip").html((totalPay + shippingCost));
+
+	var prepaid = parseFloat($("#prepaid").val());
+	prepaid = prepaid ? prepaid : 0;
+	var totalWillPay = (totalPay + shippingCost) - prepaid;
+	$("#totalWillPay").html(totalWillPay);
 
 	$( "input" ).keyup(inputKeyupfunction);
 
@@ -350,6 +356,11 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
 
+	var prepaid = parseFloat($("#prepaid").val());
+	prepaid = prepaid ? prepaid : 0;
+	var totalWillPay = (totalPay + shippingCost) - prepaid;
+	$("#totalWillPay").html(totalWillPay);
+
 	$(".btnProductName_"+productIndex).html(productList[index][3] + " | " + 1 + " | " + productList[index][12] + " | " + productList[index][12]);
 
 	addNewFormOfProduct(productIndex);
@@ -369,6 +380,12 @@ function inputKeyupfunction() {
 		shippingCost = parseFloat(shippingCost);
 
 		$("#totalPayIncludeShip").html((totalPay + shippingCost));
+
+		var prepaid = parseFloat($("#prepaid").val());
+		prepaid = prepaid ? prepaid : 0;
+		var totalWillPay = (totalPay + shippingCost) - prepaid;
+		$("#totalWillPay").html(totalWillPay);
+
 		return;
 	}
 	var className = $(this).attr("class").split(" ").pop().split("_");
@@ -403,6 +420,11 @@ function inputKeyupfunction() {
 		totalPayIncludeShip = parseFloat(shippingCost) + totalPay;
 
 		$("#totalPayIncludeShip").html(totalPayIncludeShip);
+
+		var prepaid = parseFloat($("#prepaid").val());
+		prepaid = prepaid ? prepaid : 0;
+		var totalWillPay = (totalPay + shippingCost) - prepaid;
+		$("#totalWillPay").html(totalWillPay);
 
 		$(".btnProductName_"+productIndex).html($(".productName_"+productIndex).val() + " | " + productCount + " | " + productEstimateSellingVND + " | " + turnover);
 
@@ -489,6 +511,9 @@ $("#addNewOrder").click(function(){
 	var orderNode = $("#orderNode").val();
 	var otherCost = $("#otherCost").val();
 
+	var prepaid = parseFloat($("#prepaid").val());
+	prepaid = prepaid ? prepaid : 0;
+
 	otherCost = otherCost ? otherCost : 0;
 	shippingCost = shippingCost ? shippingCost : 0;
 
@@ -502,7 +527,8 @@ $("#addNewOrder").click(function(){
 		orderDate : orderDate,
 		totalPayIncludeShip : totalPayIncludeShip,
 		orderNode : orderNode,
-		otherCost : otherCost
+		otherCost : otherCost,
+		prepaid : prepaid
 	}
 
 	var submitOrderData = [
@@ -518,7 +544,8 @@ $("#addNewOrder").click(function(){
                 "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
 				"",
-				otherCost
+				otherCost,
+				prepaid
                 ]
             ]
 

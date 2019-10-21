@@ -29,6 +29,10 @@ $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED
 
 $("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
 
+$("#prepaid").html(currentOrder.prepaid);
+$("#willpay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0));
+
+
 if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }
@@ -86,14 +90,16 @@ $(".showImage").click(function(){
 })
 
 $("#zoomin").click(function(){
-	console.log(document.body.style.zoom);
-	zoom = zoom / 10;
-	document.body.style.zoom  = zoom;
+	location.reload();
+	// console.log(document.body.style.zoom);
+	// zoom = zoom / 10;
+	// document.body.style.zoom  = zoom;
 })
 $("#zoomout").click(function(){
-	console.log(document.body.style.zoom);
-	zoom = zoom * 10;
-	document.body.style.zoom = zoom;
+	location.reload();
+	// console.log(document.body.style.zoom);
+	// zoom = zoom * 10;
+	// document.body.style.zoom = zoom;
 })
 
 var textarea = document.getElementById("textarea");
@@ -129,11 +135,25 @@ $("#printOrder").click(function(){
 	$(".controlOrder").show();
 	$("#orderPrintHeader").hide();
 
-
 })
 
 $("#simplify").click(function(){
 	$(".simply").hide();
+	$("#shippingCost").html("Phí giao hàng:"+currentOrder.shippingCost);
+	$("#orderCode").html(currentOrder.orderCode+" | "+currentOrder.customerName)
+	var prepaid = currentOrder.prepaid ? currentOrder.prepaid : 0;
+	if (prepaid == 0) {
+		$(".prepaid").hide();
+		$(".willpay").hide();
+	}
+
+	if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
+		|| currentOrder.paymentStatus == "PAID"
+		){
+		$(".willpay").hide();
+		$(".prepaid").show();
+		$(".prepaid").html("Khách đã thanh toán");
+	}
 });
 
 $("#createNewOrder").click(function(){

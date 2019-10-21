@@ -468,7 +468,7 @@ function appendOrderDetail(submitData,callback) {
 }
 
 function appendOrder(submitOrderData,callback) {
-  var numOfColumn = 12;
+  var numOfColumn = 13;
   var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = mainSheetForProduct;
 

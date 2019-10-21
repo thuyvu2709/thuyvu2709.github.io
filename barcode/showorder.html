@@ -43,7 +43,7 @@
                   <label id="orderCode" class="form-control"></label>
                </div>
             </div>
-            <div class="row">
+            <div class="row simply">
                <label for="customerName" class="col-sm-2 col-form-label simply">Tên khách hàng</label>
                <div class="col-sm-10">
                   <label id="customerName" class="form-control"></label>
@@ -76,11 +76,11 @@
               </tbody>
             </table>
 <!-- end table -->
-            <div class="simply">
+            <!-- <div class="simply"> -->
               <br/>
-            </div>
-            <div class="row shippingCost">
-               <label for="shippingCost" class="col-sm-2 col-form-label">Phí giao hàng</label>
+            <!-- </div> -->
+            <div class="row">
+               <label for="shippingCost" class="col-sm-2 col-form-label simply">Phí giao hàng</label>
                <div class="col-sm-10">
                   <label id="shippingCost" class="form-control"></label>
                </div>
@@ -93,16 +93,25 @@
                </div>
             </div>
 
-            <div class="row shippingCost simply">
+            <div class="row simply">
                <label for="node" class="col-sm-2 col-form-label">Ghi chú</label>
                <div class="col-sm-10">
                   <textarea id="orderNode" class="field-textarea form-control" readonly></textarea>
                </div>
             </div>
 
-            <div class="row">
+            <div class="row totalPayIncludeShip">
               <h5>Tổng tiền thanh toán : </h5>
               <h5 id="totalPayIncludeShip">0</h5>
+            </div>
+            <div class="row prepaid">
+              <h5>Khách đã cọc : </h5>
+              <h5 id="prepaid">0</h5>
+            </div>
+
+            <div class="row willpay">
+              <h5>Khách sẽ thanh toán : </h5>
+              <h5 id="willpay">0</h5>
             </div>
 
             <h5 class="text-center">
