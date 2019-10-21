@@ -129,7 +129,8 @@ function addNewFormOfProduct(currentIndex){
 	$("#totalPay").html(totalPay);
 
 	var shippingCost = $("#shippingCost").val();
-	shippingCost = shippingCost ? shippingCost : 0;
+	shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
+
 
 	$("#totalPayIncludeShip").html((totalPay + shippingCost));
 
@@ -349,10 +350,11 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 		totalPay = totalPay + parseFloat($(".turnover_"+i).html());
 	}
 	$("#totalPay").html(totalPay);
-	shippingCost = $("#shippingCost").val();
-	shippingCost = shippingCost ? shippingCost : 0;
+	var shippingCost = $("#shippingCost").val();
+	shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
-	totalPayIncludeShip = parseFloat(shippingCost) + totalPay;
+
+	totalPayIncludeShip = (shippingCost) + totalPay;
 
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
 
@@ -372,12 +374,11 @@ function inputKeyupfunction() {
 	if (!$(this).attr("class")) {
 		return;
 	};
-	if ($(this).attr("id") == "shippingCost"){
+	if ($(this).attr("id") == "shippingCost" || $(this).attr("id") == "prepaid"){
 		var totalPay = parseFloat($("#totalPay").html());
 		var shippingCost = $("#shippingCost").val();
-		shippingCost = shippingCost ? shippingCost : 0;
+		shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
-		shippingCost = parseFloat(shippingCost);
 
 		$("#totalPayIncludeShip").html((totalPay + shippingCost));
 
@@ -414,10 +415,10 @@ function inputKeyupfunction() {
 		}
 		$("#totalPay").html(totalPay);
 		
-		var shippingCost = parseFloat($("#shippingCost").val());
-		shippingCost = shippingCost ? shippingCost : 0;
+		var shippingCost = $("#shippingCost").val();
+		shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
-		totalPayIncludeShip = parseFloat(shippingCost) + totalPay;
+		totalPayIncludeShip = shippingCost + totalPay;
 
 		$("#totalPayIncludeShip").html(totalPayIncludeShip);
 

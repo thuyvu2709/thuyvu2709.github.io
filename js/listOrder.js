@@ -239,11 +239,11 @@ function loadOrderListHtml() {
 
     gapi.client.sheets.spreadsheets.values.update({
       spreadsheetId: spreadsheetId,
-      range : "Order!A"+orderIndex+":M"+orderIndex,
+      range : "Order!A"+orderIndex+":N"+orderIndex,
       valueInputOption: "USER_ENTERED",
       resource: {
           "majorDimension": "ROWS",
-          "values": [["","","","","","","","","","","","",""]]
+          "values": [["","","","","","","","","","","","","",""]]
       }
     }).then(function(response) {
       

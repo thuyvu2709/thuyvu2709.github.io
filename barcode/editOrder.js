@@ -16,7 +16,7 @@ $("#totalPay").html(currentOrder.totalPay);
 $("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);
 $("#orderNode").val(currentOrder.orderNode);
 $("#prepaid").val(currentOrder.prepaid);
-$("#totalWillPay").html(currentOrder.totalPayIncludeShip - currentOrder.prepaid);
+$("#totalWillPay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid));
 
 
 var productList = JSON.parse(localStorage.getItem("productList"));
@@ -252,7 +252,7 @@ function addNewFormOfProduct(currentIndex){
 	}
 	$("#totalPay").html(totalPay);
 	var shippingCost = parseFloat($("#shippingCost").val());
-	shippingCost = shippingCost ? shippingCost : 0;
+	shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
 	$("#totalPayIncludeShip").html((totalPay + shippingCost));
 
@@ -461,9 +461,9 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 	}
 	$("#totalPay").html(totalPay);
 	shippingCost = $("#shippingCost").val();
-	shippingCost = shippingCost ? shippingCost : 0;
+	shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
-	totalPayIncludeShip = parseFloat(shippingCost) + totalPay;
+	totalPayIncludeShip = shippingCost + totalPay;
 
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
 
@@ -483,12 +483,11 @@ function inputKeyupfunction() {
 	if (!$(this).attr("class")) {
 		return;
 	};
-	if ($(this).attr("id") == "shippingCost"){
+	if ($(this).attr("id") == "shippingCost" || $(this).attr("id") == "prepaid"){
 		var totalPay = parseFloat($("#totalPay").html());
 		var shippingCost = $("#shippingCost").val();
-		shippingCost = shippingCost ? shippingCost : 0;
+		shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
-		shippingCost = parseFloat(shippingCost);
 
 		$("#totalPayIncludeShip").html((totalPay + shippingCost));
 
@@ -529,7 +528,7 @@ function inputKeyupfunction() {
 		}
 		$("#totalPay").html(totalPay);
 		shippingCost = $("#shippingCost").val();
-		shippingCost = shippingCost ? shippingCost : 0;
+		shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
 		totalPayIncludeShip = parseFloat(shippingCost) + totalPay;
 
@@ -841,6 +840,9 @@ $(".deleteelement").click(function(){
 
 	$("#totalPay").html(totalPay);
 	$("#totalPayIncludeShip").html(totalPayIncludeShip);
+
+	var shippingCost = $("#shippingCost").val();
+	shippingCost = shippingCost ? parseFloat(shippingCost) : 0;
 
 	var prepaid = parseFloat($("#prepaid").val());
 	prepaid = prepaid ? prepaid : 0;
