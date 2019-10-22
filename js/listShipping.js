@@ -314,7 +314,7 @@ function shipComplete(){
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-      if (lsOrder[orderIndex][8]==2) {
+      if (lsOrder[orderIndex][8]!=2) {
         $(".cardElement_"+orderIndex).remove();
       }
       $("#loadingSpin").hide();
