@@ -10947,6 +10947,11 @@ form .row:first-child .floating-label-form-group {
   border: 1px solid black;
 }
 
+.btnNormal5px {
+  border: 1px solid black;
+  margin:5px
+}
+
 .paddingNormal{
   padding: 1rem 1rem 1rem 1rem
 }

@@ -852,7 +852,7 @@ function getCurrentUser() {
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
-  var numOfColumn = 7;
+  var numOfColumn = 8;
   var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn)+"1";
 
   var spreadsheetId = shippingSheet;
@@ -1150,7 +1150,8 @@ function requestShipping(currentOrder){
       "Requested",
       currentOrder.otherCost,
       "",
-      currentOrder.shippingCost
+      currentOrder.shippingCost,
+      currentOrder.shippingType
     ]
   ];
   if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
@@ -1162,7 +1163,7 @@ function requestShipping(currentOrder){
       $("#loadingSpin").hide();
     })
   } else {
-    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':H'+currentOrder.shipIndex;
+    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':I'+currentOrder.shipIndex;
     updateShipping(dataShipping, sheetrange, function(){
       console.log("updated:"+currentOrder.shipIndex);
       $("#loadingSpin").hide();
