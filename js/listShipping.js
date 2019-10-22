@@ -27,7 +27,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoad();
+  triggerAfterLoadX();
 })
 
 function readOrderDetail(callback){
