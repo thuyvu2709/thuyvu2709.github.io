@@ -120,12 +120,12 @@ function loadOrderShippingListHtml() {
     }
 
     var preparedButton = '<div class="btn btn-default btnNormal prepared preparedOrder_'+e+'" style="margin:10px 10px 0;">Đã chuẩn bị</div><br/>';
-    var orderReady = "";
-    if (lsOrder[e][8]) {
-      // console.log(lsOrder[e][8]);
-      orderReady = "borderMustard"
-      preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
-    }
+    // var orderReady = "";
+    // if (lsOrder[e][8]) {
+    //   // console.log(lsOrder[e][8]);
+    //   orderReady = "borderMustard"
+    //   preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
+    // }
 
     var title = lsOrder[e][0]+' | '+lsOrder[e][1];
     if (userRole=="manager") {
@@ -147,7 +147,7 @@ function loadOrderShippingListHtml() {
         '<div class="card cardElement_'+e+'">'+
           '<div class="card-header" id="heading_'+e+'">'+
             '<h5 class="mb-0">'+
-              '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+              '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
                 title +
               '</button>'+
             '</h5>'+
