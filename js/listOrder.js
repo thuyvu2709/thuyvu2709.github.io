@@ -398,6 +398,7 @@ function loadOrderListHtml() {
     $("#simpleModal").modal('toggle');
 
     $(".shippingType").click(function(){
+      $("#simpleModal").hide();
       console.log(orderIndex);
       console.log(willpay);
       currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();

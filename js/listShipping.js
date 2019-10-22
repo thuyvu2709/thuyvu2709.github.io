@@ -83,20 +83,24 @@ function loadOrderShippingListHtml() {
     if (lsOrder[e][4] == "COMPLETED") {
       totalShippingCost += parseInt(lsOrder[e][7]) + parseInt(lsOrder[e][5])
     }
-
+    var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
+    willpay = willpay ? willpay : 0;
     if (mode == "PROCESSING") {
-      if (lsOrder[e][4] == "COMPLETED") {
+      if (lsOrder[e][4] == "COMPLETED" && 
+        willpay == lsOrder[e][9]
+        ) {
         continue;
       }
     } else if (mode == "COMPLETED") {
-      if (lsOrder[e][4] != "COMPLETED") {
+      if (lsOrder[e][4] != "COMPLETED" ||
+        willpay != lsOrder[e][9]) {
         continue;
       }
     }
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
-    var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal delete order_'+e+'" style="margin:10px 10px 0;">Xoá</div>' : "";
+    var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal5px delete order_'+e+'">Xoá</div>' : "";
 
     var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
 
@@ -107,19 +111,28 @@ function loadOrderShippingListHtml() {
     '      <div class=\'input-group date\'>'+
     '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
     '      </div>'+
-    '     <div class="btn btn-default btnNormal btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
+    '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
     '       Xác nhận'+
     '     </div>'+
     '   </div>'+
     '<hr/>';
 
-    var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 0px 0;">Hoàn thành</div>';
+    var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
 
-    if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
-      completeButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 0px 0;">Hoàn thành lúc '+lsOrder[e][6]+'</div>';
+    if (lsOrder[e][8] == 1) {
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành (thu '+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
     }
 
-    var preparedButton = '<div class="btn btn-default btnNormal prepared preparedOrder_'+e+'" style="margin:10px 10px 0;">Đã chuẩn bị</div><br/>';
+    if (lsOrder[e][8] == 2) {
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post</div>'+
+        '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
+    }
+
+    if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
+      completeButton = '<div class="btn borderMustard btn-default btnNormal5px" >Hoàn thành lúc '+lsOrder[e][6]+'</div>';
+    }
+
+    var preparedButton = '<div class="btn btn-default btnNormal5px prepared preparedOrder_'+e+'" ">Đã chuẩn bị</div><br/>';
     // var orderReady = "";
     // if (lsOrder[e][8]) {
     //   // console.log(lsOrder[e][8]);
@@ -127,10 +140,18 @@ function loadOrderShippingListHtml() {
     //   preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
     // }
 
+    var shipIcon = '[<i class="fas fa-motorcycle"></i>]'
+
+    if (lsOrder[e][8]==1) {
+      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]'
+    } else if (lsOrder[e][8]==2) {
+      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]'
+    }
+
     var title = lsOrder[e][0]+' | '+lsOrder[e][1];
     if (userRole=="manager") {
       // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
-      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1]
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon
     }
 
     var orderDetailBrief = "<hr/>";
@@ -156,16 +177,16 @@ function loadOrderShippingListHtml() {
           '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listShippingOrder">'+
             '<div class="card-body">'+
               // datetime +
-              '<div class="btn btn-default btnNormal">'+
+              '<div class="btn btn-default btnNormal5px">'+
               '  <a href="tel:'+lsOrder[e][2]+'"><span class="fas fa-phone"></span>'+lsOrder[e][2]+'</a>'+
               '</div>'+
               '<br/>'+
-              '<div class="btn btn-default btnNormal" style="margin-top:10px;">'+
+              '<div class="btn btn-default btnNormal5px" style="margin-top:10px;">'+
               '  <a href="http://maps.google.com/maps?q='+address+'"><span class="fas fa-address-card"></span>'+lsOrder[e][1]+'</a>'+
               '</div>'+
               '<br/>'+
               orderDetailBrief+
-              '<div class="btn btn-default btnNormal detail order_'+e+'" style="margin-top:10px;">Xem chi tiết</div>'+
+              '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
               preparedButton +
               completeButton +
               deleteButton +
@@ -182,20 +203,22 @@ function loadOrderShippingListHtml() {
   $('.prepared').click(shipPrepared);
 
   $(".btnChooseShippingSchedule").hide();
-  $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
+  // $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
 
-  $('.datetimepicker').change(function(){
-    console.log($(this).attr("class"));
-    console.log($(this).val());
-    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  // $('.datetimepicker').change(function(){
+  //   console.log($(this).attr("class"));
+  //   console.log($(this).val());
+  //   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 
-    if ($(this).val()) {
-      console.log(".btnChooseShippingSchedule "+orderIndex);
-      $(".chooseShippingSchedule_"+orderIndex).show();
-    } else {
-      $(".chooseShippingSchedule_"+orderIndex).hide();
-    }
-  });
+  //   if ($(this).val()) {
+  //     console.log(".btnChooseShippingSchedule "+orderIndex);
+  //     $(".chooseShippingSchedule_"+orderIndex).show();
+  //   } else {
+  //     $(".chooseShippingSchedule_"+orderIndex).hide();
+  //   }
+  // });
+
+  $(".shipperReceiveMonney").click(shipperReceiveMonney);
 }
 
 function chooseShippingScheduleFn(){
@@ -231,6 +254,31 @@ function showDetail(){
   window.location = "showordershipping.html";  
 }
 
+function shipperReceiveMonney(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var sheetrange = 'Shipping!J'+actualOrderIndex+':J'+actualOrderIndex;
+
+  var otherCost = lsOrder[orderIndex][5];
+  // console.log("Reply : email:"+emailId);
+
+  var dataUpdateShipping = [
+    [lsOrder[orderIndex][3].willpay]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+
+      $(".cardElement_"+orderIndex).remove();
+      $("#loadingSpin").hide();
+
+  },function(){
+    console.log("Something wrong");
+  })
+}
+
 function shipComplete(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
@@ -249,33 +297,27 @@ function shipComplete(){
     ["COMPLETED", otherCost, dateTime]
   ];
 
+  if (lsOrder[orderIndex][8] == 1){
+    sheetrange = 'Shipping!E'+actualOrderIndex+':J'+actualOrderIndex;
+
+    dataUpdateShipping = [
+      ["COMPLETED", 
+        otherCost, 
+        dateTime,
+        lsOrder[orderIndex][7],
+        lsOrder[orderIndex][8], 
+        lsOrderDetail[lsOrder[e][0]].willpay
+        ]
+    ];
+  }
+
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-    // // $(".cardElement_"+orderIndex).remove();
-    // // // $("#loadingSpin").show();
-
-    // var roles = getSpecificRoles();
-    // var receiver = roles["manager"];
-    // var cc = roles["shipper"];
-    // console.log(receiver);
-    // console.log(cc);
-
-    // var emailContent = "Hoàn thành";
-    // // var subject = lsOrder[orderIndex][0] + " - " +removeSpecialAlias(lsOrder[orderIndex][1]).toUpperCase();
-    // var subject = lsOrder[orderIndex][0] + " -  COMPLETED"; 
-
-    // var headers_obj = {
-    //         'To': receiver,
-    //         'CC' : cc,
-    //         'Subject': subject,
-    //         'In-Reply-To': emailId
-    //       };
-
-    // sendEmail(headers_obj,emailContent, function(){
-      $(".cardElement_"+orderIndex).remove();
+      if (lsOrder[orderIndex][8]==2) {
+        $(".cardElement_"+orderIndex).remove();
+      }
       $("#loadingSpin").hide();
-    // });
 
   },function(){
     console.log("Something wrong");

@@ -852,7 +852,7 @@ function getCurrentUser() {
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
-  var numOfColumn = 8;
+  var numOfColumn = 9;
   var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn)+"1";
 
   var spreadsheetId = shippingSheet;
@@ -990,7 +990,7 @@ function getOrderShipping(callback) {
 
   console.log("getOrderShipping");
 
-  var indexColumnOfAllData = 9;
+  var indexColumnOfAllData = 10;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
@@ -1151,7 +1151,8 @@ function requestShipping(currentOrder){
       currentOrder.otherCost,
       "",
       currentOrder.shippingCost,
-      currentOrder.shippingType
+      currentOrder.shippingType,
+      "0"
     ]
   ];
   if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
@@ -1163,7 +1164,7 @@ function requestShipping(currentOrder){
       $("#loadingSpin").hide();
     })
   } else {
-    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':I'+currentOrder.shipIndex;
+    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':J'+currentOrder.shipIndex;
     updateShipping(dataShipping, sheetrange, function(){
       console.log("updated:"+currentOrder.shipIndex);
       $("#loadingSpin").hide();
