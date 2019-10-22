@@ -405,6 +405,7 @@ function loadOrderListHtml() {
       if (currentOrder.shippingType == 2) {
         currentOrder.otherCost = 5;
       }
+      currentOrder.willpay = willpay;
 
       requestShipping(currentOrder);
     });
