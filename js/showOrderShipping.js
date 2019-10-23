@@ -34,6 +34,10 @@ $("#paymentStatus").html((currentOrder.paymentStatus == "PAID" ? "Khách đã th
 
 $("#otherCost").html(currentOrder.otherCost);
 
+$("#prepaid").html(currentOrder.prepaid);
+$("#willpay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0));
+
+
 if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }
