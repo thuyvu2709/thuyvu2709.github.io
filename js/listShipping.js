@@ -70,6 +70,7 @@ function loadOrderShippingListHtml() {
   var userRole = JSON.parse(localStorage.getItem("userRole"));
   
   totalShippingCost = 0
+  var totalShipperReceivedMoney = 0;
 
   for(e in lsOrder) {
     if (e == 0) {
@@ -86,17 +87,21 @@ function loadOrderShippingListHtml() {
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
     if (mode == "PROCESSING") {
-      if (lsOrder[e][4] == "COMPLETED" && 
-        willpay == lsOrder[e][9]
-        ) {
+      if (lsOrder[e][4] == "COMPLETED" || lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
         continue;
       }
     } else if (mode == "COMPLETED") {
-      if (lsOrder[e][4] != "COMPLETED" ||
-        willpay != lsOrder[e][9]) {
+      if (lsOrder[e][4] != "COMPLETED" && lsOrder[e][4] != "SHIPPER_RECEIVED_MONEY") {
         continue;
       }
+    } else if (mode == "SHIPPER_RECEIVED_MONEY") {
+      if (lsOrder[e][4] != "SHIPPER_RECEIVED_MONEY") {
+        continue;
+      } else {
+        totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
+      }
     }
+
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
@@ -123,9 +128,21 @@ function loadOrderShippingListHtml() {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành (thu '+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
     }
 
-    if (lsOrder[e][8] == 2) {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post</div>'+
-        '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
+    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "Requested") {
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post</div>';
+        // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
+    }
+
+    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "SEND_POST") {
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Shipper đã nhận tiền</div>';
+    }
+
+    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
+      if (userRole=="manager") {
+        completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >SHOP đã nhận tiền</div>';
+      } else {
+        completeButton = '<div class="btn btn-default btnNormal5px order_'+e+'" >Chờ xác nhận từ SHOP</div>';
+      }
     }
 
     if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
@@ -196,6 +213,8 @@ function loadOrderShippingListHtml() {
       )
   }
 
+  $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
+
   $(".complete").click(shipComplete)
   $(".detail").click(showDetail);
   $(".delete").click(deleteShipRequest);
@@ -232,9 +251,9 @@ function deleteShipRequest() {
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
   var dataUpdateShipping = [
-    ["","","","","","","",""]
+    ["","","","","","","","",""]
   ];
-  var sheetrange = 'Shipping!A'+actualOrderIndex+':H'+actualOrderIndex;
+  var sheetrange = 'Shipping!A'+actualOrderIndex+':I'+actualOrderIndex;
 
   $("#loadingSpin").show();
 
@@ -297,16 +316,32 @@ function shipComplete(){
     ["COMPLETED", otherCost, dateTime]
   ];
 
+  sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
+
+
   if (lsOrder[orderIndex][8] == 1){
-    sheetrange = 'Shipping!E'+actualOrderIndex+':J'+actualOrderIndex;
 
     dataUpdateShipping = [
-      ["COMPLETED", 
+      ["SHIPPER_RECEIVED_MONEY", 
         otherCost, 
-        dateTime,
-        lsOrder[orderIndex][7],
-        lsOrder[orderIndex][8], 
-        lsOrderDetail[lsOrder[e][0]].willpay
+        dateTime
+        ]
+    ];
+  } else if (lsOrder[orderIndex][8] == 2){
+
+    var nextStep = "";
+    if (lsOrder[orderIndex][4] == "Requested") {
+      nextStep = "SEND_POST";
+    } else if (lsOrder[orderIndex][4] == "SEND_POST") {
+      nextStep = "SHIPPER_RECEIVED_MONEY";
+    } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
+      nextStep = "COMPLETED";
+    }
+
+    dataUpdateShipping = [
+      [nextStep, 
+        otherCost, 
+        dateTime
         ]
     ];
   }
@@ -314,7 +349,7 @@ function shipComplete(){
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-      if (lsOrder[orderIndex][8]!=2) {
+      if (dataUpdateShipping[0] == "COMPLETED") {
         $(".cardElement_"+orderIndex).remove();
       }
       $("#loadingSpin").hide();
