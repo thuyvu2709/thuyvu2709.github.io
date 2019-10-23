@@ -349,7 +349,7 @@ function shipComplete(){
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-      if (dataUpdateShipping[0] == "COMPLETED") {
+      if (dataUpdateShipping[0][0] == "COMPLETED") {
         $(".cardElement_"+orderIndex).remove();
       }
       $("#loadingSpin").hide();
