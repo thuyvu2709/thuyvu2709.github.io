@@ -212,8 +212,10 @@ function loadOrderShippingListHtml() {
         '</div>'
       )
   }
-
-  $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
+  
+  if (mode == "SHIPPER_RECEIVED_MONEY"){
+    $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
+  }
 
   $(".complete").click(shipComplete)
   $(".detail").click(showDetail);
