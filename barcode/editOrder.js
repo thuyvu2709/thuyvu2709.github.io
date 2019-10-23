@@ -748,7 +748,7 @@ $("#editOrder").click(function(){
 
 	var shippingCost = $("#shippingCost").val();
 
-	var prepaid = parseFloat($("#prepaid").val());
+	var prepaid = $("#prepaid").val();
 	prepaid = prepaid ? prepaid : 0;
 
 	otherCost = otherCost ? otherCost : 0;
