@@ -512,7 +512,7 @@ $("#addNewOrder").click(function(){
 	var orderNode = $("#orderNode").val();
 	var otherCost = $("#otherCost").val();
 
-	var prepaid = parseFloat($("#prepaid").val());
+	var prepaid = $("#prepaid").val();
 	prepaid = prepaid ? prepaid : 0;
 
 	otherCost = otherCost ? otherCost : 0;
