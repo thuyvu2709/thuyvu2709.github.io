@@ -544,7 +544,7 @@ $("#addNewOrder").click(function(){
                 "ORDERED",
                 "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
-				"",
+				"-1",
 				otherCost,
 				prepaid
                 ]
