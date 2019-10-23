@@ -165,10 +165,10 @@ function loadOrderShippingListHtml() {
       shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]'
     }
 
-    var title = lsOrder[e][0]+' | '+lsOrder[e][1];
+    var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
     if (userRole=="manager") {
       // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
-      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
     }
 
     var orderDetailBrief = "<hr/>";
