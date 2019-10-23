@@ -215,6 +215,8 @@ function loadOrderShippingListHtml() {
   
   if (mode == "SHIPPER_RECEIVED_MONEY"){
     $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
+  } else {
+    $("#note").html("");
   }
 
   $(".complete").click(shipComplete)
@@ -347,6 +349,7 @@ function shipComplete(){
         ]
     ];
   }
+  console.log(dataUpdateShipping);
 
   $("#loadingSpin").show();
 
