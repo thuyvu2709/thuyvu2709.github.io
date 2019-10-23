@@ -124,7 +124,7 @@ function loadOrderShippingListHtml() {
 
     var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
 
-    if (lsOrder[e][8] == 1) {
+    if (lsOrder[e][8] == 1 && lsOrder[e][4] == "Requested") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành (thu '+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
     }
 
@@ -137,7 +137,7 @@ function loadOrderShippingListHtml() {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Shipper đã nhận tiền</div>';
     }
 
-    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
+    if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
       if (userRole=="manager") {
         completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >SHOP đã nhận tiền</div>';
       } else {
