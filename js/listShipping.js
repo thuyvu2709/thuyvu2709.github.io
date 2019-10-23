@@ -316,24 +316,18 @@ function shipComplete(){
   var otherCost = lsOrder[orderIndex][5];
   // console.log("Reply : email:"+emailId);
 
-  var dataUpdateShipping = [
-    ["COMPLETED", otherCost, dateTime]
-  ];
-
   sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
+  var nextStep = "COMPLETED";
 
   if (lsOrder[orderIndex][8] == 1){
-
-    dataUpdateShipping = [
-      ["SHIPPER_RECEIVED_MONEY", 
-        otherCost, 
-        dateTime
-        ]
-    ];
+    if (lsOrder[orderIndex][4] == "Requested") {
+      nextStep = "SHIPPER_RECEIVED_MONEY";
+    } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
+      nextStep = "COMPLETED";
+    }
   } else if (lsOrder[orderIndex][8] == 2){
 
-    var nextStep = "";
     if (lsOrder[orderIndex][4] == "Requested") {
       nextStep = "SEND_POST";
     } else if (lsOrder[orderIndex][4] == "SEND_POST") {
@@ -342,13 +336,15 @@ function shipComplete(){
       nextStep = "COMPLETED";
     }
 
-    dataUpdateShipping = [
-      [nextStep, 
-        otherCost, 
-        dateTime
-        ]
-    ];
   }
+
+  dataUpdateShipping = [
+    [nextStep, 
+      otherCost, 
+      dateTime
+      ]
+  ];
+
   console.log(dataUpdateShipping);
 
   $("#loadingSpin").show();
