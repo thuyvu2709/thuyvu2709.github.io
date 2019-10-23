@@ -163,14 +163,14 @@ function loadOrderShippingListHtml() {
       title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
     }
 
-    var shipIcon = '[<i class="fas fa-motorcycle"></i>]'
+    var shipIcon = '[<i class="fas fa-motorcycle"></i>]';
     var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
 
     if (lsOrder[e][8]==1) {
-      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]'
+      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]';
       orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
     } else if (lsOrder[e][8]==2) {
-      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]'
+      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]';
       orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
     }
 
