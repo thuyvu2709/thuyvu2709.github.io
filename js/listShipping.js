@@ -157,21 +157,23 @@ function loadOrderShippingListHtml() {
     //   preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
     // }
 
-    var shipIcon = '[<i class="fas fa-motorcycle"></i>]'
-
-    if (lsOrder[e][8]==1) {
-      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]'
-    } else if (lsOrder[e][8]==2) {
-      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]'
-    }
-
     var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
     if (userRole=="manager") {
       // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
       title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
     }
 
-    var orderDetailBrief = "<hr/>";
+    var shipIcon = '[<i class="fas fa-motorcycle"></i>]'
+    var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
+
+    if (lsOrder[e][8]==1) {
+      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]'
+      orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
+    } else if (lsOrder[e][8]==2) {
+      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]'
+      orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
+    }
+
     var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
     for (o in prodListOrder) {
       orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
