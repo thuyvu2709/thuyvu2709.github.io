@@ -293,7 +293,7 @@ function loadOrderList(callback) {
   var spreadsheetId = mainSheetForProduct;
 
 
-  var indexColumnOfAllData = 12;
+  var indexColumnOfAllData = 13;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   if (passDataLocalhost) {

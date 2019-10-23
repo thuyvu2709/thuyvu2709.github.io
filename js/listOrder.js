@@ -32,6 +32,17 @@ var triggerAfterLoad = function(){
   })
 }
 
+$(".text-center").click(function(){
+  // getOrderShipping(function(lsOrderset){
+  //     lsOrder = lsOrderset;
+  //     loadOrderShippingListHtml(lsOrder);
+  //     getTaskList(function(lsTaskset){
+  //       lsTask = lsTaskset;
+  //     })
+  // });
+  triggerAfterLoadX();
+})
+
 var orderWithProdRef = [];
 function filterOrderWithProdRefCode(){
   var prodRefCodeFilter = url.searchParams.get("prodRefCodeFilter");
@@ -388,6 +399,8 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
     var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
+    console.log(currentOrder.totalPayIncludeShip);
+    console.log(currentOrder.prepaid);    
     var lsBtnShip = 
     '<h5>Chọn kiểu giao hàng</h5>'+
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
