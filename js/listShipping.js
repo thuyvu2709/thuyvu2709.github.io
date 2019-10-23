@@ -349,7 +349,8 @@ function shipComplete(){
   $("#loadingSpin").show();
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
-      if (dataUpdateShipping[0][0] == "COMPLETED") {
+      if (dataUpdateShipping[0][0] == "COMPLETED" ||
+        dataUpdateShipping[0][0] == "SHIPPER_RECEIVED_MONEY") {
         $(".cardElement_"+orderIndex).remove();
       }
       $("#loadingSpin").hide();
