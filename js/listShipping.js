@@ -502,7 +502,7 @@ function taskComplete(){
 $(".orderFilter").change(function(){
   console.log("orderFilter:");;
   mode = document.getElementsByClassName($(this).attr("class"))[0].value;
-  if (mode == "PROCESSING" || mode == "COMPLETED" || mode == "ALL") {
+  if (mode == "PROCESSING" || mode == "COMPLETED" || mode == "ALL" || mode == "SHIPPER_RECEIVED_MONEY") {
     $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
   } else if (mode == "TASK") {
