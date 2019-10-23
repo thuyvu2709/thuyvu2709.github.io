@@ -345,7 +345,7 @@ function shipComplete(){
       ]
   ];
 
-  console.log(dataUpdateShipping);
+  // console.log(dataUpdateShipping);
 
   $("#loadingSpin").show();
 
