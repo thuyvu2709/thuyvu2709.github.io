@@ -114,8 +114,9 @@ function loadProductListHtml(){
             '<p>Cân nặng:'+data[e][6]+'</p>'+
             '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
             '<p>Hàng tồn:'+data[e][17]+'</p>'+
-            '<div class="btn editproductelement product_'+e+'" style="border: 1px solid black;margin:5px;">Sửa mặt hàng</div>'+
-            '<div class="btn showorder product_'+e+'" style="border: 1px solid black;margin:5px;">Xem đơn hàng</div>'+
+            '<div class="btn btnNormal5px editproductelement product_'+e+'" >Sửa mặt hàng</div>'+
+            '<div class="btn btnNormal5px textRed deleteproductelement product_'+oá'" >Xoá mặt hàng</div>'+
+            '<div class="btn btnNormal5px showorder product_'+e+'" >Xem đơn hàng</div>'+
           '</div>'+
           imageDiv+
         '</div>'+
@@ -124,6 +125,9 @@ function loadProductListHtml(){
 
 
   $(".editproductelement").click(editProduct);
+  $(".deleteproductelement").click(deleteProduct);
+
+
   $(".showorder").click(showOrder);
   $("#loadingSpin").hide();
 
@@ -132,6 +136,53 @@ function loadProductListHtml(){
     productIndex = parseInt(productIndex);
     window.location = "listorder.html?prodRefCodeFilter="+data[productIndex][1];
   }
+
+  function deleteProduct() {
+    var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    productIndex = parseInt(productIndex);
+    console.log($(this).attr("class")+" vs "+productIndex);
+
+    var dataEditP = [
+                ["", //0 A
+                 "",
+                 "",
+                 "", //1 B
+                 "", //2 C
+                 "", //3 D
+                 "", //4 E
+                 "", //5 F
+                 "", //6 G
+                 "", //7 H
+                 "", //8 I
+                 "", //9 J
+                 "", //10 K
+                 "", //11 L
+                "", //12 M
+                "", //13 N
+                "", //14 O
+                "", //15 P
+                "", //16 Q
+                ""
+                ]
+            ];
+    var proIndex = parseInt(productIndex) + 1;
+    var numOfColumn = 19;
+    var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
+
+    $("#loadingSpin").show();
+
+    editProduct(dataEditP, sheetrange,function(){
+        $("#loadingSpin").hide();
+        $("#simpleModal .modal-content").html("Đã xoá mặt hàng");
+        $('#simpleModal').modal('toggle');
+      }, function(){
+        $("#loadingSpin").hide();
+        $("#simpleModal .modal-content").html("Có lỗi, không thể xoá");
+        $('#simpleModal').modal('toggle');
+    })
+
+  }
+
   function editProduct() {
     var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     productIndex = parseInt(productIndex);
