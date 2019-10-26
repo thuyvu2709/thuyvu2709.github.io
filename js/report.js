@@ -7,13 +7,13 @@ var sheetOrder = "Order";
 
 var triggerAfterLoad = function(){
 
-  // $("#loadingSpin").show();
+  $("#loadingSpin").show();
 
-  // loadReport(function(){
-  //     $("#loadingSpin").hide();
-  //     console.log("Gooo");
-  loadReportHtml();
-  // })
+  loadReport(function(){
+      $("#loadingSpin").hide();
+      console.log("Gooo");
+      loadReportHtml();
+  })
 }
 
 function loadReportHtml() {
