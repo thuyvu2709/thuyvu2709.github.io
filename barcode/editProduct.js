@@ -290,6 +290,9 @@ $("#btnDuplicate").click(function(){
 	$("#pageMode").html("Thêm mặt hàng");
     window.scrollTo(0, 0);
     $("#editProduct").html("Thêm mặt hàng");
+	getLatestProductCode(function(code){
+		$("#productCode").val(code);
+	})
 })
 
 $('#btnAddImage').click(function() {
