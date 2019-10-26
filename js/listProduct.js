@@ -115,7 +115,7 @@ function loadProductListHtml(){
             '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
             '<p>Hàng tồn:'+data[e][17]+'</p>'+
             '<div class="btn btnNormal5px editproductelement product_'+e+'" >Sửa mặt hàng</div>'+
-            '<div class="btn btnNormal5px textRed deleteproductelement product_'+e'" >Xoá mặt hàng</div>'+
+            '<div class="btn btnNormal5px textRed deleteproductelement product_'+e+'" >Xoá mặt hàng</div>'+
             '<div class="btn btnNormal5px showorder product_'+e+'" >Xem đơn hàng</div>'+
           '</div>'+
           imageDiv+
