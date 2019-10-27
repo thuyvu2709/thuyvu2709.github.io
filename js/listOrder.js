@@ -331,9 +331,10 @@ function loadOrderListHtml() {
       paymentStatus : data[orderIndex][8],
       shippingStatus : data[orderIndex][9],
       orderNode : data[orderIndex][10],
-      shipIndex : shipIndex,
+      shippingType : data[orderIndex][11],
       otherCost : data[orderIndex][12],
       prepaid : data[orderIndex][13],
+      shipIndex : shipIndex,
       orderIndex : orderIndex
     }
 

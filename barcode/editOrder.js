@@ -18,6 +18,11 @@ $("#orderNode").val(currentOrder.orderNode);
 $("#prepaid").val(currentOrder.prepaid);
 $("#totalWillPay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid));
 
+if (!currentOrder.shippingType) {
+	$("#shippingType").val(0);
+} else {
+	$("#shippingType").val(currentOrder.shippingType);
+}
 
 var productList = JSON.parse(localStorage.getItem("productList"));
 
@@ -748,6 +753,8 @@ $("#editOrder").click(function(){
 
 	var shippingCost = $("#shippingCost").val();
 
+	var shippingType = $("#shippingType").val();
+
 	var prepaid = $("#prepaid").val();
 	prepaid = prepaid ? prepaid : 0;
 
@@ -768,9 +775,9 @@ $("#editOrder").click(function(){
 		orderNode : orderNode,
 		paymentStatus : paymentStatus,
 		shippingStatus : shippingStatus,
-		shipIndex : shipIndex,
 		otherCost: otherCost,
-		prepaid : prepaid
+		prepaid : prepaid,
+		shippingType : shippingType
 	}
 
 	console.log(orderCode);
@@ -788,7 +795,7 @@ $("#editOrder").click(function(){
 				paymentStatus,
 				"=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
-				shipIndex,
+				shippingType,
 				otherCost,
 				prepaid
                 ]
