@@ -262,9 +262,9 @@ function deleteShipRequest() {
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
   var dataUpdateShipping = [
-    ["","","","","","","","",""]
+    ["","","","","","","","","",""]
   ];
-  var sheetrange = 'Shipping!A'+actualOrderIndex+':I'+actualOrderIndex;
+  var sheetrange = 'Shipping!A'+actualOrderIndex+':J'+actualOrderIndex;
 
   $("#loadingSpin").show();
 
