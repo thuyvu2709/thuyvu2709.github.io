@@ -549,7 +549,7 @@ $("#addNewOrder").click(function(){
 				orderNode,
 				shippingType,
 				otherCost,
-				prepaid
+				prepaid	
                 ]
             ]
 

@@ -777,7 +777,8 @@ $("#editOrder").click(function(){
 		shippingStatus : shippingStatus,
 		otherCost: otherCost,
 		prepaid : prepaid,
-		shippingType : shippingType
+		shippingType : shippingType,
+		shipIndex : shipIndex
 	}
 
 	console.log(orderCode);
