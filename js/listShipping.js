@@ -158,14 +158,18 @@ function loadOrderShippingListHtml() {
     // }
 
     var shipIcon = '[<i class="fas fa-motorcycle"></i>]';
-    var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
+    // var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
+    var orderDetailBrief  = "<hr/>";
 
     if (lsOrder[e][8]==1) {
       shipIcon = '[<i class="fas fa-motorcycle">COD</i>]';
-      orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
+      // orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
     } else if (lsOrder[e][8]==2) {
       shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]';
-      orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
+      // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
+    } else if (lsOrder[e][8]==3) {
+      shipIcon = '[<i class="fas fa-motorcycle">SHOPEE</i>]';
+      // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
     }
 
     var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;

@@ -160,6 +160,8 @@ function loadOrderListHtml() {
           stype = "COD"
         } else if (orderShipStatus[data[e][0]].stype == 2){
           stype = "POST"
+        } else if (orderShipStatus[data[e][0]].stype == 3){
+          stype = "SHOPEE"
         }
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+stype+'</i>';
         optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="COMPLETED">Đã giao hàng</option>'
@@ -413,7 +415,7 @@ function loadOrderListHtml() {
 
     // $(".shippingType").click(function(){
     //   $("#simpleModal").modal('hide');
-      console.log(orderIndex);
+      // console.log(orderIndex);
       console.log(willpay);
       // currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
       console.log("shippingType:"+currentOrder.shippingType);
