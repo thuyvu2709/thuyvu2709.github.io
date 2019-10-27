@@ -37,6 +37,17 @@ if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }
 
+// console.log(">>"+currentOrder.shippingType);
+if (currentOrder.shippingType == 0 || !currentOrder.shippingType) {
+	$("#shippingType").html("Shipper không thu tiền");
+} else if (currentOrder.shippingType == 1) {
+	$("#shippingType").html("Shipper thu tiền " + $("#willpay").html());
+} else if (currentOrder.shippingType == 2) {
+	$("#shippingType").html("Ship Poste");
+} else if (currentOrder.shippingType == 3) {
+	$("#shippingType").html("Ship Shopee");
+}
+
 $("#orderNode").html((currentOrder.orderNode ? currentOrder.orderNode : ""));
 $("#orderNode").height( $("#orderNode")[0].scrollHeight );
 $("#otherCost").html(currentOrder.otherCost);
