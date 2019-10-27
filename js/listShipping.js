@@ -343,7 +343,7 @@ function shipComplete(){
       nextStep = "COMPLETED";
     }
 
-  } else else if (lsOrder[orderIndex][8] == 3){
+  } else if (lsOrder[orderIndex][8] == 3){
     nextStep = "COMPLETED";
   }
 
