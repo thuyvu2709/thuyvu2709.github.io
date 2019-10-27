@@ -132,30 +132,30 @@ $("#copyText").click(function(){
 $("#requestShipping").click(function(){
 	// requestShipping(currentOrder);
 	var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
-    console.log(currentOrder.totalPayIncludeShip);
-    console.log(currentOrder.prepaid);    
-    var lsBtnShip = 
-    '<h5>Chọn kiểu giao hàng</h5>'+
-    // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
-    '<div class="btn btnNormal5px shippingType type_0" >Shipper không thu tiền</div>'+
-    '<div class="btn btnNormal5px shippingType type_1" >Shipper thu '+willpay+'k</div>'+
-    '<div class="btn btnNormal5px shippingType type_2" >Ship Poste</div>';
-    $("#simpleModal .modal-content").html(lsBtnShip);
-    $("#simpleModal").modal('toggle');
+ //    console.log(currentOrder.totalPayIncludeShip);
+ //    console.log(currentOrder.prepaid);    
+ //    var lsBtnShip = 
+ //    '<h5>Chọn kiểu giao hàng</h5>'+
+ //    // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
+ //    '<div class="btn btnNormal5px shippingType type_0" >Shipper không thu tiền</div>'+
+ //    '<div class="btn btnNormal5px shippingType type_1" >Shipper thu '+willpay+'k</div>'+
+ //    '<div class="btn btnNormal5px shippingType type_2" >Ship Poste</div>';
+ //    $("#simpleModal .modal-content").html(lsBtnShip);
+ //    $("#simpleModal").modal('toggle');
 
-    $(".shippingType").click(function(){
-      $("#simpleModal").modal('hide');
-      // console.log(orderIndex);
-      console.log(willpay);
-      currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
-      console.log("shippingType:"+currentOrder.shippingType);
-      if (currentOrder.shippingType == 2) {
-        currentOrder.otherCost = 5;
-      }
-      currentOrder.willpay = willpay;
+ //    $(".shippingType").click(function(){
+	// $("#simpleModal").modal('hide');
+	// console.log(orderIndex);
+	console.log(willpay);
+	// currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
+	console.log("shippingType:"+currentOrder.shippingType);
+	if (currentOrder.shippingType == 2 || currentOrder.shippingType == 3) {
+		currentOrder.otherCost = 5;
+	}
+	currentOrder.willpay = willpay;
 
-      requestShipping(currentOrder);
-    });
+	requestShipping(currentOrder);
+    // });
 })
 
 
