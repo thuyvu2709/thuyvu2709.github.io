@@ -179,7 +179,7 @@ $("#printOrder").click(function(){
 
 $("#simplify").click(function(){
 	$(".simply").hide();
-	$("#shippingCost").html("Phí giao hàng:"+currentOrder.shippingCost);
+	$("#shippingCost").html("Phí giao hàng:"+$("#shippingCost").html());
 	$("#orderCode").html(currentOrder.orderCode+" | "+currentOrder.customerName)
 	var prepaid = currentOrder.prepaid ? currentOrder.prepaid : 0;
 	if (prepaid == 0) {
