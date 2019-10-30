@@ -43,8 +43,12 @@ if (currentOrder.shippingType == 0 || !currentOrder.shippingType) {
 } else if (currentOrder.shippingType == 1) {
 	$("#shippingType").html("Shipper thu tiền " + $("#willpay").html());
 } else if (currentOrder.shippingType == 2) {
+	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+
 	$("#shippingType").html("Ship Poste");
 } else if (currentOrder.shippingType == 3) {
+	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+
 	$("#shippingType").html("Ship Shopee");
 }
 
