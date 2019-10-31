@@ -409,7 +409,9 @@ function loadOrderListHtml() {
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
     '<div class="btn btnNormal5px shippingType type_0" >Shipper không thu tiền</div>'+
     '<div class="btn btnNormal5px shippingType type_1" >Shipper thu '+willpay+'k</div>'+
-    '<div class="btn btnNormal5px shippingType type_2" >Ship Poste</div>';
+    '<div class="btn btnNormal5px shippingType type_2" >Ship Poste</div>'+
+    '<div class="btn btnNormal5px shippingType type_3" >Ship Shopee</div>';
+
     $("#simpleModal .modal-content").html(lsBtnShip);
     $("#simpleModal").modal('toggle');
 
