@@ -4,7 +4,7 @@ Todo-
 2- Trong edit/new product: chỗ thêm ảnh, nhớ cho thêm loading vào
 3_ Report doanh thu, lãi theo ngày
 
-4_ CHeck lúc sửa đơn 104 thì đơn 104 ghi đè thẳng vào đơn 103
+4_ CHeck lúc sửa đơn 104 thì đơn 104 ghi đè thẳng vào đơn 103=> Test: lỗi sinh ra khi sửa nhiều lần
 
 5-Tạo mới y hệt cho đơn hàng
 6- Giải quyết cái quay vòng vốn

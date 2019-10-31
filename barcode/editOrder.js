@@ -44,7 +44,7 @@ $("#orderCode").val(currentOrder.orderCode);
 
 var orderCode = currentOrder.orderCode;
 
-var orderIndex = parseInt(currentOrder.orderIndex)+1;
+var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
 
 var numOfProType = 1;
 
@@ -762,6 +762,8 @@ $("#editOrder").click(function(){
 	shippingCost = shippingCost ? shippingCost : 0;
 
 	var shipIndex = currentOrder.shipIndex;
+	var orderIndex = currentOrder.orderIndex;
+	
 	currentOrder  = {
 		orderCode : orderCode,//
 		customerName : customerName,//
@@ -802,7 +804,7 @@ $("#editOrder").click(function(){
                 ]
             ];
     var numOfColumn = 13;
-	var sheetrange = sheetOrder+'!A'+orderIndex +":"+ String.fromCharCode(65+numOfColumn) + orderIndex;
+	var sheetrange = sheetOrder+'!A'+realOrderIndex +":"+ String.fromCharCode(65+numOfColumn) + realOrderIndex;
 
     editOrder(dataEditOrder, sheetrange, function(){
     	addDetailOrder();
