@@ -79,7 +79,7 @@ for (i in prodListOrder){
 	var isAvailable = prodListOrder[i].available == 1 ? "borderMustard" : "";
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
-    "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
+    "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+"(Đợt "+prodListOrder[i].importCode+")</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
     // "<td>"+prodListOrder[i].available+"</td>"+
