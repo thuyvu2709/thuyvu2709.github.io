@@ -290,7 +290,7 @@ function searchForm(){
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
             '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
-              productList[e][0]+" ("+productList[e][2]+") | " + productList[e][3] + "("+productList[e][17]+")"+
+              productList[e][0]+" ("+productList[e][2]+") | " + productList[e][3] + " (Đh "+productList[e][17]+")"+
             '</button>'+
           // '</h5>'+
         // '</div>'+
@@ -387,7 +387,7 @@ function filterInSearchForm(index,searchText){
         // '<div class="card-header">'+
           // '<h5 class="mb-0">'+
             '<button class="btn btn-link searchProductChoose searchProductChooseIndexInStore_'+e+' searchProductBtn_'+index+'">'+
-              productList[e][0]+" ("+productList[e][2]+") | " + productList[e][3] + "("+productList[e][17]+")"+
+              productList[e][0]+" ("+productList[e][2]+") | " + productList[e][3] + " (Đh "+productList[e][17]+")"+
             '</button>'+
           // '</h5>'+
         // '</div>'+
