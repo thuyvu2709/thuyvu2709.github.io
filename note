@@ -4,12 +4,13 @@ Todo-
 2- Trong edit/new product: chỗ thêm ảnh, nhớ cho thêm loading vào
 3_ Report doanh thu, lãi theo ngày
 
-4_ CHeck lúc sửa đơn 104 thì đơn 104 ghi đè thẳng vào đơn 103=> Test: lỗi sinh ra khi sửa nhiều lần
-
 5-Tạo mới y hệt cho đơn hàng
 6- Giải quyết cái quay vòng vốn
 7-Xoá mặt hàng bị lỗi split gì đó
 8-Tìm kiếm trong quản lý kho hàng ko chạy :)))
-9-Xoá mặt hàng trong list product: chưa có confirm
+9-Xoá mặt hàng trong list product: chưa có confirm=>> DANGEROUS
 
 10-Trong phần xem shipping list, hiển thị những đơn nào đã ship của poste, thì ko pải check lại nữa, mark viettelpost - đã gửi hangf, chờ nhận tiền
+
+11- Xem đơn hàng, ấn tối giản thì hide cái đợt hàng đi
+12- (-1) trong hàng có sẵn

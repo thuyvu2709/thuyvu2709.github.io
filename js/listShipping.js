@@ -166,6 +166,9 @@ function loadOrderShippingListHtml() {
       // orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
     } else if (lsOrder[e][8]==2) {
       shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]';
+      if (lsOrder[e][4] == "SEND_POST") {
+         shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST (Đã gửi)</i>]';     
+      }
       // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
     } else if (lsOrder[e][8]==3) {
       shipIcon = '[<i class="fas fa-motorcycle">SHOPEE</i>]';
