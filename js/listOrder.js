@@ -145,9 +145,10 @@ function loadOrderListHtml() {
         continue;
       }
     } if (status == 'READY') {
-      if (data[e][9]!=1) {
+      if (data[e][9]<1) {
         continue;
-      } else if (data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+      }
+      if (data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       };
     }
