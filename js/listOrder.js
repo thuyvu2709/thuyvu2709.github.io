@@ -5,7 +5,7 @@ var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
 var orderShipStatus =[];
 var listProductParse = {};
-
+var listOrderDetailParse = {};
 
 var url = new URL(window.location.href);
 
@@ -19,6 +19,7 @@ var triggerAfterLoad = function(){
           // console.log("2")
       loadOrderListDetail(function(){
         filterOrderWithProdRefCode();
+        parseOrderDetail();
         getOrderShipping(function(lsOrderset){
           parseOrderShipping();
           parseProduct();
@@ -107,9 +108,23 @@ function parseProduct(){
   }
 }
 
+function parseOrderDetail(){
+  listOrderDetailParse = {};
+  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  for (var e in orderListDetail) {
+    if (!orderListDetail[e][0]) {
+      continue;
+    }
+    if (!listOrderDetailParse[orderListDetail[e][0]]) {
+      listOrderDetailParse[orderListDetail[e][0]] = [];
+    }
+    listOrderDetailParse[orderListDetail[e][0]].push(orderListDetail[e]);
+  }
+}
+
 function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
-  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  // orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#listOrder").empty();
   // console.log(data);
@@ -184,6 +199,18 @@ function loadOrderListHtml() {
       orderReady = "borderMustard"
     }
 
+    ///Short description
+    var orderDetailBrief="<hr/>";
+    for (o in listOrderDetailParse[data[e][0]]) {
+      orderDetailBrief += listOrderDetailParse[data[e][0]][o][3]+" | "
+                        +listOrderDetailParse[data[e][0]][o][4] 
+                        +" (sl:"+listOrderDetailParse[data[e][0]][o][5] +")<br/>"
+    }
+    // console.log(prodListOrder[o]);
+    orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10] : "");
+    orderDetailBrief+="<hr/>";
+    ///
+
   	$("#listOrder").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
@@ -207,7 +234,8 @@ function loadOrderListHtml() {
             '</select>'+
             // '<label class="mdb-main-label">Đã đặt hàng</label>'+
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
-            '<hr/>'+
+            // '<hr/>'+
+            orderDetailBrief+
             '<div class="btn orderelement order_'+e+'" style="border: 1px solid black;margin:5px">Chi tiết</div>'+
             '<div class="btn deleteelement order_'+e+'" style="border: 1px solid black;margin:5px;">Xoá đơn hàng</div>'+
             '<div class="btn editorder order_'+e+'" style="border: 1px solid black;margin:5px;">Sửa đơn hàng</div>'+
