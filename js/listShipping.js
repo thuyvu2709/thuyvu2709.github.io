@@ -175,11 +175,11 @@ function loadOrderShippingListHtml() {
       // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
     }
 
-    var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
-    if (userRole=="manager") {
+    // var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
+    // if (userRole=="manager") {
       // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
-      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
-    }
+    var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
+    // }
 
 
     var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
