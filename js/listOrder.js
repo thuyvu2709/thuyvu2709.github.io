@@ -204,10 +204,11 @@ function loadOrderListHtml() {
     for (o in listOrderDetailParse[data[e][0]]) {
       orderDetailBrief += listOrderDetailParse[data[e][0]][o][3]+" | "
                         +listOrderDetailParse[data[e][0]][o][4] 
-                        +" (sl:"+listOrderDetailParse[data[e][0]][o][5] +")<br/>"
+                        +" (x "+listOrderDetailParse[data[e][0]][o][5] +")<br/>"
     }
     // console.log(prodListOrder[o]);
-    orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10] : "");
+    orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
+    orderDetailBrief+="Tiền hàng:"+data[e][5];
     orderDetailBrief+="<hr/>";
     ///
 
