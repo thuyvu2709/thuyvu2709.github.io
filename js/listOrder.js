@@ -144,6 +144,12 @@ function loadOrderListHtml() {
       if (!(data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED")) {
         continue;
       }
+    } if (status == 'READY') {
+      if (data[e][9]!=1) {
+        continue;
+      } else if (data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+        continue;
+      };
     }
 
     if (orderWithProdRef.length>0) {
