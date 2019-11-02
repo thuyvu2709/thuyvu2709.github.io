@@ -124,7 +124,7 @@ function parseOrderDetail(){
 
 function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
-  // orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#listOrder").empty();
   // console.log(data);
@@ -201,10 +201,14 @@ function loadOrderListHtml() {
 
     ///Short description
     var orderDetailBrief="<hr/>";
-    for (o in listOrderDetailParse[data[e][0]]) {
-      orderDetailBrief += listOrderDetailParse[data[e][0]][o][3]+" | "
-                        +listOrderDetailParse[data[e][0]][o][4] 
-                        +" (x "+listOrderDetailParse[data[e][0]][o][5] +")<br/>"
+    var currentOrderDetail = listOrderDetailParse[data[e][0]];
+    for (o in currentOrderDetail) {
+      orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
+                        +currentOrderDetail[o][3]+" | "
+                        +currentOrderDetail[o][4] 
+                        +" (x "+currentOrderDetail[o][5] +")"
+                        +"</span>"
+                        +"<br/>";
     }
     // console.log(prodListOrder[o]);
     orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
@@ -237,12 +241,12 @@ function loadOrderListHtml() {
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
             // '<hr/>'+
             orderDetailBrief+
-            '<div class="btn orderelement order_'+e+'" style="border: 1px solid black;margin:5px">Chi tiết</div>'+
-            '<div class="btn deleteelement order_'+e+'" style="border: 1px solid black;margin:5px;">Xoá đơn hàng</div>'+
-            '<div class="btn editorder order_'+e+'" style="border: 1px solid black;margin:5px;">Sửa đơn hàng</div>'+
-            '<hr/>'+
-            '<div class="btn requestshipping order_'+e+'" style="border: 1px solid black;margin:5px;">Yêu cầu giao hàng</div>'+
-            '<div class="btn splitorder order_'+e+'" style="border: 1px solid black;margin:5px;">Tách đơn hàng có sẵn</div>'+
+            '<div class="btn btnNormal5px orderelement order_'+e+'" >Chi tiết</div>'+
+            '<div class="btn btnNormal5px deleteelement order_'+e+'" >Xoá đơn hàng</div>'+
+            '<div class="btn btnNormal5px editorder order_'+e+'" >Sửa đơn hàng</div>'+
+            '<br/>'+
+            '<div class="btn btnNormal5px requestshipping order_'+e+'" >Yêu cầu giao hàng</div>'+
+            '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng có sẵn</div>'+
           '</div>'+
         '</div>'+
       '</div>'
