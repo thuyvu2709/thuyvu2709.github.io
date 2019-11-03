@@ -228,7 +228,7 @@ function updateTitle(){
             console.log("Percent:"+percent+ " vs "+s.length);
             // console.log(s.substring(0, percent));
             // console.log(s.substring(percent, s.length));
-            $(".navbar-brand").html("<span class='textRed'>"+
+            $(".navbar-brand").html("<span class='textYellow'>"+
                 s.substring(0, percent) +
             "</span>"+
             "<span class='text-white'>"+
