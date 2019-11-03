@@ -190,12 +190,14 @@ function loadOrderShippingListHtml() {
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
+    var mark = (lsOrder[e][9] == 1 ? "textRed" : "");
+
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
         '<div class="card cardElement_'+e+'">'+
           '<div class="card-header" id="heading_'+e+'">'+
             '<h5 class="mb-0">'+
-              '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
+              '<button class="btn btn-link '+mark+' btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
                 title +
               '</button>'+
             '</h5>'+
