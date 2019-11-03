@@ -224,7 +224,16 @@ function updateTitle(){
 
         var breakevenPoint = parseFloat(totalPay - totalTurnover);
         if (breakevenPoint <=0) {
-            return;
+            var percent = parseInt(totalPay * s.length / totalTurnover);
+            console.log("Percent:"+percent+ " vs "+s.length);
+            // console.log(s.substring(0, percent));
+            // console.log(s.substring(percent, s.length));
+            $(".navbar-brand").html("<span class='textRed'>"+
+                s.substring(0, percent) +
+            "</span>"+
+            "<span class='text-white'>"+
+                s.substring(percent, s.length) +
+            "</span>")
         } else {
 
             var percent = parseInt(totalTurnover * s.length / totalPay);
