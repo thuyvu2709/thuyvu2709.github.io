@@ -224,7 +224,7 @@ function updateTitle(){
 
         var breakevenPoint = parseFloat(totalPay - totalTurnover);
         if (breakevenPoint <=0) {
-            var percent = parseInt(totalPay * s.length / totalTurnover);
+            var percent = parseInt((totalTurnover - totalPay) * s.length / totalPay);
             console.log("Percent:"+percent+ " vs "+s.length);
             // console.log(s.substring(0, percent));
             // console.log(s.substring(percent, s.length));
