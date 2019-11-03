@@ -432,7 +432,7 @@ function loadWarehouse(callback) {
 
 function appendOrderDetail(submitData,callback) {
   var numOfColumn = 10;
-  var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn);
+  var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn)+'1';
   var spreadsheetId = mainSheetForProduct;
 
 
@@ -469,7 +469,7 @@ function appendOrderDetail(submitData,callback) {
 
 function appendOrder(submitOrderData,callback) {
   var numOfColumn = 13;
-  var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn);
+  var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn)+'1';
   var spreadsheetId = mainSheetForProduct;
 
   if (passDataLocalhost) {

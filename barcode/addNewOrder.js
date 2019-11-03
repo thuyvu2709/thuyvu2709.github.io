@@ -7,6 +7,18 @@ var productList = JSON.parse(localStorage.getItem("productList"));
 var currentOrder = {};
 var importSLData = {};
 
+var url = new URL(window.location.href);
+
+var makeCopy = url.searchParams.get("makeCopy");
+
+if (makeCopy) {
+	var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
+
+	$("#customerName").val(currentOrder.customerName);
+	$("#customerAddress").val(currentOrder.customerAddress);
+	$("#customerPhone").val(currentOrder.customerPhone);
+}
+
 var triggerAfterLoad = function(){
 	
 	console.log("triggerAfterLoad");
@@ -472,6 +484,7 @@ function addDetailOrder() {
 	}
 
 	currentOrder.prodListOrder = prodListOrder;
+	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
  	appendOrderDetail(submitData,finishOrder);
 }

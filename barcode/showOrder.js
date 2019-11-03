@@ -9,7 +9,7 @@ if (currentOrder.orderIndex) {
 	$("#editOrder").hide();
 }
 
-$("#orderCode").html(currentOrder.orderCode);
+$("#orderCode").html(currentOrder.orderCode +" | "+currentOrder.orderDate);
 $("#customerName").html(currentOrder.customerName);
 
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -197,6 +197,10 @@ $("#simplify").click(function(){
 		$(".prepaid").html("Khách đã thanh toán");
 	}
 });
+
+$("#makeCopy").click(function(){
+	window.location = "neworder.html?makeCopy=true";
+})
 
 $("#createNewOrder").click(function(){
 	// $("#loadingSpin").show();
