@@ -199,7 +199,14 @@ function getLatestOrderCode(callback) {
       dataset = response.result.values;
       // showList(dataset);
       // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
-      var latestCode = parseFloat(dataset[dataset.length-1][0].split("_").pop())+1;
+      var maxCode = 0;
+      for (var e in dataset){
+        var code = parseFloat(dataset[e][0].split("_").pop());
+        if (maxCode < code) {
+          maxCode = code;
+        }
+      }
+      var latestCode = maxCode+1;
 
       localStorage.setItem("orderCode","DONHANG_"+latestCode);
 
