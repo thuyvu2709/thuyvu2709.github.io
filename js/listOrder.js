@@ -190,6 +190,16 @@ function loadOrderListHtml() {
       }
 
     } else {
+      var stype = "";
+      if (data[e][11] == 1){
+        stype = "COD"
+      } else if (data[e][11] == 2){
+        stype = "POST"
+      } else if (data[e][11] == 3){
+        stype = "SHOPEE"
+      }
+      iconShip = ' | <i class="fas fa-motorcycle" style="color:blue">'+stype+'</i>';
+      
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
     }
 
