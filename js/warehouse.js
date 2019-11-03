@@ -16,16 +16,22 @@ var triggerAfterLoad = function(){
 // })
 
 function loadWarehouseHtml() {
-  data = JSON.parse(localStorage.getItem("warehouse"));
+  var data = JSON.parse(localStorage.getItem("warehouse"));
   warehouseData = data;
   $("#listSchedule").empty();
   // console.log(data);
-  for(e in data) {
+  for(var e in data) {
     if (e == 0) {
       continue;
     }
     if (!data[e][0]){
       continue;
+    }
+
+    if ($("#warehouseSearchInput").val()) {
+      if (!data[e][1].toUpperCase().includes($("#warehouseSearchInput").val().toUpperCase())){
+        continue;
+      }
     }
 
     var scheduleStatus = data[e][2];
@@ -67,6 +73,11 @@ function loadWarehouseHtml() {
     $(".showWH_"+e).click(showWH);
   }
 };
+
+$("#warehouseSearchInput").change(function(){
+  console.log("search"+$("#warehouseSearchInput").val());
+  loadWarehouseHtml();
+});
 
 function showWH(){
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();

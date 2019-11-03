@@ -1,6 +1,5 @@
 Todo-
 
-1- Tạo mới y hệt: làm button bên list product,
 2- Trong edit/new product: chỗ thêm ảnh, nhớ cho thêm loading vào
 3_ Report doanh thu, lãi theo ngày
 
@@ -9,8 +8,3 @@ Todo-
 7-Xoá mặt hàng bị lỗi split gì đó
 8-Tìm kiếm trong quản lý kho hàng ko chạy :)))
 9-Xoá mặt hàng trong list product: chưa có confirm=>> DANGEROUS
-
-10-Trong phần xem shipping list, hiển thị những đơn nào đã ship của poste, thì ko pải check lại nữa, mark viettelpost - đã gửi hangf, chờ nhận tiền
-
-11- Xem đơn hàng, ấn tối giản thì hide cái đợt hàng đi
-12- (-1) trong hàng có sẵn
