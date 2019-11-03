@@ -45,7 +45,7 @@ if (currentOrder.shippingType == 0 || !currentOrder.shippingType) {
 } else if (currentOrder.shippingType == 2) {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 
-	$("#shippingType").html("Ship Poste");
+	$("#shippingType").html("Ship Viettelpost");
 } else if (currentOrder.shippingType == 3) {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 

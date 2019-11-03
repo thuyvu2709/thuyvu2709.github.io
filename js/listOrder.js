@@ -198,7 +198,7 @@ function loadOrderListHtml() {
       } else if (data[e][11] == 3){
         stype = "SHOPEE"
       }
-      iconShip = ' | <i class="fas fa-motorcycle" style="color:blue">'+stype+'</i>';
+      iconShip = ' | <i class="fas fa-motorcycle" >'+stype+'</i>';
       
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
     }
