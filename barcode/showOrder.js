@@ -44,7 +44,7 @@ if (currentOrder.shippingType == 0 || !currentOrder.shippingType) {
 	$("#shippingType").html("Shipper thu tiền " + $("#willpay").html());
 } else if (currentOrder.shippingType == 2) {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
-
+	$("#titleWillpay").html("Thu COD:");
 	$("#shippingType").html("Ship Viettelpost");
 } else if (currentOrder.shippingType == 3) {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
