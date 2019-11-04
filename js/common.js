@@ -442,7 +442,7 @@ function loadWarehouse(callback) {
 
 function appendOrderDetail(submitData,callback) {
   var numOfColumn = 10;
-  var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn)+'1';
+  var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn)+'';
   var spreadsheetId = mainSheetForProduct;
 
 
