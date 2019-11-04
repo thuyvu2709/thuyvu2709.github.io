@@ -193,8 +193,9 @@ $("#simplify").click(function(){
 		|| currentOrder.paymentStatus == "PAID"
 		){
 		$(".willpay").hide();
-		$(".prepaid").show();
-		$(".prepaid").html("Khách đã thanh toán");
+		$(".prepaid").hide();
+		// $(".prepaid").html("Khách đã thanh toán");
+		$(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng</h5>")
 	}
 });
 
