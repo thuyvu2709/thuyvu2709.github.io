@@ -23,7 +23,7 @@ if (historicalData){
 
   if (historicalData.orderFilter) {
     var orderFilter = historicalData.orderFilter;
-    $(".orderFilter").val(importCode);
+    $(".orderFilter").val(orderFilter);
   }
 }
 
