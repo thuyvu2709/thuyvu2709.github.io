@@ -70,6 +70,8 @@ var triggerAfterLoad = function(){
 
           $("#importFilter").append("<option value='-2'>Hàng đã bán hết</option>");
           $("#importFilter").append("<option value='-3'>Toàn bộ</option>");
+          $("#importFilter").append("<option value='-4'>Hàng số âm</option>");
+
           $("#importFilter").val(importCode);
       })
   })
@@ -124,6 +126,10 @@ function loadProductListHtml(){
       }
     } else if (importCode == -2) {
       if (data[e][17] != 0) {
+        continue;
+      }
+    }  else if (importCode == -4) {
+      if (parseFloat(data[e][17]) < 0) {
         continue;
       }
     }
