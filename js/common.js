@@ -306,16 +306,16 @@ function loadOrderList(callback) {
   var indexColumnOfAllData = 13;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
-  if (passDataLocalhost) {
-    callback();
-    return;
-  }
+  // if (passDataLocalhost) {
+  //   callback();
+  //   return;
+  // }
 
-  if(!gapi.client.sheets) {
-    callback();
-    comeBackHomeToAuthorize();
-    return;
-  }
+  // if(!gapi.client.sheets) {
+  //   callback();
+  //   comeBackHomeToAuthorize();
+  //   return;
+  // }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,

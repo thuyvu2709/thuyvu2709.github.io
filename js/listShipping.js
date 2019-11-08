@@ -81,7 +81,7 @@ function readOrderDetail(callback){
 // $('#datetimepicker').datetimepicker();
 // });
 
-var mode = "NEEDED_TO_SHIP";
+var mode = "Requested";
 
 var totalShippingCost = 0;
 

@@ -9,7 +9,7 @@ var listOrderDetailParse = {};
 
 var url = new URL(window.location.href);
 
-var triggerAfterLoad = function(){
+var triggerAfterLoadX = function(){
 
   $("#loadingSpin").show();
 
