@@ -1181,6 +1181,16 @@ function getSpecificRoles(){
 function requestShipping(currentOrder){
   $("#loadingSpin").show();
 
+  for (e in currentOrder.prodListOrder){
+    currentOrder.prodListOrder[e].productCount = undefined;
+    currentOrder.prodListOrder[e].productEstimateSellingVND = undefined;
+    currentOrder.prodListOrder[e].turnover = undefined;
+    currentOrder.prodListOrder[e].totalPay = undefined;
+    currentOrder.prodListOrder[e].profit = undefined;
+    currentOrder.prodListOrder[e].available = undefined;
+
+  }
+
   var dataShipping = [
     [
       currentOrder.orderCode,
