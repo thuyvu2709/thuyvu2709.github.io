@@ -168,6 +168,8 @@ function loadProductListHtml(){
       '</div>')
 	}
 
+  afterLoadHTML();
+
 
   $(".editproductelement").click(editProduct);
   $(".deleteproductelement").click(deleteProduct);

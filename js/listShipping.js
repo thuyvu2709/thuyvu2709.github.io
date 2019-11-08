@@ -10,6 +10,42 @@ var lsOrderDetail;
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
+//Load history
+
+//saveHistory({
+// orderFilter : $(".orderFilter").val(),
+// goToClass : $(this).attr("class")
+// })
+var historicalData = readCurrentHistoryData();
+if (historicalData){
+  console.log("historicalData");
+  console.log(historicalData);
+
+  if (historicalData.orderFilter) {
+    var orderFilter = historicalData.orderFilter;
+    $(".orderFilter").val(importCode);
+  }
+}
+
+var afterLoadHTML = function(){
+  // document.getElementsByClassName
+  if (historicalData && historicalData.goToClass) {
+    // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
+    var $container = $("html,body");
+    var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
+    var btnOrder = "btnProd_"+orderIndex;
+
+    console.log("goToClass:"+btnOrder);
+
+    var $scrollTo = $('.'+btnOrder);
+
+    $("html,body").animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - 100, scrollLeft: 0},300); 
+    $scrollTo.click();
+  }
+}
+/////////////
+
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -249,6 +285,8 @@ function loadOrderShippingListHtml() {
       )
   }
   
+  afterLoadHTML();
+
   if (mode == "SHIPPER_RECEIVED_MONEY"){
     $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
   } else {
@@ -310,6 +348,12 @@ function showDetail(){
   var actualOrderIndex = parseInt(orderIndex) + 1;
 
   localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
+
+  saveHistory({
+    orderFilter : $(".orderFilter").val(),
+    goToClass : $(this).attr("class")
+  })
+
   window.location = "showordershipping.html";  
 }
 
