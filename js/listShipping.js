@@ -110,9 +110,11 @@ function loadOrderShippingListHtml() {
     }
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
-    if (mode != lsOrder[e][4]) {
-        continue;
-    } 
+    if (mode != "ALL") {
+      if (mode != lsOrder[e][4]) {
+          continue;
+      } 
+    }
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
       totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
@@ -542,7 +544,12 @@ function taskComplete(){
 $(".orderFilter").change(function(){
   console.log("orderFilter:");;
   mode = document.getElementsByClassName($(this).attr("class"))[0].value;
-  if (mode == "PROCESSING" || mode == "COMPLETED" || mode == "ALL" || mode == "SHIPPER_RECEIVED_MONEY") {
+  if (mode == "Requested" 
+      || mode == "SENT_POST"
+      || mode == "SHIPPER_RECEIVED_MONEY"
+      || mode == "COMPLETED" 
+      || mode == "ALL" 
+      ) {
     $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
   } else if (mode == "TASK") {
