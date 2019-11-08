@@ -11,20 +11,21 @@ var url = new URL(window.location.href);
 
 //Load history
 var historicalData = readCurrentHistoryData();
+if (historicalData){
+  console.log("historicalData");
+  console.log(historicalData);
+  if (historicalData.searchText){
+    $("#orderSearchInput").val(historicalData.searchText);
+  }
 
-console.log("historicalData");
-console.log(historicalData);
-if (historicalData.searchText){
-  $("#orderSearchInput").val(historicalData.searchText);
-}
-
-if (historicalData.status) {
-  status = historicalData.status;
+  if (historicalData.status) {
+    status = historicalData.status;
+  }
 }
 
 var afterLoadHTML = function(){
   // document.getElementsByClassName
-  if (historicalData.goToClass) {
+  if (historicalData && historicalData.goToClass) {
     // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
     var $container = $("html,body");
     var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
