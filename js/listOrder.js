@@ -9,7 +9,7 @@ var listOrderDetailParse = {};
 
 var url = new URL(window.location.href);
 
-var triggerAfterLoadX = function(){
+var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
@@ -41,7 +41,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoadX();
+  // triggerAfterLoadX();
 })
 
 var orderWithProdRef = [];
