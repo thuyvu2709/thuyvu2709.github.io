@@ -25,6 +25,7 @@ if (historicalData){
 
   if (historicalData.importCode) {
     importCode = historicalData.importCode;
+    $("#importFilter").val(importCode);
   }
 }
 

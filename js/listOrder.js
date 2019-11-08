@@ -20,6 +20,7 @@ if (historicalData){
 
   if (historicalData.status) {
     status = historicalData.status;
+    $(".orderFilter").val(status);
   }
 }
 
