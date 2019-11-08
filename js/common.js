@@ -42,7 +42,7 @@ function saveHistory(object){
 }
 function cleanHistory() {
   // var last = historyPath.pop();
-  localStorage.setItem("historyPath",JSON.stringify([historyPath.pop()]));
+  localStorage.setItem("historyPath",JSON.stringify([]));
 }
 function backPage() {
   console.log("back");
