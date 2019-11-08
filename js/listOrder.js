@@ -173,33 +173,16 @@ function loadOrderListHtml() {
 
     if (orderShipStatus[data[e][0]]) {
 
-      iconShip = ' | <i class="fas fa-motorcycle"></i>';
       if(orderShipStatus[data[e][0]].status == "COMPLETED") {
+        iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Sent)</i>';
         optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
       } else {
-        var stype = "";
-        if (orderShipStatus[data[e][0]].stype == 1){
-          stype = "COD"
-        } else if (orderShipStatus[data[e][0]].stype == 2){
-          stype = "POST"
-        } else if (orderShipStatus[data[e][0]].stype == 3){
-          stype = "SHOPEE"
-        }
-        iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+stype+'</i>';
+        iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Requested)</i>';
         optionShip = '<option value="Requested" selected>Chưa giao hàng</option><option value="COMPLETED">Đã giao hàng</option>'
       }
 
     } else {
-      var stype = "";
-      if (data[e][11] == 1){
-        stype = "COD"
-      } else if (data[e][11] == 2){
-        stype = "POST"
-      } else if (data[e][11] == 3){
-        stype = "SHOPEE"
-      }
-      iconShip = ' | <i class="fas fa-motorcycle" >'+stype+'</i>';
-      
+      iconShip = ' | <i class="fas fa-motorcycle" >'+data[e][11]+'</i>';
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
     }
 
@@ -457,10 +440,11 @@ function loadOrderListHtml() {
     var lsBtnShip = 
     '<h5>Chọn kiểu giao hàng</h5>'+
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
-    '<div class="btn btnNormal5px shippingType type_0" >Shipper không thu tiền</div>'+
-    '<div class="btn btnNormal5px shippingType type_1" >Shipper thu '+willpay+'k</div>'+
-    '<div class="btn btnNormal5px shippingType type_2" >Ship Poste</div>'+
-    '<div class="btn btnNormal5px shippingType type_3" >Ship Shopee</div>';
+    '<div class="btn btnNormal5px shippingType SHIPPER_NO_COD" >Shipper không thu tiền</div>'+
+    '<div class="btn btnNormal5px shippingType SHIPPER_COD" >Shipper thu '+willpay+'k</div>'+
+    '<div class="btn btnNormal5px shippingType POST_COD" >Ship Poste thu COD</div>'+
+    '<div class="btn btnNormal5px shippingType POST_NO_COD" >Ship Poste ko COD</div>'+
+    '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>';
 
     $("#simpleModal .modal-content").html(lsBtnShip);
     $("#simpleModal").modal('toggle');
@@ -469,11 +453,13 @@ function loadOrderListHtml() {
       $("#simpleModal").modal('hide');
       console.log(orderIndex);
       console.log(willpay);
-      currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
+      currentOrder.shippingType =  $(this).attr("class").split(" ").pop();
 
       //////////
       console.log("shippingType:"+currentOrder.shippingType);
-      if (currentOrder.shippingType == 2 || currentOrder.shippingType == 3) {
+      if (currentOrder.shippingType == "POST_COD" 
+        || currentOrder.shippingType == "SHOPEE"
+        || currentOrder.shippingType == "POST_NO_COD" ) {
         currentOrder.otherCost = 5;
       }
       currentOrder.willpay = willpay;
@@ -493,7 +479,7 @@ function loadOrderListHtml() {
     
     line = parseInt(line) + 1;
 
-    var column = 8; //for ship
+    var column = 8; //for payment
     $("#loadingSpin").show();
     updateOrderStatus(line,column,value, function(){
       $("#loadingSpin").hide();

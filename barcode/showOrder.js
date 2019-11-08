@@ -155,7 +155,9 @@ $("#requestShipping").click(function(){
 	console.log(willpay);
 	// currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
 	console.log("shippingType:"+currentOrder.shippingType);
-	if (currentOrder.shippingType == 2 || currentOrder.shippingType == 3) {
+	if (currentOrder.shippingType == "POST_COD" 
+		|| currentOrder.shippingType == "SHOPEE"
+		|| currentOrder.shippingType == "POST_NO_COD" ) {
 		currentOrder.otherCost = 5;
 	}
 	currentOrder.willpay = willpay;

@@ -13,7 +13,7 @@ try {
 
 saveHistory();
 
-function saveHistory(){
+function saveHistory(object){
   var currentHref = window.location.pathname;
   // console.log(window.location);
   // console.log(currentHref);
@@ -326,7 +326,7 @@ function loadOrderList(callback) {
       // showList(dataset);
       localStorage.setItem("orderList",JSON.stringify(dataset));
 
-      callback();
+      callback(dataset);
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });

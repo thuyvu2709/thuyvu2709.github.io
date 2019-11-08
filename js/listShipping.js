@@ -1,6 +1,14 @@
+// 0:SHIPPER_NO_COD
+// 1:SHIPPER_COD
+// 2:POST_COD
+// 3:SHOPEE
+// 4:POST_NO_COD
+//=if(I2=0,"SHIPPER_NO_COD",if(I2=1,"SHIPPER_COD",if(I2=2,"POST_COD","SHOPEE")))
 var lsOrder;
 var lsTask;
 var lsOrderDetail;
+
+var userRole = JSON.parse(localStorage.getItem("userRole"));
 
 var triggerAfterLoad = function(){
 
@@ -30,6 +38,22 @@ $(".text-center").click(function(){
   triggerAfterLoadX();
 })
 
+var orderListParse = {}
+
+function parseOrder(){
+  if (userRole!="manager") {
+    return;
+  }
+  loadOrderList(function(orderlist){
+    for (e in orderlist) {
+      orderListParse[orderlist[e][0]] = {
+        index : e,
+        orderCode : orderlist[e][1]
+      }
+    }
+  })
+}
+
 function readOrderDetail(callback){
   // console.log("userRole:"+userRole);
   // if (userRole!="manager") {
@@ -57,7 +81,7 @@ function readOrderDetail(callback){
 // $('#datetimepicker').datetimepicker();
 // });
 
-var mode = "PROCESSING";
+var mode = "NEEDED_TO_SHIP";
 
 var totalShippingCost = 0;
 
@@ -67,7 +91,7 @@ function loadOrderShippingListHtml() {
   // $(".maintitle").html("Quản lý giao hàng");
 
 
-  var userRole = JSON.parse(localStorage.getItem("userRole"));
+  // var userRole = JSON.parse(localStorage.getItem("userRole"));
   
   totalShippingCost = 0
   var totalShipperReceivedMoney = 0;
@@ -86,21 +110,14 @@ function loadOrderShippingListHtml() {
     }
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
-    if (mode == "PROCESSING") {
-      if (lsOrder[e][4] == "COMPLETED" || lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
+    if (mode != lsOrder[e][4]) {
         continue;
-      }
-    } else if (mode == "COMPLETED") {
-      if (lsOrder[e][4] != "COMPLETED" && lsOrder[e][4] != "SHIPPER_RECEIVED_MONEY") {
-        continue;
-      }
-    } else if (mode == "SHIPPER_RECEIVED_MONEY") {
-      if (lsOrder[e][4] != "SHIPPER_RECEIVED_MONEY") {
-        continue;
-      } else {
-        totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
-      }
+    } 
+
+    if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
+      totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
     }
+    
 
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -124,16 +141,21 @@ function loadOrderShippingListHtml() {
 
     var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
 
-    if (lsOrder[e][8] == 1 && lsOrder[e][4] == "Requested") {
+    if (lsOrder[e][8] == "SHIPPER_COD" && lsOrder[e][4] == "Requested") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành (thu '+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
     }
 
-    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "Requested") {
+    if (lsOrder[e][8] == "POST_NO_COD" && lsOrder[e][4] == "Requested") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post</div>';
         // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
     }
 
-    if (lsOrder[e][8] == 2 && lsOrder[e][4] == "SEND_POST") {
+    if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested") {
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+') </div>';
+        // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
+    }
+
+    if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "SENT_POST") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Shipper đã nhận tiền</div>';
     }
 
@@ -157,23 +179,23 @@ function loadOrderShippingListHtml() {
     //   preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
     // }
 
-    var shipIcon = '[<i class="fas fa-motorcycle"></i>]';
+    var shipIcon = '[<i class="fas fa-motorcycle">'+lsOrder[e][8]+'</i>]';
     // var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
     var orderDetailBrief  = "<hr/>";
 
-    if (lsOrder[e][8]==1) {
-      shipIcon = '[<i class="fas fa-motorcycle">COD</i>]';
-      // orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
-    } else if (lsOrder[e][8]==2) {
-      shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]';
-      if (lsOrder[e][4] == "SEND_POST") {
-         shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST (Đã gửi)</i>]';     
-      }
-      // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
-    } else if (lsOrder[e][8]==3) {
-      shipIcon = '[<i class="fas fa-motorcycle">SHOPEE</i>]';
-      // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
-    }
+    // if (lsOrder[e][8]=="SHIPPER_COD") {
+    //   shipIcon = '[<i class="fas fa-motorcycle">COD</i>]';
+    //   // orderDetailBrief = "<hr/>Shipper nhớ thu tiền<hr/>";
+    // } else if (lsOrder[e][8]=="POST_COD") {
+    //   shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST</i>]';
+    //   // if (lsOrder[e][4] == "SENT_POST") {
+    //   //    shipIcon = '[<i class="fas fa-motorcycle">VIETTELPOST (Đã gửi)</i>]';     
+    //   // }
+    //   // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
+    // } else if (lsOrder[e][8]=="SHOPEE") {
+    //   shipIcon = '[<i class="fas fa-motorcycle">SHOPEE</i>]';
+    //   // orderDetailBrief = "<hr/>Shipper gửi VIETTELPOST<hr/>";
+    // }
 
     // var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
     // if (userRole=="manager") {
@@ -330,27 +352,31 @@ function shipComplete(){
 
   sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
-  var nextStep = "COMPLETED";
+  var nextStep = "COMPLETED"; //FOR SHIPPER_NO_COD, SHOPEE, POST_NO_COD
 
-  if (lsOrder[orderIndex][8] == 1){
+  
+
+  if (lsOrder[orderIndex][8] == "SHIPPER_COD"){
     if (lsOrder[orderIndex][4] == "Requested") {
       nextStep = "SHIPPER_RECEIVED_MONEY";
     } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
       nextStep = "COMPLETED";
     }
-  } else if (lsOrder[orderIndex][8] == 2){
+  } else if (lsOrder[orderIndex][8] == "POST_COD"){
 
     if (lsOrder[orderIndex][4] == "Requested") {
-      nextStep = "SEND_POST";
-    } else if (lsOrder[orderIndex][4] == "SEND_POST") {
+      nextStep = "SENT_POST";
+    } else if (lsOrder[orderIndex][4] == "SENT_POST") {
       nextStep = "SHIPPER_RECEIVED_MONEY";
     } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
       nextStep = "COMPLETED";
+
     }
 
-  } else if (lsOrder[orderIndex][8] == 3){
-    nextStep = "COMPLETED";
   }
+  //  else if (lsOrder[orderIndex][8] == "SHOPEE"){
+  //   nextStep = "COMPLETED";
+  // }
 
   dataUpdateShipping = [
     [nextStep, 
@@ -366,9 +392,10 @@ function shipComplete(){
   updateShipping(dataUpdateShipping, sheetrange, function(){
       if (dataUpdateShipping[0][0] == "COMPLETED" ||
         dataUpdateShipping[0][0] == "SHIPPER_RECEIVED_MONEY") {
-        $(".cardElement_"+orderIndex).remove();
       }
       $("#loadingSpin").hide();
+
+      $(".cardElement_"+orderIndex).remove();
 
   },function(){
     console.log("Something wrong");
@@ -414,8 +441,6 @@ function shippingReport(){
 
 function showTask(){
   $("#listShippingOrder").empty();
-
-  var userRole = JSON.parse(localStorage.getItem("userRole"));
 
   for(e in lsTask) {
     if (e == 0) {
