@@ -33,7 +33,7 @@ var afterLoadHTML = function(){
     // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
     var $container = $("html,body");
     var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
-    var btnOrder = "btnProd_"+orderIndex;
+    var btnOrder = "btnOrder_"+orderIndex;
 
     console.log("goToClass:"+btnOrder);
 
