@@ -8,6 +8,44 @@ if (!importCode) {
   importCode = -3;
 }
 
+//Load history
+
+//saveHistory({
+//   searchText : $("#prodSearchInput").val(),
+//   importCode : $("#importFilter").val(),
+//   goToClass : $(this).attr("class")
+// })
+var historicalData = readCurrentHistoryData();
+if (historicalData){
+  console.log("historicalData");
+  console.log(historicalData);
+  if (historicalData.searchText){
+    $("#prodSearchInput").val(historicalData.searchText);
+  }
+
+  if (historicalData.importCode) {
+    importCode = historicalData.importCode;
+  }
+}
+
+var afterLoadHTML = function(){
+  // document.getElementsByClassName
+  if (historicalData && historicalData.goToClass) {
+    // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
+    var $container = $("html,body");
+    var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
+    var btnOrder = "btnProd_"+orderIndex;
+
+    console.log("goToClass:"+btnOrder);
+
+    var $scrollTo = $('.'+btnOrder);
+
+    $("html,body").animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - 100, scrollLeft: 0},300); 
+    $scrollTo.click();
+  }
+}
+/////////////
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -96,7 +134,7 @@ function loadProductListHtml(){
 		$("#listProduct").append('<div class="card">'+
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
-            '<button class="btn btn-link" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
+            '<button class="btn btn-link btnProd_'+e+'" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
               data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +
             '</button>'+
           '</h5>'+
@@ -134,6 +172,13 @@ function loadProductListHtml(){
   function showOrder(){
     var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     productIndex = parseInt(productIndex);
+
+    saveHistory({
+      searchText : $("#prodSearchInput").val(),
+      importCode : $("#importFilter").val(),
+      goToClass : $(this).attr("class")
+    })
+
     window.location = "listorder.html?prodRefCodeFilter="+data[productIndex][1];
   }
 
@@ -214,6 +259,12 @@ function loadProductListHtml(){
     }
 
     localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
+
+    saveHistory({
+      searchText : $("#prodSearchInput").val(),
+      importCode : $("#importFilter").val(),
+      goToClass : $(this).attr("class")
+    })
 
     window.location = "../barcode/editproduct.html";
   }
