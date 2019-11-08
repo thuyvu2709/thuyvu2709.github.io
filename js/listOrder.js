@@ -14,8 +14,10 @@ var historicalData = readCurrentHistoryData();
 
 console.log("historicalData");
 console.log(historicalData);
+if (historicalData.searchText){
+  $("#orderSearchInput").val(historicalData.searchText);
+}
 
-$("#orderSearchInput").val(historicalData.searchText);
 if (historicalData.status) {
   status = historicalData.status;
 }
