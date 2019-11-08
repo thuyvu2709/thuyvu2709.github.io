@@ -454,6 +454,12 @@ function loadOrderListHtml() {
 
     $("#loadingSpin").show();
 
+    saveHistory({
+      searchText : $("#orderSearchInput").val(),
+      status : $(".orderFilter").value,
+      goToClass : $(this).attr("class")
+    })
+
     splitOrderAvailable(currentOrder,function(){
       location.reload();
     });
@@ -469,6 +475,13 @@ function loadOrderListHtml() {
     // console.log("AAA");
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
+    
+    saveHistory({
+      searchText : $("#orderSearchInput").val(),
+      status : $(".orderFilter").value,
+      goToClass : $(this).attr("class")
+    })
+
     window.location = "../barcode/editorder.html"
   })
 
