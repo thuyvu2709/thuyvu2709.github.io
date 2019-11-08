@@ -70,6 +70,8 @@ function readCurrentHistoryData() {
     return  {};
   }
 
+  localStorage.setItem("currentHistoryData",JSON.stringify({}));
+
   return historicalData;
 }
 
