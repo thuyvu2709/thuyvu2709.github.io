@@ -9,6 +9,36 @@ var listOrderDetailParse = {};
 
 var url = new URL(window.location.href);
 
+//Load history
+var historicalData = readCurrentHistoryData();
+
+console.log("historicalData");
+console.log(historicalData);
+
+$("#orderSearchInput").val(historicalData.searchText);
+if (historicalData.status) {
+  status = historicalData.status;
+}
+
+var afterLoadHTML = function(){
+  // document.getElementsByClassName
+  if (historicalData.goToClass) {
+    // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
+    var $container = $("html,body");
+    var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
+    var btnOrder = "btnOrder_"+orderIndex;
+
+    console.log("goToClass:"+btnOrder);
+
+    var $scrollTo = $('.'+btnOrder);
+
+    $("html,body").animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - 100, scrollLeft: 0},300); 
+    $scrollTo.click();
+  }
+}
+/////////////
+
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -41,7 +71,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  // triggerAfterLoadX();
+  triggerAfterLoadX();
 })
 
 var orderWithProdRef = [];
@@ -253,6 +283,7 @@ function loadOrderListHtml() {
       )
   }
 
+  afterLoadHTML();
 
 
   function removeOrderDetail(orderCode, callback){
@@ -404,6 +435,13 @@ function loadOrderListHtml() {
   $(".orderelement").click(function(){
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     getOrder(orderIndex);
+
+    saveHistory({
+      searchText : $("#orderSearchInput").val(),
+      status : $(".orderFilter").value,
+      goToClass : $(this).attr("class")
+    })
+
     window.location = "../barcode/showorder.html";
   })
 

@@ -5,6 +5,7 @@ var hostname = window.location.hostname;
 var passDataLocalhost = (hostname == "localhost");
 
 var historyPath = [];
+// var currentHistoryData;
 try {
   historyPath = JSON.parse(localStorage.getItem("historyPath"));
 } catch(e) {
@@ -14,19 +15,28 @@ try {
 saveHistory();
 
 function saveHistory(object){
-  var currentHref = window.location.pathname;
-  // console.log(window.location);
+  var currentHref = window.location.href;
+  console.log(window.location);
   // console.log(currentHref);
   if (!historyPath) {
-    historyPath = [];
+    historyPath = [{}];
   };
   
-  if (historyPath[historyPath.length-1] == currentHref) {
+
+  if (historyPath[historyPath.length-1] && 
+      historyPath[historyPath.length-1].href == currentHref) {
+    if (object) {
+      historyPath[historyPath.length-1].data = object;
+      localStorage.setItem("historyPath",JSON.stringify(historyPath));
+    }
     return;
   }
 
-  historyPath.push(currentHref);
-  // console.log(historyPath);
+  historyPath.push({
+    href : currentHref,
+    data : object
+  });
+  console.log(historyPath);
 
   localStorage.setItem("historyPath",JSON.stringify(historyPath));
 }
@@ -37,10 +47,30 @@ function cleanHistory() {
 function backPage() {
   console.log("back");
   historyPath.pop();
-  var backHref = historyPath.pop();
+  var historyData = historyPath.pop();
+  if (!historyData)  {
+    return;
+  }
+  var backHref = historyData.href;
+
+  console.log(historyPath);
+
   localStorage.setItem("historyPath",JSON.stringify(historyPath));
+  localStorage.setItem("currentHistoryData",JSON.stringify(historyData.data));
+  console.log("backHref:"+backHref);
 
   window.location = backHref;
+}
+
+function readCurrentHistoryData() {
+  var historicalData = {}
+  try {
+    var historicalData = JSON.parse(localStorage.getItem("currentHistoryData"));
+  } catch (e) {
+    return  {};
+  }
+
+  return historicalData;
 }
 
 function comeBackHomeToAuthorize(){
@@ -306,16 +336,16 @@ function loadOrderList(callback) {
   var indexColumnOfAllData = 13;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
-  // if (passDataLocalhost) {
-  //   callback();
-  //   return;
-  // }
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
 
-  // if(!gapi.client.sheets) {
-  //   callback();
-  //   comeBackHomeToAuthorize();
-  //   return;
-  // }
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
