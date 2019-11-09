@@ -10,6 +10,7 @@ var lsOrderDetail;
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
+$(".orderFilter").val("Requested");
 //Load history
 
 //saveHistory({
@@ -34,7 +35,16 @@ var afterLoadHTML = function(){
     var $container = $("html,body");
     var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
     var btnOrder = "btnOrder_"+orderIndex;
-
+    // var orderFilter = $(".orderFilter");
+    // if (orderFilter == "Requested" 
+    //   || orderFilter == "SENT_POST"
+    //   || orderFilter == "SHIPPER_RECEIVED_MONEY"
+    //   || orderFilter == "COMPLETED" 
+    //   || orderFilter == "ALL" 
+    //   ) {
+    // btnOrder = "btnOrder_"+orderIndex;
+    // }
+    
     console.log("goToClass:"+btnOrder);
 
     var $scrollTo = $('.'+btnOrder);
@@ -117,7 +127,7 @@ function readOrderDetail(callback){
 // $('#datetimepicker').datetimepicker();
 // });
 
-var mode = "Requested";
+// var mode = "Requested";
 
 var totalShippingCost = 0;
 
@@ -131,6 +141,8 @@ function loadOrderShippingListHtml() {
   
   totalShippingCost = 0
   var totalShipperReceivedMoney = 0;
+  
+  var mode = $(".orderFilter").val();
 
   for(e in lsOrder) {
     if (e == 0) {
