@@ -57,14 +57,10 @@ var afterLoadHTML = function(){
 }
 /////////////
 
-
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
-  // var lsOrderset = JSON.parse(localStorage.getItem("ordershipping"));
-  // var lsTaskset =  JSON.parse(localStorage.getItem("tasklist"));
-  
   getOrderShipping(function(lsOrderset){
       $("#loadingSpin").hide();
       lsOrder = lsOrderset;
@@ -83,7 +79,13 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoadX();
+  // triggerAfterLoadX();
+  console.log("Trigger");
+  lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
+  lsTask =  JSON.parse(localStorage.getItem("tasklist"));
+
+  readOrderDetail(loadOrderShippingListHtml);
+
 })
 
 var orderListParse = {}
@@ -176,17 +178,17 @@ function loadOrderShippingListHtml() {
 
     var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal5px delete order_'+e+'">Xoá</div>' : "";
 
-    var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
+    // var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
 
 
     var datetime =
     '   <div class="form-group">'+
-    '      <label class="control-label">Thời gian giao hàng</label>'+
+    // '      <label class="control-label">Thời gian giao hàng</label>'+
     '      <div class=\'input-group date\'>'+
     '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
     '      </div>'+
     '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
-    '       Xác nhận'+
+    '       Xác nhận thời gian giao hàng'+
     '     </div>'+
     '   </div>'+
     '<hr/>';
@@ -316,20 +318,21 @@ function loadOrderShippingListHtml() {
   $('.prepared').click(shipPrepared);
 
   $(".btnChooseShippingSchedule").hide();
-  // $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
+  $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
 
-  // $('.datetimepicker').change(function(){
-  //   console.log($(this).attr("class"));
-  //   console.log($(this).val());
-  //   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  $('.datetimepicker').change(function(){
+    console.log($(this).attr("class"));
+    console.log($(this).val());
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 
-  //   if ($(this).val()) {
-  //     console.log(".btnChooseShippingSchedule "+orderIndex);
-  //     $(".chooseShippingSchedule_"+orderIndex).show();
-  //   } else {
-  //     $(".chooseShippingSchedule_"+orderIndex).hide();
-  //   }
-  // });
+    if ($(this).val()) {
+      console.log(".btnChooseShippingSchedule "+orderIndex);
+      $(".chooseShippingSchedule_"+orderIndex).show();
+      // chooseShippingScheduleFn(orderIndex, $(this).val());
+    }  else {
+      $(".chooseShippingSchedule_"+orderIndex).hide();
+    }
+  });
 
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
 }
@@ -337,7 +340,7 @@ function loadOrderShippingListHtml() {
 function chooseShippingScheduleFn(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var value = $(".datetimepickerorder_"+orderIndex).val();
-  console.log(value);
+  console.log( orderIndex+ " - "+ value);
 
 }
 
