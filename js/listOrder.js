@@ -26,6 +26,8 @@ if (historicalData){
 
 var afterLoadHTML = function(){
   // document.getElementsByClassName
+  console.log("afterLoadHTML");
+  console.log(historicalData);
   if (historicalData && historicalData.goToClass) {
     // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
     var $container = $("html,body");
@@ -38,6 +40,8 @@ var afterLoadHTML = function(){
 
     $("html,body").animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - 100, scrollLeft: 0},300); 
     $scrollTo.click();
+
+    historicalData = undefined;
   }
 }
 /////////////

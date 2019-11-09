@@ -51,6 +51,8 @@ var afterLoadHTML = function(){
 
     $("html,body").animate({scrollTop: $scrollTo.offset().top - $container.offset().top + $container.scrollTop() - 100, scrollLeft: 0},300); 
     $scrollTo.click();
+
+    historicalData = undefined;
   }
 }
 /////////////
