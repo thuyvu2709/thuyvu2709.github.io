@@ -36,7 +36,7 @@ function saveHistory(object){
     href : currentHref,
     data : object
   });
-  console.log(historyPath);
+  // console.log(historyPath);
 
   localStorage.setItem("historyPath",JSON.stringify(historyPath));
 }
