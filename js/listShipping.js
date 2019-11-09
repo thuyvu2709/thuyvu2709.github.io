@@ -599,7 +599,7 @@ function taskComplete(){
 
 $(".orderFilter").change(function(){
   console.log("orderFilter:");;
-  mode = document.getElementsByClassName($(this).attr("class"))[0].value;
+  var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
   if (mode == "Requested" 
       || mode == "SENT_POST"
       || mode == "SHIPPER_RECEIVED_MONEY"
