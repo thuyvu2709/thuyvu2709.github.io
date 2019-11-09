@@ -168,7 +168,7 @@ function loadOrderListHtml() {
   $("#listOrder").empty();
   // console.log(data);
   var status = $("#orderFilter").val();
-  
+
   for(var e in data) {
     if (e == 0) {
       continue;
@@ -486,7 +486,7 @@ function loadOrderListHtml() {
     
     saveHistory({
       searchText : $("#orderSearchInput").val(),
-      status : $("#orderFilter").value,
+      status : $("#orderFilter").val(),
       goToClass : $(this).attr("class")
     })
 
