@@ -279,7 +279,6 @@ function loadOrderShippingListHtml() {
 
           '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listShippingOrder">'+
             '<div class="card-body">'+
-              // datetime +
               '<div class="btn btn-default btnNormal5px">'+
               '  <a href="tel:'+lsOrder[e][2]+'"><span class="fas fa-phone"></span>'+lsOrder[e][2]+'</a>'+
               '</div>'+
@@ -289,6 +288,9 @@ function loadOrderShippingListHtml() {
               '</div>'+
               '<br/>'+
               orderDetailBrief+
+              
+              datetime +
+
               '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
               preparedButton +
               completeButton +
