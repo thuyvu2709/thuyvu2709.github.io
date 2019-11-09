@@ -16,7 +16,7 @@ saveHistory();
 
 function saveHistory(object){
   var currentHref = window.location.href;
-  console.log(window.location);
+  // console.log(window.location);
   // console.log(currentHref);
   if (!historyPath) {
     historyPath = [{}];
