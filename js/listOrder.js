@@ -1,5 +1,7 @@
 
-var status = "PROCESSING";
+// var status = "PROCESSING";
+
+$("#orderFilter").val("PROCESSING");
 
 var spreadsheetId = mainSheetForProduct;
 var sheetOrder = "Order";
@@ -19,8 +21,7 @@ if (historicalData){
   }
 
   if (historicalData.status) {
-    status = historicalData.status;
-    $(".orderFilter").val(status);
+    $("#orderFilter").val(historicalData.status);
   }
 }
 
@@ -88,7 +89,7 @@ function filterOrderWithProdRefCode(){
   if (!prodRefCodeFilter) {
     return;
   }
-  status = "REQUESTED";
+  var status = "REQUESTED";
   $("#orderFilter").val(status);
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   for (var e in orderListDetail) {
@@ -166,6 +167,8 @@ function loadOrderListHtml() {
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#listOrder").empty();
   // console.log(data);
+  var status = $("#orderFilter").val();
+  
   for(var e in data) {
     if (e == 0) {
       continue;
@@ -446,7 +449,7 @@ function loadOrderListHtml() {
 
     saveHistory({
       searchText : $("#orderSearchInput").val(),
-      status : $(".orderFilter").value,
+      status : $("#orderFilter").val(),
       goToClass : $(this).attr("class")
     })
 
@@ -461,7 +464,7 @@ function loadOrderListHtml() {
 
     saveHistory({
       searchText : $("#orderSearchInput").val(),
-      status : $(".orderFilter").value,
+      status : $(".orderFilter").val(),
       goToClass : $(this).attr("class")
     })
 
@@ -483,7 +486,7 @@ function loadOrderListHtml() {
     
     saveHistory({
       searchText : $("#orderSearchInput").val(),
-      status : $(".orderFilter").value,
+      status : $("#orderFilter").value,
       goToClass : $(this).attr("class")
     })
 
@@ -582,10 +585,10 @@ function loadOrderListHtml() {
 };
 
 
-$(".orderFilter").change(function(){
+$("#orderFilter").change(function(){
   console.log("orderFilter:");
   orderWithProdRef = [];
-  status = document.getElementsByClassName($(this).attr("class"))[0].value;
+  // status = document.getElementsByClassName($(this).attr("class"))[0].value;
   loadOrderListHtml();
 })
 
