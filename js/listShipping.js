@@ -10,7 +10,7 @@ var lsOrderDetail;
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
-$(".orderFilter").val("Requested");
+$(".orderFilter").val("Need_Schedule");
 //Load history
 
 //saveHistory({
@@ -162,7 +162,7 @@ function loadOrderShippingListHtml() {
     }
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
-    if (mode != "ALL") {
+    if (mode != "ALL" && mode != "Need_Schedule") {
       if (mode != lsOrder[e][4]) {
           continue;
       } 
@@ -172,6 +172,12 @@ function loadOrderShippingListHtml() {
       totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
     }
     
+
+    if (mode == "Need_Schedule") {
+      if (lsOrder[e][11]) {
+        continue;
+      }
+    }
 
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -330,6 +336,12 @@ function loadOrderShippingListHtml() {
     }
   }
   
+  if ($('#listShippingOrder').is(':empty')){
+    $(".orderFilter").val("Requested");
+    loadOrderShippingListHtml();
+    return;
+  }
+
   afterLoadHTML();
 
   if (mode == "SHIPPER_RECEIVED_MONEY"){
@@ -651,7 +663,8 @@ function taskComplete(){
 $(".orderFilter").change(function(){
   console.log("orderFilter:");;
   var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
-  if (mode == "Requested" 
+  if (mode == "Need_Schedule"
+      || mode == "Requested" 
       || mode == "SENT_POST"
       || mode == "SHIPPER_RECEIVED_MONEY"
       || mode == "COMPLETED" 
