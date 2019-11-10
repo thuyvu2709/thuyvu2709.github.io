@@ -894,7 +894,7 @@ function getCurrentUser() {
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
-  var numOfColumn = 9;
+  var numOfColumn = 10;
   var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn)+"1";
 
   var spreadsheetId = shippingSheet;
@@ -935,7 +935,7 @@ function updateShipping(dataUpdateShipping, sheetrange, callback, callbackError)
     // var numOfColumn = 5;
     // var sheetrange = 'Shipping!A1:'+ String.fromCharCode(65+numOfColumn);
 
-    var spreadsheetId = shippingSheet;
+  var spreadsheetId = shippingSheet;
 
   if (passDataLocalhost) {
     callback();
@@ -1032,7 +1032,7 @@ function getOrderShipping(callback) {
 
   console.log("getOrderShipping");
 
-  var indexColumnOfAllData = 10;
+  var indexColumnOfAllData = 12;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
@@ -1180,6 +1180,16 @@ function getSpecificRoles(){
   }
 }
 
+function getCurrentDateTime(){
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  return {
+    dateTime : dateTime
+  };
+}
+
 function requestShipping(currentOrder){
   $("#loadingSpin").show();
 
@@ -1201,7 +1211,8 @@ function requestShipping(currentOrder){
       "",
       currentOrder.shippingCost,
       currentOrder.shippingType,
-      "0"
+      "0",
+      getCurrentDateTime().dateTime
     ]
   ];
   if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
@@ -1213,7 +1224,7 @@ function requestShipping(currentOrder){
       $("#loadingSpin").hide();
     })
   } else {
-    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':J'+currentOrder.shipIndex;
+    var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':K'+currentOrder.shipIndex;
     updateShipping(dataShipping, sheetrange, function(){
       console.log("updated:"+currentOrder.shipIndex);
       $("#loadingSpin").hide();

@@ -341,7 +341,24 @@ function chooseShippingScheduleFn(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var value = $(".datetimepickerorder_"+orderIndex).val();
   console.log( orderIndex+ " - "+ value);
+  var actualOrderIndex = parseInt(orderIndex) + 1;
 
+  var sheetrange = 'Shipping!L'+actualOrderIndex+':L'+actualOrderIndex;
+
+  var dataUpdateShipping = [
+    [value]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+
+      $(".cardElement_"+orderIndex).remove();
+      $("#loadingSpin").hide();
+
+  },function(){
+    console.log("Something wrong");
+  })
 }
 
 function deleteShipRequest() {
