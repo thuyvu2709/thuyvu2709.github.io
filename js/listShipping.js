@@ -184,7 +184,7 @@ function loadOrderShippingListHtml() {
     var datetime;
 
     if (lsOrder[e][11]) {
-      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div>';
+      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div></hr>';
     } else {
       datetime ='   <div class="form-group">'+
                 // '      <label class="control-label">Thời gian giao hàng</label>'+
@@ -306,6 +306,19 @@ function loadOrderShippingListHtml() {
           '</div>'+
         '</div>'
       )
+
+    // $('.datetimepicker').datetimepicker();
+    if (!lsOrder[e][11]) {
+      // $('.datetimepickerorder_'+e).datetimepicker();
+      var requestedDate = new Date(lsOrder[e][10].split(" ")[0]);
+      var next2days = new Date();
+      next2days.setDate(requestedDate.getDate()+2);
+
+      $('.datetimepicker').datetimepicker();
+      $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
+      $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
+
+    }
   }
   
   afterLoadHTML();
@@ -319,7 +332,7 @@ function loadOrderShippingListHtml() {
   $(".complete").click(shipComplete)
   $(".detail").click(showDetail);
   $(".delete").click(deleteShipRequest);
-  $('.datetimepicker').datetimepicker();
+  // $('.datetimepicker').datetimepicker();
   $('.prepared').click(shipPrepared);
 
   $(".btnChooseShippingSchedule").hide();
