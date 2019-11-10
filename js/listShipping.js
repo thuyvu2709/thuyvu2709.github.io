@@ -329,7 +329,7 @@ function loadOrderShippingListHtml() {
         minDate : requestedDate,
         maxDate : next2days
       });
-      console.log($('.datetimepickerorder_'+e));
+      // console.log($('.datetimepickerorder_'+e));
       // $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
       // $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
 
