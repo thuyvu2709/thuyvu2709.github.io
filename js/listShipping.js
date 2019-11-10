@@ -360,12 +360,12 @@ function loadOrderShippingListHtml() {
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
 
   $('.datetimepicker').change(function(){
-    console.log($(this).attr("class"));
-    console.log($(this).val());
+    // console.log($(this).attr("class"));
+    // console.log($(this).val());
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 
     if ($(this).val()) {
-      console.log(".btnChooseShippingSchedule "+orderIndex);
+      // console.log(".btnChooseShippingSchedule "+orderIndex);
       $(".chooseShippingSchedule_"+orderIndex).show();
       // chooseShippingScheduleFn(orderIndex, $(this).val());
     }  else {
