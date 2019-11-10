@@ -565,7 +565,6 @@ function loadOrderListHtml() {
 
     var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
 
-
     // var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
     var sheetrange = 'Shipping!E'+shipIndex+':G'+shipIndex;
 

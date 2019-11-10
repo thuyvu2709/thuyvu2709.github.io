@@ -181,17 +181,22 @@ function loadOrderShippingListHtml() {
     // var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
 
 
-    var datetime =
-    '   <div class="form-group">'+
-    // '      <label class="control-label">Thời gian giao hàng</label>'+
-    '      <div class=\'input-group date\'>'+
-    '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
-    '      </div>'+
-    '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
-    '       Xác nhận thời gian giao hàng'+
-    '     </div>'+
-    '   </div>'+
-    '<hr/>';
+    var datetime;
+
+    if (lsOrder[e][11]) {
+      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div>';
+    } else {
+      datetime ='   <div class="form-group">'+
+                // '      <label class="control-label">Thời gian giao hàng</label>'+
+                '      <div class=\'input-group date\'>'+
+                '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
+                '      </div>'+
+                '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
+                '       Xác nhận thời gian giao hàng'+
+                '     </div>'+
+                '   </div>'+
+                '<hr/>';
+    }
 
     var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
 
