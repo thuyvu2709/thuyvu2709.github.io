@@ -188,11 +188,23 @@ function loadOrderShippingListHtml() {
 
 
     var datetime;
+    var requestedDate;
+    var next2days;
 
     if (lsOrder[e][11]) {
       datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div><br/>';
     } else {
-      datetime ='   <div class="form-group">'+
+
+      var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
+      requestedDate = new Date(dateText);
+      // console.log(dateText);
+      next2days = new Date();
+      next2days.setDate(requestedDate.getDate()+2);
+
+      if (next2days < new Date()) {
+        datetime = '<div class="btn btn-default btnNormal5px textRed" >Quá hạn lên lịch!</div><br/>';
+      } else {
+        datetime ='   <div class="form-group">'+
                 // '      <label class="control-label">Thời gian giao hàng</label>'+
                 '      <div class=\'input-group date\'>'+
                 '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
@@ -202,6 +214,7 @@ function loadOrderShippingListHtml() {
                 '     </div>'+
                 '   </div>'+
                 '<hr/>';
+      }
     }
 
     var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
@@ -317,11 +330,6 @@ function loadOrderShippingListHtml() {
     if (!lsOrder[e][11]) {
       // $('.datetimepickerorder_'+e).datetimepicker();
       // console.log(lsOrder[e]);
-      var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
-      var requestedDate = new Date(dateText);
-      // console.log(dateText);
-      var next2days = new Date();
-      next2days.setDate(requestedDate.getDate()+2);
 
       // $('.datetimepicker').datetimepicker();
       $('.datetimepickerorder_'+e).datetimepicker({
