@@ -234,8 +234,8 @@ function loadOrderShippingListHtml() {
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested") {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+') </div>';
-      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +")";
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+'k) </div>';
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +"k)";
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "SENT_POST") {
