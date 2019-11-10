@@ -190,7 +190,7 @@ function loadOrderShippingListHtml() {
     var datetime;
 
     if (lsOrder[e][11]) {
-      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div></hr>';
+      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div><br/>';
     } else {
       datetime ='   <div class="form-group">'+
                 // '      <label class="control-label">Thời gian giao hàng</label>'+
