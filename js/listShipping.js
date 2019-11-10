@@ -179,6 +179,9 @@ function loadOrderShippingListHtml() {
       }
     }
 
+    var shipIcon = '[<i class="fas fa-motorcycle">'+lsOrder[e][8]+'</i>]';
+    var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
+
 
     var address = lsOrder[e][1].replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
@@ -221,6 +224,8 @@ function loadOrderShippingListHtml() {
 
     if (lsOrder[e][8] == "SHIPPER_COD" && lsOrder[e][4] == "Requested") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành (thu '+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +")";
+
     }
 
     if (lsOrder[e][8] == "POST_NO_COD" && lsOrder[e][4] == "Requested") {
@@ -230,7 +235,7 @@ function loadOrderShippingListHtml() {
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+') </div>';
-        // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
+      title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +")";
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "SENT_POST") {
@@ -257,7 +262,6 @@ function loadOrderShippingListHtml() {
     //   preparedButton = '<div class="btn borderMustard btn-default btnNormal" style="margin:10px 10px 0;">Đã chuẩn bị lúc:'+lsOrder[e][8]+'</div><br/>';
     // }
 
-    var shipIcon = '[<i class="fas fa-motorcycle">'+lsOrder[e][8]+'</i>]';
     // var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
     var orderDetailBrief  = "<hr/>";
 
@@ -278,7 +282,7 @@ function loadOrderShippingListHtml() {
     // var title = lsOrder[e][0]+' | '+lsOrder[e][1] +" | "+shipIcon;
     // if (userRole=="manager") {
       // console.log(lsOrderDetail[lsOrder[e][0]].customerName);
-    var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
+    // var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
     // }
 
 
