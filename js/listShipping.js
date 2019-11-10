@@ -319,7 +319,7 @@ function loadOrderShippingListHtml() {
       // console.log(lsOrder[e]);
       var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
       var requestedDate = new Date(dateText);
-      console.log(dateText);
+      // console.log(dateText);
       var next2days = new Date();
       next2days.setDate(requestedDate.getDate()+2);
 
