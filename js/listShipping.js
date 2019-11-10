@@ -83,7 +83,7 @@ $(".text-center").click(function(){
   console.log("Trigger");
   lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   lsTask =  JSON.parse(localStorage.getItem("tasklist"));
-
+  console.log(lsOrder);
   readOrderDetail(loadOrderShippingListHtml);
 
 })
@@ -310,13 +310,22 @@ function loadOrderShippingListHtml() {
     // $('.datetimepicker').datetimepicker();
     if (!lsOrder[e][11]) {
       // $('.datetimepickerorder_'+e).datetimepicker();
-      var requestedDate = new Date(lsOrder[e][10].split(" ")[0]);
+      // console.log(lsOrder[e]);
+      var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
+      var requestedDate = new Date(dateText);
+      console.log(dateText);
       var next2days = new Date();
       next2days.setDate(requestedDate.getDate()+2);
 
-      $('.datetimepicker').datetimepicker();
-      $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
-      $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
+      // $('.datetimepicker').datetimepicker();
+      $('.datetimepickerorder_'+e).datetimepicker({
+        autoclose: true,
+        minDate : requestedDate,
+        maxDate : next2days
+      });
+      console.log($('.datetimepickerorder_'+e));
+      // $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
+      // $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
 
     }
   }

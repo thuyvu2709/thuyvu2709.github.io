@@ -1032,7 +1032,7 @@ function getOrderShipping(callback) {
 
   console.log("getOrderShipping");
 
-  var indexColumnOfAllData = 12;
+  var indexColumnOfAllData = 13;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
