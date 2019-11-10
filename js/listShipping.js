@@ -325,7 +325,7 @@ function loadOrderShippingListHtml() {
 
       // $('.datetimepicker').datetimepicker();
       $('.datetimepickerorder_'+e).datetimepicker({
-        autoclose: true,
+        // autoclose: true,
         minDate : requestedDate,
         maxDate : next2days
       });
