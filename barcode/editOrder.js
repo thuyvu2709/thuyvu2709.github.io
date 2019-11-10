@@ -738,10 +738,11 @@ $("#editOrder").click(function(){
 	var paymentStatus = currentOrder.paymentStatus;
 	var shippingStatus = currentOrder.shippingStatus;
 
-	var today = new Date();
-	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-	var dateTime = date+' '+time;
+	// var today = new Date();
+	// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	// var dateTime = date+' '+time;
+	var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
 
 	var orderDate = dateTime;
 
