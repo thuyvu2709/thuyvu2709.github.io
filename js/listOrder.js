@@ -511,8 +511,9 @@ function loadOrderListHtml() {
 
     $("#simpleModal .modal-content").html(lsBtnShip);
 
-    $("."+currentOrder.shippingType).addClass("themeMustard");
-
+    $("."+currentOrder.shippingType).css(
+      {"background-color": "#c57e0f", "color": "white"}
+    );
     $("#simpleModal").modal('toggle');
 
     $(".shippingType").click(function(){
@@ -587,6 +588,7 @@ function loadOrderListHtml() {
       var column = 11; //for shipping
       // $("#loadingSpin").show();
       updateOrderStatus(realOrderIndex,column,value, function(){
+        console.log("updateOrderStatus for shipping");
         $("#loadingSpin").hide();
       });
       //end updating
