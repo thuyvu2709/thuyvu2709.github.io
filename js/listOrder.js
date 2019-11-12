@@ -580,7 +580,18 @@ function loadOrderListHtml() {
 
     updateShipping(dataUpdateTask, sheetrange, function(){
       
-      $("#loadingSpin").hide();
+      //Update into excel : order
+      
+      var realOrderIndex = orderIndex + 1;
+
+      var column = 11; //for shipping
+      // $("#loadingSpin").show();
+      updateOrderStatus(realOrderIndex,column,value, function(){
+        $("#loadingSpin").hide();
+      });
+      //end updating
+
+      // $("#loadingSpin").hide();
 
     },function(){
       console.log("Something wrong");
