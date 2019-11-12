@@ -37,14 +37,20 @@ $("#otherCost").html(currentOrder.otherCost);
 $("#prepaid").html(currentOrder.prepaid);
 $("#willpay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0));
 
-if (currentOrder.shippingType == 0 || !currentOrder.shippingType) {
+if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType) {
 	$("#shippingType").html("Shipper không thu tiền");
-} else if (currentOrder.shippingType == 1) {
+} else if (currentOrder.shippingType == "SHIPPER_COD") {
 	$("#shippingType").html("Shipper thu tiền " + $("#willpay").html());
-} else if (currentOrder.shippingType == 2) {
-	$("#shippingType").html("Ship Poste");
-} else if (currentOrder.shippingType == 3) {
+} else if (currentOrder.shippingType == "POST_COD") {
+	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	$("#titleWillpay").html("Thu COD:");
+	$("#shippingType").html("Ship Viettelpost");
+} else if (currentOrder.shippingType == "SHOPEE") {
+	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Shopee");
+} else if (currentOrder.shippingType == "POST_NO_COD") {
+	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	$("#shippingType").html("Ship Viettelpost không COD");
 }
 
 
