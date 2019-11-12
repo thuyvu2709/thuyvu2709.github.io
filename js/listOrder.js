@@ -533,7 +533,7 @@ function loadOrderListHtml() {
 
       requestShipping(currentOrder);
 
-      var realOrderIndex = orderIndex + 1;
+      var realOrderIndex = parseInt(orderIndex) + 1;
 
       var column = 11; //for shipping
       $("#loadingSpin").show();
@@ -541,7 +541,7 @@ function loadOrderListHtml() {
         console.log("updateOrderStatus for shipping");
         $("#loadingSpin").hide();
       });
-      
+
     });
   })
 
