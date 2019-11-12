@@ -532,7 +532,16 @@ function loadOrderListHtml() {
       currentOrder.willpay = willpay;
 
       requestShipping(currentOrder);
-      //////////
+
+      var realOrderIndex = orderIndex + 1;
+
+      var column = 11; //for shipping
+      $("#loadingSpin").show();
+      updateOrderStatus(realOrderIndex,column,currentOrder.shippingType, function(){
+        console.log("updateOrderStatus for shipping");
+        $("#loadingSpin").hide();
+      });
+      
     });
   })
 
@@ -583,17 +592,17 @@ function loadOrderListHtml() {
       
       //Update into excel : order
       
-      var realOrderIndex = orderIndex + 1;
+      // var realOrderIndex = orderIndex + 1;
 
-      var column = 11; //for shipping
-      // $("#loadingSpin").show();
-      updateOrderStatus(realOrderIndex,column,value, function(){
-        console.log("updateOrderStatus for shipping");
-        $("#loadingSpin").hide();
-      });
+      // var column = 11; //for shipping
+      // // $("#loadingSpin").show();
+      // updateOrderStatus(realOrderIndex,column,value, function(){
+      //   console.log("updateOrderStatus for shipping");
+      //   $("#loadingSpin").hide();
+      // });
       //end updating
 
-      // $("#loadingSpin").hide();
+      $("#loadingSpin").hide();
 
     },function(){
       console.log("Something wrong");
