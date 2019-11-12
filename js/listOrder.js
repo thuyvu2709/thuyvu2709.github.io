@@ -497,8 +497,9 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
     var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
-    console.log(currentOrder.totalPayIncludeShip);
-    console.log(currentOrder.prepaid);    
+    // console.log(currentOrder.totalPayIncludeShip);
+    // console.log(currentOrder.prepaid);    
+    console.log(currentOrder);
     var lsBtnShip = 
     '<h5>Chọn kiểu giao hàng</h5>'+
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
@@ -509,6 +510,9 @@ function loadOrderListHtml() {
     '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>';
 
     $("#simpleModal .modal-content").html(lsBtnShip);
+
+    $("."+currentOrder.shippingType).addClass("themeMustard");
+
     $("#simpleModal").modal('toggle');
 
     $(".shippingType").click(function(){

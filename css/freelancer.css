@@ -10380,6 +10380,11 @@ button.bg-dark:focus {
   color: #c57e0f !important;
 }
 
+.themeMustard {
+  background-color: #c57e0f;
+  color: white;
+}
+
 .text-blue {
   color: #1abc9c !important;
 }
