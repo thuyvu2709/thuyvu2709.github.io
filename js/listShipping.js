@@ -10,7 +10,9 @@ var lsOrderDetail;
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
-$(".orderFilter").val("Need_Schedule");
+// $(".orderFilter").val("Need_Schedule");
+$(".orderFilter").val("Requested");
+
 //Load history
 
 //saveHistory({
@@ -176,11 +178,11 @@ function loadOrderShippingListHtml() {
     }
     
 
-    if (mode == "Need_Schedule") {
-      if (lsOrder[e][11]) {
-        continue;
-      }
-    }
+    // if (mode == "Need_Schedule") {
+    //   if (lsOrder[e][11]) {
+    //     continue;
+    //   }
+    // }
 
     var shipIcon = '[<i class="fas fa-motorcycle">'+lsOrder[e][8]+'</i>]';
     var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
@@ -193,35 +195,35 @@ function loadOrderShippingListHtml() {
     // var datetime = '<input type="text" class="datetimepicker form-control"/></br>';
 
 
-    var datetime;
-    var requestedDate;
-    var next2days;
+    // var datetime;
+    // var requestedDate;
+    // var next2days;
 
-    if (lsOrder[e][11]) {
-      datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div><br/>';
-    } else {
+    // if (lsOrder[e][11]) {
+    //   datetime = '<div class="btn btn-default btnNormal5px" >Thời gian giao:'+lsOrder[e][11]+'</div><br/>';
+    // } else {
 
-      var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
-      requestedDate = new Date(dateText);
-      // console.log(dateText);
-      next2days = new Date();
-      next2days.setDate(requestedDate.getDate()+2);
+    //   var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
+    //   requestedDate = new Date(dateText);
+    //   // console.log(dateText);
+    //   next2days = new Date();
+    //   next2days.setDate(requestedDate.getDate()+2);
 
-      if (next2days < new Date()) {
-        datetime = '<div class="btn btn-default btnNormal5px textRed" >Quá hạn lên lịch!</div><br/>';
-      } else {
-        datetime ='   <div class="form-group">'+
-                // '      <label class="control-label">Thời gian giao hàng</label>'+
-                '      <div class=\'input-group date\'>'+
-                '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
-                '      </div>'+
-                '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
-                '       Xác nhận thời gian giao hàng'+
-                '     </div>'+
-                '   </div>'+
-                '<hr/>';
-      }
-    }
+    //   if (next2days < new Date()) {
+    //     datetime = '<div class="btn btn-default btnNormal5px textRed" >Quá hạn lên lịch!</div><br/>';
+    //   } else {
+    //     datetime ='   <div class="form-group">'+
+    //             // '      <label class="control-label">Thời gian giao hàng</label>'+
+    //             '      <div class=\'input-group date\'>'+
+    //             '         <input type=\'text\' class="datetimepicker form-control datetimepickerorder_'+e+'" placeholder="Chọn thời gian giao hàng"/>'+
+    //             '      </div>'+
+    //             '     <div class="btn btn-default btnNormal5px btnChooseShippingSchedule chooseShippingSchedule_'+e+'">'+
+    //             '       Xác nhận thời gian giao hàng'+
+    //             '     </div>'+
+    //             '   </div>'+
+    //             '<hr/>';
+    //   }
+    // }
 
     var completeButton = '<div class="btn btn-default  btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
 
@@ -324,7 +326,7 @@ function loadOrderShippingListHtml() {
               '<br/>'+
               orderDetailBrief+
               
-              datetime +
+              // datetime +
 
               '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
               preparedButton +
@@ -336,30 +338,30 @@ function loadOrderShippingListHtml() {
       )
 
     // $('.datetimepicker').datetimepicker();
-    if (!lsOrder[e][11]) {
-      // $('.datetimepickerorder_'+e).datetimepicker();
-      // console.log(lsOrder[e]);
+    // if (!lsOrder[e][11]) {
+    //   // $('.datetimepickerorder_'+e).datetimepicker();
+    //   // console.log(lsOrder[e]);
 
-      // $('.datetimepicker').datetimepicker();
-      $('.datetimepickerorder_'+e).datetimepicker({
-        // autoclose: true,
-        minDate : requestedDate,
-        maxDate : next2days
-      });
-      // console.log($('.datetimepickerorder_'+e));
-      // $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
-      // $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
+    //   // $('.datetimepicker').datetimepicker();
+    //   $('.datetimepickerorder_'+e).datetimepicker({
+    //     // autoclose: true,
+    //     minDate : requestedDate,
+    //     maxDate : next2days
+    //   });
+    //   // console.log($('.datetimepickerorder_'+e));
+    //   // $('.datetimepickerorder_'+e).data("DateTimePicker").minDate(requestedDate);
+    //   // $('.datetimepickerorder_'+e).data("DateTimePicker").maxDate(next2days);
 
-    }
+    // }
   }
   
-  if ($('#listShippingOrder').is(':empty')){
-    if ($(".orderFilter").val() != "Requested") {
-      $(".orderFilter").val("Requested");
-      loadOrderShippingListHtml();
-    }
-    return;
-  }
+  // if ($('#listShippingOrder').is(':empty')){
+  //   if ($(".orderFilter").val() != "Requested") {
+  //     $(".orderFilter").val("Requested");
+  //     loadOrderShippingListHtml();
+  //   }
+  //   return;
+  // }
 
   afterLoadHTML();
 
@@ -378,19 +380,19 @@ function loadOrderShippingListHtml() {
   $(".btnChooseShippingSchedule").hide();
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
 
-  $('.datetimepicker').change(function(){
-    // console.log($(this).attr("class"));
-    // console.log($(this).val());
-    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  // $('.datetimepicker').change(function(){
+  //   // console.log($(this).attr("class"));
+  //   // console.log($(this).val());
+  //   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 
-    if ($(this).val()) {
-      // console.log(".btnChooseShippingSchedule "+orderIndex);
-      $(".chooseShippingSchedule_"+orderIndex).show();
-      // chooseShippingScheduleFn(orderIndex, $(this).val());
-    }  else {
-      $(".chooseShippingSchedule_"+orderIndex).hide();
-    }
-  });
+  //   if ($(this).val()) {
+  //     // console.log(".btnChooseShippingSchedule "+orderIndex);
+  //     $(".chooseShippingSchedule_"+orderIndex).show();
+  //     // chooseShippingScheduleFn(orderIndex, $(this).val());
+  //   }  else {
+  //     $(".chooseShippingSchedule_"+orderIndex).hide();
+  //   }
+  // });
 
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
 }
