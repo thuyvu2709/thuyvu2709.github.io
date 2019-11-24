@@ -294,6 +294,8 @@ function loadOrderShippingListHtml() {
       orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
     }
     // console.log(prodListOrder[o]);
+    orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
+
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
