@@ -173,7 +173,7 @@ function loadProductListHtml(){
   afterLoadHTML();
 
 
-  $(".editproductelement").click(editProduct);
+  $(".editproductelement").click(editProductFn);
   $(".deleteproductelement").click(deleteProduct);
 
 
@@ -239,7 +239,7 @@ function loadProductListHtml(){
 
   }
 
-  function editProduct() {
+  function editProductFn() {
     var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     productIndex = parseInt(productIndex);
     console.log($(this).attr("class")+" vs "+productIndex);
