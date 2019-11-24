@@ -145,75 +145,127 @@ $("#btnRefresh").click(function(){
 	location.reload();
 });
 
-$( "input" ).keyup(function() {
-	var idClass = $(this).attr('id');
+// $( "input" ).keyup(function() {
+// 	var idClass = $(this).attr('id');
 
-	if (idClass == "productEstimateSellingVND" || idClass == "productEstimateVND") {
-		var productEstimateVND = parseFloat($("#productEstimateVND").val());
-		var productCount = parseFloat($("#productCount").val());
-		if (!$("#productEstimateSellingVND").val()) {
-			return;
-		}
-		var productEstimateSellingVND = parseFloat($("#productEstimateSellingVND").val());
+// 	if (idClass == "productEstimateSellingVND" || idClass == "productEstimateVND") {
+		
+// 		return;
+// 	};
 
-		$("#profitPerOneProduct").html(productEstimateSellingVND - productEstimateVND);
-		$("#turnover").html(productEstimateSellingVND * productCount);
-		$("#totalCost").html(productEstimateVND * productCount);
-		$("#totalProfit").html((productEstimateSellingVND - productEstimateVND)*productCount);
+// 	// if (idClass == "productName") {
+// 	// 	var productCode = $("#productCode").val();
+// 	// 	productCode = productCode ? productCode : "$$$";
+// 	// 	var productName = $("#productName").val();
+// 	// 	checkProductCodeName(productCode,productName,function(check){
+// 	// 		console.log("checkProductCodeName:"+check);
+// 	// 		if (!check) {
+// 	// 		    $("#modelContent").html("Mã hàng hoặc tên mặt hàng đã tồn tại hoặc hệ thống có vấn đề");
+// 	// 	    	$('#myModal').modal('toggle');
+// 	// 		}
+// 	// 	})
+// 	// return;
+// 	// }
 
+// 	if (idClass == "productEstimateVND" || idClass == "productName"){
+// 		return;
+// 	};
+
+
+// 	var productCount = parseFloat($("#productCount").val());
+
+// 	var productOriginalCostEur = parseFloat($("#productOriginalCostEur").val());
+
+// 	var productWeight = parseFloat($("#productWeight").val());
+// 	var shipInternationalFee = parseFloat($("#shipInternationalFee").val());
+// 	var shipItalyFee = parseFloat($("#shipItalyFee").val());
+
+// 	var otherFee = parseFloat($("#otherFee").val());
+
+// 	var shipVietnamFee = parseFloat($("#shipVietnamFee").val());
+
+// 	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
+// 	shipItalyFee = shipItalyFee ? shipItalyFee : 0;
+// 	otherFee = otherFee ? otherFee : 0;
+// 	shipVietnamFee = shipVietnamFee ? shipVietnamFee : 0;
+
+// 	console.log( "Handler for .keypress() called." );
+
+// 	console.log($("#productOriginalCostEur").val())
+// 	// console.log($(this).attr('id'));
+// 	var productEstimateVND = productOriginalCostEur*EuroVndRate + productWeight * 
+// 		( shipInternationalFee * EuroVndRate + shipItalyFee * EuroVndRate + shipVietnamFee ) + otherFee;
+
+// 	console.log(productOriginalCostEur + " " + productWeight + " " + productEstimateVND);
+// 	// $("#productEstimateVND").val();
+// 	$("#productEstimateVND").val(productEstimateVND);
+// 	// $("#productEstimateSellingVND").val(parseFloat(productEstimateVND + 100000));
+
+// });
+
+$( "#productCount" ).keyup(function() {
+	recalculateRefValues();
+})
+
+$("#productOriginalCostEur").keyup(function(){
+	recalculateProdEstVND();
+})
+$("#productWeight").keyup(function(){
+	recalculateProdEstVND();
+})
+$("#shipInternationalFee").keyup(function(){
+	recalculateProdEstVND();
+})
+$( "#productEstimateVND" ).keyup(function() {
+	recalculateRefValues();
+})
+$( "#productEstimateSellingVND" ).keyup(function() {
+	recalculateRefValues();
+})
+
+function recalculateRefValues(){
+	var productEstimateVND = $("#productEstimateVND").val();
+	var productCount = $("#productCount").val();
+
+	var productEstimateSellingVND = $("#productEstimateSellingVND").val();
+
+	if (!productCount || !productEstimateVND || !productEstimateSellingVND) {
 		return;
-	};
+	}
 
-	// if (idClass == "productName") {
-	// 	var productCode = $("#productCode").val();
-	// 	productCode = productCode ? productCode : "$$$";
-	// 	var productName = $("#productName").val();
-	// 	checkProductCodeName(productCode,productName,function(check){
-	// 		console.log("checkProductCodeName:"+check);
-	// 		if (!check) {
-	// 		    $("#modelContent").html("Mã hàng hoặc tên mặt hàng đã tồn tại hoặc hệ thống có vấn đề");
-	// 	    	$('#myModal').modal('toggle');
-	// 		}
-	// 	})
-	// return;
-	// }
+	var productEstimateVND = parseFloat(productEstimateVND);
+	var productCount = parseFloat(productCount);
 
-	if (idClass == "productEstimateVND" || idClass == "productName"){
+	var productEstimateSellingVND = parseFloat(productEstimateSellingVND);
+
+	$("#profitPerOneProduct").html(productEstimateSellingVND - productEstimateVND);
+	$("#turnover").html(productEstimateSellingVND * productCount);
+	$("#totalCost").html(productEstimateVND * productCount);
+	$("#totalProfit").html((productEstimateSellingVND - productEstimateVND)*productCount);
+}
+
+function recalculateProdEstVND(){
+	var productOriginalCostEur = $("#productOriginalCostEur").val();
+
+	var productWeight = $("#productWeight").val();
+
+	var shipInternationalFee = $("#shipInternationalFee").val();
+
+	if (!productOriginalCostEur || !productWeight || !shipInternationalFee) {
 		return;
-	};
+	}
 
+	productOriginalCostEur = parseFloat(productOriginalCostEur);
+	productWeight = parseFloat(productWeight);
+	shipInternationalFee = parseFloat(shipInternationalFee);
 
-	var productCount = parseFloat($("#productCount").val());
-
-	var productOriginalCostEur = parseFloat($("#productOriginalCostEur").val());
-
-	var productWeight = parseFloat($("#productWeight").val());
-	var shipInternationalFee = parseFloat($("#shipInternationalFee").val());
-	var shipItalyFee = parseFloat($("#shipItalyFee").val());
-
-	var otherFee = parseFloat($("#otherFee").val());
-
-	var shipVietnamFee = parseFloat($("#shipVietnamFee").val());
-
-	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
-	shipItalyFee = shipItalyFee ? shipItalyFee : 0;
-	otherFee = otherFee ? otherFee : 0;
-	shipVietnamFee = shipVietnamFee ? shipVietnamFee : 0;
-
-	console.log( "Handler for .keypress() called." );
-
-	console.log($("#productOriginalCostEur").val())
-	// console.log($(this).attr('id'));
 	var productEstimateVND = productOriginalCostEur*EuroVndRate + productWeight * 
-		( shipInternationalFee * EuroVndRate + shipItalyFee * EuroVndRate + shipVietnamFee ) + otherFee;
+		( shipInternationalFee * EuroVndRate );
 
-	console.log(productOriginalCostEur + " " + productWeight + " " + productEstimateVND);
-	// $("#productEstimateVND").val();
 	$("#productEstimateVND").val(productEstimateVND);
-	// $("#productEstimateSellingVND").val(parseFloat(productEstimateVND + 100000));
 
-});
-
+	recalculateRefValues();
+}
 
 $('#btnAddImage').click(function() {
 	// $("#picture").css.visibility = "visible";
