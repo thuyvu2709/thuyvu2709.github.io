@@ -225,17 +225,29 @@ function loadProductListHtml(){
     var numOfColumn = 19;
     var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
-    $("#loadingSpin").show();
+    var deleteTrigger = function() {
+      
+      $("#loadingSpin").show();
 
-    editProduct(dataEditP, sheetrange,function(){
-        $("#loadingSpin").hide();
-        $("#simpleModal .modal-content").html("Đã xoá mặt hàng");
-        $('#simpleModal').modal('toggle');
-      }, function(){
-        $("#loadingSpin").hide();
-        $("#simpleModal .modal-content").html("Có lỗi, không thể xoá");
-        $('#simpleModal').modal('toggle');
+      editProduct(dataEditP, sheetrange,function(){
+          $("#loadingSpin").hide();
+          $("#simpleModal .modal-content").html("Đã xoá mặt hàng");
+          $('#simpleModal').modal('toggle');
+        }, function(){
+          $("#loadingSpin").hide();
+          $("#simpleModal .modal-content").html("Có lỗi, không thể xoá");
+          $('#simpleModal').modal('toggle');
+      })
+
+      var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+      console.log("delete:"+orderIndex);
+    }
+
+    $("#modelContent").html("Bạn có chắc chắn muốn xoá không");
+    $("#modalYes").click(function(){
+      deleteTrigger();
     })
+    $('#myModal').modal('toggle');
 
   }
 
