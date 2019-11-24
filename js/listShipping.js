@@ -137,7 +137,10 @@ var totalShippingCost = 0;
 
 function loadOrderShippingListHtml() {
 
+  console.log("loadOrderShippingListHtml");
+  
   $("#listShippingOrder").empty();
+  
   // $(".maintitle").html("Quản lý giao hàng");
 
 
@@ -349,8 +352,10 @@ function loadOrderShippingListHtml() {
   }
   
   if ($('#listShippingOrder').is(':empty')){
-    $(".orderFilter").val("Requested");
-    loadOrderShippingListHtml();
+    if ($(".orderFilter").val() != "Requested") {
+      $(".orderFilter").val("Requested");
+      loadOrderShippingListHtml();
+    }
     return;
   }
 
@@ -673,8 +678,9 @@ function taskComplete(){
 
 
 $(".orderFilter").change(function(){
-  console.log("orderFilter:");;
   var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
+  console.log("orderFilter:"+mode);
+
   if (mode == "Need_Schedule"
       || mode == "Requested" 
       || mode == "SENT_POST"
