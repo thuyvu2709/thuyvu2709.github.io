@@ -293,6 +293,9 @@ function loadOrderShippingListHtml() {
 
     var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
     for (o in prodListOrder) {
+      if (prodListOrder[i].delete) {
+        continue;
+      }
       orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
     }
     // console.log(prodListOrder[o]);
