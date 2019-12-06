@@ -224,7 +224,7 @@ function loadOrderListHtml() {
 
     if (orderShipStatus[data[e][0]]) {
       if(orderShipStatus[data[e][0]].status == "SHIPPER_RECEIVED_MONEY") {
-        iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Wait to get money)</i>';
+        iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Shipper received money)</i>';
         optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
       } else if(orderShipStatus[data[e][0]].status == "SENT_POST") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Sent Post)</i>';
