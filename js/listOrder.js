@@ -225,10 +225,10 @@ function loadOrderListHtml() {
     if (orderShipStatus[data[e][0]]) {
       if(orderShipStatus[data[e][0]].status == "SHIPPER_RECEIVED_MONEY") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Shipper received money)</i>';
-        optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
+        optionShip = '<option value="COMPLETED" selected>Shop đã nhận tiền</option><option value="Requested">Chưa giao hàng</option>';
       } else if(orderShipStatus[data[e][0]].status == "SENT_POST") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Sent Post)</i>';
-        optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
+        optionShip = '<option value="COMPLETED" selected>Đã hoàn thành</option><option value="Requested">Chưa giao hàng</option>';
       } else if(orderShipStatus[data[e][0]].status == "COMPLETED") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Sent)</i>';
         optionShip = '<option value="COMPLETED" selected>Đã giao hàng</option><option value="Requested">Chưa giao hàng</option>';
@@ -290,9 +290,9 @@ function loadOrderListHtml() {
             '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
             '</select>'+
-            '<select class="mdb-select md-form selectShip selectShipStatus_'+e+'">'+
-              optionShip +
-            '</select>'+
+            // '<select class="mdb-select md-form selectShip selectShipStatus_'+e+'">'+
+            //   optionShip +
+            // '</select>'+
             // '<label class="mdb-main-label">Đã đặt hàng</label>'+
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
             // '<hr/>'+
