@@ -71,6 +71,24 @@ var triggerAfterLoad = function(){
         lsTask = lsTaskset;
       })
   });
+
+  if (userRole=="manager"){
+    loadOrderList(function(){
+      parseOrderList();
+    }
+  }
+}
+
+listOrderSheetParse = {};
+
+function parseOrderList(){
+  listOrderSheetParse = {};
+  var orderList = JSON.parse(localStorage.getItem("orderList"));
+  for(var e in orderList) {
+    listOrderSheetParse[orderList[e][0]] = {
+      orderIndex : e
+    }
+  }
 }
 
 $(".text-center").click(function(){
@@ -248,7 +266,7 @@ function loadOrderShippingListHtml() {
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "SENT_POST") {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >SHOP đã nhận tiền</div>';
     }
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
@@ -489,6 +507,17 @@ function shipperReceiveMonney(){
   })
 }
 
+
+function updatePaymentComplete(orderIndex){
+  var line = parseInt(orderIndex) + 1;
+  var value = "PAID";
+  var column = 8; //for payment
+  $("#loadingSpin").show();
+  updateOrderStatus(line,column,value, function(){
+    $("#loadingSpin").hide();
+  });
+}
+
 function shipComplete(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
@@ -514,6 +543,7 @@ function shipComplete(){
       nextStep = "SHIPPER_RECEIVED_MONEY";
     } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
       nextStep = "COMPLETED";
+      updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
     }
   } else if (lsOrder[orderIndex][8] == "POST_COD"){
 
@@ -521,9 +551,7 @@ function shipComplete(){
       nextStep = "SENT_POST";
     } else if (lsOrder[orderIndex][4] == "SENT_POST") {
       nextStep = "COMPLETED";
-    } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
-      nextStep = "COMPLETED";
-
+      updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
     }
 
   }
@@ -554,6 +582,7 @@ function shipComplete(){
     console.log("Something wrong");
   })
 }
+
 
 function shipPrepared(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -690,7 +719,6 @@ function taskComplete(){
     console.log("Something wrong");
   })
 }
-
 
 $(".orderFilter").change(function(){
   var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
