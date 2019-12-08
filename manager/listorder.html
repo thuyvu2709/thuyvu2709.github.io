@@ -36,7 +36,6 @@
     <h2 class="text-center">Danh sách đơn hàng</h2>
 
     <div class="btn btn-default">
-      Hiển thị đơn hàng
       <select class="mdb-select md-form orderFilter" id="orderFilter">
         <option value="PROCESSING">Đang xử lý</option>
         <option value="READY">Đã sẵn sàng</option>
@@ -61,34 +60,21 @@
 
     <div id="listOrder">
 
-<!--   <a href="#" class="list-group-item list-group-item-action"></a>
- -->
-
-<!--     <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              Collapsible Group Item #1
-            </button>
-          </h5>
-        </div>
-
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <p>Mã đơn hàng:</p>
-            <p>Tên mặt hàng</p>
-            <p>Giá gốc</p>
-            <p>Giá bán</p>
-            <p>Số lượng</p>
-
-          </div>
-        </div>
-      </div> -->
-
-
-     </div> 
+    </div> 
+    <div id="controllMany">
+      <hr/>
+      <h4>Xử lý hàng loạt</h4>
+      <div class="btn btnNormal5px requestshippingMany" >Yêu cầu giao hàng</div>
+    </div>
 
   </section>
+
+  <div class="click-to-select d-lg position-fixed ">
+    <a class="d-block text-center text-white rounded">
+      <i class="fa fa-check"></i>
+    </a>
+  </div>
+
 
   <!-- Modal -->
    <div class="modal fade" id="myModal" role="dialog">

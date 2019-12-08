@@ -80,7 +80,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoadX();
+  // triggerAfterLoadX();
 })
 
 var orderWithProdRef = [];
@@ -165,6 +165,7 @@ function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
+  $("#controllMany").hide();
   $("#listOrder").empty();
   // console.log(data);
   var status = $("#orderFilter").val();
@@ -273,17 +274,18 @@ function loadOrderListHtml() {
     orderDetailBrief+="<hr/>";
     ///
 
-    var paidDiv = '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
+    var paidDiv = "";
+    if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD") {
+      paidDiv = '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
             '</select>';
-    if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD") {
-      paidDiv = "";
     }
   	$("#listOrder").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
+            '<input type="checkbox" class="checkbox check_'+e+'"/>'+
             '<button class="btn '+orderReady+' btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
               data[e][0]+' | '+data[e][2] + ' | '+data[e][5] + 
               iconShip +
@@ -314,6 +316,8 @@ function loadOrderListHtml() {
       '</div>'
       )
   }
+
+  $(".checkbox").hide();
 
   afterLoadHTML();
 
@@ -648,6 +652,27 @@ function loadOrderListHtml() {
 
 };
 
+$(".click-to-select").click(function(){
+  if($(".checkbox").is(':visible') ) {
+    $(".checkbox").hide();
+    $("#controllMany").hide();
+  } else {
+    $(".checkbox").show();
+    $("#controllMany").show();
+  }
+})
+
+$(".requestshippingMany").click(function(){
+  var lsChecked = $(".checkbox");
+  var requestShip = function(index) {
+    if (index >= lsChecked.length)  {
+      return;
+    }
+    console.log(lsChecked[index]);
+    requestShip(index+1);
+  }
+  requestShip(0);
+})
 
 $("#orderFilter").change(function(){
   console.log("orderFilter:");
