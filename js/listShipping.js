@@ -154,7 +154,7 @@ function readOrderDetail(callback){
 
       if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
         $(".modal-body").empty();
-        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko khớp</p>");
+        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko </p>");
         $('#myModal').modal('toggle');
       }
 
