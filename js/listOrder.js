@@ -657,6 +657,34 @@ function loadOrderListHtml() {
 
   })
 
+  $(".requestshippingMany").click(function(){
+    var lsChecked = $(".checkbox");
+    $("#loadingSpin").show();
+
+    var requestShip = function(index) {
+      if (index >= lsChecked.length)  {
+        $("#loadingSpin").hide();
+        return;
+      }
+
+      if ($(lsChecked[index]).is(":checked")){
+        console.log(lsChecked[index]);
+        // requestshipping order_'+e+'
+        var currentOrder=getOrder(index);
+
+        $("#loading-text").html("Request ship "+currentOrder.orderCode);
+
+        requestShipping(currentOrder,function(){
+          requestShip(index+1);
+        });
+
+      } else {
+        requestShip(index+1);
+      }
+    }
+    requestShip(0);
+  })
+
 };
 
 $(".click-to-select").click(function(){
@@ -669,28 +697,6 @@ $(".click-to-select").click(function(){
   }
 })
 
-$(".requestshippingMany").click(function(){
-  var lsChecked = $(".checkbox");
-  var requestShip = function(index) {
-    if (index >= lsChecked.length)  {
-      return;
-    }
-
-    if ($(lsChecked[index]).is(":checked")){
-      console.log(lsChecked[index]);
-      // requestshipping order_'+e+'
-      var currentOrder=getOrder(orderIndex);
-
-      requestShipping(currentOrder,function(){
-        requestShip(index+1);
-      });
-
-    } else {
-      requestShip(index+1);
-    }
-  }
-  requestShip(0);
-})
 
 $("#orderFilter").change(function(){
   console.log("orderFilter:");
