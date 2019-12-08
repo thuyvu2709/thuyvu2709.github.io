@@ -74,14 +74,14 @@ var triggerAfterLoad = function(){
 
   if (userRole=="manager"){
     loadOrderList(function(){
-      parseOrderList();
+      parseOrderSheetList();
     })
   }
 }
 
 listOrderSheetParse = {};
 
-function parseOrderList(){
+function parseOrderSheetList(){
   listOrderSheetParse = {};
   var orderList = JSON.parse(localStorage.getItem("orderList"));
   for(var e in orderList) {
@@ -108,21 +108,24 @@ $(".text-center").click(function(){
 
 })
 
-var orderListParse = {}
+// var orderListParse = {}
 
-function parseOrder(){
-  if (userRole!="manager") {
-    return;
-  }
-  loadOrderList(function(orderlist){
-    for (e in orderlist) {
-      orderListParse[orderlist[e][0]] = {
-        index : e,
-        orderCode : orderlist[e][1]
-      }
-    }
-  })
-}
+// function parseOrder(){
+//   if (userRole!="manager") {
+//     return;
+//   }
+//   loadOrderList(function(orderlist){
+//     for (e in orderlist) {
+//       if (!orderlist[e][0]) {
+//         continue;
+//       }
+//       orderListParse[orderlist[e][0]] = {
+//         index : e,
+//         orderCode : orderlist[e][1]
+//       }
+//     }
+//   })
+// }
 
 function readOrderDetail(callback){
   // console.log("userRole:"+userRole);
@@ -140,6 +143,14 @@ function readOrderDetail(callback){
       continue;
     }
     lsOrderDetail[lsOrder[e][0]] = JSON.parse(lsOrder[e][3]);
+
+    if (userRole=="manager"){
+      if (!listOrderSheetParse[lsOrder[e][0]]) {
+        $(".modal-body").empty();
+        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" ko tồn tại trong sheet Order</p>");
+        $('#myModal').modal('toggle');
+      }
+    }
   }
   // console.log(lsOrderDetail);
   callback();
@@ -768,7 +779,7 @@ $(".completeMany").click(function(){
     if ($(lsChecked[index]).is(":checked")){
       console.log(lsChecked[index]);
       
-      
+
 
       // requestShipping(currentOrder,function(){
       //   requestShip(index+1);
