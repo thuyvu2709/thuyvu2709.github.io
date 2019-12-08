@@ -714,14 +714,24 @@ function finishOrder(){
 	$("#addNewOrder").hide();
 	$("#btnRefresh").show();
 	$("#btnPrintOrder").show();
-	$(".modal-body").empty();
-	$(".modal-body").html("<p id='modelContent'>Đã lưu mặt hàng</p>");
-	// $("#modelContent").html("Đã lưu đơn hàng");
-	$("#loadingSpin").hide();
+
 	
 	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
-	$('#myModal').modal('toggle');
+	if (currentOrder.shipIndex) {
+		requestShipping(currentOrder,function(){
+			$("#loadingSpin").hide();
+			$(".modal-body").empty();
+			$(".modal-body").html("<p id='modelContent'>Đã sửa và cập nhật yêu cầu</p>");
+			$('#myModal').modal('toggle');
+		});
+	} else {
+		$("#loadingSpin").hide();
+		$(".modal-body").empty();
+		$(".modal-body").html("<p id='modelContent'>Đã sửa đơn hàng</p>");
+		$('#myModal').modal('toggle');
+	}
+
 }
 
 $("#editOrder").click(function(){

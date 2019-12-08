@@ -1193,6 +1193,18 @@ function getCurrentDateTime(){
 function requestShipping(currentOrder, callback){
   $("#loadingSpin").show();
 
+  var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
+
+  // console.log(willpay);
+  // currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
+  console.log("shippingType:"+currentOrder.shippingType);
+  if (currentOrder.shippingType == "POST_COD" 
+    || currentOrder.shippingType == "SHOPEE"
+    || currentOrder.shippingType == "POST_NO_COD" ) {
+    currentOrder.otherCost = 5;
+  }
+  currentOrder.willpay = willpay;
+
   for (e in currentOrder.prodListOrder){
     currentOrder.prodListOrder[e].turnover = undefined;
     currentOrder.prodListOrder[e].totalPay = undefined;
