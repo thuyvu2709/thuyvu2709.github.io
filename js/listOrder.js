@@ -133,6 +133,7 @@ function parseOrderShipping(){
       stype : lsOrderShipping[e][8],
       sindex : (parseInt(e)+1)
     }
+
     /*
     shipping type: 0: ship, ko thu tien
                    1: ship, co thu tien (COD)
@@ -287,6 +288,16 @@ function loadOrderListHtml() {
               optionPaid +
             '</select>';
     }
+
+    if (shippingType == "SHIPPER_COD" || shippingType == "POST_COD") {
+      if (orderShipStatus[data[e][0]].status == "COMPLETED"
+        && data[e][8]!="PAID") {
+        $(".modal-body").empty();
+        $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+shippingType+" đã thanh toán</p>");
+        $('#myModal').modal('toggle');
+      } 
+    }
+
   	$("#listOrder").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
