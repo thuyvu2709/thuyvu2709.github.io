@@ -290,12 +290,14 @@ function loadOrderListHtml() {
     }
 
     if (shippingType == "SHIPPER_COD" || shippingType == "POST_COD") {
-      if (orderShipStatus[data[e][0]].status == "COMPLETED"
-        && data[e][8]!="PAID") {
-        $(".modal-body").empty();
-        $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+shippingType+" đã thanh toán</p>");
-        $('#myModal').modal('toggle');
-      } 
+      if (orderShipStatus[data[e][0]]){
+        if (orderShipStatus[data[e][0]].status == "COMPLETED"
+          && data[e][8]!="PAID") {
+          $(".modal-body").empty();
+          $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+shippingType+" đã thanh toán</p>");
+          $('#myModal').modal('toggle');
+        } 
+      }
     }
 
   	$("#listOrder").append(
