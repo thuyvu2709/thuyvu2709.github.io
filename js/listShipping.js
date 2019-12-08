@@ -157,9 +157,7 @@ function readOrderDetail(callback){
         $(".modal-body").empty();
         $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" ko tồn tại trong sheet Order</p>");
         $('#myModal').modal('toggle');
-      }
-
-      if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
+      } else if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
         $(".modal-body").empty();
         $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko khớp</p>");
         $('#myModal').modal('toggle');
