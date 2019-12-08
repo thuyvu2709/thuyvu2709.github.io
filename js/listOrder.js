@@ -702,6 +702,7 @@ function checkSystemConsistent(){
     if (data[e][11] == "SHIPPER_COD" || data[e][11] == "POST_COD") {
       if (orderShipStatus[data[e][0]]){
         if (orderShipStatus[data[e][0]].status == "COMPLETED" && data[e][8]!="PAID") {
+          console.log(orderShipStatus[data[e][0]]);
           $(".modal-body").empty();
           $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+data[e][11]+" đã thanh toán?</p>");
           $('#myModal').modal('toggle');
