@@ -121,6 +121,13 @@ function parseOrderShipping(){
     if (!lsOrderShipping[e][0]){
       continue;
     }
+
+    if (orderShipStatus[lsOrderShipping[e][0]]) {
+      $(".modal-body").empty();
+      $(".modal-body").html("<p id='modelContent'>Cảnh báo! Có 2 yêu cầu giao hàng cho đơn "+lsOrderShipping[e][0]+"</p>");
+      $('#myModal').modal('toggle');
+    }
+
     orderShipStatus[lsOrderShipping[e][0]] = {
       status : lsOrderShipping[e][4],
       stype : lsOrderShipping[e][8],
