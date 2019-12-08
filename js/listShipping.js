@@ -176,6 +176,10 @@ function loadOrderShippingListHtml() {
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
       totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
     }
+
+    if (lsOrder[e][4] == "SENT_POST") {
+      totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].totalPay);
+    }
     
 
     // if (mode == "Need_Schedule") {
@@ -244,7 +248,7 @@ function loadOrderShippingListHtml() {
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "SENT_POST") {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Shipper đã nhận tiền</div>';
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Hoàn thành</div>';
     }
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
@@ -370,9 +374,13 @@ function loadOrderShippingListHtml() {
 
   if (mode == "SHIPPER_RECEIVED_MONEY"){
     $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
+  } if (mode == "SENT_POST") {
+    $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
   } else {
     $("#note").html("");
   }
+
+
 
   $(".complete").click(shipComplete)
   $(".detail").click(showDetail);
@@ -512,7 +520,7 @@ function shipComplete(){
     if (lsOrder[orderIndex][4] == "Requested") {
       nextStep = "SENT_POST";
     } else if (lsOrder[orderIndex][4] == "SENT_POST") {
-      nextStep = "SHIPPER_RECEIVED_MONEY";
+      nextStep = "COMPLETED";
     } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
       nextStep = "COMPLETED";
 
