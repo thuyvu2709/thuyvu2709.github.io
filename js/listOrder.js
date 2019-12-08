@@ -699,7 +699,7 @@ function checkSystemConsistent(){
   data = JSON.parse(localStorage.getItem("orderList"));
 
   for(var e in data) {
-      if (data[e][11] == "SHIPPER_COD" || data[e][11] == "POST_COD") {
+    if (data[e][11] == "SHIPPER_COD" || data[e][11] == "POST_COD") {
       if (orderShipStatus[data[e][0]]){
         if (orderShipStatus[data[e][0]].status == "COMPLETED" && data[e][8]!="PAID") {
           $(".modal-body").empty();
@@ -707,6 +707,7 @@ function checkSystemConsistent(){
           $('#myModal').modal('toggle');
         } 
       }
+    }
   }
 }
 
