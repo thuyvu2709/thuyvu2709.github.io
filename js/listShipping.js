@@ -159,6 +159,8 @@ function loadOrderShippingListHtml() {
 
   console.log("loadOrderShippingListHtml");
   
+  $("#controllMany").hide();
+
   $("#listShippingOrder").empty();
   
   // $(".maintitle").html("Quản lý giao hàng");
@@ -333,6 +335,7 @@ function loadOrderShippingListHtml() {
         '<div class="card cardElement_'+e+'">'+
           '<div class="card-header" id="heading_'+e+'">'+
             '<h5 class="mb-0">'+
+              '<input type="checkbox" class="checkbox check_'+e+'"/>'+
               '<button class="btn btn-link '+mark+' btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
                 title +
               '</button>'+
@@ -387,6 +390,8 @@ function loadOrderShippingListHtml() {
   //   }
   //   return;
   // }
+
+  $(".checkbox").hide();
 
   afterLoadHTML();
 
@@ -741,3 +746,38 @@ $(".orderFilter").change(function(){
     shippingReport();
   }
 })
+
+$(".click-to-select").click(function(){
+  if($(".checkbox").is(':visible') ) {
+    $(".checkbox").hide();
+    $("#controllMany").hide();
+  } else {
+    $(".checkbox").show();
+    $("#controllMany").show();
+  }
+})
+
+
+$(".completeMany").click(function(){
+  var lsChecked = $(".checkbox");
+  var requestShip = function(index) {
+    if (index >= lsChecked.length)  {
+      return;
+    }
+
+    if ($(lsChecked[index]).is(":checked")){
+      console.log(lsChecked[index]);
+      
+      
+
+      // requestShipping(currentOrder,function(){
+      //   requestShip(index+1);
+      // });
+
+    } else {
+      requestShip(index+1);
+    }
+  }
+  requestShip(0);
+})
+
