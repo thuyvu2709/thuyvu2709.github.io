@@ -75,7 +75,7 @@ var triggerAfterLoad = function(){
   if (userRole=="manager"){
     loadOrderList(function(){
       parseOrderList();
-    }
+    })
   }
 }
 
