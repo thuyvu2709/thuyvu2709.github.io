@@ -703,7 +703,7 @@ function checkSystemConsistent(){
       if (orderShipStatus[data[e][0]]){
         if (orderShipStatus[data[e][0]].status == "COMPLETED" && data[e][8]!="PAID") {
           $(".modal-body").empty();
-          $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+shippingType+" đã thanh toán?</p>");
+          $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+data[e][11]+" đã thanh toán?</p>");
           $('#myModal').modal('toggle');
         } 
       }
