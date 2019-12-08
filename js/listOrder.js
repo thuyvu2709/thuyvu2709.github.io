@@ -668,8 +668,31 @@ $(".requestshippingMany").click(function(){
     if (index >= lsChecked.length)  {
       return;
     }
-    console.log(lsChecked[index]);
-    requestShip(index+1);
+
+    if ($(lsChecked[index]).is(":checked")){
+      console.log(lsChecked[index]);
+      // requestshipping order_'+e+'
+      var currentOrder=getOrder(orderIndex);
+
+      var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
+
+      console.log(willpay);
+      // currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
+      console.log("shippingType:"+currentOrder.shippingType);
+      if (currentOrder.shippingType == "POST_COD" 
+        || currentOrder.shippingType == "SHOPEE"
+        || currentOrder.shippingType == "POST_NO_COD" ) {
+        currentOrder.otherCost = 5;
+      }
+      currentOrder.willpay = willpay;
+
+      requestShipping(currentOrder,function(){
+        requestShip(index+1);
+      });
+
+    } else {
+      requestShip(index+1);
+    }
   }
   requestShip(0);
 })

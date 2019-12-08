@@ -1190,7 +1190,7 @@ function getCurrentDateTime(){
   };
 }
 
-function requestShipping(currentOrder){
+function requestShipping(currentOrder, callback){
   $("#loadingSpin").show();
 
   for (e in currentOrder.prodListOrder){
@@ -1222,12 +1222,22 @@ function requestShipping(currentOrder){
     },function(){
       console.log("Something wrong");
       $("#loadingSpin").hide();
+
+      if (callback) {
+        callback();
+      }
+
     })
   } else {
     var sheetrange = 'Shipping!A'+currentOrder.shipIndex+':K'+currentOrder.shipIndex;
     updateShipping(dataShipping, sheetrange, function(){
       console.log("updated:"+currentOrder.shipIndex);
       $("#loadingSpin").hide();
+      
+      if (callback) {
+        callback();
+      }
+
     }, function(){
       console.log("Something wrong");
     })
