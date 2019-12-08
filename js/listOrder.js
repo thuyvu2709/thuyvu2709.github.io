@@ -220,6 +220,7 @@ function loadOrderListHtml() {
     }
 
     var optionShip;
+    var shippingType = data[e][11];
     var iconShip = "";
 
     if (orderShipStatus[data[e][0]]) {
@@ -272,6 +273,12 @@ function loadOrderListHtml() {
     orderDetailBrief+="<hr/>";
     ///
 
+    var paidDiv = '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
+              optionPaid +
+            '</select>';
+    if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD") {
+      paidDiv = "";
+    }
   	$("#listOrder").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
@@ -287,9 +294,7 @@ function loadOrderListHtml() {
 
         '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listOrder">'+
           '<div class="card-body">'+
-            '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
-              optionPaid +
-            '</select>'+
+            paidDiv+
             // '<select class="mdb-select md-form selectShip selectShipStatus_'+e+'">'+
             //   optionShip +
             // '</select>'+
@@ -303,6 +308,7 @@ function loadOrderListHtml() {
             '<br/>'+
             '<div class="btn btnNormal5px requestshipping order_'+e+'" >Yêu cầu giao hàng</div>'+
             '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng có sẵn</div>'+
+            '<div class="btn btnNormal5px makecopy order_'+e+'" >Tạo mới y hệt</div>'+
           '</div>'+
         '</div>'+
       '</div>'
@@ -469,6 +475,21 @@ function loadOrderListHtml() {
     })
 
     window.location = "../barcode/showorder.html";
+  })
+
+
+  $(".makecopy").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    getOrder(orderIndex);
+
+    saveHistory({
+      searchText : $("#orderSearchInput").val(),
+      status : $("#orderFilter").val(),
+      goToClass : $(this).attr("class")
+    })
+
+    window.location = "../barcode/neworder.html?makeCopy=true";
+
   })
 
   $(".splitorder").click(function(){

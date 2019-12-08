@@ -17,6 +17,8 @@ if (makeCopy) {
 	$("#customerName").val(currentOrder.customerName);
 	$("#customerAddress").val(currentOrder.customerAddress);
 	$("#customerPhone").val(currentOrder.customerPhone);
+	$("#shippingType").val(currentOrder.shippingType);
+
 }
 
 var triggerAfterLoad = function(){
