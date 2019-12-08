@@ -668,9 +668,14 @@ function loadOrderListHtml() {
       }
 
       if ($(lsChecked[index]).is(":checked")){
-        console.log(lsChecked[index]);
+        // console.log($(lsChecked[index]).attr("class").split(" ").pop().split("_").pop());
+        var orderIndex = $(lsChecked[index]).attr("class").split(" ").pop().split("_").pop();
+
+        // console.log($(lsChecked[index]));
         // requestshipping order_'+e+'
-        var currentOrder=getOrder(index);
+        var currentOrder=getOrder(orderIndex);
+        // console.log(orderIndex);
+        // console.log(currentOrder);
 
         $("#loading-text").html("Request ship "+currentOrder.orderCode);
 
