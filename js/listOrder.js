@@ -716,7 +716,7 @@ function checkSystemConsistent(){
 
 $(".click-to-select").click(function(){
   
-  checkSystemConsistent();
+  // checkSystemConsistent();
 
   if($(".checkbox").is(':visible') ) {
     $(".checkbox").hide();
