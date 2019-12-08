@@ -706,6 +706,7 @@ function checkSystemConsistent(){
           $(".modal-body").empty();
           $(".modal-body").html("<p id='modelContent'>"+lsOrderShipping[e][0]+" : "+data[e][11]+" đã thanh toán?</p>");
           $('#myModal').modal('toggle');
+          return;
         } 
       }
     }
