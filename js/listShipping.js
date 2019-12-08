@@ -86,7 +86,8 @@ function parseOrderSheetList(){
   var orderList = JSON.parse(localStorage.getItem("orderList"));
   for(var e in orderList) {
     listOrderSheetParse[orderList[e][0]] = {
-      orderIndex : e
+      orderIndex : e,
+      totalPay : orderList[e][5]
     }
   }
 }
@@ -150,6 +151,13 @@ function readOrderDetail(callback){
         $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" ko tồn tại trong sheet Order</p>");
         $('#myModal').modal('toggle');
       }
+
+      if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
+        $(".modal-body").empty();
+        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko khớp</p>");
+        $('#myModal').modal('toggle');
+      }
+
     }
   }
   // console.log(lsOrderDetail);
