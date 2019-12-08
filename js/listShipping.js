@@ -63,19 +63,26 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
-  getOrderShipping(function(lsOrderset){
-      $("#loadingSpin").hide();
-      lsOrder = lsOrderset;
-      readOrderDetail(loadOrderShippingListHtml);
-      getTaskList(function(lsTaskset){
-        lsTask = lsTaskset;
-      })
-  });
+  var step2 = function(){
+    getOrderShipping(function(lsOrderset){
+        $("#loadingSpin").hide();
+        lsOrder = lsOrderset;
+        readOrderDetail(function(){
+          loadOrderShippingListHtml();
+        });
+        getTaskList(function(lsTaskset){
+          lsTask = lsTaskset;
+        })
+    });
+  }
 
   if (userRole=="manager"){
     loadOrderList(function(){
       parseOrderSheetList();
+      step2();
     })
+  } else {
+    step2();
   }
 }
 
@@ -154,7 +161,7 @@ function readOrderDetail(callback){
 
       if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
         $(".modal-body").empty();
-        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko </p>");
+        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko khớp</p>");
         $('#myModal').modal('toggle');
       }
 
