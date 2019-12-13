@@ -421,7 +421,7 @@ function loadOrderShippingListHtml() {
 
   if (mode == "SHIPPER_RECEIVED_MONEY"){
     $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
-  } if (mode == "SENT_POST") {
+  } else if (mode == "SENT_POST") {
     $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
   } else {
     $("#note").html("");
