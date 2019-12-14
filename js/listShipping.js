@@ -340,14 +340,21 @@ function loadOrderShippingListHtml() {
 
 
     var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
+    var numOfProd = 0;
+    var productWeights = 0;
     for (o in prodListOrder) {
       if (prodListOrder[o].delete) {
         continue;
       }
-      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
+      numOfProd = numOfProd + parseInt(prodListOrder[o].productCount);
+      productWeights = productWeights + parseFloat(prodListOrder[o].productWeight);
+
+      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +"|"+prodListOrder[o].productWeight+" kg/pc)<br/>"
     }
     // console.log(prodListOrder[o]);
-    orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
+    // orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
+    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
+
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
