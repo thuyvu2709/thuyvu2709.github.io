@@ -59,7 +59,7 @@ var afterLoadHTML = function(){
 }
 /////////////
 
-var triggerAfterLoad = function(){
+var triggerAfterLoadX = function(){
 
   $("#loadingSpin").show();
 
@@ -107,7 +107,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  // triggerAfterLoadX();
+  triggerAfterLoadX();
   console.log("Trigger");
   lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   lsTask =  JSON.parse(localStorage.getItem("tasklist"));
@@ -353,13 +353,26 @@ function loadOrderShippingListHtml() {
     }
     // console.log(prodListOrder[o]);
     // orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
-    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
+    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> ) <br/>";
 
+    var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
+    var requestedDate = new Date(dateText);
+    var next2days = new Date(requestedDate);
+    //5: Friday, 6: Sat, 0->4: Sun to thursay
+    if (requestedDate.getDay() >=0 && requestedDate.getDay() <=4) {
+      next2days.setDate(requestedDate.getDate()+2);
+    } else if (requestedDate.getDay() ==5){
+      next2days.setDate(requestedDate.getDate()+4);
+    } else if (requestedDate.getDay() ==6){
+      next2days.setDate(requestedDate.getDate()+3);
+    }
+
+    orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
-    var mark = (lsOrder[e][9] == 1 ? "textRed" : "");
+    var mark = (next2days < new Date() ? "textRed" : "");
 
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
