@@ -59,7 +59,7 @@ var afterLoadHTML = function(){
 }
 /////////////
 
-var triggerAfterLoadX = function(){
+var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
@@ -107,7 +107,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoadX();
+  // triggerAfterLoadX();
   console.log("Trigger");
   lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   lsTask =  JSON.parse(localStorage.getItem("tasklist"));
@@ -367,14 +367,14 @@ function loadOrderShippingListHtml() {
       next2days.setDate(requestedDate.getDate()+3);
     }
 
-    // orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
+    orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
     var mark = "";
     if (userRole=="manager"){
-      // mark = (next2days < new Date() ? "textRed" : "");
+      mark = (next2days < new Date() ? "textRed" : "");
     }
 
     $("#listShippingOrder").append(
