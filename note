@@ -2,5 +2,8 @@ Todo-
 
 1- Kết nối shipper vs app viettelpost
 2-Tính cân đơn hàng cho An
-3-Tự động sửa lỗi - đồng bộ đơn hàng vs shippe
+3-Tự động sửa lỗi - đồng bộ đơn hàng vs shipper
+=> Yêu cầu giao hàng bên thuỷ: khi mới tạo đơn hàng: chỉ đc clikc 1 lần vs biến mất khi ko có 
+=> có nhiều yêu cầu giao hàng => xoá những cái cuối cùng và đồng bộ cái hiện 
 4-Xử lý hàng loạt: Sửa hàng, yêu cầu đơn hàng, tạo mới đợt hàng theo lưa chọn hàng có sẵn
+5-Thêm chi phí khác vào phần đơn hàng

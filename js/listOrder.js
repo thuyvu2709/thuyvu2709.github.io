@@ -268,6 +268,7 @@ function loadOrderListHtml() {
     ///Short description
     var orderDetailBrief="<hr/>";
     var currentOrderDetail = listOrderDetailParse[data[e][0]];
+    var numOfProd = 0;
     for (o in currentOrderDetail) {
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
                         +currentOrderDetail[o][3]+" | "
@@ -275,10 +276,11 @@ function loadOrderListHtml() {
                         +" (x "+currentOrderDetail[o][5] +")"
                         +"</span>"
                         +"<br/>";
+      numOfProd = numOfProd + parseInt(currentOrderDetail[o][5]);
     }
     // console.log(prodListOrder[o]);
     orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
-    orderDetailBrief+="Tiền hàng:"+data[e][5];
+    orderDetailBrief+="Tiền hàng:"+data[e][5]+" <i class='fas fa-box-full'>x"+numOfProd+"</i>";
     orderDetailBrief+="<hr/>";
     ///
 
