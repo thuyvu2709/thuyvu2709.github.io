@@ -372,7 +372,10 @@ function loadOrderShippingListHtml() {
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
 
-    var mark = (next2days < new Date() ? "textRed" : "");
+    var mark = "";
+    if (userRole=="manager"){
+      // mark = (next2days < new Date() ? "textRed" : "");
+    }
 
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
