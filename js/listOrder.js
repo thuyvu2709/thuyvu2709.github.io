@@ -272,18 +272,19 @@ function loadOrderListHtml() {
     var numOfProd = 0;
     var productWeights = 0;
     for (o in currentOrderDetail) {
+      var pw = parseFloat(listProductParse[orderListDetail[e][3]].productWeight);
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
                         +currentOrderDetail[o][3]+" | "
                         +currentOrderDetail[o][4] 
-                        +" (x "+currentOrderDetail[o][5] +")"
+                        +" (x "+currentOrderDetail[o][5] +"|"+pw+"kg/pc)"
                         +"</span>"
                         +"<br/>";
       numOfProd = numOfProd + parseInt(currentOrderDetail[o][5]);
-      productWeights = productWeights + parseFloat(listProductParse[orderListDetail[e][3]].productWeight);
+      productWeights = productWeights + pw;
     }
     // console.log(prodListOrder[o]);
     orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
-    orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box' class='textMustard'>x"+numOfProd+"</i> <i class='fas fa-weight' class='textMustard'>"+productWeights+"kg</i> )";
+    orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
     orderDetailBrief+="<hr/>";
     ///
 
