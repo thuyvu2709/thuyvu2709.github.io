@@ -276,7 +276,7 @@ function loadOrderListHtml() {
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
                         +currentOrderDetail[o][3]+" | "
                         +currentOrderDetail[o][4] 
-                        +" (x "+currentOrderDetail[o][5] +"|"+pw+"kg/pc)"
+                        +" (x "+currentOrderDetail[o][5] +" | "+pw+"kg/pc)"
                         +"</span>"
                         +"<br/>";
       numOfProd = numOfProd + parseInt(currentOrderDetail[o][5]);
