@@ -349,7 +349,7 @@ function loadOrderShippingListHtml() {
       numOfProd = numOfProd + parseInt(prodListOrder[o].productCount);
       productWeights = productWeights + parseFloat(prodListOrder[o].productWeight);
 
-      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +"|"+prodListOrder[o].productWeight+" kg/pc)<br/>"
+      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +" | "+prodListOrder[o].productWeight+" kg/pc)<br/>"
     }
     // console.log(prodListOrder[o]);
     // orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
