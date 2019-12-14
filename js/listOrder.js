@@ -150,7 +150,8 @@ function parseProduct(){
   var productList = JSON.parse(localStorage.getItem("productList"));
   for (var e in productList) {
     listProductParse[productList[e][1]] = {
-      image : productList[e][19]
+      image : productList[e][19],
+      productWeight: productList[e][6]
     }
   }
 }
@@ -269,6 +270,7 @@ function loadOrderListHtml() {
     var orderDetailBrief="<hr/>";
     var currentOrderDetail = listOrderDetailParse[data[e][0]];
     var numOfProd = 0;
+    var productWeights = 0;
     for (o in currentOrderDetail) {
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
                         +currentOrderDetail[o][3]+" | "
@@ -277,10 +279,11 @@ function loadOrderListHtml() {
                         +"</span>"
                         +"<br/>";
       numOfProd = numOfProd + parseInt(currentOrderDetail[o][5]);
+      productWeights = productWeights + parseFloat(listProductParse[orderListDetail[e][3]]);
     }
     // console.log(prodListOrder[o]);
     orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
-    orderDetailBrief+="Tiền hàng:"+data[e][5]+" <i class='fas fa-box-full'>x"+numOfProd+"</i>";
+    orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
     orderDetailBrief+="<hr/>";
     ///
 
@@ -467,7 +470,8 @@ function loadOrderListHtml() {
           profit : orderListDetail[e][9],
           available : orderListDetail[e][10],
           orderDetailIndex : e,
-          productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : ""
+          productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : "",
+          productWeight : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : ""
         }
         prodIndex++;
       }

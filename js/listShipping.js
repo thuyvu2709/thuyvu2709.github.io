@@ -551,10 +551,11 @@ function shipComplete(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
 
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
+  // var today = new Date();
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // var dateTime = date+' '+time;
+  var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
 
   var sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
 
@@ -723,10 +724,11 @@ function taskComplete(){
   var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualTaskIndex = parseInt(taskIndex) + 1;
 
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
+  // var today = new Date();
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // var dateTime = date+' '+time;
+  var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
 
   var sheetrange = 'Task!D'+actualTaskIndex+':E'+actualTaskIndex;
 
