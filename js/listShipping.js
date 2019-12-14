@@ -367,7 +367,7 @@ function loadOrderShippingListHtml() {
       next2days.setDate(requestedDate.getDate()+3);
     }
 
-    orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
+    // orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
