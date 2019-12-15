@@ -154,6 +154,11 @@ $("#requestShipping").click(function(){
  //    $(".shippingType").click(function(){
 	// $("#simpleModal").modal('hide');
 	// console.log(orderIndex);
+
+	if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
+		$("#requestShipping").hide();
+	}
+
 	console.log(willpay);
 	// currentOrder.shippingType =  $(this).attr("class").split(" ").pop().split("_").pop();
 	console.log("shippingType:"+currentOrder.shippingType);
