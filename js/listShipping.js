@@ -356,7 +356,8 @@ function loadOrderShippingListHtml() {
     // console.log(prodListOrder[o]);
     // orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
     // orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> ) <br/>";
-    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> ) <br/>";
+    // orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> ) <br/>";
+    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" <br/> Số lượng hàng: "+numOfProd+" <br/>";
 
     var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
     var requestedDate = new Date(dateText);
