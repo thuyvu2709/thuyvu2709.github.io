@@ -347,13 +347,16 @@ function loadOrderShippingListHtml() {
         continue;
       }
       numOfProd = numOfProd + parseInt(prodListOrder[o].productCount);
-      productWeights = productWeights + parseFloat(prodListOrder[o].productWeight);
+      // productWeights = productWeights + parseFloat(prodListOrder[o].productWeight);
 
-      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +" | "+prodListOrder[o].productWeight+" kg/pc)<br/>"
+      // orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +" | "+prodListOrder[o].productWeight+" kg/pc)<br/>"
+      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
+
     }
     // console.log(prodListOrder[o]);
     // orderDetailBrief+="Tổng tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+"</br>";
-    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> ) <br/>";
+    // orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> ) <br/>";
+    orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> ) <br/>";
 
     var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
     var requestedDate = new Date(dateText);
