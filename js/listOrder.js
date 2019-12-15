@@ -208,6 +208,9 @@ function loadOrderListHtml() {
       if (data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       };
+      if (data[e][11]=="SHOPEE" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+        continue;
+      }
     } if (status == 'SHOPEE') {
       if (data[e][9]<1) {
         continue;
