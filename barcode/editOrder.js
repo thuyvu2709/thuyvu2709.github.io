@@ -718,7 +718,7 @@ function finishOrder(){
 	
 	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
-	if (currentOrder.shipIndex) {
+	if (currentOrder.shipIndex && currentOrder.shipIndex > 0) {
 		requestShipping(currentOrder,function(){
 			$("#loadingSpin").hide();
 			$(".modal-body").empty();
