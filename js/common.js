@@ -1132,26 +1132,26 @@ function appendDataInSheet(spreadsheets, sheetrange, data, callback, callbackErr
 }
 
 function sendEmail(headers_obj, message, callback){
-    // var email = '';
+    var email = '';
 
-    // for(var header in headers_obj) {
-    //   email += header += ": "+headers_obj[header]+"\r\n";
-    // }
+    for(var header in headers_obj) {
+      email += header += ": "+headers_obj[header]+"\r\n";
+    }
 
-    // email += "\r\n" + message;
+    email += "\r\n" + message;
 
-    // var sendRequest = gapi.client.gmail.users.messages.send({
-    //   'userId': 'me',
-    //   'resource': {
-    //     'raw': b64EncodeUnicode(email).replace(/\+/g, '-').replace(/\//g, '_')
-    //   }
-    // });
-    // // sendRequest.execute(function(){console.log("done")});
+    var sendRequest = gapi.client.gmail.users.messages.send({
+      'userId': 'me',
+      'resource': {
+        'raw': b64EncodeUnicode(email).replace(/\+/g, '-').replace(/\//g, '_')
+      }
+    });
+    // sendRequest.execute(function(){console.log("done")});
 
-    // return sendRequest.execute(callback);
-    callback({
-      id : "1234"
-    })
+    return sendRequest.execute(callback);
+    // callback({
+    //   id : "1234"
+    // })
     // sendEmail("levanthanh3005@gmail.com","vanle@unibz.it","Test","Test",function(){console.log("done")});
 }
 
