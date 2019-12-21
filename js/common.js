@@ -1165,7 +1165,7 @@ function getSpecificRoles(){
     if (roles[e][1] == "shipper") {
       shipper += roles[e][0]+";";
     } else if (roles[e][1] == "manager" 
-      && roles[e][0]!="thuy.vtlminhlong@gmail.com"
+      // && roles[e][0]!="thuy.vtlminhlong@gmail.com"
       ) {
       manager += roles[e][0]+";";
     } else if (roles[e][1] == "marketer" 
