@@ -277,7 +277,7 @@ function notiOrderViaEmail(receiver,cc, currentOrder, status) {
 	// return myvar;
 
 	var emailContent = myvar;
-	var subject = currentOrder.orderCode + " - " +removeSpecialAlias(currentOrder.customerName).toUpperCase()+"|"+status;
+	var subject = currentOrder.orderCode + "-" +removeSpecialAlias(currentOrder.customerName).toUpperCase()+"-"+status;
 
     var headers_obj = {
             'To': receiver,
