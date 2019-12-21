@@ -604,17 +604,19 @@ function shipComplete(){
     }
   } else if (lsOrder[orderIndex][8] == "POST_COD"){
 
-    if (lsOrder[orderIndex][4] == "Requested") {
-      nextStep = "SENT_POST";
-    } else if (lsOrder[orderIndex][4] == "SENT_POST") {
+    // if (lsOrder[orderIndex][4] == "Requested") {
+    //   nextStep = "SENT_POST";
+    // } else if (lsOrder[orderIndex][4] == "SENT_POST") {
       nextStep = "COMPLETED";
       updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
-    }
+    // }
 
   }
-  //  else if (lsOrder[orderIndex][8] == "SHOPEE"){
-  //   nextStep = "COMPLETED";
-  // }
+  
+  if (lsOrder[orderIndex][4] == "Requested") {
+    var currentOrder = lsOrderDetail[lsOrder[orderIndex][0]];
+    sendToManagerViaEmail(currentOrder, "Sent via "+lsOrder[orderIndex][8]);
+  }
 
   dataUpdateShipping = [
     [nextStep, 

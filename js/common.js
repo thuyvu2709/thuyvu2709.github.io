@@ -1239,6 +1239,8 @@ function requestShipping(currentOrder, callback){
       console.log("Something wrong");
       $("#loadingSpin").hide();
 
+      sendToShipperViaEmail(currentOrder, "Yeu cau giao hang");
+
       if (callback) {
         callback();
       }
@@ -1250,6 +1252,8 @@ function requestShipping(currentOrder, callback){
       console.log("updated:"+currentOrder.shipIndex);
       $("#loadingSpin").hide();
       
+      sendToShipperViaEmail(currentOrder, "Cap nhat yeu cau");
+
       if (callback) {
         callback();
       }
