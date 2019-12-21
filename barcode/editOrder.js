@@ -685,6 +685,9 @@ function addDetailOrder() {
 
 				 var dataEditOD = [submitDataEdit[index]];
 			 	 editOrderDetail(dataEditOD, rangeEdit[index], function(){
+
+ 				 	$("#loading-text").html("Cập nhật "+submitDataEdit[4]);
+
 			 	 	updateOneByOne(index+1);
 			 	 })
 
@@ -701,6 +704,8 @@ function addDetailOrder() {
 	if (submitDataAppend.length > 0){
 
 	 	appendOrderDetail(submitDataAppend,function(){
+		 	$("#loading-text").html("Cập nhật "+submitDataAppend[4]);
+
 	 		fEdit();
 	 	})
 
@@ -816,6 +821,8 @@ $("#editOrder").click(function(){
             ];
     var numOfColumn = 13;
 	var sheetrange = sheetOrder+'!A'+realOrderIndex +":"+ String.fromCharCode(65+numOfColumn) + realOrderIndex;
+
+	$("#loading-text").html("Cập nhật thông tin chung");
 
     editOrder(dataEditOrder, sheetrange, function(){
     	addDetailOrder();

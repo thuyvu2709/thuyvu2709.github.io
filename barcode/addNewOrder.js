@@ -488,6 +488,8 @@ function addDetailOrder() {
 	currentOrder.prodListOrder = prodListOrder;
 	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
+ 	$("#loading-text").html("Thêm các sản phẩm vào đơn hàng");
+
  	appendOrderDetail(submitData,finishOrder);
 }
 
@@ -567,6 +569,7 @@ $("#addNewOrder").click(function(){
 				prepaid	
                 ]
             ]
+ 	$("#loading-text").html("Thêm thông tin chung đơn hàng");
 
     appendOrder(submitOrderData,addDetailOrder);
 })
