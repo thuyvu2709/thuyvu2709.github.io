@@ -1235,12 +1235,12 @@ function requestShipping(currentOrder, callback){
     appendShipping(dataShipping, function(){
       console.log("Done request shipping")
       $("#loadingSpin").hide();
-    },function(){
-      console.log("Something wrong");
-      $("#loadingSpin").hide();
 
       sendToShipperViaEmail(currentOrder, "Yeu cau giao hang");
 
+    },function(){
+      console.log("Something wrong");
+      $("#loadingSpin").hide();
       if (callback) {
         callback();
       }
