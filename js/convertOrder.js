@@ -245,6 +245,9 @@ function notiOrderViaEmail(receiver,cc, currentOrder, status) {
 	'    <h1 class="text-center title">Xách tay Thuỷ Vũ - Góc Hàng Âu</h1>'+
 	'    <form>'+
 	'      <ul class="form-style-1">'+
+	'		 <li>'+
+    '		   <label class="inputField" style="color: white;background-color: #c57e0f;">'+status+'</label>'+
+	'        </li>'+
 	'        <li>'+
 	'          <label>Mã đơn hàng</label>'+
 	'          <label class="inputField">'+currentOrder.orderCode+'</label>'+
