@@ -594,6 +594,7 @@ function shipComplete(){
   var nextStep = "COMPLETED"; //FOR SHIPPER_NO_COD, SHOPEE, POST_NO_COD
 
   
+  var currentOrder = lsOrderDetail[lsOrder[orderIndex][0]];
 
   if (lsOrder[orderIndex][8] == "SHIPPER_COD"){
     if (lsOrder[orderIndex][4] == "Requested") {
@@ -619,7 +620,6 @@ function shipComplete(){
   }
   
   if (lsOrder[orderIndex][4] == "Requested") {
-    var currentOrder = lsOrderDetail[lsOrder[orderIndex][0]];
     sendToManagerViaEmail(currentOrder, "Sent via "+lsOrder[orderIndex][8]);
   }
 
