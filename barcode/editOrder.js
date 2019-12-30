@@ -686,7 +686,7 @@ function addDetailOrder() {
 				 var dataEditOD = [submitDataEdit[index]];
 			 	 editOrderDetail(dataEditOD, rangeEdit[index], function(){
 
- 				 	$("#loading-text").html("Cập nhật "+submitDataEdit[4]);
+ 				 	$("#loading-text").html("Cập nhật "+submitDataEdit[index][4]);
 
 			 	 	updateOneByOne(index+1);
 			 	 })
@@ -704,7 +704,7 @@ function addDetailOrder() {
 	if (submitDataAppend.length > 0){
 
 	 	appendOrderDetail(submitDataAppend,function(){
-		 	$("#loading-text").html("Cập nhật "+submitDataAppend[4]);
+		 	$("#loading-text").html("Cập nhật thêm các mặt hàng");
 
 	 		fEdit();
 	 	})
