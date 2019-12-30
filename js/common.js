@@ -1097,6 +1097,39 @@ function getTaskList(callback) {
   });
 }
 
+function getShippingReport(callback) {
+  var spreadsheetId = shippingSheet;
+
+  var indexColumnOfAllData = 5;
+  var sheetrange = 'Report!A:B';
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+
+      localStorage.setItem("shippingReport",JSON.stringify(dataset));
+
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 function editDataInSheet(spreadsheets, sheetrange, data, callback, callbackError){
   gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: spreadsheets,

@@ -10672,6 +10672,12 @@ a.text-dark:hover, a.text-dark:focus {
   bottom: 1rem;
 }
 
+.text-to-center {
+  z-index: 1042;
+  left: 50%;
+  bottom: 1rem;
+}
+
 .click-to-select {
   z-index: 1042;
   right: 1rem;
@@ -10684,6 +10690,13 @@ a.text-dark:hover, a.text-dark:focus {
   background-color: rgba(197, 126, 15, 0.5);
     /*color: #c57e0f !important;*/
   line-height: 3.1rem;
+}
+
+.text-to-center a {
+  background-color: rgba(197, 126, 15, 0.5);
+  line-height: 3.1rem;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
 #mainNav {

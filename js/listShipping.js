@@ -74,6 +74,10 @@ var triggerAfterLoad = function(){
           lsTask = lsTaskset;
         })
     });
+
+    getShippingReport(function(shippingRpData){
+      $(".textBottomCenter").html("Thu nhập:"+shippingRpData[5][1]);
+    })
   }
 
   if (userRole=="manager"){
