@@ -617,9 +617,7 @@ function shipComplete(){
       updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
     // }
 
-  }
-  
-  if (lsOrder[orderIndex][4] == "Requested") {
+  } else if (lsOrder[orderIndex][4] == "Requested") {
     sendToManagerViaEmail(currentOrder, "Sent via "+lsOrder[orderIndex][8]);
   }
 
