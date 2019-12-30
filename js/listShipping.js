@@ -598,9 +598,14 @@ function shipComplete(){
   if (lsOrder[orderIndex][8] == "SHIPPER_COD"){
     if (lsOrder[orderIndex][4] == "Requested") {
       nextStep = "SHIPPER_RECEIVED_MONEY";
+
+      sendToManagerViaEmail(currentOrder, "Shipper received cash:"+lsOrderDetail[lsOrder[orderIndex][0]].willpay);
+
     } else if (lsOrder[orderIndex][4] == "SHIPPER_RECEIVED_MONEY") {
       nextStep = "COMPLETED";
       updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
+
+      sendToManagerViaEmail(currentOrder, "Shop received cash:"+lsOrderDetail[lsOrder[orderIndex][0]].willpay);
     }
   } else if (lsOrder[orderIndex][8] == "POST_COD"){
 
