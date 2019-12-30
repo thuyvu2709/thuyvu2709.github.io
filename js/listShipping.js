@@ -76,7 +76,7 @@ var triggerAfterLoad = function(){
     });
 
     getShippingReport(function(shippingRpData){
-      $(".textBottomCenter").html("Thu nhập:"+shippingRpData[5][1]);
+      $(".textBottomCenter").html(shippingRpData[5][1]);
     })
   }
 
