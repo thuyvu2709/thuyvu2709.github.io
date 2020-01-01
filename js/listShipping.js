@@ -618,7 +618,7 @@ function shipComplete(){
     //   nextStep = "SENT_POST";
     // } else if (lsOrder[orderIndex][4] == "SENT_POST") {
       nextStep = "COMPLETED";
-      updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
+      // updatePaymentComplete(listOrderSheetParse[lsOrder[orderIndex][0]].orderIndex);
       sendToManagerViaEmail(currentOrder, "Sent via "+lsOrder[orderIndex][8]);
 
     // }
