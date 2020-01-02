@@ -74,6 +74,8 @@ var prodListOrder = currentOrder.prodListOrder;
 
 // console.log($("#portfolio"))
 
+var totalCount = 0;
+
 for (i in prodListOrder){
 	if (prodListOrder[i].delete) {
 		continue;
@@ -89,10 +91,13 @@ for (i in prodListOrder){
     // "<td>"+prodListOrder[i].available+"</td>"+
   "</tr>")
 	allText = allText + 
-		(parseInt(i)+1)+"-"+prodListOrder[i].productName+" (Số lượng:"+prodListOrder[i].productCount+")\n"
+		(parseInt(i)+1)+"-"+prodListOrder[i].productName+" (Số lượng:"+prodListOrder[i].productCount+")\n";
+	totalCount = totalCount + parseInt(prodListOrder[i].productCount);
 }
 
 allText = allText +  "Tổng tiền trả cả ship:"+currentOrder.totalPayIncludeShip + "\n";
+
+allText = allText + "Tổng số lượng:"+totalCount +"\n";
 
 allText = allText + (currentOrder.paymentStatus == "PAID" ? "Khách hàng đã thanh toán\n" : "Khách hàng chưa thanh toán\n");
 
