@@ -99,7 +99,7 @@ $("#totalCount").html(totalCount);
 
 allText = allText +  "Tổng tiền trả cả ship:"+currentOrder.totalPayIncludeShip + "\n";
 
-// allText = allText + "Tổng số lượng:"+totalCount +"\n";
+allText = allText + "Tổng số lượng:"+totalCount +"\n";
 
 allText = allText + (currentOrder.paymentStatus == "PAID" ? "Khách hàng đã thanh toán\n" : "Khách hàng chưa thanh toán\n");
 
