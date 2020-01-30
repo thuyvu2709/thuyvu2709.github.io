@@ -1,6 +1,25 @@
+
+
+var datasetName = 2019;
 var mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
 var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
 var shippingSheet = '1sN3aFKDTAjPJNNSHX2TssCY5S0mwcbmtJe4AyBAMtMY';
+
+datasetName = JSON.parse(localStorage.getItem("datasetName"));
+if (!datasetName) {
+  datasetName = 2019;
+  mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
+  roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
+  shippingSheet = '1sN3aFKDTAjPJNNSHX2TssCY5S0mwcbmtJe4AyBAMtMY';
+} else {
+  mainSheetForProduct = JSON.parse(localStorage.getItem("mainSheetForProduct"));
+  roleSheet = JSON.parse(localStorage.getItem("roleSheet"));
+  shippingSheet = JSON.parse(localStorage.getItem("shippingSheet"));
+}
+
+
+
+
 var hostname = window.location.hostname;
 var passDataLocalhost = (hostname == "localhost");
 
