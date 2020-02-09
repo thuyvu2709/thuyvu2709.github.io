@@ -210,10 +210,10 @@ function searchForm(){
 		'<input type="text" class="form-control searchInputProdText searchInputProduct_'+index+'" placeholder="Tìm kiếm">'+
 		// '<div class="btn btn-default">'+
 		'<select class="mdb-select md-form importSearchProductFilter" style="width:100%">'+
-			'<option value="-1" selected>Hàng có sẵn</option>'+
+			'<option value="-1">Hàng có sẵn</option>'+
 			lsImportCodeSearchProduct +
 			'<option value="-2">Hàng đã bán hết</option>'+
-			'<option value="-3">Toàn bộ</option>'+
+			'<option value="-3" selected>Toàn bộ</option>'+
 		'</select>'
     	// '</div>'
 	)
@@ -268,7 +268,7 @@ function filterInSearchForm(index,searchText){
 		}
 		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
 		// importCode = parseInt(importCode);
-		console.log("Dot hang:"+importCode);
+		console.log("Dot hang:"+importCode+" ");
 		if (importCode > -1) {
 		  if (importCode != productList[e][2]) {
 		    continue;

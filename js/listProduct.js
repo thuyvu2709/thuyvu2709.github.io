@@ -131,7 +131,7 @@ function loadProductListHtml(){
         continue;
       }
     }  else if (importCode == -4) {
-      if (parseFloat(data[e][17]) < 0) {
+      if (parseFloat(data[e][17]) >= 0) {
         continue;
       }
     }
