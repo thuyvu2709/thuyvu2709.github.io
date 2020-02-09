@@ -3,6 +3,8 @@
 // 2:POST_COD
 // 3:SHOPEE
 // 4:POST_NO_COD
+// 5:SHIP_BY_THIRD_PARTY
+
 //=if(I2=0,"SHIPPER_NO_COD",if(I2=1,"SHIPPER_COD",if(I2=2,"POST_COD","SHOPEE")))
 var lsOrder;
 var lsTask;

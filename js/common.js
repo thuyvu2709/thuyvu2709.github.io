@@ -1283,6 +1283,23 @@ function requestShipping(currentOrder, callback){
       getCurrentDateTime().dateTime
     ]
   ];
+  if (currentOrder.shippingType == "SHIP_BY_THIRD_PARTY") {
+    dataShipping = [
+      [
+        currentOrder.orderCode,
+        currentOrder.customerAddress,
+        "'"+currentOrder.customerPhone,
+        JSON.stringify(currentOrder),
+        "COMPLETED",
+        currentOrder.otherCost,
+        "",
+        currentOrder.shippingCost,
+        currentOrder.shippingType,
+        "1",
+        getCurrentDateTime().dateTime
+      ]
+    ];
+  }
   if(currentOrder.shipIndex == -1 || !currentOrder.shipIndex) {  
     appendShipping(dataShipping, function(){
       console.log("Done request shipping")

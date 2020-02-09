@@ -52,6 +52,9 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 } else if (currentOrder.shippingType == "POST_NO_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Viettelpost không COD");
+}  else {
+	$("#shippingCost").html("");
+	$("#shippingType").html("");
 }
 
 $("#orderNode").html((currentOrder.orderNode ? currentOrder.orderNode : ""));

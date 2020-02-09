@@ -307,7 +307,7 @@ function loadOrderListHtml() {
     ///
 
     var paidDiv = "";
-    if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD") {
+    if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD" || shippingType == "SHIP_BY_THIRD_PARTY") {
       paidDiv = '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
             '</select>';
@@ -581,7 +581,8 @@ function loadOrderListHtml() {
     '<div class="btn btnNormal5px shippingType SHIPPER_COD" >Shipper thu '+willpay+'k</div>'+
     '<div class="btn btnNormal5px shippingType POST_COD" >Ship Poste thu COD</div>'+
     '<div class="btn btnNormal5px shippingType POST_NO_COD" >Ship Poste ko COD</div>'+
-    '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>';
+    '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>' + 
+    '<div class="btn btnNormal5px shippingType SHIP_BY_THIRD_PARTY" >Ship từ bên thứ 3</div>';
 
     $("#simpleModal .modal-content").html(lsBtnShip);
 
