@@ -113,7 +113,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  // triggerAfterLoadX();
+  triggerAfterLoad();
   console.log("Trigger");
   lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   lsTask =  JSON.parse(localStorage.getItem("tasklist"));
@@ -259,9 +259,10 @@ function loadOrderShippingListHtml() {
       }
       packedCost+=5;
       if (lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD") {
-        shippedCost+= parseFloat(lsOrder[e][8]);
+        // console.log(lsOrder[e][0]+">"+lsOrder[e][7]+">"+parseFloat(lsOrder[e][7] ? lsOrder[e][7] : 0));
+        shippedCost += parseFloat(lsOrder[e][7] ? lsOrder[e][7] : 0);
       } else {
-        postAndShopeeCost+= parseFloat(lsOrder[e][5]);
+        postAndShopeeCost += parseFloat(lsOrder[e][5] ? lsOrder[e][5] : 0);
       }
       console.log("userRole:"+userRole);
       if (userRole=="manager") {
@@ -556,8 +557,8 @@ function getTaskUnpaid(){
     if (lsTask[e][3]) {
       continue;
     }
-    text += "--"+lsTask[e][1]+":"+lsTask[e][5]+"<br/>";
-    taskPay += parseFloat(lsTask[e][5]);
+    text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"<br/>";
+    taskPay += parseFloat(lsTask[e][5] ? lsTask[e][5] : 0);
   }
   return {
     text : text,
