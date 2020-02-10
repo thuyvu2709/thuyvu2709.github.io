@@ -185,6 +185,25 @@ function readOrderDetail(callback){
 
 var totalShippingCost = 0;
 
+var packedCost = 0;
+var postAndShopeeCost = 0;
+var shippedCost = 0;
+
+var lsCount = {
+  "SHIPPER_NO_COD" : 0,
+  "SHIPPER_COD" : 0,
+  "POST_COD" : 0,
+  "SHOPEE" : 0,
+  "POST_NO_COD" : 0
+};
+
+// 0:SHIPPER_NO_COD
+// 1:SHIPPER_COD
+// 2:POST_COD
+// 3:SHOPEE
+// 4:POST_NO_COD
+// 5:SHIP_BY_THIRD_PARTY
+
 function loadOrderShippingListHtml() {
 
   console.log("loadOrderShippingListHtml");
@@ -217,7 +236,7 @@ function loadOrderShippingListHtml() {
     }
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
-    if (mode != "ALL" && mode != "Need_Schedule") {
+    if (mode != "ALL" && mode != "Need_Schedule" && mode!="PAYSHIP") {
       if (mode != lsOrder[e][4]) {
           continue;
       } 
@@ -230,6 +249,25 @@ function loadOrderShippingListHtml() {
     if (lsOrder[e][4] == "SENT_POST") {
       totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].totalPay);
     }
+
+    var payshipButton = "";
+    if (mode == "PAYSHIP") {
+      if (lsOrder[e][9]=="1" || lsOrder[e][4] != "COMPLETED") {
+        continue;
+      }
+      packedCost+=5;
+      if (lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD") {
+        shippedCost+= parseFloat(lsOrder[e][8]);
+      } else {
+        postAndShopeeCost+= parseFloat(lsOrder[e][5]);
+      }
+      console.log("userRole:"+userRole);
+      if (userRole=="manager") {
+        payshipButton = '<div class="btn btn-default btnNormal5px payship order_'+e+'">Trả công ship</div>';
+        $("#controllMany").show();
+      }
+    }
+
     
 
     // if (mode == "Need_Schedule") {
@@ -312,6 +350,8 @@ function loadOrderShippingListHtml() {
     if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
       completeButton = '<div class="btn borderMustard btn-default btnNormal5px" >Hoàn thành lúc '+lsOrder[e][6]+'</div>';
     }
+
+    lsCount[lsOrder[e][8]] = lsCount[lsOrder[e][8]] + 1;
 
     var preparedButton = '<div class="btn btn-default btnNormal5px prepared preparedOrder_'+e+'" ">Đã chuẩn bị</div><br/>';
     // var orderReady = "";
@@ -456,8 +496,24 @@ function loadOrderShippingListHtml() {
     $("#note").html("Shipper đã nhận :"+totalShipperReceivedMoney);
   } else if (mode == "SENT_POST") {
     $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
+  } else if (mode == "PAYSHIP") {
+    
+    var  reportPay = ("Tiền gói hàng (số đơn X 5):"+packedCost+"<br/>Tiền đi ship:"+shippedCost+"<br/>Tiền post và shoppe:"+postAndShopeeCost+"<br/>");
+    var taskPayfn = getTaskUnpaid();
+
+    var taskPay = taskPayfn.taskPay;
+    reportPay += taskPayfn.text;
+    reportPay += "Tiền nhiệm vụ:"+taskPayfn.taskPay+"<br/>";
+    reportPay += "Tổng tiền cho shipper:"+(packedCost+shippedCost+postAndShopeeCost+taskPayfn.taskPay);
+
+    $("#note").html(reportPay);
   } else {
-    $("#note").html("");
+    var lsCountText = "<hr/>Tổng cộng:<br/>";
+    console.log(lsCount)
+    for (e in lsCount) {
+      lsCountText += e + " : " + lsCount[e] + "<br/>"
+    }
+    $("#note").html(lsCountText);
   }
 
 
@@ -465,6 +521,9 @@ function loadOrderShippingListHtml() {
   $(".complete").click(shipComplete)
   $(".detail").click(showDetail);
   $(".delete").click(deleteShipRequest);
+
+  $(".payship").click(payShipForEachTask);
+
   // $('.datetimepicker').datetimepicker();
   $('.prepared').click(shipPrepared);
 
@@ -486,6 +545,22 @@ function loadOrderShippingListHtml() {
   // });
 
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
+}
+
+function getTaskUnpaid(){
+  var text = "Danh sách nhiệm vụ hoàn thành <br/>";
+  var taskPay = 0;
+  for(e in lsTask) {
+    if (lsTask[e][3]) {
+      continue;
+    }
+    text += "--"+lsTask[e][1]+":"+lsTask[e][5]+"<br/>";
+    taskPay += parseFloat(lsTask[e][5]);
+  }
+  return {
+    text : text,
+    taskPay : taskPay
+  }
 }
 
 function chooseShippingScheduleFn(){
@@ -579,6 +654,51 @@ function updatePaymentComplete(orderIndex){
     $("#loadingSpin").hide();
   });
 }
+
+function payShipForEachTask(oix, callback){
+  var orderIndex = oix ? oix : $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var sheetrange = 'Shipping!J'+actualOrderIndex+':J'+actualOrderIndex;
+
+  dataUpdateShipping = [
+    [
+      "1"
+    ]
+  ];
+
+  $("#loadingSpin").show();
+  $("#modelContent").html("Thanh toán ship cho đơn:"+lsOrderDetail[lsOrder[orderIndex][0]].orderCode+" "+lsOrderDetail[lsOrder[orderIndex][0]].customerName);
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+      $("#loadingSpin").hide();
+
+      $(".cardElement_"+orderIndex).remove();
+
+      if (callback) {
+        callback();
+      }
+
+  },function(){
+    console.log("Something wrong");
+  })
+}
+
+
+$("#payShipAll").click(function(){
+  lsPay = $("#listShippingOrder").children();
+  var runPayShip = function(index) {
+    if (index  == lsPay.length) {
+      return;
+    }
+    var currentChild = lsPay.eq(lsPay);
+    var orderIndex = $(currentChild).attr("class").split(" ").pop().split("_").pop();
+    payShipForEachTask(orderIndex, function(){
+      runPayShip(index+1);
+    })
+  }
+  runPayShip(0);
+})
 
 function shipComplete(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -801,6 +921,7 @@ $(".orderFilter").change(function(){
       || mode == "SHIPPER_RECEIVED_MONEY"
       || mode == "COMPLETED" 
       || mode == "ALL" 
+      || mode == "PAYSHIP"
       ) {
     $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
