@@ -816,6 +816,8 @@ function shippingReport(){
 
 function showTask(){
   $("#listShippingOrder").empty();
+  
+  $("#note").html("");
 
   for(e in lsTask) {
     if (e == 0) {
