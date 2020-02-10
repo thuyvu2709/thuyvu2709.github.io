@@ -189,13 +189,7 @@ var packedCost = 0;
 var postAndShopeeCost = 0;
 var shippedCost = 0;
 
-var lsCount = {
-  "SHIPPER_NO_COD" : 0,
-  "SHIPPER_COD" : 0,
-  "POST_COD" : 0,
-  "SHOPEE" : 0,
-  "POST_NO_COD" : 0
-};
+var lsCount = {}
 
 // 0:SHIPPER_NO_COD
 // 1:SHIPPER_COD
@@ -221,6 +215,14 @@ function loadOrderShippingListHtml() {
   var totalShipperReceivedMoney = 0;
   
   var mode = $(".orderFilter").val();
+
+  lsCount = {
+    "SHIPPER_NO_COD" : 0,
+    "SHIPPER_COD" : 0,
+    "POST_COD" : 0,
+    "SHOPEE" : 0,
+    "POST_NO_COD" : 0
+  };
 
   for(e in lsOrder) {
     if (e == 0) {
