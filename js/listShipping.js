@@ -113,7 +113,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  triggerAfterLoad();
+  // triggerAfterLoad();
   console.log("Trigger");
   lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   lsTask =  JSON.parse(localStorage.getItem("tasklist"));
