@@ -503,7 +503,7 @@ function loadOrderShippingListHtml() {
     $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
   } else if (mode == "PAYSHIP") {
     
-    var  reportPay = ("Tiền gói hàng (số đơn X 5):"+packedCost+"<br/>Tiền đi ship:"+shippedCost+"<br/>Tiền post và shoppe:"+postAndShopeeCost+"<br/>");
+    var  reportPay = ("Tiền gói hàng (số đơn X 5): "+packedCost+"<br/>Tiền đi ship: "+shippedCost+"<br/>Tiền post và shoppe: "+postAndShopeeCost+"<br/>");
     var taskPayfn = getTaskUnpaid();
 
     var taskPay = taskPayfn.taskPay;
