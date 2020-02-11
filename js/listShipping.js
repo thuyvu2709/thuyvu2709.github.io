@@ -116,7 +116,7 @@ $(".text-center").click(function(){
   // });
   // triggerAfterLoad();
   // console.log("Trigger");
-  
+
   // lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
   // lsTask =  JSON.parse(localStorage.getItem("tasklist"));
   // // console.log(lsOrder);
@@ -923,6 +923,8 @@ function taskComplete(){
 $(".orderFilter").change(function(){
   var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
   console.log("orderFilter:"+mode);
+
+  $("#controllMany").hide();
 
   if (mode == "Need_Schedule"
       || mode == "Requested" 
