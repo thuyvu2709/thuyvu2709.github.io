@@ -1084,9 +1084,9 @@ function getOrderShipping(callback) {
 function getTaskList(callback) {
   var spreadsheetId = shippingSheet;
 
-  console.log("getTaskList");
+  // console.log("getTaskList");
 
-  var indexColumnOfAllData = 5;
+  var indexColumnOfAllData = 7;
   var sheetrange = 'Task!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 

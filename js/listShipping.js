@@ -23,8 +23,8 @@ $(".orderFilter").val("Requested");
 // })
 var historicalData = readCurrentHistoryData();
 if (historicalData){
-  console.log("historicalData");
-  console.log(historicalData);
+  // console.log("historicalData");
+  // console.log(historicalData);
 
   if (historicalData.orderFilter) {
     var orderFilter = historicalData.orderFilter;
@@ -49,7 +49,7 @@ var afterLoadHTML = function(){
     // btnOrder = "btnOrder_"+orderIndex;
     // }
     
-    console.log("goToClass:"+btnOrder);
+    // console.log("goToClass:"+btnOrder);
 
     var $scrollTo = $('.'+btnOrder);
 
@@ -73,12 +73,13 @@ var triggerAfterLoad = function(){
           loadOrderShippingListHtml();
         });
         getTaskList(function(lsTaskset){
+          // console.log("getTaskList");
           lsTask = lsTaskset;
         })
     });
 
     getShippingReport(function(shippingRpData){
-      $(".textBottomCenter").html(shippingRpData[5][1]);
+      $(".textBottomCenter").html(shippingRpData ? shippingRpData[5][1] : 0);
     })
   }
 
@@ -114,11 +115,12 @@ $(".text-center").click(function(){
   //     })
   // });
   // triggerAfterLoad();
-  console.log("Trigger");
-  lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
-  lsTask =  JSON.parse(localStorage.getItem("tasklist"));
-  console.log(lsOrder);
-  readOrderDetail(loadOrderShippingListHtml);
+  // console.log("Trigger");
+  
+  // lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
+  // lsTask =  JSON.parse(localStorage.getItem("tasklist"));
+  // // console.log(lsOrder);
+  // readOrderDetail(loadOrderShippingListHtml);
 
 })
 
@@ -553,8 +555,11 @@ function loadOrderShippingListHtml() {
 function getTaskUnpaid(){
   var text = "Danh sách nhiệm vụ hoàn thành <br/>";
   var taskPay = 0;
+  // console.log(lsTask);
   for(e in lsTask) {
-    if (lsTask[e][3] == "COMPLETED" && lsTask[e][6]!="1") {
+    if (lsTask[e][3] == "COMPLETED" && !lsTask[e][6]) {
+      // console.log(lsTask[e])
+      // console.log(lsTask[e][6])
       text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"<br/>";
       taskPay += parseFloat(lsTask[e][5] ? lsTask[e][5] : 0);
     }
