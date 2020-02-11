@@ -554,11 +554,10 @@ function getTaskUnpaid(){
   var text = "Danh sách nhiệm vụ hoàn thành <br/>";
   var taskPay = 0;
   for(e in lsTask) {
-    if (lsTask[e][3]) {
-      continue;
+    if (lsTask[e][3] == "COMPLETED" && lsTask[e][6]!="1") {
+      text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"<br/>";
+      taskPay += parseFloat(lsTask[e][5] ? lsTask[e][5] : 0);
     }
-    text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"<br/>";
-    taskPay += parseFloat(lsTask[e][5] ? lsTask[e][5] : 0);
   }
   return {
     text : text,

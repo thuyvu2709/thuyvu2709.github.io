@@ -14,8 +14,8 @@ var url = new URL(window.location.href);
 //Load history
 var historicalData = readCurrentHistoryData();
 if (historicalData){
-  console.log("historicalData");
-  console.log(historicalData);
+  // console.log("historicalData");
+  // console.log(historicalData);
   if (historicalData.searchText){
     $("#orderSearchInput").val(historicalData.searchText);
   }
@@ -27,8 +27,8 @@ if (historicalData){
 
 var afterLoadHTML = function(){
   // document.getElementsByClassName
-  console.log("afterLoadHTML");
-  console.log(historicalData);
+  // console.log("afterLoadHTML");
+  // console.log(historicalData);
   if (historicalData && historicalData.goToClass) {
     // document.getElementsByClassName(historicalData.goToClass)[0].scrollIntoView();
     var $container = $("html,body");
@@ -63,7 +63,7 @@ var triggerAfterLoad = function(){
           parseOrderShipping();
           parseProduct();
           $("#loadingSpin").hide();
-          console.log("Gooo");
+          // console.log("Gooo");
           loadOrderListHtml();
         })
 
@@ -80,7 +80,9 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  // triggerAfterLoadX();
+  // triggerAfterLoad();
+  // console.log("listProductParse");
+  // console.log(listProductParse);
 })
 
 var orderWithProdRef = [];
@@ -167,6 +169,11 @@ function parseOrderDetail(){
       listOrderDetailParse[orderListDetail[e][0]] = [];
     }
     listOrderDetailParse[orderListDetail[e][0]].push(orderListDetail[e]);
+    if (orderListDetail[e][8] == "#N/A" || orderListDetail[e][9] == "#N/A") {
+      $(".modal-body").empty();
+      $(".modal-body").html("<p id='modelContent'>Cảnh báo! Đơn hàng "+orderListDetail[e][0]+" mặt hàng "+ orderListDetail[e][4] +" mã "+orderListDetail[e][3] +" không tồn tại trong bảng sản phẩm, hãy thêm vào hoặc đổi mã</p>");
+      $('#myModal').modal('toggle');
+    }
   }
 }
 
@@ -290,7 +297,8 @@ function loadOrderListHtml() {
     var numOfProd = 0;
     var productWeights = 0;
     for (o in currentOrderDetail) {
-      var pw = parseFloat(listProductParse[orderListDetail[e][3]].productWeight);
+      // console.log("orderListDetail[e][3]:"+orderListDetail[e][3]);
+      var pw = parseFloat(listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : 0);
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
                         +currentOrderDetail[o][3]+" | "
                         +currentOrderDetail[o][4] 
