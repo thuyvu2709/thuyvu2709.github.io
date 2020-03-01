@@ -304,6 +304,7 @@ function searchForm(){
 	var lsImportCodeSearchProduct = "";
 	for (e in importSLData) {
 		if (e ==0 ) continue;
+		if (!importSLData[e][0]) continue;
 		lsImportCodeSearchProduct += ("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
 	}
 
