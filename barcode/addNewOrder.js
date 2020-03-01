@@ -355,9 +355,15 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 
 	$(".productName_"+productIndex).val(productList[index][3]);
 	$(".productCount_"+productIndex).val(1);
-	$(".productEstimateSellingVND_"+productIndex).val(productList[index][12])
+
+
+	if ($("#ckCTV").is(":checked")) {
+		$(".productEstimateSellingVND_"+productIndex).val(productList[index][20]);
+	} else {
+		$(".productEstimateSellingVND_"+productIndex).val(productList[index][12]);
+	}
 	// $(".btnProductName_"+productIndex).html(productList[index][3]);
-	$(".turnover_"+productIndex).html(productList[index][12]);
+	$(".turnover_"+productIndex).html($(".productEstimateSellingVND_"+productIndex).val());
 
 	totalPay = 0;
 	for (var i = 0; i < numOfProType; i++) { 
