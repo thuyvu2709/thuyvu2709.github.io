@@ -356,14 +356,15 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 	$(".productName_"+productIndex).val(productList[index][3]);
 	$(".productCount_"+productIndex).val(1);
 
-
+	var productSellPrice = productList[index][12];
 	if ($("#ckCTV").is(":checked")) {
-		$(".productEstimateSellingVND_"+productIndex).val(productList[index][20]);
-	} else {
-		$(".productEstimateSellingVND_"+productIndex).val(productList[index][12]);
-	}
+		productSellPrice = productList[index][20];
+	} 
+
+	$(".productEstimateSellingVND_"+productIndex).val(productSellPrice);
+	
 	// $(".btnProductName_"+productIndex).html(productList[index][3]);
-	$(".turnover_"+productIndex).html($(".productEstimateSellingVND_"+productIndex).val());
+	$(".turnover_"+productIndex).html(productSellPrice);
 
 	totalPay = 0;
 	for (var i = 0; i < numOfProType; i++) { 
@@ -383,7 +384,7 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 	var totalWillPay = (totalPay + shippingCost) - prepaid;
 	$("#totalWillPay").html(totalWillPay);
 
-	$(".btnProductName_"+productIndex).html(productList[index][3] + " | " + 1 + " | " + productList[index][12] + " | " + productList[index][12]);
+	$(".btnProductName_"+productIndex).html(productList[index][3] + " | " + 1 + " | " + productSellPrice + " | " + productSellPrice);
 
 	addNewFormOfProduct(productIndex);
 };
