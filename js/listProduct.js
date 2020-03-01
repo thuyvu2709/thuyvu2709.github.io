@@ -156,7 +156,8 @@ function loadProductListHtml(){
             '<p>Mã đợt hàng:'+data[e][2]+'</p>'+
             '<p>Giá gốc:'+data[e][5]+' EUR</p>'+
             '<p>Giá gốc:'+data[e][11]+' VND</p>'+
-            '<p>Giá bán:'+data[e][12]+' VND</p>'+
+            '<p>Giá bán lẻ:'+data[e][12]+' VND</p>'+
+            '<p>Giá bán CTV:'+data[e][20]+' VND</p>'+
             '<p>Số lượng:'+data[e][4]+'</p>'+
             '<p>Cân nặng:'+data[e][6]+'</p>'+
             '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
