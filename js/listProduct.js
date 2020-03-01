@@ -219,11 +219,12 @@ function loadProductListHtml(){
                 "", //14 O
                 "", //15 P
                 "", //16 Q
+                "",
                 ""
                 ]
             ];
     var proIndex = parseInt(productIndex) + 1;
-    var numOfColumn = 19;
+    var numOfColumn = 20;
     var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
     var deleteTrigger = function() {
@@ -273,6 +274,7 @@ function loadProductListHtml(){
       otherFee : data[productIndex][10],
       productEstimateVND : data[productIndex][11],
       productEstimateSellingVND : data[productIndex][12],
+      productEstimateSellingCTV : data[productIndex][20],
       profitPerOneProduct : data[productIndex][13],
       turnover : data[productIndex][14],
       totalCost : data[productIndex][15],

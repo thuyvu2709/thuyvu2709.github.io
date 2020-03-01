@@ -47,6 +47,8 @@ function addNewProduct(){
 
 	var productEstimateSellingVND = $("#productEstimateSellingVND").val();
 
+	var productEstimateSellingCTV = $("#productEstimateSellingCTV").val();
+
 	var profitPerOneProduct = $("#profitPerOneProduct").html();
 
 	var turnover = $("#turnover").html();
@@ -68,6 +70,8 @@ function addNewProduct(){
 	otherFee = otherFee ? otherFee : 0;
 	productEstimateVND = productEstimateVND ? productEstimateVND : 0;
 	
+	productEstimateSellingCTV = productEstimateSellingCTV ? productEstimateSellingCTV : productEstimateVND;
+
 	prodImageLink = prodImageLink ? prodImageLink : "";
 	// console.log(productCode)
 
@@ -91,7 +95,8 @@ function addNewProduct(){
 				"=INDIRECT(ADDRESS(ROW(),15)) - INDIRECT(ADDRESS(ROW(),16))", //16 Q
 				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //17 R
 				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //18 S
-				prodImageLink //19 T
+				prodImageLink, //19 T
+				productEstimateSellingCTV
                 ]
             ];
 

@@ -638,7 +638,7 @@ function appendWarehouse(submitImportData,callback) {
 }
 
 function appendProduct(dataAppendProduct, callback, callbackError) {
-    var numOfColumn = 19;
+    var numOfColumn = 20;
     var sheetrange = 'Product!A1:'+ String.fromCharCode(65+numOfColumn);
 
     var spreadsheetId = mainSheetForProduct;

@@ -22,6 +22,9 @@ $("#productEstimateVND").val(currentProduct.productEstimateVND);
 
 $("#productEstimateSellingVND").val(currentProduct.productEstimateSellingVND);
 
+$("#productEstimateSellingCTV").val(currentProduct.productEstimateSellingCTV);
+
+
 $("#profitPerOneProduct").html(currentProduct.profitPerOneProduct);
 
 $("#turnover").html(currentProduct.turnover);
@@ -77,6 +80,8 @@ function editProductFn(){
 
 	var productEstimateSellingVND = $("#productEstimateSellingVND").val();
 
+	var productEstimateSellingCTV = $("#productEstimateSellingCTV").val();
+
 	var profitPerOneProduct = $("#profitPerOneProduct").html();
 
 	var turnover = $("#turnover").html();
@@ -98,7 +103,7 @@ function editProductFn(){
 	productOriginalCostEur = productOriginalCostEur ? productOriginalCostEur : 0;
 	otherFee = otherFee ? otherFee : 0;
 	productEstimateVND = productEstimateVND ? productEstimateVND : 0;
-
+	productEstimateSellingCTV = productEstimateSellingCTV ? productEstimateSellingCTV : productEstimateVND;
 	prodImageLink = prodImageLink ? prodImageLink : "";
 
 	currentProduct = {
@@ -115,6 +120,7 @@ function editProductFn(){
 		shipVietnamFee : shipVietnamFee,
 		productEstimateVND : productEstimateVND,
 		productEstimateSellingVND : productEstimateSellingVND,
+		productEstimateSellingCTV : productEstimateSellingCTV,
 		profitPerOneProduct : profitPerOneProduct,
 		turnover : turnover,
 		totalCost : totalCost,
@@ -127,7 +133,7 @@ function editProductFn(){
 
 	// console.log(productCode)
 	var proIndex = parseInt(productIndex) + 1;
-	var numOfColumn = 19;
+	var numOfColumn = 20;
 	var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
 	var dataEditP = [
@@ -150,7 +156,8 @@ function editProductFn(){
 				"=INDIRECT(ADDRESS(ROW(),15)) - INDIRECT(ADDRESS(ROW(),16))", //14 O
 				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //15 P
 				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //16 Q
-				prodImageLink
+				prodImageLink,
+				productEstimateSellingCTV
                 ]
             ];
     
