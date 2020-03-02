@@ -15,7 +15,8 @@ $("#customerName").html(currentOrder.customerName);
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
 $("#customerAddress").html(
-	'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
+	// '<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
+	'<div >'+currentOrder.customerAddress+'</div>'
 );
 $("#customerPhone").html(
 	'<a href="tel:'+currentOrder.customerPhone+'">'+currentOrder.customerPhone+'</a>'
