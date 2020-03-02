@@ -69,6 +69,9 @@ var triggerAfterLoad = function(){
     getOrderShipping(function(lsOrderset){
         $("#loadingSpin").hide();
         lsOrder = lsOrderset;
+        if (!lsOrder) {
+            lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
+        }
         readOrderDetail(function(){
           loadOrderShippingListHtml();
         });
@@ -114,7 +117,7 @@ $(".text-center").click(function(){
   //       lsTask = lsTaskset;
   //     })
   // });
-  // triggerAfterLoad();
+  triggerAfterLoad();
   // console.log("Trigger");
 
   // lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
@@ -273,6 +276,13 @@ function loadOrderShippingListHtml() {
       }
     }
 
+    var searchText = $("#orderSearchInput").val();
+    var searchContent = lsOrder[e][0]+" "+lsOrder[e][1]+" "+lsOrder[e][2]+" "+lsOrderDetail[lsOrder[e][0]].customerName;
+    if (searchText) {
+      if (!searchContent.toUpperCase().includes(searchText.toUpperCase())){
+        continue;
+      }
+    }
     
 
     // if (mode == "Need_Schedule") {
@@ -978,4 +988,10 @@ $(".completeMany").click(function(){
   }
   requestShip(0);
 })
+
+$("#orderSearchInput").keyup(function(){
+  var searchText = $(this).val();
+  console.log("search:"+searchText);
+  loadOrderShippingListHtml();
+});
 
