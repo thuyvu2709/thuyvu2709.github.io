@@ -134,7 +134,7 @@ function addNewFormOfProduct(currentIndex){
 	$('#collapse_'+e).on('shown.bs.collapse', function() {
   		// console.log("shown:"+e);
   		// $('.productCode_'+e).focus();
-  		$(".btnSearchProduct_"+e).click();
+  		// $(".btnSearchProduct_"+e).click();
 	})
 
 	var totalPay = 0;
