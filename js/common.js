@@ -111,7 +111,7 @@ function comeBackHomeToAuthorize(){
 
 function loadProductList(callback) {
   var spreadsheetId = mainSheetForProduct;
-  var indexColumnOfAllData = 21;
+  var indexColumnOfAllData = 22;
   var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
