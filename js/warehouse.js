@@ -64,7 +64,7 @@ function loadWarehouseHtml() {
             cardBody +
             '<div class="btn btn-default btnNormal showWH_'+e+'" style="margin : 5px">Xem</div>'+
             '<hr/>'+
-            'Tồn kho : '+data[e][4]+'<br/>'+
+            // 'Tồn kho : '+data[e][4]+'<br/>'+
             'Tổng vốn : ' + data[e][10]+
             '<hr/>'+
             '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 5px">Sửa</div>'+
