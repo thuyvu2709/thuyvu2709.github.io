@@ -214,7 +214,7 @@ $("#simplify").click(function(){
 		$(".willpay").hide();
 		$(".prepaid").hide();
 		// $(".prepaid").html("Khách đã thanh toán");
-		$(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng</h5>")
+		$(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
 	}
 });
 
