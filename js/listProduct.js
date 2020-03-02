@@ -59,12 +59,15 @@ var triggerAfterLoad = function(){
 
       loadImportScheduleList(function(){
           var importSLData = JSON.parse(localStorage.getItem("warehouse"));
-          console.log(importSLData);
+          // console.log(importSLData);
           $("#importFilter").empty();
           $("#importFilter").append("<option value='-1'>Hàng có sẵn</option>");
       
           for (var e in importSLData) {
             if (e ==0) {
+              continue;
+            }
+            if (!importSLData[e][0]) {
               continue;
             }
             $("#importFilter").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
