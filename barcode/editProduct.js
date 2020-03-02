@@ -133,7 +133,7 @@ function editProductFn(){
 
 	// console.log(productCode)
 	var proIndex = parseInt(productIndex) + 1;
-	var numOfColumn = 20;
+	var numOfColumn = 21;
 	var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
 	var dataEditP = [
@@ -157,7 +157,8 @@ function editProductFn(){
 				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //15 P
 				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //16 Q
 				prodImageLink,
-				productEstimateSellingCTV
+				productEstimateSellingCTV,
+				'=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!L:L)'
                 ]
             ];
     

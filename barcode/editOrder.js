@@ -562,7 +562,7 @@ function inputKeyupfunction() {
 
 function addDetailOrder() {
 	console.log("addDetailOrder");
-	var numOfColumn = 10;
+	var numOfColumn = 12;
 	// var sheetrange = 'Test2!A1:'+ String.fromCharCode(65+numOfColumn);
 
     //for append
@@ -617,7 +617,8 @@ function addDetailOrder() {
 				"=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
 				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
 				"=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
+				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
+				'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
 			])
 		} else {
 			submitDataEdit.push([
@@ -631,7 +632,8 @@ function addDetailOrder() {
 				"=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
 				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
 				"=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
+				"=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
+				'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
 			])			
 			var orderDetailIndex = parseInt(prodListOrder[i].orderDetailIndex) + 1;
 			rangeEdit.push(

@@ -96,7 +96,8 @@ function addNewProduct(){
 				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //17 R
 				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //18 S
 				prodImageLink, //19 T
-				productEstimateSellingCTV
+				productEstimateSellingCTV,
+				'=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!L:L)'
                 ]
             ];
 

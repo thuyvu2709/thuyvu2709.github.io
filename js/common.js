@@ -111,7 +111,7 @@ function comeBackHomeToAuthorize(){
 
 function loadProductList(callback) {
   var spreadsheetId = mainSheetForProduct;
-  var indexColumnOfAllData = 20;
+  var indexColumnOfAllData = 21;
   var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
@@ -492,7 +492,7 @@ function loadWarehouse(callback) {
 
 
 function appendOrderDetail(submitData,callback) {
-  var numOfColumn = 10;
+  var numOfColumn = 12;
   var sheetrange = 'OrderDetail!A1:'+ String.fromCharCode(65+numOfColumn)+'';
   var spreadsheetId = mainSheetForProduct;
 
@@ -638,7 +638,7 @@ function appendWarehouse(submitImportData,callback) {
 }
 
 function appendProduct(dataAppendProduct, callback, callbackError) {
-    var numOfColumn = 20;
+    var numOfColumn = 21;
     var sheetrange = 'Product!A1:'+ String.fromCharCode(65+numOfColumn);
 
     var spreadsheetId = mainSheetForProduct;
