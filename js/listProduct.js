@@ -1,6 +1,8 @@
 console.log(window.location);
 var url = new URL(window.location.href);
 var importCode = url.searchParams.get("importCode");
+var lsNotifications = [];
+
 
 console.log("importCode:"+importCode);
 
@@ -94,6 +96,14 @@ $(".text-center").click(function(){
 })
 // console.log(c);
 
+$(".click-to-notify").hide();
+
+function addNotification(text){
+  lsNotifications.push(text);
+  $(".click-to-notify").show();
+}
+
+
 function loadProductListHtml(){
   data = JSON.parse(localStorage.getItem("productList"));
   var indexColumnOfAllData = 19;
@@ -137,6 +147,10 @@ function loadProductListHtml(){
       if (parseFloat(data[e][17]) >= 0) {
         continue;
       }
+    }
+
+    if (data[e][17] < 0) {
+      addNotification(data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +" hàng tồn bị âm");
     }
 
     var imageDiv = "";
