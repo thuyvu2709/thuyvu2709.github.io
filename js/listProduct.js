@@ -313,6 +313,19 @@ function loadProductListHtml(){
   }
 }
 
+$(".click-to-notify").click(function(){
+  $(".modal-body").empty();
+  var content = "<div id='modelContent'>Chú ý:<br/>"
+  for (e in lsNotifications){
+    content+= lsNotifications[e]+"<br/>"
+  }
+  content+="</div>";
+
+  $(".modal-body").html(content);
+
+  $('#myModal').modal('toggle');
+})
+
 $("#prodSearchInput").keyup(function(){
   var searchText = $(this).val();
   console.log("search:"+searchText);
