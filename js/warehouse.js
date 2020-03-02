@@ -1,5 +1,6 @@
 
 var warehouseData;
+var importType = 0;
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -26,6 +27,11 @@ function loadWarehouseHtml() {
     }
     if (!data[e][0]){
       continue;
+    }
+    if (importType==0) {
+      if (data[e][4]==0) {
+        continue;
+      }
     }
 
     if ($("#warehouseSearchInput").val()) {
@@ -57,6 +63,9 @@ function loadWarehouseHtml() {
           '<div class="card-body">'+
             cardBody +
             '<div class="btn btn-default btnNormal showWH_'+e+'" style="margin : 5px">Xem</div>'+
+            '<hr/>'+
+            'Tồn kho : '+data[e][4]+'<br/>'+
+            'Tổng vốn : ' + data[e][10]+
             '<hr/>'+
             '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 5px">Sửa</div>'+
             '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 5px">Xoá</div>'+
@@ -142,11 +151,13 @@ function editWarehouseFn() {
     importName : warehouseData[importIndex][1],
     importStatus : warehouseData[importIndex][2],
     importShippingFee : warehouseData[importIndex][3],
+    inventory : warehouseData[importIndex][4],
     receiverPhone: warehouseData[importIndex][5],
     receiverAddress: warehouseData[importIndex][6],
     receiverName: warehouseData[importIndex][7],
     bankingAccountNumber: warehouseData[importIndex][8],
-    bankingName: warehouseData[importIndex][9]
+    bankingName: warehouseData[importIndex][9],
+    totalPay: warehouseData[importIndex][10]
   }
 
   localStorage.setItem("currentImport",JSON.stringify(currentImport));
@@ -250,3 +261,10 @@ function deleteWH(){
 
   })
 }
+
+$("#importFilter").change(function(){
+  // console.log("importFilter:");
+  importType = document.getElementById("importFilter").value;
+  // console.log("importType:"+importType);
+  loadWarehouseHtml();
+})
