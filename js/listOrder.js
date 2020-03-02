@@ -289,7 +289,11 @@ function loadOrderListHtml() {
 
     var dateOrder = new Date(data[e][1]);
     var today = new Date();
-    if (dateOrder.getDate() - today.getDate() > 29) {
+    var diffTime = Math.abs(dateOrder - today);
+    var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    // console.log(data[e][0]+ " "+diffDays);
+
+    if (diffDays > 29 && data[e][11] == "SHIP_BY_THIRD_PARTY") {
       addNotification(data[e][0]+" "+data[e][2]+" by thirdparty bị quá 30 ngày");
     };
 
