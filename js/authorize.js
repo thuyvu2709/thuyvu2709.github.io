@@ -159,8 +159,8 @@ function checkRole() {
     var roles = JSON.parse(localStorage.getItem("roles"));
 
     var continueWithRoles = function(roles) {
-        console.log("Role list")
-        console.log(roles);
+        // console.log("Role list")
+        // console.log(roles);
         for (e in roles) {
             if (e == 0) {
                 continue;
