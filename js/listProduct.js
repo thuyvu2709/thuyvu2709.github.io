@@ -144,7 +144,7 @@ function loadProductListHtml(){
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnProd_'+e+'" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
-              data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] " /<i class='fas fa-motorcycle' style='color:red'>" +data[e][21]+
+              data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +" / <i class='fas fa-motorcycle' style='color:red'>" +data[e][21]+
             '</button>'+
           '</h5>'+
         '</div>'+
