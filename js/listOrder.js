@@ -9,6 +9,8 @@ var orderShipStatus =[];
 var listProductParse = {};
 var listOrderDetailParse = {};
 
+var lsNotifications = [];
+
 var url = new URL(window.location.href);
 
 //Load history
@@ -177,6 +179,13 @@ function parseOrderDetail(){
   }
 }
 
+$(".click-to-notify").hide();
+
+function addNotification(text){
+  lsNotifications.push(text);
+  $(".click-to-notify").show();
+}
+
 function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
@@ -277,6 +286,12 @@ function loadOrderListHtml() {
       iconShip = ' | <i class="fas fa-motorcycle" >'+data[e][11]+'</i>';
       optionShip = '<option value="Requested" selected>Chưa giao hàng</option>'
     }
+
+    var dateOrder = new Date(data[e][1]);
+    var today = new Date();
+    if (dateOrder.getDate() - today.getDate() > 29) {
+      addNotification(data[e][0]+" "+data[e][2]+" by thirdparty bị quá 30 ngày");
+    };
 
     var searchText = $("#orderSearchInput").val();
     var titleString = data[e][0]+' | '+data[e][2]+' | '+data[e][5];
@@ -748,6 +763,19 @@ function checkSystemConsistent(){
     }
   }
 }
+
+$(".click-to-notify").click(function(){
+  $(".modal-body").empty();
+  var content = "<div id='modelContent'>Chú ý:<br/>"
+  for (e in lsNotifications){
+    content+= lsNotifications[e]+"<br/>"
+  }
+  content+="</div>";
+
+  $(".modal-body").html(content);
+
+  $('#myModal').modal('toggle');
+})
 
 $(".click-to-select").click(function(){
   
