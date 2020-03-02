@@ -172,7 +172,7 @@ function addNewFormOfProduct(currentIndex){
 
 	e = numOfProType;
 	$("#listProduct").append('<div class="card">'+
-        '<div class="card-header" id="heading_"'+e+'>'+
+        '<div class="card-header" id="heading_'+e+'">'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnProductName_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
               'Thêm hàng vào đơn hàng' +
@@ -246,9 +246,10 @@ function addNewFormOfProduct(currentIndex){
 	numOfProType = numOfProType + 1;
 
 	$('#collapse_'+e).on('shown.bs.collapse', function() {
-  		console.log("shown:"+e);
+  		// console.log("shown:"+e);
+  		// console.log($(this).attr("id").split("_").pop())
   		// $('.productCode_'+e).focus();
-  		// $(".btnSearchProduct_"+e).click();
+  		$(".btnSearchProduct_"+$(this).attr("id").split("_").pop()).click();
 	})
 
 	var totalPay = 0;

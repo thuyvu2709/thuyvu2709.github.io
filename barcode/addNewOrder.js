@@ -135,6 +135,7 @@ function addNewFormOfProduct(currentIndex){
   		// console.log("shown:"+e);
   		// $('.productCode_'+e).focus();
   		// $(".btnSearchProduct_"+e).click();
+  		$(".btnSearchProduct_"+$(this).attr("id").split("_").pop()).click();
 	})
 
 	var totalPay = 0;
