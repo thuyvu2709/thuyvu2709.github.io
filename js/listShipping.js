@@ -249,6 +249,17 @@ function loadOrderShippingListHtml() {
       } 
     }
 
+    if (mode == "RequestedSHIP") {
+      if (!(lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD")) {
+        continue;
+      }
+    }
+    if (mode == "RequestedPOST") {
+      if (!(lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD")) {
+        continue;
+      }
+    }
+
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
       totalShipperReceivedMoney += parseFloat(lsOrderDetail[lsOrder[e][0]].willpay);
     }
@@ -938,6 +949,8 @@ $(".orderFilter").change(function(){
 
   if (mode == "Need_Schedule"
       || mode == "Requested" 
+      || mode == "RequestedPOST"
+      || mode == "RequestedSHIP"      
       || mode == "SENT_POST"
       || mode == "SHIPPER_RECEIVED_MONEY"
       || mode == "COMPLETED" 
