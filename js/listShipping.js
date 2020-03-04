@@ -948,7 +948,7 @@ function showTask(){
       "Đã thanh toán: "+(lsTask[e][6] ? "Rồi" : "Chưa")+"<br/>";
       
       editTask = '<div class="btn btn-default btnNormal editTask order_'+e+'" style="margin:10px 10px 0;">Sửa thông tin</div>';
-      payTaskBtn = '<div class="btn btn-default btnNormal payTask order_'+e+'" style="margin:10px 10px 0;">Sửa thông tin</div>';
+      payTaskBtn = '<div class="btn btn-default btnNormal payTask order_'+e+'" style="margin:10px 10px 0;">Thanh toán ship</div>';
 
     }
     $("#listShippingOrder").append(
