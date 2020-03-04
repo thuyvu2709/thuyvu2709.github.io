@@ -1004,7 +1004,7 @@ function showEditTask(){
               // '<div>Chi phí</div>'+
               '<input class="taskChooseIndex" readonly hidden value="'+taskIndex+'"/>'+
               '<div class="btn btn-default btnNormal">'+
-              ' Chi phí <input class="taskfee" value="'+lsTask[taskIndex][5]+'"/>'+
+              ' Chi phí <input class="taskfee" value="'+(lsTask[taskIndex][5] ? lsTask[taskIndex][5] : 0)+'"/>'+
               '</div>'+
               '<br/>'+
               '<div class="btn btn-default btnNormal"> Thanh toán ?'+
