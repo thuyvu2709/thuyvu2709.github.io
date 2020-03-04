@@ -288,7 +288,7 @@ function loadOrderShippingListHtml() {
       } else {
         postAndShopeeCost += parseFloat(lsOrder[e][5] ? lsOrder[e][5] : 0);
       }
-      console.log("userRole:"+userRole);
+      // console.log("userRole:"+userRole);
       if (userRole=="manager") {
         payshipButton = '<div class="btn btn-default btnNormal5px payship order_'+e+'">Trả công ship</div>';
         $("#controllMany").show();
@@ -915,8 +915,12 @@ function shippingReport(){
 function showTask(){
   $("#listShippingOrder").empty();
   
+  var mode = $(".orderFilter").val();
+
   $("#note").html("");
 
+  // console.log(lsTask);
+  
   for(e in lsTask) {
     if (e == 0) {
       continue;
@@ -926,7 +930,7 @@ function showTask(){
       continue;
     }
 
-    if (lsTask[e][3]) {
+    if (lsTask[e][3] && mode=="TASK") {
       continue;
     }
 
@@ -1033,7 +1037,9 @@ $(".orderFilter").change(function(){
       ) {
     $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
-  } else if (mode == "TASK") {
+  } else if (mode == "TASK"
+    || mode == "TASKALL"
+    ) {
     $(".maintitle").html("Quản lý nhiệm vụ");
     showTask();
   } else if (mode == "REPORT") {
