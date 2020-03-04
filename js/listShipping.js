@@ -1022,7 +1022,7 @@ function showEditTask(){
 function saveTaskFn(){
   var taskfee = $(".taskfee").val();
   taskfee = taskfee ? taskfee : 0;
-  var taskCkPaid = $(".taskCkPaid").is(":checked") ? 1 : 0;
+  var taskCkPaid = $(".taskCkPaid").is(":checked") ? "1" : "";
   var taskIndex = $(".taskChooseIndex").val();
   var actualTaskIndex = parseInt(taskIndex) + 1;
 
