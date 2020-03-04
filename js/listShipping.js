@@ -938,6 +938,7 @@ function showTask(){
 
     var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>';
     var additionalContent = "";
+    var payTaskBtn = "";
     var editTask = '';
     if (mode == "TASKALL") {
       additionalContent = '<hr/>' +
@@ -947,6 +948,7 @@ function showTask(){
       "Đã thanh toán: "+(lsTask[e][6] ? "Rồi" : "Chưa")+"<br/>";
       
       editTask = '<div class="btn btn-default btnNormal editTask order_'+e+'" style="margin:10px 10px 0;">Sửa thông tin</div>';
+      payTaskBtn = '<div class="btn btn-default btnNormal payTask order_'+e+'" style="margin:10px 10px 0;">Sửa thông tin</div>';
 
     }
     $("#listShippingOrder").append(
@@ -971,6 +973,7 @@ function showTask(){
               '<hr/>' +
               completeButton +
               deleteButton +
+              payTaskBtn +
               editTask +
             '</div>'+
           '</div>'+
@@ -983,6 +986,7 @@ function showTask(){
   $(".complete").click(taskComplete)
   $(".delete").click(deleteTask);
   $(".editTask").click(showEditTask);
+  $(".payTask").click(payTaskFn);
 }
 
 function showEditTask(){
@@ -1017,6 +1021,37 @@ function showEditTask(){
   $("#myModal .modal-body").html(modalBody);
   $('#myModal').modal('toggle');
   $('.taskSaveInfor').click(saveTaskFn)
+}
+
+function payTaskFn(){
+  var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualTaskIndex = parseInt(taskIndex) + 1;
+
+  // var today = new Date();
+  // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // var dateTime = date+' '+time;
+  var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
+
+  var sheetrange = 'Task!G'+actualTaskIndex+':G'+actualTaskIndex;
+
+  lsTask[taskIndex][6] = "1";
+
+  var dataUpdateTask = [
+    ["1"]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateTask, sheetrange, function(){
+    
+    $(".cardElement_"+taskIndex).remove();
+    $("#loadingSpin").hide();
+
+  },function(){
+    console.log("Something wrong");
+  })
+
 }
 
 function saveTaskFn(){
