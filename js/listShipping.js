@@ -244,20 +244,24 @@ function loadOrderShippingListHtml() {
     var willpay = lsOrderDetail[lsOrder[e][0]].willpay;
     willpay = willpay ? willpay : 0;
     if (mode != "ALL" && mode != "Need_Schedule" && mode!="PAYSHIP") {
+      if (mode == "RequestedSHIP" && lsOrder[e][4]=="Requested") {
+        if (!(lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD")) {
+          continue;
+        }
+      } else 
+      if (mode == "RequestedPOST" && lsOrder[e][4]=="Requested") {
+        if (!(lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD")) {
+          continue;
+        }
+      } else 
+      if (mode == "RequestedSHOPEE" && lsOrder[e][4]=="Requested") {
+        if (!(lsOrder[e][8] == "SHOPEE")) {
+          continue;
+        }
+      } else 
       if (mode != lsOrder[e][4]) {
           continue;
       } 
-    }
-
-    if (mode == "RequestedSHIP") {
-      if (!(lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD")) {
-        continue;
-      }
-    }
-    if (mode == "RequestedPOST") {
-      if (!(lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD")) {
-        continue;
-      }
     }
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
@@ -950,7 +954,8 @@ $(".orderFilter").change(function(){
   if (mode == "Need_Schedule"
       || mode == "Requested" 
       || mode == "RequestedPOST"
-      || mode == "RequestedSHIP"      
+      || mode == "RequestedSHIP"    
+      || mode == "RequestedSHOPEE"        
       || mode == "SENT_POST"
       || mode == "SHIPPER_RECEIVED_MONEY"
       || mode == "COMPLETED" 
