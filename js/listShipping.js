@@ -693,7 +693,7 @@ function updatePaymentComplete(orderIndex){
 }
 
 function payShipForEachShip(oix, callback){
-  var orderIndex = oix ? oix : $(this).attr("class").split(" ").pop().split("_").pop();
+  var orderIndex = oix.type ? $(this).attr("class").split(" ").pop().split("_").pop() : oix;
   var actualOrderIndex = parseInt(orderIndex) + 1;
 
   var sheetrange = 'Shipping!J'+actualOrderIndex+':J'+actualOrderIndex;
@@ -705,6 +705,8 @@ function payShipForEachShip(oix, callback){
   ];
 
   $("#loadingSpin").show();
+  // console.log(orderIndex);
+  // console.log($(this).attr("class").split)
   $("#modelContent").html("Thanh toán ship cho đơn:"+lsOrderDetail[lsOrder[orderIndex][0]].orderCode+" "+lsOrderDetail[lsOrder[orderIndex][0]].customerName);
 
   updateShipping(dataUpdateShipping, sheetrange, function(){
