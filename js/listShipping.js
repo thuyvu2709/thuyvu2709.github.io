@@ -203,6 +203,10 @@ var lsCount = {}
 // 4:POST_NO_COD
 // 5:SHIP_BY_THIRD_PARTY
 
+if (userRole!="manager") {
+  $(".click-to-select").hide();
+}
+
 function loadOrderShippingListHtml() {
 
   console.log("loadOrderShippingListHtml");
@@ -487,6 +491,7 @@ function loadOrderShippingListHtml() {
               preparedButton +
               completeButton +
               deleteButton +
+              payshipButton+
             '</div>'+
           '</div>'+
         '</div>'
@@ -552,7 +557,7 @@ function loadOrderShippingListHtml() {
   $(".detail").click(showDetail);
   $(".delete").click(deleteShipRequest);
 
-  $(".payship").click(payShipForEachTask);
+  $(".payship").click(payShipForEachShip);
 
   // $('.datetimepicker').datetimepicker();
   $('.prepared').click(shipPrepared);
@@ -687,7 +692,7 @@ function updatePaymentComplete(orderIndex){
   });
 }
 
-function payShipForEachTask(oix, callback){
+function payShipForEachShip(oix, callback){
   var orderIndex = oix ? oix : $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
 
@@ -717,19 +722,83 @@ function payShipForEachTask(oix, callback){
 }
 
 
-$("#payShipAll").click(function(){
-  lsPay = $("#listShippingOrder").children();
-  var runPayShip = function(index) {
-    if (index  == lsPay.length) {
+$(".payShipAll").click(function(){
+  // lsPay = $("#listShippingOrder").children();
+  // var runPayShip = function(index) {
+  //   if (index  == lsPay.length) {
+  //     return;
+  //   }
+  //   var currentChild = lsPay.eq(lsPay);
+  //   var orderIndex = $(currentChild).attr("class").split(" ").pop().split("_").pop();
+  //   payShipForEachShip(orderIndex, function(){
+  //     runPayShip(index+1);
+  //   })
+  // }
+  // runPayShip(0);
+  var lsChecked = $(".checkbox");
+  var requestShip = function(index) {
+    if (index >= lsChecked.length)  {
       return;
     }
-    var currentChild = lsPay.eq(lsPay);
-    var orderIndex = $(currentChild).attr("class").split(" ").pop().split("_").pop();
-    payShipForEachTask(orderIndex, function(){
-      runPayShip(index+1);
-    })
+
+    // if ($(lsChecked[index]).is(":checked")){
+      // console.log();
+      var orderIndex = $(lsChecked[index]).attr("class").split(" ").pop().split("_").pop();
+      // var actualOrderIndex = parseInt(orderIndex) + 1;
+      payShipForEachShip(orderIndex,function(){
+        requestShip(index+1);  
+      })
+
+      // requestShipping(currentOrder,function(){
+      //   requestShip(index+1);
+      // });
+      
+    // } else {
+    //   requestShip(index+1);
+    // }
   }
-  runPayShip(0);
+  requestShip(0);
+})
+
+$(".payShipSelect").click(function(){
+  // lsPay = $("#listShippingOrder").children();
+  // var runPayShip = function(index) {
+  //   if (index  == lsPay.length) {
+  //     return;
+  //   }
+  //   var currentChild = lsPay.eq(lsPay);
+  //   var orderIndex = $(currentChild).attr("class").split(" ").pop().split("_").pop();
+  //   payShipForEachShip(orderIndex, function(){
+  //     runPayShip(index+1);
+  //   })
+  // }
+  // runPayShip(0);
+
+  /////////////////////
+  
+  var lsChecked = $(".checkbox");
+  var requestShip = function(index) {
+    if (index >= lsChecked.length)  {
+      return;
+    }
+
+    if ($(lsChecked[index]).is(":checked")){
+      // console.log();
+      var orderIndex = $(lsChecked[index]).attr("class").split(" ").pop().split("_").pop();
+      // var actualOrderIndex = parseInt(orderIndex) + 1;
+      payShipForEachShip(orderIndex,function(){
+        requestShip(index+1);  
+      })
+
+      // requestShipping(currentOrder,function(){
+      //   requestShip(index+1);
+      // });
+      
+    } else {
+      requestShip(index+1);
+    }
+  }
+  requestShip(0);
 })
 
 function shipComplete(){
