@@ -937,7 +937,18 @@ function showTask(){
     var deleteButton = userRole=="manager" ? '<div class="btn btn-default btnNormal delete order_'+e+'" style="margin:10px 0 0;">Xoá</div>' : "";
 
     var completeButton = '<div class="btn btn-default btnNormal complete order_'+e+'" style="margin:10px 10px 0;">Hoàn thành</div>';
+    var additionalContent = "";
+    var editTask = '';
+    if (mode == "TASKALL") {
+      additionalContent = '<hr/>' +
+      "Tình trạng: "+lsTask[e][3]+"<br/>"+
+      "Thời gian hoàn thành: "+lsTask[e][4]+"<br/>"+
+      "Công task: "+lsTask[e][5]+"<br/>"+
+      "Đã thanh toán: "+(lsTask[e][6] ? "Rồi" : "Chưa")+"<br/>";
+      
+      editTask = '<div class="btn btn-default btnNormal editTask order_'+e+'" style="margin:10px 10px 0;">Sửa thông tin</div>';
 
+    }
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
         '<div class="card cardElement_'+e+'">'+
@@ -953,12 +964,14 @@ function showTask(){
             '<div class="card-body">'+
               '<div class="task content">'+
                 // '<textarea class="field-textarea form-control taskContent_'+e+'" readonly>'+
-                  lsTask[e][2] +
+                  (mode=="TASKALL" ? "Không hiển thị" : lsTask[e][2]) +
                 // '</textarea>'+
               '</div>'+
+              additionalContent+
               '<hr/>' +
               completeButton +
               deleteButton +
+              editTask +
             '</div>'+
           '</div>'+
         '</div>'
@@ -969,6 +982,72 @@ function showTask(){
 
   $(".complete").click(taskComplete)
   $(".delete").click(deleteTask);
+  $(".editTask").click(showEditTask);
+}
+
+function showEditTask(){
+  var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  // var modalBody ="<div>"+
+  //       " Nhận hàng: "+data[e][5]+" | "+data[e][6] + "<br/>"+
+  //       " Thanh toán: "+data[e][7]+" | "+data[e][8]+ "|" + data[e][9]+"<br/>"+ 
+  //       "</div>";
+  var modalBody = '<div>Thông tin nhiệm vụ:</div><br/>'+
+              '<div class="btn btn-default btnNormal">'+
+              lsTask[taskIndex][1]+
+              '</div>'+
+              '<br/>'+
+              // '<div>Trạng thái : '+
+              '<div class="btn btn-default btnNormal"> Trạng thái :'+
+              lsTask[taskIndex][3]+
+              '</div>'+
+              '<br/>'+
+              // '<div>Chi phí</div>'+
+              '<input class="taskChooseIndex" readonly hidden value="'+taskIndex+'"/>'+
+              '<div class="btn btn-default btnNormal">'+
+              ' Chi phí <input class="taskfee" value="'+lsTask[taskIndex][5]+'"/>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default btnNormal"> Thanh toán ?'+
+              ' <input type="checkbox" class="taskCkPaid" '+(lsTask[taskIndex][6]==1 ? 'checked' : '')+'/>'+
+              '</div>'+
+              '<br/>'+
+              '<div class="btn btn-default taskSaveInfor btnNormal">Lưu thông tin'+
+              '</div>'
+              ;
+  $("#myModal .modal-body").html(modalBody);
+  $('#myModal').modal('toggle');
+  $('.taskSaveInfor').click(saveTaskFn)
+}
+
+function saveTaskFn(){
+  var taskfee = $(".taskfee").val();
+  taskfee = taskfee ? taskfee : 0;
+  var taskCkPaid = $(".taskCkPaid").is(":checked") ? 1 : 0;
+  var taskIndex = $(".taskChooseIndex").val();
+  var actualTaskIndex = parseInt(taskIndex) + 1;
+
+  console.log(taskfee+ " "+taskCkPaid + " "+taskIndex);
+
+  var sheetrange = 'Task!F'+actualTaskIndex+':G'+actualTaskIndex;
+
+  lsTask[taskIndex][5] = taskfee;
+  lsTask[taskIndex][6] = taskCkPaid;
+
+  var dataUpdateTask = [
+    [taskfee, taskCkPaid]
+  ];
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateTask, sheetrange, function(){
+    
+    // $(".cardElement_"+taskIndex).remove();
+    $("#loadingSpin").hide();
+
+  },function(){
+    console.log("Something wrong");
+  })
+
 }
 
 function deleteTask() {
@@ -999,8 +1078,8 @@ function taskComplete(){
 
   var sheetrange = 'Task!D'+actualTaskIndex+':E'+actualTaskIndex;
 
-  lsTask[taskIndex][4] = "COMPLETED";
-  lsTask[taskIndex][5] = dateTime;
+  lsTask[taskIndex][3] = "COMPLETED";
+  lsTask[taskIndex][4] = dateTime;
 
   var dataUpdateTask = [
     ["COMPLETED", dateTime]
