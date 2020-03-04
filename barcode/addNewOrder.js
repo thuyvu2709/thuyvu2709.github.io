@@ -204,6 +204,7 @@ function searchForm(){
 	
 	var lsImportCodeSearchProduct = "";
 	for (e in importSLData) {
+		// console.log(importSLData[e][0]+" "+importSLData[e][4])
 		if (e ==0 ) continue;
 		if (!importSLData[e][0]) continue;
 		if (importSLData[e][4]==0) continue;
