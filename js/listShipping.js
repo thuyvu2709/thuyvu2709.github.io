@@ -955,7 +955,7 @@ function showTask(){
           '<div class="card-header" id="heading_"'+e+'>'+
             '<h5 class="mb-0">'+
               '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-                lsTask[e][0]+' | '+lsTask[e][1] +
+                lsTask[e][0]+' | '+lsTask[e][1] + (lsTask[e][6]==1 ? "| PAID" : "")+
               '</button>'+
             '</h5>'+
           '</div>'+
