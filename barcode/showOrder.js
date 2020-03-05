@@ -231,7 +231,7 @@ $("#createNewOrder").click(function(){
 	// getLatestOrderCode(function(){
 	// 	$("#loadingSpin").hide();
 
-	window.location = "neworder.html";
+	window.location = "neworder.html?makeCopy=true";
 	// })
 })
 
