@@ -22,6 +22,13 @@
          var pageName = "showorder";
          var pageRole = "manager";
       </script>
+      <script src="../js/html2canvas.min.js"></script>
+      <script src="../js/canvas2image.js"></script>
+      <style type="text/css">
+        .row {
+          margin-left : 0px !important
+        }
+      </style>
    </head>
    <body id="page-top">
 
@@ -37,29 +44,36 @@
       <!-- Portfolio Section -->
       <section class="page-section portfolio" id="portfolio">
          <form class="needs-validation container" novalidate>
-            <div class="row">
+
+            <h4 class="text-center textMustard">XÁCH TAY THUỶ VŨ - GÓC HÀNG ÂU</h4>
+<!--             <div class="row">
+              <h6 class="text-center">Ngày 10/03/2020</h6>
+            </div> -->
+            <!-- <div class="row"> -->
+              <p class="text-center">Mã đơn hàng: 
+                <span id="orderCode">DONHANG_45</span>
+                | Ngày:<span id="orderDate">10/03</span>
+              </p>
+            <!-- </div> -->
+<!--             <div class="row">
                <label for="orderCode" class="col-sm-2 col-form-label simply">Mã đơn hàng</label>
                <div class="col-sm">
                   <label id="orderCode" class="form-control"></label>
                </div>
-            </div>
-            <div class="row simply">
-               <label for="customerName" class="col-sm-2 col-form-label simply">Tên khách hàng</label>
-               <div class="col-sm-10">
-                  <label id="customerName" class="form-control"></label>
-               </div>
+            </div> -->
+            <div class="row">
+               <!-- <label for="customerName" class="col-sm col-form-label simply"> -->
+                <span>Tên khách hàng : </span>
+                <span id="customerName" class="textMustard"></span>
+               <!-- </label> -->
             </div>
             <div class="row">
-               <label for="customerAddress" class="col-sm-2 col-form-label simply">Địa chỉ khách hàng</label>
-               <div class="col-sm-10">
-                  <label id="customerAddress" class="form-control"></label>
-               </div>
+              <span>Địa chỉ khách hàng : </span>
+              <span id="customerAddress" class="textMustard"></span>
             </div>
             <div class="row">
-               <label for="customerPhone" class="col-sm-2 col-form-label simply">Số điện thoại</label>
-               <div class="col-sm-10">
-                  <label id="customerPhone" class="form-control"></label>
-               </div>
+              <span>Số điện thoại : </span>
+              <span id="customerPhone" class="textMustard"></span>
             </div>
 
 <!-- table is here -->
@@ -67,7 +81,7 @@
               <tr>
                 <th>STT</th>
                 <th>Tên hàng</th>
-                <th>Số lượng</th>
+                <th>SL</th>
                 <th>Giá bán</th>
                 <!-- <th>Có hàng ?</th> -->
               </tr>
@@ -77,13 +91,11 @@
             </table>
 <!-- end table -->
             <!-- <div class="simply"> -->
-              <br/>
+              <!-- <br/> -->
             <!-- </div> -->
             <div class="row">
-               <label for="shippingCost" class="col-sm-2 col-form-label simply">Phí giao hàng</label>
-               <div class="col-sm-10">
-                  <label id="shippingCost" class="form-control"></label>
-               </div>
+               <span>Phí giao hàng : </span>
+               <span id="shippingCost"></span>
             </div>
 
 <!--             <div class="row simply">
@@ -94,38 +106,40 @@
             </div> -->
 
             <div class="row simply">
-               <label for="node" class="col-sm-2 col-form-label">Ghi chú</label>
+               <span>Ghi chú</span>
                <div class="col-sm-10">
                   <textarea id="orderNode" class="field-textarea form-control" readonly></textarea>
                </div>
             </div>
 
             <div class="row totalPayIncludeShip">
-              <h5>Tổng tiền thanh toán : </h5>
-              <h5 id="totalPayIncludeShip">0</h5>
+              <span>Tổng tiền thanh toán : </span>
+              <span id="totalPayIncludeShip">0</span>
             </div>
             <div class="row totalCount">
-              <h5>Tổng số lượng : </h5>
-              <h5 id="totalCount">0</h5>
+              <span>Tổng số lượng : </span>
+              <span id="totalCount">0</span>
             </div>
             <div class="row prepaid">
-              <h5>Khách đã cọc : </h5>
-              <h5 id="prepaid">0</h5>
+              <span>Khách đã cọc : </span>
+              <span id="prepaid">0</span>
             </div>
 
             <div class="row willpay">
-              <h5 id="titleWillpay">Khách sẽ thanh toán : </h5>
-              <h5 id="willpay">0</h5>
+              <span id="titleWillpay">Khách sẽ thanh toán : </span>
+              <span id="willpay">0</span>
             </div>
 
             <div class="row">
-              <h5>Cách ship: </h5>
-              <h5 id="shippingType" class="textBlue"></h5>
+              <span>Cách ship: </span>
+              <span id="shippingType" class="textBlue"></span>
             </div>
+            <br/>
+            <p class="text-center">Thông tin chuyển khoản: Le Van Thanh - 19034601990019 - Techcombank chi nhánh Phúc Yên, Vĩnh Phúc</p>
 
             <h5 class="text-center">
               <span class="fa fa-star checked" id="zoomin"></span>
-              Cảm ơn quý khách đã mua hàng của chúng tôi
+              Cảm ơn quý khách
               <span class="fa fa-star checked" id="zoomout"></span>
             </h5>
          </form>
@@ -150,6 +164,10 @@
 
           <div class="btn btn-default col-sm" style="border: 1px solid black" id="printOrder">In đơn hàng
           </div>
+
+<!--           <div class="btn btn-default col-sm" style="border: 1px solid black" id="makeImage">
+            Tải ảnh
+          </div> -->
 
           <div class="btn btn-default col-sm" style="border: 1px solid black" id="createNewOrder">Tạo đơn hàng mới
           </div>

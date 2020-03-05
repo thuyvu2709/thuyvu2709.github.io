@@ -293,3 +293,156 @@ function notiOrderViaEmail(receiver,cc, currentOrder, status) {
 		console.log("Send email");
 	});	
 }
+
+function orderToHtml(currentOrder) {
+	var prodListOrder = currentOrder.prodListOrder;
+	var otable = "";
+	for (var i in prodListOrder){
+		if (prodListOrder[i].delete) {
+			continue;
+		}
+		otable = otable + ("<tr>"+
+	    "<td>"+(parseInt(i)+1)+"</td>"+
+	    "<td>"+prodListOrder[i].productName+"</td>"+
+	    "<td>"+prodListOrder[i].productCount+"</td>"+
+	    "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
+	  "</tr>")
+	}
+
+	
+var myvar = '<div lang="en">'+
+'  <div>'+
+'    <meta charset="utf-8">'+
+'      <style type="text/css">'+
+'      .form-style-1 {'+
+'  margin:10px auto;'+
+'  padding: 20px 12px 10px 20px;'+
+'  font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;'+
+'}'+
+'.form-style-1 li {'+
+'  padding: 0;'+
+'  display: block;'+
+'  list-style: none;'+
+'  margin: 10px 0 0 0;'+
+'}'+
+'.form-style-1 label{'+
+'  margin:0 0 3px 0;'+
+'  padding:0px;'+
+'  display:block;'+
+'  font-weight: bold;'+
+'}'+
+'.form-style-1 .field-divided{'+
+'  width: 49%;'+
+'}'+
+'.form-style-1 .field-long{'+
+'  width: 100%;'+
+'}'+
+'.form-style-1 .field-select{'+
+'  width: 100%;'+
+'}'+
+'.form-style-1 .field-textarea{'+
+'  height: 100px;'+
+'}'+
+'.form-style-1 .required{'+
+'  color:red;'+
+'}'+
+'.inputField {'+
+'  border: 1px solid rgba(0, 0, 0, 0.35);'+
+'  padding: 5px ! important;'+
+'}'+
+'.text-center{'+
+'  text-align:center;'+
+'}'+
+'.title {'+
+'  color: #c57e0f !important;'+
+'  text-align:center;'+
+'}'+
+'.code-label {'+
+'  color: white;'+
+'  background-color: #c57e0f;'+
+'  font-size: 32px;'+
+'  font-weight: bold;'+
+'  text-align:center;'+
+'}'+
+'table, td, th {'+
+'  border: 1px solid black;'+
+'  text-align : center;'+
+'}'+
+'table {'+
+'  border-collapse: collapse;'+
+'  width: 100%;'+
+'}'+
+'.textRed {'+
+'  color: #c57e0f !important;'+
+'}'+
+''+
+'    </style>'+
+'    </div>'+
+'    <div id="page-top">'+
+'      <form>'+
+'        <ul class="form-style-1">'+
+''+
+'    '+
+'          <h1 class="text-center title">XÁCH TAY THUỶ VŨ - GÓC HÀNG ÂU</h1>'+
+'          <label class="text-center">Ngày 10/03/2020</label>'+
+'          <label class="text-center">Mã đơn hàng: DONHANG_45</label>'+
+''+
+''+
+'          <li>'+
+'            <label>Tên khách hàng: <span class="textRed">Lê Tường Vân</span>  </label>'+
+'          </li>'+
+'          <li>'+
+'            <label>Địa chỉ khách hàng: <span class="textRed">195 Bạch Mai, Hà Nội</span></label>'+
+'          </li>'+
+'          <li>'+
+'            <label>Số điện thoại khách hàng: <span class="textRed">0989403929</span></label>'+
+'          </li>'+
+'          <li>'+
+'            <table style="width: 100%;border-collapse: collapse;">'+
+'              <tr>'+
+'                <th>STT</th>'+
+'                <th>Tên hàng</th>'+
+'                <th>Số lượng</th>'+
+'                <th>Giá bán</th>'+
+'                <th>Thành tiền</th>'+
+'              </tr>'+
+'              <tbody id = "lsTable">'+
+'                <tr>'+
+'                  <td>1</td>'+
+'                  <td>SON KIKO VELVET 316</td>'+
+'                  <td>1</td>'+
+'                  <td>150</td>'+
+'                  <td>150</td>'+
+'                </tr>'+
+'                <tr>'+
+'                  <td>1</td>'+
+'                  <td>SON KIKO VELVET 316</td>'+
+'                  <td>1</td>'+
+'                  <td>150</td>'+
+'                  <td>150</td>'+
+'                </tr>'+
+'              </tbody>'+
+'            </table>'+
+'          </li>'+
+'          <li>'+
+'            <label>Phí giao hàng: 30</label>'+
+'          </li>'+
+'          <li>'+
+'            <label>Phương thức giao hàng: Ship VIETTELPOST </label>'+
+'          </li>'+
+'          <li>'+
+'            <label>Tổng tiền thanh toán : 180</label>'+
+'          </li>'+
+'          <li>'+
+'            <label class="title">Thông tin chuyển khoản: Le Van Thanh - 19034601990019 - Techcombank chi nhánh Phúc Yên, Vĩnh Phúc</label>'+
+'            <!-- <label class="inputField">Le Van Thanh </label> -->'+
+'          </li>'+
+'      </ul>'+
+'      <h2 class="text-center title">Cảm ơn quý khách đã mua hàng của chúng tôi</h2>'+
+'    </form>'+
+'  </div>'+
+'</div>';
+	
+
+	return myvar;
+}

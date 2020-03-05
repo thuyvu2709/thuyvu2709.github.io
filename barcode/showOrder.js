@@ -9,7 +9,8 @@ if (currentOrder.orderIndex) {
 	$("#editOrder").hide();
 }
 
-$("#orderCode").html(currentOrder.orderCode +" | "+currentOrder.orderDate);
+$("#orderCode").html(currentOrder.orderCode);
+$("#orderDate").html(currentOrder.orderDate)
 $("#customerName").html(currentOrder.customerName);
 
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
@@ -79,7 +80,7 @@ var prodListOrder = currentOrder.prodListOrder;
 // console.log($("#portfolio"))
 
 var totalCount = 0;
-
+$("#lsTable").empty();
 for (i in prodListOrder){
 	if (prodListOrder[i].delete) {
 		continue;
@@ -201,8 +202,8 @@ $("#printOrder").click(function(){
 
 $("#simplify").click(function(){
 	$(".simply").hide();
-	$("#shippingCost").html("Phí giao hàng:"+$("#shippingCost").html());
-	$("#orderCode").html(currentOrder.orderCode+" | "+currentOrder.customerName)
+	$("#shippingCost").html($("#shippingCost").html());
+	// $("#orderCode").html(currentOrder.orderCode+" | "+currentOrder.customerName)
 	var prepaid = currentOrder.prepaid ? currentOrder.prepaid : 0;
 	if (prepaid == 0) {
 		$(".prepaid").hide();
@@ -215,7 +216,7 @@ $("#simplify").click(function(){
 		$(".willpay").hide();
 		$(".prepaid").hide();
 		// $(".prepaid").html("Khách đã thanh toán");
-		$(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
+		// $(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
 	}
 });
 
@@ -236,4 +237,60 @@ $("#createNewOrder").click(function(){
 //     if (event.originalEvent.persisted) {
 //       alert("From back / forward cache.");
 //     }
+// });
+
+// $("#makeImage").click(function(){
+// 	// console.log($(orderToHtml(currentOrder))[0]);
+// 	// var data = orderToHtml(currentOrder);
+// 	var data = "<div>abcd</div>";
+// 	html2canvas($("#portfolio")[0]).then(function(canvas){
+// 		// canvas width
+// 		console.log("AA")
+// 		var canvasWidth = canvas.width;
+// 		// canvas height
+// 		var canvasHeight = canvas.height;
+
+// 		console.log(canvasHeight);
+		
+// 		var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+//         let type = "png"; // image type
+//         let w = $('#imgW').val(); // image width
+//         let h = $('#imgH').val(); // image height
+//         let f = "order"; // file name
+//         w = (w === '') ? canvasWidth : w; 
+//         h = (h === '') ? canvasHeight : h;
+//         // save as image
+//         Canvas2Image.saveAsImage(canvas, w, h, type, f);
+// 	})
+// })
+
+// to canvas
+// $('.toCanvas').click(function(e) {
+//   html2canvas(test).then(function(canvas) {
+//     // canvas width
+//     var canvasWidth = canvas.width;
+//     // canvas height
+//     var canvasHeight = canvas.height;
+//     // render canvas
+//     $('.toCanvas').after(canvas);
+//     // show 'to image' button
+//     $('.toPic').show(1000);
+//     // convert canvas to image
+//     $('.toPic').click(function(e) {
+//       var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+//       // render image
+//       $(".toPic").after(img);
+//       // save
+//       $('#save').click(function(e) {
+//         let type = $('#sel').val(); // image type
+//         let w = $('#imgW').val(); // image width
+//         let h = $('#imgH').val(); // image height
+//         let f = $('#imgFileName').val(); // file name
+//         w = (w === '') ? canvasWidth : w; 
+//         h = (h === '') ? canvasHeight : h;
+//         // save as image
+//         Canvas2Image.saveAsImage(canvas, w, h, type, f);
+//       });
+//     });
+//   });
 // });
