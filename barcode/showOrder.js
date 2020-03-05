@@ -213,7 +213,7 @@ $("#simplify").click(function(){
 	$(".click-to-back").hide();
 	$(".controlOrder").hide();
 	$("#headerInclude").hide();
-	$("#Include").hide();
+	$("#footerInclude").hide();
 
 	// if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
 	// 	|| currentOrder.paymentStatus == "PAID"
@@ -229,7 +229,7 @@ $("#showController").click(function(){
 	$(".click-to-back").show();
 	$(".controlOrder").show();
 	$("#headerInclude").show();
-	$("#Include").show();
+	$("#footerInclude").show();
 	$(".simply").show();
 	$(".prepaid").show();
 	$(".willpay").show();
