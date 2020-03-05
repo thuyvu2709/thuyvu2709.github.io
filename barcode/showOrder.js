@@ -24,6 +24,7 @@ $("#customerPhone").html(
 );
 
 $("#shippingCost").html(currentOrder.shippingCost);
+// $("#shippingCost").html("Khách thanh  a a a toán với bên vận chuyển");
 
 $("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);
 
