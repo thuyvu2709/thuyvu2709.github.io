@@ -114,6 +114,7 @@ $('.toCanvas').click(function(e) {
         w = (w === '') ? canvasWidth : w;
         h = (h === '') ? canvasHeight : h;
         // save as image
+        console.log(type+" "+f);
         Canvas2Image.saveAsImage(canvas, w, h, type, f);
       });
     });

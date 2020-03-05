@@ -16,8 +16,8 @@ $("#customerName").html(currentOrder.customerName);
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
 $("#customerAddress").html(
-	// '<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
-	'<div >'+currentOrder.customerAddress+'</div>'
+	currentOrder.customerAddress
+	// "số 76 số 76 số"
 );
 $("#customerPhone").html(
 	'<a href="tel:'+currentOrder.customerPhone+'">'+currentOrder.customerPhone+'</a>'
@@ -209,15 +209,16 @@ $("#simplify").click(function(){
 		$(".prepaid").hide();
 		$(".willpay").hide();
 	}
+	$(".click-to-back a").css("background-color", "white")
 
-	if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
-		|| currentOrder.paymentStatus == "PAID"
-		){
-		$(".willpay").hide();
-		$(".prepaid").hide();
-		// $(".prepaid").html("Khách đã thanh toán");
-		// $(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
-	}
+	// if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
+	// 	|| currentOrder.paymentStatus == "PAID"
+	// 	){
+	// 	$(".willpay").hide();
+	// 	$(".prepaid").hide();
+	// 	// $(".prepaid").html("Khách đã thanh toán");
+	// 	// $(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
+	// }
 });
 
 $("#makeCopy").click(function(){
@@ -239,30 +240,31 @@ $("#createNewOrder").click(function(){
 //     }
 // });
 
-$("#makeImage").click(function(){
-	// console.log($(orderToHtml(currentOrder))[0]);
-	// var data = orderToHtml(currentOrder);
-	$("#simplify").click();
-	html2canvas($("#portfolio")[0]).then(function(canvas){
-		// canvas width
-		console.log("AA")
-		var canvasWidth = canvas.width;
-		// canvas height
-		var canvasHeight = canvas.height;
+// $("#makeImage").click(function(){
+// 	// console.log($(orderToHtml(currentOrder))[0]);
+// 	// var data = orderToHtml(currentOrder);
+// 	$("#simplify").click();
+// 	html2canvas($("#portfolio")[0]).then(function(canvas){
+// 		// canvas width
+// 		// console.log("AA")
+// 		var canvasWidth = canvas.width;
+// 		// canvas height
+// 		var canvasHeight = canvas.height;
 
-		console.log(canvasHeight);
+// 		// console.log(canvasHeight);
 		
-		var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
-        let type = "png"; // image type
-        let w = $('#imgW').val(); // image width
-        let h = $('#imgH').val(); // image height
-        let f = "order"; // file name
-        w = (w === '') ? canvasWidth : w; 
-        h = (h === '') ? canvasHeight : h;
-        // save as image
-        Canvas2Image.saveAsImage(canvas, w, h, type, f);
-	})
-})
+// 		var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+//         let type = "png"; // image type
+//         // let w = $('#imgW').val(); // image width
+//         // let h = $('#imgH').val(); // image height
+//         let f = "order"; // file name
+//         let w = canvasWidth; 
+//         let h = canvasHeight;
+//         // save as image
+//         console.log(w+" "+h+" "+type);
+//         Canvas2Image.saveAsImage(canvas, w, h, type, f);
+// 	})
+// })
 
 // to canvas
 // $('.toCanvas').click(function(e) {
