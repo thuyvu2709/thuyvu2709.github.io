@@ -239,30 +239,30 @@ $("#createNewOrder").click(function(){
 //     }
 // });
 
-// $("#makeImage").click(function(){
-// 	// console.log($(orderToHtml(currentOrder))[0]);
-// 	// var data = orderToHtml(currentOrder);
-// 	var data = "<div>abcd</div>";
-// 	html2canvas($("#portfolio")[0]).then(function(canvas){
-// 		// canvas width
-// 		console.log("AA")
-// 		var canvasWidth = canvas.width;
-// 		// canvas height
-// 		var canvasHeight = canvas.height;
+$("#makeImage").click(function(){
+	// console.log($(orderToHtml(currentOrder))[0]);
+	// var data = orderToHtml(currentOrder);
+	$("#simplify").click();
+	html2canvas($("#portfolio")[0]).then(function(canvas){
+		// canvas width
+		console.log("AA")
+		var canvasWidth = canvas.width;
+		// canvas height
+		var canvasHeight = canvas.height;
 
-// 		console.log(canvasHeight);
+		console.log(canvasHeight);
 		
-// 		var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
-//         let type = "png"; // image type
-//         let w = $('#imgW').val(); // image width
-//         let h = $('#imgH').val(); // image height
-//         let f = "order"; // file name
-//         w = (w === '') ? canvasWidth : w; 
-//         h = (h === '') ? canvasHeight : h;
-//         // save as image
-//         Canvas2Image.saveAsImage(canvas, w, h, type, f);
-// 	})
-// })
+		var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+        let type = "png"; // image type
+        let w = $('#imgW').val(); // image width
+        let h = $('#imgH').val(); // image height
+        let f = "order"; // file name
+        w = (w === '') ? canvasWidth : w; 
+        h = (h === '') ? canvasHeight : h;
+        // save as image
+        Canvas2Image.saveAsImage(canvas, w, h, type, f);
+	})
+})
 
 // to canvas
 // $('.toCanvas').click(function(e) {
