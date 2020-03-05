@@ -771,8 +771,9 @@ $("#editOrder").click(function(){
 	// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 	// var dateTime = date+' '+time;
-	var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
-
+	// var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
+	var dateTime = currentOrder.orderDate;
+	
 	var orderDate = dateTime;
 
 	var totalPay = $("#totalPay").html();
