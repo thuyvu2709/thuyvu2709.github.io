@@ -203,14 +203,17 @@ $("#printOrder").click(function(){
 
 $("#simplify").click(function(){
 	$(".simply").hide();
-	$("#shippingCost").html($("#shippingCost").html());
+	// $("#shippingCost").html($("#shippingCost").html());
 	// $("#orderCode").html(currentOrder.orderCode+" | "+currentOrder.customerName)
 	var prepaid = currentOrder.prepaid ? currentOrder.prepaid : 0;
 	if (prepaid == 0) {
 		$(".prepaid").hide();
 		$(".willpay").hide();
 	}
-	$(".click-to-back a").css("background-color", "white")
+	$(".click-to-back").hide();
+	$(".controlOrder").hide();
+	$("#headerInclude").hide();
+	$("#Include").hide();
 
 	// if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
 	// 	|| currentOrder.paymentStatus == "PAID"
@@ -221,6 +224,16 @@ $("#simplify").click(function(){
 	// 	// $(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
 	// }
 });
+
+$("#showController").click(function(){
+	$(".click-to-back").show();
+	$(".controlOrder").show();
+	$("#headerInclude").show();
+	$("#Include").show();
+	$(".simply").show();
+	$(".prepaid").show();
+	$(".willpay").show();
+})
 
 $("#makeCopy").click(function(){
 	window.location = "neworder.html?makeCopy=true";
