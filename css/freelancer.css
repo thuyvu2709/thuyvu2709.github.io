@@ -10685,10 +10685,24 @@ a.text-dark:hover, a.text-dark:focus {
   text-align: center;
 }
 
-.click-to-notify {
+.click-to-select-all {
   z-index: 1042;
   right: 1rem;
   bottom: 5rem;
+  text-align: center;
+}
+
+.click-to-view {
+  z-index: 1042;
+  right: 1rem;
+  bottom: 9rem;
+  text-align: center;
+}
+
+.click-to-notify {
+  z-index: 1042;
+  right: 5rem;
+  bottom: 1rem;
 }
 
 .click-to-notify a {
@@ -10699,7 +10713,7 @@ a.text-dark:hover, a.text-dark:focus {
   line-height: 4.1rem;
 }
 
-.scroll-to-top a, .click-to-back a, .click-to-select a {
+.scroll-to-top a, .click-to-back a, .click-to-select a, .click-to-select-all a, .click-to-view a {
   width: 3.5rem;
   height: 3.5rem;
   background-color: rgba(197, 126, 15, 0.5);

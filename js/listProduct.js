@@ -6,6 +6,9 @@ var lsNotifications = [];
 
 console.log("importCode:"+importCode);
 
+$(".click-to-select-all").hide();
+$(".click-to-view").hide();
+
 if (!importCode) {
   importCode = -3;
 }
@@ -160,8 +163,13 @@ function loadProductListHtml(){
 		$("#listProduct").append('<div class="card">'+
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
+            '<input type="checkbox" class="checkbox prodExtend check_'+e+'"/>'+
             '<button class="btn btn-link btnProd_'+e+'" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
-              data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +" / <i class='fas fa-motorcycle' style='color:red'/>" +data[e][21]+
+              data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +
+              '<span class="prodExtend" style="color:red">'+
+                " / <i class='fas fa-motorcycle'/>" +data[e][21] +
+                (data[e][17] ==0 ? " / CLEAR" : "") +
+              '</span>'+
             '</button>'+
           '</h5>'+
         '</div>'+
@@ -187,6 +195,8 @@ function loadProductListHtml(){
         '</div>'+
       '</div>')
 	}
+
+  $(".prodExtend").hide();
 
   afterLoadHTML();
 
@@ -340,4 +350,43 @@ $("#importFilter").change(function(){
 
   loadProductListHtml();
 })
+
+$(".click-to-select").click(function(){
+  if($(".checkbox").is(':visible') ) {
+    $(".checkbox").hide();
+    $(".prodExtend").hide();
+    $(".click-to-select-all").hide();
+    $("#controllMany").hide();
+    $(".click-to-view").hide();
+
+  } else {
+    $(".checkbox").show();
+    $(".prodExtend").show();
+    $(".click-to-select-all").show();
+    $("#controllMany").show();
+    $(".click-to-view").show();
+
+  }
+})
+
+$(".click-to-select-all").click(function(){
+  // var lsChecked = $(".checkbox");
+  // for (e in lsChecked){
+  //   $(lsChecked[e]).attr("checked", true);
+  // }
+  $('.checkbox').each(function(){ this.checked = true; });
+
+})
+
+$(".click-to-view").click(function(){
+  var lsChecked = $(".checkbox");
+  var totalCost = 0;
+  for (e in lsChecked){
+    if ($(lsChecked[e]).is(":checked")){
+      var prodIndex =  $(lsChecked[e]).attr("class").split(" ").pop().split("_").pop();
+      
+    }
+  }
+})
+
 
