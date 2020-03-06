@@ -54,7 +54,7 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 	$("#shippingType").html("Shopee");
 } else if (currentOrder.shippingType == "POST_NO_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
-	$("#shippingType").html("ViettelPOST (không COD) - Khách chuyển khoản trước qua");
+	$("#shippingType").html("ViettelPOST (không COD) - Khách chuyển khoản trước qua:");
 }  else {
 	$("#shippingCost").html("");
 	$("#shippingType").html("");
