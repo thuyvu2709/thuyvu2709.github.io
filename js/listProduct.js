@@ -376,7 +376,19 @@ $(".click-to-select-all").click(function(){
   // for (e in lsChecked){
   //   $(lsChecked[e]).attr("checked", true);
   // }
-  $('.checkbox').each(function(){ this.checked = true; });
+  var count = 0;
+  var check = false;
+  $('.checkbox').each(function(){ 
+    count++;
+    if (count == 1 && this.checked) {
+      check = true;
+    }
+    if (check){
+      this.checked = false; 
+    } else {
+      this.checked = true;
+    }
+  });
 
 })
 
@@ -386,16 +398,20 @@ $(".click-to-view").click(function(){
   var num = 0;
   var requestedNum = 0;
   var stillInStore = 0;
-  for (e in lsChecked){
-    if ($(lsChecked[e]).is(":checked")){
-      var productIndex =  $(lsChecked[e]).attr("class").split(" ").pop().split("_").pop();
-      // console.log(data[productIndex]);
-      totalCost+= parseInt(data[productIndex][11]);
-      num += parseInt(data[productIndex][4]);
-      requestedNum += parseInt(data[productIndex][21]);
-      stillInStore += parseInt(data[productIndex][17]);
+  // for (e in lsChecked){
+  //   if ($(lsChecked[e]).is(":checked")){
+  $('.checkbox').each(function(){ 
+      // this.checked = true; });
+      if (this.checked){
+        var productIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+        // console.log(data[productIndex]);
+        totalCost+= parseInt(data[productIndex][11]);
+        num += parseInt(data[productIndex][4]);
+        requestedNum += parseInt(data[productIndex][21]);
+        stillInStore += parseInt(data[productIndex][17]);
+      }
     }
-  }
+  )
   var content = "Tổng tiền vốn: "+totalCost+" <br/>"+
                 "Tổng số lượng: "+num+" <br/>"+
                 "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
