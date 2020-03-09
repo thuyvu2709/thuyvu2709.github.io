@@ -334,6 +334,8 @@ $(".click-to-notify").click(function(){
   $(".modal-body").html(content);
 
   $('#myModal').modal('toggle');
+  $("#modalYes").click(function(){
+  })
 })
 
 $("#prodSearchInput").keyup(function(){
