@@ -144,7 +144,8 @@ function checkRole() {
     var currentUser = getCurrentUser();
 
     if (window.location.hostname == "localhost" ||
-        window.location.hostname == "172.20.10.6") {
+        window.location.hostname == "172.20.10.6" ||
+        window.location.hostname == "172.20.10.11") {
         currentUser = {
             email : "kenkreck1004@gmail.com",
             status : true
