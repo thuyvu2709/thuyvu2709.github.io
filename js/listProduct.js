@@ -400,6 +400,8 @@ $(".click-to-view").click(function(){
   var stillInStore = 0;
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
+  var downloadContent = "No, Name, Count\n";
+  var count = 0;
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
@@ -409,17 +411,27 @@ $(".click-to-view").click(function(){
         num += parseInt(data[productIndex][4]);
         requestedNum += parseInt(data[productIndex][21]);
         stillInStore += parseInt(data[productIndex][17]);
+        count++;
+        downloadContent += count+","+data[productIndex][3]+","+data[productIndex][11]+"\n";
       }
     }
   )
+  downloadContent += "-, Tổng số lượng, "+num+"\n";
+  downloadContent += "-, Tổng tiền, "+totalCost+"\n";
+
   var content = "Tổng tiền vốn: "+totalCost+" <br/>"+
                 "Tổng số lượng: "+num+" <br/>"+
                 "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
-                "Hàng tồn: "+stillInStore+" <br/>";
+                "Hàng tồn: "+stillInStore+" <br/>"+
+                "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file<div> <br/>";
+
   $("#modelContent").html(content);
   $("#modalYes").click(function(){
   })
   $('#myModal').modal('toggle');
+  $(".downloadProds").click(function(){
+     downloadFile("hang.csv", downloadContent);
+  })
 })
 
 
