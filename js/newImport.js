@@ -21,7 +21,8 @@ function addNewImport(){
         $("#receiverAddress").val(),
         $("#receiverName").val(),
         $("#bankingAccountNumber").val(),
-        $("#bankingName").val()
+        $("#bankingName").val(),
+        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!P:P)"
       ]
     ]
     

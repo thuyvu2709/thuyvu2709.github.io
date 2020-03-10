@@ -603,7 +603,7 @@ function appendTask(submitTaskData,callback) {
 
 
 function appendWarehouse(submitImportData,callback) {
-  var numOfColumn = 9;
+  var numOfColumn = 10;
   var sheetrange = 'Warehouse!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = mainSheetForProduct;
 
