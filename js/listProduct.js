@@ -400,19 +400,24 @@ $(".click-to-view").click(function(){
   var stillInStore = 0;
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
-  var downloadContent = "No, Name, Count\n";
+  var downloadContent = "No, Name, Count, Price, Total\n";
   var count = 0;
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
         var productIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
         // console.log(data[productIndex]);
-        totalCost+= parseInt(data[productIndex][11]);
+        totalCost+= parseInt(data[productIndex][4]) * parseInt(data[productIndex][11];
         num += parseInt(data[productIndex][4]);
         requestedNum += parseInt(data[productIndex][21]);
         stillInStore += parseInt(data[productIndex][17]);
         count++;
-        downloadContent += count+","+data[productIndex][3]+","+data[productIndex][11]+"\n";
+        downloadContent += count+","
+        +data[productIndex][3]+","
+        +data[productIndex][4]+","
+        +data[productIndex][11]+","
+        +(parseInt(data[productIndex][4]) * parseInt(data[productIndex][11]))
+        +"\n";
       }
     }
   )
