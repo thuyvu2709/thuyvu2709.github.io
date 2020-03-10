@@ -407,7 +407,7 @@ $(".click-to-view").click(function(){
       if (this.checked){
         var productIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
         // console.log(data[productIndex]);
-        totalCost+= parseInt(data[productIndex][4]) * parseInt(data[productIndex][11];
+        totalCost+= (parseInt(data[productIndex][4]) * parseInt(data[productIndex][11]));
         num += parseInt(data[productIndex][4]);
         requestedNum += parseInt(data[productIndex][21]);
         stillInStore += parseInt(data[productIndex][17]);
