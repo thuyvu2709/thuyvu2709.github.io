@@ -37,13 +37,14 @@ function editImport(){
             $("#receiverAddress").val(),
             $("#receiverName").val(),
             $("#bankingAccountNumber").val(),
-            $("#bankingName").val() 
+            $("#bankingName").val(),
+            "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!P:P)"
         ]
     ]
     
     $("#loadingSpin").show();
     
-    var indexColumnOfAllData = 9;
+    var indexColumnOfAllData = 10;
 
     var sheetrange = 'Warehouse!A'+currentImport.importIndex+':'+String.fromCharCode(65+indexColumnOfAllData)+''+currentImport.importIndex;
 
