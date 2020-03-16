@@ -422,13 +422,15 @@ $(".click-to-view").click(function(){
     }
   )
   downloadContent += "-, Tổng số lượng, "+num+"\n";
-  downloadContent += "-, Tổng tiền, "+totalCost+"\n";
+  downloadContent += "-, Tổng tiền, "+totalCost;
 
   var content = "Tổng tiền vốn: "+totalCost+" <br/>"+
                 "Tổng số lượng: "+num+" <br/>"+
                 "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
                 "Hàng tồn: "+stillInStore+" <br/>"+
-                "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file<div> <br/>";
+                "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file</div>"+
+                "<div class='btn btn-primary mb-2 viewProds'>Xem bảng</div>"+
+                " <br/>";
 
   $("#modelContent").html(content);
   $("#modalYes").click(function(){
@@ -436,6 +438,17 @@ $(".click-to-view").click(function(){
   $('#myModal').modal('toggle');
   $(".downloadProds").click(function(){
      downloadFile("hang.csv", downloadContent);
+  })
+  $(".viewProds").click(function(){
+    var ls1 = downloadContent.split("\n");
+    var ls2 = [];
+    for (s in ls1) {
+      ls2.push(ls1[s].split(","));
+    }
+    console.log(ls2);
+    localStorage.setItem("tmp",JSON.stringify(ls2));
+    window.location = "../manager/viewtmp.html";
+
   })
 })
 
