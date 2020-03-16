@@ -1286,11 +1286,10 @@ function pkImageScan(){
 
       // console.log(dataUpdateShipping);
 
-      $("#loadingSpin").show();
-
       updateShipping(dataUpdateShipping, sheetrange, function(){
           
           clickToShowImage(link, ".showPackageImage_"+orderIndex);
+          $("#loadingSpin").hide();
 
         },function(){
           console.log("Something wrong");
