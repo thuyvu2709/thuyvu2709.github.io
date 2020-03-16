@@ -396,6 +396,14 @@ function loadOrderShippingListHtml() {
     // }
 
     // var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
+
+    var packageImageBtn = '<div class="btn btn-default btnNormal5px packageImage packageImage_'+e+'" ">Chụp ảnh gói hàng</div>'
+                          +'<div style="height: 0px;width:0px; overflow:hidden;">'
+                          +'  <input id="pkScanImage_'+e+'" class="pkScanImage packageImage_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
+                          +'</div>'
+                          +'<div class="btn btn-default '+(lsOrder[e][12] ? "" : "divHide")+' btnNormal5px showPackageImage showPackageImage_'+e+'" ">Xem ảnh gói hàng</div>'
+                          +'<br/>';
+
     var orderDetailBrief  = "<hr/>";
 
     // if (lsOrder[e][8]=="SHIPPER_COD") {
@@ -488,7 +496,8 @@ function loadOrderShippingListHtml() {
               // datetime +
 
               '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
-              preparedButton +
+              // preparedButton +
+              packageImageBtn+
               completeButton +
               deleteButton +
               payshipButton+
@@ -496,6 +505,10 @@ function loadOrderShippingListHtml() {
           '</div>'+
         '</div>'
       )
+
+      if (lsOrder[e][12]){
+          $(".showPackageImage").click(clickToShowImageEvent);
+      }
 
     // $('.datetimepicker').datetimepicker();
     // if (!lsOrder[e][11]) {
@@ -561,6 +574,9 @@ function loadOrderShippingListHtml() {
 
   // $('.datetimepicker').datetimepicker();
   $('.prepared').click(shipPrepared);
+
+  $('.packageImage').click(pkImageBtnClick);
+  $(".pkScanImage").on("change", pkImageScan);
 
   $(".btnChooseShippingSchedule").hide();
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
@@ -1203,4 +1219,100 @@ $("#orderSearchInput").keyup(function(){
   console.log("search:"+searchText);
   loadOrderShippingListHtml();
 });
+
+function pkImageBtnClick() {
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  console.log("packageImage:"+orderIndex);
+  document.getElementById("pkScanImage_"+orderIndex).click();
+}
+
+function pkImageScan(){
+  $("#loadingSpin").show();
+
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+
+  var $files = $(this).get(0).files;
+
+  if ($files.length) {
+
+    // Reject big files
+    if ($files[0].size > $(this).data("max-size") * 1024) {
+      console.log("Please select a smaller file");
+      return false;
+    }
+
+    // Begin file upload
+    console.log("Uploading file to Imgur..");
+
+    // Replace ctrlq with your own API key
+    var apiUrl = 'https://api.imgur.com/3/image';
+    var apiKey = 'bddc38af21c5d9a';
+
+    var settings = {
+      async: false,
+      crossDomain: true,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+      url: apiUrl,
+      headers: {
+        Authorization: 'Client-ID ' + apiKey,
+        Accept: 'application/json'
+      },
+      mimeType: 'multipart/form-data'
+    };
+
+    var formData = new FormData();
+    formData.append("image", $files[0]);
+    settings.data = formData;
+
+    // Response contains stringified JSON
+    // Image URL available at response.data.link
+    $.ajax(settings).done(function(response) {
+      console.log(response);
+      console.log("link:"+JSON.parse(response).data.link);
+      // $("#prodImageLink").val(JSON.parse(response).data.link);
+      $("#loadingSpin").hide();
+      $(".packageImage_"+orderIndex).hide();
+      $(".showPackageImage_"+orderIndex).show();
+
+      var link = JSON.parse(response).data.link;
+
+      var actualOrderIndex = parseInt(orderIndex) + 1;
+
+      var sheetrange = 'Shipping!M'+actualOrderIndex+':M'+actualOrderIndex;
+
+      dataUpdateShipping = [[link]];
+
+      // console.log(dataUpdateShipping);
+
+      $("#loadingSpin").show();
+
+      updateShipping(dataUpdateShipping, sheetrange, function(){
+          
+          clickToShowImage(link, ".showPackageImage_"+orderIndex);
+
+        },function(){
+          console.log("Something wrong");
+      })
+    });
+
+  }
+}
+
+function clickToShowImageEvent(){
+  var index = $(this).attr("class").split(" ").pop().split("_").pop();
+  index = parseInt(index);
+  // console.log("AA"+index);
+  $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][12]+'" />')
+  $('#myModal').modal('toggle');
+}
+
+function clickToShowImage(imageLink, classname){
+  $(classname).click(function(){
+    // console.log("AA"+index);
+    $("#myModal .modal-body").html('<img style="width:100%" src="'+ imageLink +'" />')
+    $('#myModal').modal('toggle');
+  })
+}
 
