@@ -62,15 +62,22 @@
 
   <style> 
   table, td, th { 
-      border: 1px solid black; 
+      border: 1px solid #a2b8db; 
+      font-size: 0.6rem;
   } 
+  table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: 5px 10px;
+  }
+
   </style>
   <script type="text/javascript">
     var array = JSON.parse(localStorage.getItem("tmp"));
 
     // var array = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]];
-    var content = '<table style="width: 100%;border-collapse: collapse;">';
-    // content+="<tr><td>No</td><td>Name</td><td>Count</td><td>Price</td><td>Total</td></tr>"
+    var content = '<table>';
+    // content+="<tr><td style='text-align: center;'>No</td><td>Name</td><td>Count</td><td>Price</td><td>Total</td></tr>"
     array.forEach(function(row) {
         content += "<tr>";
         row.forEach(function(cell) {
