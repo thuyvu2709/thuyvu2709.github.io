@@ -649,7 +649,7 @@ function startPreparingFn(){
     } else {
       console.log("prepare done")
       $(".modal-body").empty();
-      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái";
+      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ chụp ảnh hàng";
       $(".modal-body").html(content);
     }
     $('.prepareNext').click(function(){
