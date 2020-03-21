@@ -397,11 +397,18 @@ function loadOrderShippingListHtml() {
 
     // var orderDetailBrief = "<hr/>Shipper không thu tiền<hr/>";
 
-    var packageImageBtn = '<div class="btn btn-default btnNormal5px packageImage packageImage_'+e+'" ">Chụp ảnh gói hàng</div>'
+    var packageImageBtn = '<br/>'
+                          +'<div class="btn btn-default btnNormal5px packageImage packageImage_1_'+e+'" ">Chụp ảnh hàng</div>'
                           +'<div style="height: 0px;width:0px; overflow:hidden;">'
-                          +'  <input id="pkScanImage_'+e+'" class="pkScanImage packageImage_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
+                          +'  <input id="pkScanImage_1_'+e+'" class="pkScanImage pkScanImage_1_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
                           +'</div>'
-                          +'<div class="btn btn-default '+(lsOrder[e][12] ? "" : "divHide")+' btnNormal5px showPackageImage showPackageImage_'+e+'" ">Xem ảnh gói hàng</div>'
+                          +'<div class="btn btn-default '+(lsOrder[e][12] ? "" : "divHide")+' btnNormal5px showPackageImage showPackageImage_1_'+e+'" ">Xem ảnh hàng</div>'
+                          +''
+                          +'<div class="btn btn-default btnNormal5px packageImage packageImage_2_'+e+'" ">Chụp ảnh gói hàng</div>'
+                          +'<div style="height: 0px;width:0px; overflow:hidden;">'
+                          +'  <input id="pkScanImage_2_'+e+'" class="pkScanImage pkScanImage_2_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
+                          +'</div>'
+                          +'<div class="btn btn-default '+(lsOrder[e][13] ? "" : "divHide")+' btnNormal5px showPackageImage showPackageImage_2_'+e+'" ">Xem ảnh gói hàng</div>'
                           +'<br/>';
 
     var orderDetailBrief  = "<hr/>";
@@ -426,6 +433,7 @@ function loadOrderShippingListHtml() {
     // var title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon;
     // }
 
+    orderDetailBrief+='<div class="btn btn-default btnNormal5px startPreparing order_'+e+'" >Bắt đầu xếp hàng</div><br/>'
 
     var prodListOrder = lsOrderDetail[lsOrder[e][0]].prodListOrder;
     var numOfProd = 0;
@@ -438,7 +446,7 @@ function loadOrderShippingListHtml() {
       // productWeights = productWeights + parseFloat(prodListOrder[o].productWeight);
 
       // orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +" | "+prodListOrder[o].productWeight+" kg/pc)<br/>"
-      orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
+      // orderDetailBrief += prodListOrder[o].productName + " (sl:"+prodListOrder[o].productCount +")<br/>"
 
     }
     // console.log(prodListOrder[o]);
@@ -446,6 +454,8 @@ function loadOrderShippingListHtml() {
     // orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> ) <br/>";
     // orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" ( <i class='fas fa-box'>x"+numOfProd+"</i> ) <br/>";
     orderDetailBrief+="Tiền hàng:"+lsOrderDetail[lsOrder[e][0]].totalPay+" <br/> Số lượng hàng: "+numOfProd+" <br/>";
+    
+    lsOrderDetail[lsOrder[e][0]].numOfProd = numOfProd;
 
     var dateText = lsOrder[e][10].split(" ")[0].replace(new RegExp('-', 'g'), '/');
     var requestedDate = new Date(dateText);
@@ -580,6 +590,7 @@ function loadOrderShippingListHtml() {
 
   $(".btnChooseShippingSchedule").hide();
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
+  $(".startPreparing").click(startPreparingFn);
 
   // $('.datetimepicker').change(function(){
   //   // console.log($(this).attr("class"));
@@ -614,6 +625,42 @@ function getTaskUnpaid(){
     text : text,
     taskPay : taskPay
   }
+}
+
+function startPreparingFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  orderIndex = parseInt(orderIndex);
+  var prodListOrder = lsOrderDetail[lsOrder[orderIndex][0]].prodListOrder;
+  var currentIndex = 0;
+  // console.log(Object.keys(prodListOrder).length)
+
+  function getItem(index){
+    if (index<0) {
+      return;
+    };
+    if (index<Object.keys(prodListOrder).length) {
+      console.log("getItem")
+      $(".modal-body").empty();
+      var content = prodListOrder[index].productName + "<span class='textRed'> (sl : "+prodListOrder[index].productCount +")</span><br/>";
+      content+='<img style="width:100%" src="'+prodListOrder[index].productImage+'" />'
+      content+='<div class="btn btn-default btnNormal textViolet prepareBack">Back</div>';
+      content+='<div class="btn btn-default btnNormal textBlue prepareNext">Next</div>';
+      $(".modal-body").html(content);
+    } else {
+      console.log("prepare done")
+      $(".modal-body").empty();
+      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái";
+      $(".modal-body").html(content);
+    }
+    $('.prepareNext').click(function(){
+      getItem(index+1);
+    });
+    $('.prepareBack').click(function(){
+      getItem(index-1);
+    });
+  }
+  $('#myModal').modal('show');
+  getItem(0);
 }
 
 function chooseShippingScheduleFn(){
@@ -1221,15 +1268,20 @@ $("#orderSearchInput").keyup(function(){
 });
 
 function pkImageBtnClick() {
-  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  console.log("packageImage:"+orderIndex);
-  document.getElementById("pkScanImage_"+orderIndex).click();
+  var lsIndex = $(this).attr("class").split(" ").pop().split("_");
+  var orderIndex = lsIndex.pop();
+  var num = lsIndex.pop();
+  // console.log(orderIndex+" "+num);
+  console.log("packageImage:"+num+" "+orderIndex);
+  document.getElementById("pkScanImage_"+num+"_"+orderIndex).click();
 }
 
 function pkImageScan(){
   $("#loadingSpin").show();
 
-  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var lsIndex = $(this).attr("class").split(" ").pop().split("_");
+  var orderIndex = lsIndex.pop();
+  var num = lsIndex.pop();
 
   var $files = $(this).get(0).files;
 
@@ -1273,14 +1325,20 @@ function pkImageScan(){
       console.log("link:"+JSON.parse(response).data.link);
       // $("#prodImageLink").val(JSON.parse(response).data.link);
       $("#loadingSpin").hide();
-      $(".packageImage_"+orderIndex).hide();
-      $(".showPackageImage_"+orderIndex).show();
+      $(".packageImage_"+num+"_"+orderIndex).hide();
+      $(".showPackageImage_"+num+"_"+orderIndex).show();
 
       var link = JSON.parse(response).data.link;
 
       var actualOrderIndex = parseInt(orderIndex) + 1;
 
-      var sheetrange = 'Shipping!M'+actualOrderIndex+':M'+actualOrderIndex;
+      var sheetrange;
+      if (num=="1"){
+        sheetrange = 'Shipping!M'+actualOrderIndex+':M'+actualOrderIndex;
+      } else if(num=="2") {
+        sheetrange = 'Shipping!N'+actualOrderIndex+':N'+actualOrderIndex;
+      }
+
 
       dataUpdateShipping = [[link]];
 
@@ -1288,7 +1346,7 @@ function pkImageScan(){
 
       updateShipping(dataUpdateShipping, sheetrange, function(){
           
-          clickToShowImage(link, ".showPackageImage_"+orderIndex);
+          clickToShowImage(link, ".showPackageImage_"+num+"_"+orderIndex);
           $("#loadingSpin").hide();
 
         },function(){
