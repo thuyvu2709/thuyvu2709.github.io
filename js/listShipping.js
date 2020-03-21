@@ -403,7 +403,7 @@ function loadOrderShippingListHtml() {
                           +'  <input id="pkScanImage_1_'+e+'" class="pkScanImage pkScanImage_1_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
                           +'</div>'
                           +'<div class="btn btn-default '+(lsOrder[e][12] ? "" : "divHide")+' btnNormal5px showPackageImage showPackageImage_1_'+e+'" ">Xem ảnh hàng</div>'
-                          +''
+                          +'<br/>'
                           +'<div class="btn btn-default btnNormal5px packageImage packageImage_2_'+e+'" ">Chụp ảnh gói hàng</div>'
                           +'<div style="height: 0px;width:0px; overflow:hidden;">'
                           +'  <input id="pkScanImage_2_'+e+'" class="pkScanImage pkScanImage_2_'+e+'" type="file" class="btn btn-primary mb-2" accept="image/*;capture=camera" />'
@@ -1358,10 +1358,15 @@ function pkImageScan(){
 }
 
 function clickToShowImageEvent(){
-  var index = $(this).attr("class").split(" ").pop().split("_").pop();
-  index = parseInt(index);
+  var lsIndex = $(this).attr("class").split(" ").pop().split("_");
+  var orderIndex = parseInt(lsIndex.pop());
+  var num = parseInt(lsIndex.pop());
   // console.log("AA"+index);
-  $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][12]+'" />')
+  if (num=="1"){
+    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][12]+'" />')
+  }else {
+    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][13]+'" />')    
+  }
   $('#myModal').modal('toggle');
 }
 
