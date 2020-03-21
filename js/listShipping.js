@@ -375,7 +375,7 @@ function loadOrderShippingListHtml() {
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
       if (userRole=="manager") {
-        completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >SHOP đã nhận tiền</div>';
+        completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >SHOP đã nhận tiền ('+lsOrderDetail[lsOrder[e][0]].willpay+')</div>';
       } else {
         completeButton = '<div class="btn btn-default btnNormal5px order_'+e+'" >Chờ xác nhận từ SHOP</div>';
       }

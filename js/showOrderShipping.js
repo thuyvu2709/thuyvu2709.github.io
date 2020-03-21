@@ -71,6 +71,7 @@ for (i in prodListOrder){
 		continue;
 	}
 	$("#lsTable").append("<tr>"+
+	"<td>"+'<input type="checkbox" class="checkbox"/>'+"</td>"+	
     "<td>"+(parseInt(i)+1)+"</td>"+
     // "<td>"+prodListOrder[i].productName+"</td>"+
     "<td class='showImage borderMustard image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
