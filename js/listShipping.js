@@ -1363,9 +1363,9 @@ function clickToShowImageEvent(){
   var num = parseInt(lsIndex.pop());
   // console.log("AA"+index);
   if (num=="1"){
-    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][12]+'" />')
+    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[orderIndex][12]+'" />')
   }else {
-    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[index][13]+'" />')    
+    $("#myModal .modal-body").html('<img style="width:100%" src="'+lsOrder[orderIndex][13]+'" />')    
   }
   $('#myModal').modal('toggle');
 }
