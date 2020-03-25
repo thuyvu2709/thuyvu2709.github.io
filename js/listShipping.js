@@ -1325,7 +1325,7 @@ function pkImageScan(){
       console.log("link:"+JSON.parse(response).data.link);
       // $("#prodImageLink").val(JSON.parse(response).data.link);
       $("#loadingSpin").hide();
-      $(".packageImage_"+num+"_"+orderIndex).hide();
+      // $(".packageImage_"+num+"_"+orderIndex).hide();
       $(".showPackageImage_"+num+"_"+orderIndex).show();
 
       var link = JSON.parse(response).data.link;
