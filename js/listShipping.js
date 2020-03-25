@@ -649,7 +649,7 @@ function startPreparingFn(){
     } else {
       console.log("prepare done")
       $(".modal-body").empty();
-      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ chụp 2 bức ảnh hàng";
+      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ chụp 2 bức ảnh hàng, 1 bức là hàng trong hộp, 1 bức là vỏ hộp đã bọc";
       $(".modal-body").html(content);
     }
     $('.prepareNext').click(function(){
