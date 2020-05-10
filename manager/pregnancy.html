@@ -23,6 +23,11 @@
     var pageName = "othermanage";
     var pageRole = "manager";
   </script>
+  <style type="text/css">
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
 </head>
 
 <body id="page-top">
@@ -38,60 +43,15 @@
   </header>
   <!-- Portfolio Section -->
   <section class="page-section portfolio" id="portfolio">
-    <h2 class="text-center">Quản lý thông tin khác</h2>
-    <div id="listOrder">
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="otherFees.html">Quản lý chi phí khác</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="../shipper">Quản lý giao hàng</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="warehouse.html">Quản lý kho hàng</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="dataset.html">Quản lý dữ liệu</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">
-            <button class="btn btn-link">
-              <a href="pregnancy.html">Theo dõi thai kỳ</a>
-            </button>
-          </h5>
-        </div>
-      </div>
-
-    </div> 
+    <h2 class="text-center">Theo dõi thai kỳ</h2>
+    <h5 id="lastPeriod"></h5>   
+    <h5 id="babyStatus"></h5>    
+    <h5 id="babyDimension"></h5>    
+ 
+    <h5>Cân nặng của mẹ trong khoảng:</h5>
+    <span id="pregnantWeight"></span>
+    <br/>
+    <span id="pregnantData"></span>
 
   </section>
   
@@ -113,6 +73,7 @@
   <script src="../js/freelancer.min.js"></script>
 
   <script type="text/javascript" src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/pregnancy.js"></script>
 
   <!-- <script type="text/javascript" src="js/common.js"></script> -->
 
