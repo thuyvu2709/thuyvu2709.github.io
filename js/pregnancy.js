@@ -54,7 +54,8 @@ $("#babyDimension").html("Kích thước em bé:"+babyDimension[week-7][1]+" cm 
 
 var link = "hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before="+beginWeight+"&pwg_height="+height+"&pwg_week="+week;
 $.ajax({
-  url: "http://cors-anywhere.herokuapp.com/"+link,
+  // url: "http://cors-anywhere.herokuapp.com/"+link, //For local
+  url: "https://cors-anywhere.herokuapp.com/"+link, //For code push
   type: 'GET',
   crossDomain: true,
   success: function(res) {
@@ -93,3 +94,16 @@ $.ajax({
 // https://hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before=60.1&pwg_height=160&pwg_week=12
 // http://hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before=60.1&pwg_height=160&pwg_week=12
 
+
+// var link = "hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before=60.1&pwg_height=160&pwg_week=12";
+// $.ajax({
+//   url: "https://cors-anywhere.herokuapp.com/"+link,
+//   type: 'GET',
+//   success: function(res) {
+//     // console.log(res)
+//     var data = $.parseHTML(res);  //<----try with $.parseHTML().
+    
+//     // });
+//     console.log(data);
+//   }
+// });
