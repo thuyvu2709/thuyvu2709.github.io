@@ -12,7 +12,7 @@ var roleSheet = '1PttgX_vfEPEWPzI2MFtSuWnPQi7ctzcs8QmnQOwxx74';
 var shippingSheet = '1iSGH0EXjdFOeZYDxWcy98Gv3d9CkvlcrraUZuaTR5ZY';
 
 datasetName = localStorage.getItem("datasetName");
-if (!datasetName) {
+if (!datasetName || datasetName == "2019") {
   // datasetName = 2019;
   // mainSheetForProduct = '1QEO7O0jtOVrWSVTc5EnYs03PNHqDS7nspWC2CzaZP_c';
   // roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
@@ -837,13 +837,11 @@ function editProduct(dataEditP, range,callback, callbackError) {
 }
 
 function getRoleList(callback) {
-  console.log("getRoleList");
   var spreadsheetId = roleSheet;
 
   if (passDataLocalhost) {
     callback();
   }
-  console.log("846")
 
   if(!gapi.client.sheets) {
     callback();
@@ -853,12 +851,12 @@ function getRoleList(callback) {
 
   var indexColumnOfAllData = 3;
   var sheetrange = 'Roles!A:'+String.fromCharCode(65+indexColumnOfAllData);
-  console.log("855")
+
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: sheetrange,
   }).then(function(response) {
-      console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
       // showList(dataset);
       localStorage.setItem("roles",JSON.stringify(dataset));
