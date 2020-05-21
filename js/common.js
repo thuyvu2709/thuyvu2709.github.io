@@ -837,6 +837,7 @@ function editProduct(dataEditP, range,callback, callbackError) {
 }
 
 function getRoleList(callback) {
+  console.log("getRoleList");
   var spreadsheetId = roleSheet;
 
   if (passDataLocalhost) {
@@ -856,7 +857,7 @@ function getRoleList(callback) {
       spreadsheetId: spreadsheetId,
       range: sheetrange,
   }).then(function(response) {
-      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
       // showList(dataset);
       localStorage.setItem("roles",JSON.stringify(dataset));
