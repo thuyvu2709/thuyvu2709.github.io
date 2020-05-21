@@ -899,6 +899,7 @@ function loadOtherFee(callback) {
 }
 
 function getCurrentUser() {
+    console.log("getCurrentUser");
     var auth2 = gapi.auth2.getAuthInstance();
     
     if (auth2.isSignedIn.get()) {

@@ -151,6 +151,8 @@ function checkRole() {
             status : true
         }
     }
+    console.log("checkRole");
+    console.log(currentUser);
 
     if (!currentUser.status) {
         comeBackHomeToAuthorize();
