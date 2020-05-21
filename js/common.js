@@ -843,6 +843,7 @@ function getRoleList(callback) {
   if (passDataLocalhost) {
     callback();
   }
+  console.log("846")
 
   if(!gapi.client.sheets) {
     callback();
@@ -852,7 +853,7 @@ function getRoleList(callback) {
 
   var indexColumnOfAllData = 3;
   var sheetrange = 'Roles!A:'+String.fromCharCode(65+indexColumnOfAllData);
-
+  console.log("855")
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: sheetrange,
