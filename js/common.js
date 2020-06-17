@@ -34,7 +34,7 @@ if (!datasetName) {
 
 
 var hostname = window.location.hostname;
-var passDataLocalhost = (hostname == "localhost" || hostname=="172.20.10.11");
+var passDataLocalhost = (hostname == "localhost" || hostname=="172.20.10.6");
 
 var historyPath = [];
 // var currentHistoryData;

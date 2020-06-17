@@ -626,6 +626,15 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  max-width: 33.33%;
+
+}
+.col-lg-4 h3{
+  font-size: 0.6rem
+}
+
+.minihead {
+  padding-top: calc(0.5rem + 1px);
 }
 
 .col {
@@ -1305,6 +1314,13 @@ pre code {
     flex: 0 0 33.33333%;
     max-width: 33.33333%;
   }
+  .col-lg-4 h3{
+    font-size: 1.75rem
+  }
+  .minihead {
+  padding-top: calc(1rem + 1px);
+  padding-bottom: 3rem;
+}
   .col-lg-5 {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 41.66667%;
@@ -8689,7 +8705,7 @@ button.bg-dark:focus {
 
 .pt-4,
 .py-4 {
-  padding-top: 1.5rem !important;
+  padding-top: 0.5rem !important;
 }
 
 .pr-4,
@@ -8699,7 +8715,7 @@ button.bg-dark:focus {
 
 .pb-4,
 .py-4 {
-  padding-bottom: 1.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
 .pl-4,
@@ -10584,7 +10600,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .page-section .page-section-heading {
-  font-size: 2.25rem;
+  font-size: 1.9rem;
   line-height: 2rem;
 }
 
@@ -10802,11 +10818,6 @@ a.text-dark:hover, a.text-dark:focus {
   padding-bottom: 6rem;
 }
 
-.minihead {
-  padding-top: calc(1rem + 1px);
-  padding-bottom: 3rem;
-}
-
 .masthead .masthead-heading {
   font-size: 2.75rem;
   line-height: 2.75rem;
@@ -10835,7 +10846,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .portfolio {
-  margin-bottom: -30px;
+  margin-bottom: -100px;
 }
 
 .portfolio .portfolio-item {
