@@ -624,13 +624,13 @@ pre code {
 .col-xl-auto {
   position: relative;
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 6px;
+  padding-left: 6px;
   max-width: 33.33%;
 
 }
 .col-lg-4 h3{
-  font-size: 0.6rem
+  font-size: 0.75rem
 }
 
 .minihead {
@@ -10612,7 +10612,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .divider-custom {
-  margin: 1.25rem 0 1.5rem;
+  margin: 0.25rem 0 0.5rem;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10644,7 +10644,17 @@ a.text-dark:hover, a.text-dark:focus {
 
 .divider-custom .divider-custom-icon {
   color: #2c3e50 !important;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 992px) {
+  .divider-custom {
+    margin: 1.25rem 0 1.5rem;
+  }
+  .divider-custom .divider-custom-icon {
+  color: #2c3e50 !important;
   font-size: 2rem;
+  } 
 }
 
 .divider-custom.divider-light .divider-custom-line {
