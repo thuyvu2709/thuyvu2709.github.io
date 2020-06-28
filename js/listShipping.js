@@ -556,14 +556,14 @@ function loadOrderShippingListHtml() {
     $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
   } else if (mode == "PAYSHIP") {
     
-    var  reportPay = ("Tiền gói hàng (số đơn X 5): "+packedCost+"<br/>Tiền đi ship: "+shippedCost+"<br/>Tiền post và shoppe: "+postAndShopeeCost+"<br/>");
+    var  reportPay = ("Tiền gói hàng (số đơn X 5): "+packedCost+"k<br/>Tiền đi ship: "+shippedCost+"k<br/>Tiền post và shoppe: "+postAndShopeeCost+"k<br/>");
     var taskPayfn = getTaskUnpaid();
 
     var taskPay = taskPayfn.taskPay;
     reportPay += taskPayfn.text;
-    reportPay += "Tiền nhiệm vụ:"+taskPayfn.taskPay+"<br/>";
-    reportPay += "Tổng tiền cho shipper:"+(packedCost+shippedCost+postAndShopeeCost+taskPayfn.taskPay)+"<br/>";
-    reportPay += "<div class='text-blue'>Shipper đang cầm:"+totalShipperReceivedMoney+"</div><br/>";
+    reportPay += "Tiền nhiệm vụ:"+taskPayfn.taskPay+"k<br/>";
+    reportPay += "Tổng tiền cho shipper:"+(packedCost+shippedCost+postAndShopeeCost+taskPayfn.taskPay)+"k<br/>";
+    reportPay += "<div class='text-blue'>Shipper đang cầm:"+totalShipperReceivedMoney+"k</div><br/>";
 
     $("#note").html(reportPay);
   } else {
