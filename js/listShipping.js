@@ -562,7 +562,8 @@ function loadOrderShippingListHtml() {
     var taskPay = taskPayfn.taskPay;
     reportPay += taskPayfn.text;
     reportPay += "Tiền nhiệm vụ:"+taskPayfn.taskPay+"<br/>";
-    reportPay += "Tổng tiền cho shipper:"+(packedCost+shippedCost+postAndShopeeCost+taskPayfn.taskPay);
+    reportPay += "Tổng tiền cho shipper:"+(packedCost+shippedCost+postAndShopeeCost+taskPayfn.taskPay)+"<br/>";
+    reportPay += "<div class='text-blue'>Shipper đang cầm:"+totalShipperReceivedMoney+"</div><br/>";
 
     $("#note").html(reportPay);
   } else {
