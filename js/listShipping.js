@@ -618,7 +618,7 @@ function getTaskUnpaid(){
     if (lsTask[e][3] == "COMPLETED" && !lsTask[e][6]) {
       // console.log(lsTask[e])
       // console.log(lsTask[e][6])
-      text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"<br/>";
+      text += "--"+lsTask[e][1]+" : "+parseFloat(lsTask[e][5] ? lsTask[e][5] : 0)+"k<br/>";
       taskPay += parseFloat(lsTask[e][5] ? lsTask[e][5] : 0);
     }
   }
