@@ -12,6 +12,7 @@ function loginViettelPost(){
 	    "data": {}
 	}
 	getViettelPostAccess(function(data){
+		settings["data"]=data;
 		$.ajax(settings).done(function(response) {
 		    console.log(response);
 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
