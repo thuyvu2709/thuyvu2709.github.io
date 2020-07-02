@@ -322,6 +322,41 @@ function getLatestTaskCode(callback) {
   });
 }
 
+function getViettelPostAccess(callback) {
+  var spreadsheetId = shippingSheet;
+
+  console.log("getViettelPostAccess");
+
+  var indexColumnOfAllData = 2;
+  var sheetrange = 'Viettelpost!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      callback({
+        "USERNAME": dataset[0][1],
+        "PASSWORD": dataset[1][1]
+      });
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 
 function getLatestImportCode(callback) {
   var spreadsheetId = mainSheetForProduct;

@@ -606,4 +606,25 @@ $("#btnPrintOrder").click(function(){
 	// window.print();
 })
 
+// $(".click-to-fix-address").click(function(){
+
+//   $("#modelContent").html(content);
+//   $("#modalYes").click(function(){
+//   })
+//   $('#myModal').modal('toggle');
+//   $(".downloadProds").click(function(){
+//      downloadFile("hang.csv", downloadContent);
+//   })
+//   $(".viewProds").click(function(){
+//     var ls1 = downloadContent.split("\n");
+//     var ls2 = [];
+//     for (s in ls1) {
+//       ls2.push(ls1[s].split(","));
+//     }
+//     console.log(ls2);
+//     localStorage.setItem("tmp",JSON.stringify(ls2));
+//     window.location = "../manager/viewtmp.html";
+
+//   })
+// })
 
