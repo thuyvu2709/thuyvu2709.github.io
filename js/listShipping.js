@@ -105,7 +105,7 @@ function parseOrderSheetList(){
     listOrderSheetParse[orderList[e][0]] = {
       orderIndex : e,
       totalPay : orderList[e][5],
-      orderOwner: orderlist[e][2]
+      orderOwner: orderList[e][2]
     }
   }
 }
