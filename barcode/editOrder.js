@@ -606,6 +606,8 @@ function addDetailOrder() {
 		console.log(productIndexInStore);
 		console.log(productList[productIndexInStore]);
 		prodListOrder[i].importCode = productList[productIndexInStore][2];
+		prodListOrder[i].image = productList[productIndexInStore][19];
+
 
 		if (isAppend){
 			submitDataAppend.push([
@@ -660,13 +662,13 @@ function addDetailOrder() {
 
 	currentOrder.prodListOrder = Object.assign({},newProfListOrder);
 
-	// console.log(prodListOrder);
-	console.log("submitDataAppend");
-	console.log(submitDataAppend);
+	// console.log(currentOrder.prodListOrder);
+	// console.log("submitDataAppend");
+	// console.log(submitDataAppend);
 
-	console.log("submitDataEdit");
-	console.log(submitDataEdit);
-	console.log(rangeEdit);
+	// console.log("submitDataEdit");
+	// console.log(submitDataEdit);
+	// console.log(rangeEdit);
 
 	var fEdit = function(){
 		console.log("fEdit")
