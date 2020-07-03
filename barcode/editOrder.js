@@ -607,6 +607,7 @@ function addDetailOrder() {
 		console.log(productList[productIndexInStore]);
 		prodListOrder[i].importCode = productList[productIndexInStore][2];
 		prodListOrder[i].image = productList[productIndexInStore][19];
+		prodListOrder[i].productImage = productList[productIndexInStore][19];
 
 
 		if (isAppend){
