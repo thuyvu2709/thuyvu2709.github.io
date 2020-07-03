@@ -40,7 +40,19 @@
 	<script type="text/javascript" src="js/authorize.js"></script>
 
 	<script type="text/javascript" src="js/scriptTest.js"></script>
-
+<!-- 	<script type="text/javascript">
+	export:
+	downloadFile("localStorage.txt", JSON.stringify(localStorage));
+	
+	import:
+	$.getJSON( "http://localhost:3000/localstorage.txt", function(data) {
+	    // Success
+	    console.log(data);
+	    for(var e in data) {
+			localStorage.setItem(e, data[e]);
+	    }
+	})
+	</script> -->
 
 	<script async defer src="https://apis.google.com/js/api.js"
 	onload="this.onload=function(){};handleClientLoad()"

@@ -15,6 +15,8 @@
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
       <!-- Theme CSS -->
       <link href="../css/freelancer.css" rel="stylesheet">
+      <link href="../css/autocomplete.css" rel="stylesheet">
+
       <script type="text/javascript">
          var pageName = "editorder";
          var pageRole = "manager";
@@ -49,7 +51,12 @@
                </div>
             </div>
             <div class="form-group row">
-               <label for="customerAddress" class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
+               <label for="customerAddress" class="col-sm-2 col-form-label">
+                  <span>
+                    Địa chỉ khách hàng
+                    <i class="fas fa-map-marked-alt" id="updateAddress"></i>
+                  </span>
+                </label>
                <div class="col-sm-10">
                   <input type="text" class="form-control" id="customerAddress" placeholder="Địa chỉ khách hàng" required>
                </div>
@@ -158,9 +165,9 @@
             </div>
 
 <!--             <div class="form-group row">
-               <label for="customerName" class="col-sm-2 col-form-label">Chi phí khác</label>
-               <div class="col-sm-10">
-                  <input type="text" class="form-control" id="otherCost" placeholder="Chi phí khác (shop thanh toán)" required>
+               <div class="btn btn-primary col-sm-2 col-form-label" id="addDimension">Thêm kích thước/cân nặng</div>
+               <div class="col-sm-10 recommendation">
+                  
                </div>
             </div> -->
 
@@ -252,6 +259,8 @@
       <script type="text/javascript" src="scanbarcodeIndex.js"></script>
 
       <script type="text/javascript" src="../js/common.js"></script>
+
+      <script type="text/javascript" src="../js/viettelpost.js"></script>
 
       <script type="text/javascript" src="../js/convertOrder.js"></script>
 

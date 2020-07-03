@@ -57,7 +57,7 @@ $("#btnPrintOrder").hide();
 // });
 
 var prodListOrder = currentOrder.prodListOrder;
-
+// console.log(prodListOrder);
 fillListOfProduct(prodListOrder);
 
 function fillListOfProduct(prodListOrder) {
@@ -644,6 +644,8 @@ function addDetailOrder() {
 		}
 	}
 
+	var newProfListOrder = [];
+
 	for (i in prodListOrder) {
 		if (prodListOrder[i].delete){
 			submitDataEdit.push(["","","","","","","","","","",""])			
@@ -651,10 +653,12 @@ function addDetailOrder() {
 			rangeEdit.push(
 				sheetOrderDetail+'!A'+orderDetailIndex+':'+ String.fromCharCode(65+numOfColumn)+orderDetailIndex			
 			)
+		} else {
+			newProfListOrder.push(prodListOrder[i])
 		}
 	}
 
-	currentOrder.prodListOrder = prodListOrder;
+	currentOrder.prodListOrder = Object.assign({},newProfListOrder);
 
 	// console.log(prodListOrder);
 	console.log("submitDataAppend");
@@ -780,7 +784,7 @@ $("#editOrder").click(function(){
 
 	var totalPayIncludeShip = $("#totalPayIncludeShip").html();
 
-	var otherCost = $("#otherCost").val();
+	var otherCost = currentOrder.otherCost;
 
 	var shippingCost = $("#shippingCost").val();
 
@@ -845,6 +849,19 @@ $("#editOrder").click(function(){
 
 })
 
+$("#updateAddress").click(function(){
+	triggerAutocompleteViettelpost($("#customerAddress").val(),function(addrData){
+		if (addrData["OTHER"] && addrData["PROVINCE_NAME"] && addrData["DISTRICT_NAME"]) {
+			var addr = addrData["OTHER"]+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
+			if (currentOrder.otherCost == "0" || !currentOrder.otherCost) {
+				currentOrder.otherCost = {
+					address : addrData
+				}
+			}
+			$("#customerAddress").val(addr);
+		}
+	})
+})
 
 
 $("#btnRefresh").click(function(){

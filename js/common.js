@@ -13,6 +13,19 @@ var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
 var mainSheetForProduct = '1DD-wAE56uwKK_7Q7rZ5zigPAiMXwoqHKpiyBa6XJLk8';
 var shippingSheet = '1iSGH0EXjdFOeZYDxWcy98Gv3d9CkvlcrraUZuaTR5ZY';
 
+var storeAddress = {
+  "SENDER_FULLNAME": "Lê Phan Xuân An",
+  "SENDER_ADDRESS": "ngõ 153, PHƯỜNG PHÚ ĐÔ, QUẬN NAM TỪ LIÊM, Hà Nội",
+  "SENDER_PHONE": "0376180193",
+  "SENDER_EMAIL": "lean23062001@gmail.com",
+  "SENDER_WARD": 490,
+  "SENDER_DISTRICT": 25,
+  "SENDER_PROVINCE": 1,
+  "SENDER_DISTRICT_NAME": "QUẬN NAM TỪ LIÊM",
+  "SENDER_PROVINCE_NAME": "Hà Nội",
+  "SENDER_WARD_NAME": "PHƯỜNG PHÚ ĐÔ"
+}
+
 datasetName = localStorage.getItem("datasetName");
 if (!datasetName) {
   // datasetName = 2019;

@@ -1,23 +1,19 @@
-
-
 function loginViettelPost(){
 	var settings = {
-	    "async": true,
-	    "crossDomain": true,
 	    "url": "https://partner.viettelpost.vn/v2/user/Login",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
 	    },
-	    "data": {}
+	    "data": ''
 	}
+
 	getViettelPostAccess(function(data){
 		console.log(data);
-		settings["data"]=data;
+		settings["data"]=JSON.stringify(data);
 		$.ajax(settings).done(function(response) {
 		    console.log(response);
 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
-
 		});
 	})
 }
@@ -32,7 +28,7 @@ function createABill(){
 	        "Content-Type": "application/json",
 	        "Token": localStorage.getItem("viettelpostToken")
 	    },
-	    "data": {
+	    "data": JSON.stringify({
 		    "ORDER_NUMBER": "12",
 		    "GROUPADDRESS_ID": 5818802,
 		    "CUS_ID": 722,
@@ -84,7 +80,7 @@ function createABill(){
 		        "PRODUCT_WEIGHT": 2500,
 		        "PRODUCT_QUANTITY": 1
 		    }]
-		}
+		})
 	}
 $.ajax(settings).done(function(response) {
     console.log(response);
@@ -101,18 +97,30 @@ function updateBillStatus(){
 	        "Content-Type": "application/json",
 	        "Token": localStorage.getItem("viettelpostToken")
 	    },
-	    "data": {
+	    "data": JSON.stringify({
 		  "TYPE" : 4,
 		  "ORDER_NUMBER" : "11506020148",
 		  "NOTE" : "Ghi chú"
-		}
+		})
 	}
 	$.ajax(settings).done(function(response) {
 	    console.log(response);
 	});
 }
 
-function calculateShippingCost(){
+function calculateShippingCost(infor){
+	// "data": JSON.stringify({
+	// "SENDER_PROVINCE" : 2,
+	// "SENDER_DISTRICT" : 53,
+	// "RECEIVER_PROVINCE" : 39,
+	// "RECEIVER_DISTRICT" : 449,
+	// "PRODUCT_TYPE" : "HH",
+	// "PRODUCT_WEIGHT" : 500,
+	// "PRODUCT_PRICE" : 5000000,
+	// "MONEY_COLLECTION" : "5000000",
+	// "TYPE" :1
+	// })
+
 	var settings = {
 	    "async": true,
 	    "crossDomain": true,
@@ -121,17 +129,7 @@ function calculateShippingCost(){
 	    "headers": {
 	        "Content-Type": "application/json",
 	    },
-	    "data": {
-		  "SENDER_PROVINCE" : 2,
-		  "SENDER_DISTRICT" : 53,
-		  "RECEIVER_PROVINCE" : 39,
-		  "RECEIVER_DISTRICT" : 449,
-		  "PRODUCT_TYPE" : "HH",
-		  "PRODUCT_WEIGHT" : 500,
-		  "PRODUCT_PRICE" : 5000000,
-		  "MONEY_COLLECTION" : "5000000",
-		  "TYPE" :1
-		}
+	    "data": JSON.stringify(infor)
 	}
 	$.ajax(settings).done(function(response) {
 	    console.log(response);
@@ -150,7 +148,7 @@ function findPlaceProvince(callback){
 	}
 
 	$.ajax(settings).done(function (response) {
-	  // console.log(response);
+	  console.log(response);
 	  callback(response);
 	});
 }
@@ -208,19 +206,22 @@ function autocomplete(inp, arr, textAttr, idAttr, callback) {
       /*for each item in the array...*/
       for (i = 0; i < arr.length; i++) {
         /*check if the item starts with the same letters as the text field value:*/
-        if (arr[i][textAttr].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+        if (arr[i][textAttr].toUpperCase().includes(val.toUpperCase())) {
           /*create a DIV element for each matching element:*/
           b = document.createElement("DIV");
           /*make the matching letters bold:*/
-          b.innerHTML = "<strong>" + arr[i][textAttr].substr(0, val.length) + "</strong>";
-          b.innerHTML += arr[i][textAttr].substr(val.length);
+          var subIndex = arr[i][textAttr].toUpperCase().indexOf(val.toUpperCase());
+          b.innerHTML = arr[i][textAttr].substr(0, subIndex);
+          b.innerHTML += "<strong>" + arr[i][textAttr].substr(subIndex, val.length) + "</strong>";
+          b.innerHTML += arr[i][textAttr].substr(subIndex+val.length);
           /*insert a input field that will hold the current array item's value:*/
           b.innerHTML += "<input type='hidden' value='" + arr[i][textAttr] + "' index='"+arr[i][idAttr]+"'>";
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
               inp.value = this.getElementsByTagName("input")[0].value;
-              callback(this.getElementsByTagName("input")[0].index);
+              // console.log(this.getElementsByTagName("input")[0])
+              callback(this.getElementsByTagName("input")[0].getAttribute("index"), inp.value);
               /*close the list of autocompleted values,
               (or any other open lists of autocompleted values:*/
               closeAllLists();
@@ -292,80 +293,137 @@ function autocomplete(inp, arr, textAttr, idAttr, callback) {
 
 // var stepIndex = 1;//1: Province, 2: Distric, 3: Wards
 
+var choosenAddressData = {};
+
 function triggerAutocompleteViettelpost(orginalAddress, callback){
 	// Ref:http://w3schools-fa.ir/howto/tryit5f14.html?filename=tryhow_js_autocomplete
-	if (!listProvince) {
-		$("#loadingSpin").show();
-	 	$("#loading-text").html("Tải danh sách các tỉnh");
-		findPlaceProvince(function(response){
-			$("#loadingSpin").hide();
-			listProvince = response["data"];
-			var content = '<h3>Tìm địa điểm</h3><br/>'
-			+(orginalAddress ? '<div>Đến:'+orginalAddress+'</div>' : '')
-			+'<div class="autocomplete">'+
-			+'	<input id="myProvince" type="text" name="myProvince" placeholder="Tỉnh">'
-			+'</div>'
-			+'<div class="autocomplete">'+
-			+'	<input id="myDistrict" type="text" name="myDistrict" placeholder="Quận">'
-			+'</div>'
-			+'<div class="autocomplete">'+
-			+'	<input id="myWard" type="text" name="myWard" placeholder="Xã">'
-			+'</div>'
-			+'<div class="autocomplete">'+
-			+'	<input id="myDetail" type="text" name="myDetail" placeholder="Thông tin cụ thể khác">'
-			+'</div>'
-			;
+	var content = '<h3>Tìm địa điểm</h3><br/>'
+	+(orginalAddress ? '<div>Đến:'+orginalAddress+'</div>' : '')
+	+'<div class="autocomplete">'
+	+'	<input class="form-control" id="myProvince" type="text" name="myProvince" placeholder="Tỉnh"/>'
+	+'</div>'
+	+'<div class="autocomplete">'
+	+'	<input class="form-control" id="myDistrict" type="text" name="myDistrict" placeholder="Quận/Huyện"/>'
+	+'</div>'
+	+'<div class="autocomplete">'
+	+'	<input class="form-control" id="myWard" type="text" name="myWard" placeholder="Xã/Phường"/>'
+	+'</div>'
+	+'<div class="autocomplete">'
+	+'	<input class="form-control" id="myDetail" type="text" name="myDetail" placeholder="Thông tin cụ thể khác">'
+	+'</div>'
+	+'<div class="autocomplete btn btn-link fixAddress">'
+	+'Đồng ý'
+	+'</div>'
+	;
 
-			$(".modal-body").empty();
-			$("#modelContent").html(content);
-			$('#myModal').modal('toggle');
+	$(".modal-body").empty();
+	$(".modal-body").html(content);
+	$('#myModal').modal('toggle');
 
-			choosingStep(1,function(addressResponse){
-				console.log(addressResponse);
-			},-1)
+	$(".fixAddress").click(function(){
+		choosenAddressData["OTHER"] = $("#myDetail").val();
+		callback(choosenAddressData);
+		$('#myModal').modal('toggle');
+	})
+	// $("#loadingSpin").show();
+ 	// $("#loading-text").html("Tải danh sách các tỉnh");
+	// findPlaceProvince(function(response){
+	// 	$("#loadingSpin").hide();
+	// 	listProvince = response["data"];
 
-			$("#modalYes").click(function(){
-				callback("");
-			})
+	choosingStep(1,function(addressResponse){
+		console.log(addressResponse);
+		// callback(addressResponse);
+		choosenAddressData = addressResponse;
+	},-1)
 
-		})
-	}
+	// })
+}
+
+function addDimension(callback){
+	// Ref:http://w3schools-fa.ir/howto/tryit5f14.html?filename=tryhow_js_autocomplete
+	var content = '<h3>Thông tin gói hàng</h3><br/>'
+	+(orginalAddress ? '<div>Đến:'+orginalAddress+'</div>' : '')
+	+'<div class="autocomplete">'
+	+'	<input class="form-control" id="dimX" type="text" name="myProvince" placeholder="Dài"/>'
+	+'	<input class="form-control" id="dimY" type="text" name="myDistrict" placeholder="Rộng"/>'
+	+'	<input class="form-control" id="dimZ" type="text" name="myDistrict" placeholder="Cao"/>'
+	+'</div>'
+	+'<div class="autocomplete btn btn-link fixAddress">'
+	+'Đồng ý'
+	+'</div>'
+	;
+
+	$(".modal-body").empty();
+	$(".modal-body").html(content);
+	$('#myModal').modal('toggle');
+
+	$(".fixAddress").click(function(){
+		choosenAddressData["OTHER"] = $("#myDetail").val();
+		callback(choosenAddressData);
+		$('#myModal').modal('toggle');
+	})
+	// $("#loadingSpin").show();
+ 	// $("#loading-text").html("Tải danh sách các tỉnh");
+	// findPlaceProvince(function(response){
+	// 	$("#loadingSpin").hide();
+	// 	listProvince = response["data"];
+
+	choosingStep(1,function(addressResponse){
+		console.log(addressResponse);
+		// callback(addressResponse);
+		choosenAddressData = addressResponse;
+	},-1)
+
+	// })
 }
 
 var chosenProvinceId = 0;
 var chosenDistrictId = 0;
 
+var chosenProvinceName = "";
+var chosenDistrictName = "";
+
 function choosingStep(step, callback, id){
 	if (step==1) {
 		$("#loadingSpin").show();
+		$("#loading-text").html("Tải danh sách các tỉnh");
 		findPlaceProvince(function(response){
 			$("#loadingSpin").hide();
 			var listProvince = response["data"];
-			autocomplete(document.getElementById("myProvince"),listProvince, "PROVINCE_NAME", "PROVINCE_ID", function(provinceId){
+			autocomplete(document.getElementById("myProvince"),listProvince, "PROVINCE_NAME", "PROVINCE_ID", function(provinceId, provinceName){
 				chosenProvinceId = provinceId;
+				chosenProvinceName = provinceName;
+				// console.log("chosenProvinceId:"+chosenProvinceId);
 				choosingStep(2,callback,provinceId);
 			});
 		})
 	} else if (step==2) {
 		$("#loadingSpin").show();
+		$("#loading-text").html("Tải danh sách các quận/huyện");
 		findPlaceDistrict(id, function(response){
 			$("#loadingSpin").hide();
 			var listDistrict = response["data"];
-			autocomplete(document.getElementById("myDistrict"),listDistrict, "DISTRICT_NAME", "DISTRICT_ID", function(districtId){
+			autocomplete(document.getElementById("myDistrict"),listDistrict, "DISTRICT_NAME", "DISTRICT_ID", function(districtId, districtName){
 				chosenDistrictId = districtId;
+				chosenDistrictName = districtName;
 				choosingStep(3,callback,districtId)
 			});
 		})
 	} else if (step==3) {
 		$("#loadingSpin").show();
+		$("#loading-text").html("Tải danh sách các xã/phường");
 		findPlaceWard(id, function(response){
 			$("#loadingSpin").hide();
 			var listWards = response["data"];
-			autocomplete(document.getElementById("myWard"),listWards, "WARDS_NAME", "WARDS_ID", function(wardId){
+			autocomplete(document.getElementById("myWard"),listWards, "WARDS_NAME", "WARDS_ID", function(wardId, wardName){
 				callback({
 					"RECEIVER_WARD": wardId,
 					"RECEIVER_DISTRICT": chosenDistrictId,
-					"RECEIVER_PROVINCE": chosenProvinceId
+					"RECEIVER_PROVINCE": chosenProvinceId,
+					"PROVINCE_NAME": chosenProvinceName,
+					"DISTRICT_NAME": chosenDistrictName,
+					"WARDS_NAME": wardName
 				});
 			});
 		})
