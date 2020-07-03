@@ -104,7 +104,8 @@ function parseOrderSheetList(){
   for(var e in orderList) {
     listOrderSheetParse[orderList[e][0]] = {
       orderIndex : e,
-      totalPay : orderList[e][5]
+      totalPay : orderList[e][5],
+      orderOwner: orderlist[e][2]
     }
   }
 }
@@ -166,11 +167,15 @@ function readOrderDetail(callback){
     if (userRole=="manager"){
       if (!listOrderSheetParse[lsOrder[e][0]]) {
         $(".modal-body").empty();
-        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" ko tồn tại trong sheet Order</p>");
+        $(".modal-body").html("<p id='modelContent'>"+
+            lsOrder[e][0]+"-"+listOrderSheetParse[lsOrder[e][0]].orderOwner+
+            " ko tồn tại trong sheet Order</p>");
         $('#myModal').modal('toggle');
       } else if (listOrderSheetParse[lsOrder[e][0]].totalPay != lsOrderDetail[lsOrder[e][0]].totalPay) {
         $(".modal-body").empty();
-        $(".modal-body").html("<p id='modelContent'>"+lsOrder[e][0]+" tổng tiền hàng ko khớp</p>");
+        $(".modal-body").html("<p id='modelContent'>"+
+          lsOrder[e][0]+"-"+listOrderSheetParse[lsOrder[e][0]].orderOwner+
+          " tổng tiền hàng ko khớp</p>");
         $('#myModal').modal('toggle');
       }
 
