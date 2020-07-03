@@ -23,7 +23,7 @@ if (historicalData){
   }
 
   if (historicalData.status) {
-    $("#orderFilter").val(historicalData.status);
+    $("#  ").val(historicalData.status);
   }
 }
 
@@ -60,6 +60,7 @@ var triggerAfterLoad = function(){
           // console.log("2")
       loadOrderListDetail(function(){
         filterOrderWithProdRefCode();
+        filterOrderWithDate();
         parseOrderDetail();
         getOrderShipping(function(lsOrderset){
           parseOrderShipping();
@@ -100,6 +101,36 @@ function filterOrderWithProdRefCode(){
     if (orderListDetail[e][3] == prodRefCodeFilter) {
       orderWithProdRef.push(orderListDetail[e][0]);
     }
+  }
+  if (orderWithProdRef.length == 0) {
+    orderWithProdRef.push("$$$");
+  }
+}
+
+function filterOrderWithDate(){
+  console.log("filterOrderWithDate")
+  var startDateStr = url.searchParams.get("startDate");
+  if (!startDateStr) {
+    return;
+  }
+  // console.log("1");
+  var endDateStr = url.searchParams.get("endDate");
+  if (!endDateStr) {
+    return;
+  }
+  // console.log("2");
+  var startDate = new Date(startDateStr);
+  var endDate = new Date(endDateStr);
+
+  var status = "REQUESTED";
+  $("#orderFilter").val(status);
+  var orderList = JSON.parse(localStorage.getItem("orderList"));
+
+  for (var e in orderList) {
+      var orderDate = new Date(orderList[e][1]);
+      if (startDate <= orderDate && orderDate <= endDate){
+        orderWithProdRef.push(orderList[e][0]);
+      }
   }
   if (orderWithProdRef.length == 0) {
     orderWithProdRef.push("$$$");

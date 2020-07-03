@@ -5,14 +5,24 @@ var status = "PROCESSING";
 var spreadsheetId = '16lwfdBGBzOikq2X_BUt415lDemdXpZ7TL_MUhBKYHt8';
 var sheetOrder = "Order";
 
+// var orderList = [];
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
 
   loadReport(function(){
-      $("#loadingSpin").hide();
       console.log("Gooo");
       loadReportHtml();
+      loadOrderList(function(){
+        loadOrderListDetail(function(){
+          $("#loadingSpin").hide();
+          parseOrderDetail();
+          parseOrder();
+          // orderList = JSON.parse(localStorage.getItem("orderList"));
+
+        })
+      })
   })
 }
 
@@ -44,3 +54,95 @@ function loadReportHtml() {
     $(".breakevenPoint").html("Bạn đã vượt qua điểm hoà vốn");
   }
 };
+
+var listOrderParse;
+
+function parseOrder(){
+  listOrderParse = {};
+  var orderList = JSON.parse(localStorage.getItem("orderList"));
+  for (var e in orderList) {
+    if (!orderList[e][0]){
+      continue;
+    }
+    if (!listOrderParse[orderList[e][0]]) {
+      listOrderParse[orderList[e][0]] = [];
+    }
+    var lsProduct = listOrderDetailParse[orderList[e][0]];
+    var totalProfitInOrder = 0;
+    var numOfItem = 0;
+    var totalPay = 0;
+    for (var f in lsProduct) {
+      totalProfitInOrder += parseInt(lsProduct[f][9]);
+      numOfItem += parseInt(lsProduct[f][5]);
+      totalPay += parseInt(lsProduct[f][7]);
+    }
+
+    listOrderParse[orderList[e][0]] = {
+      orderCode : orderList[e][0],
+      date : orderList[e][1],
+      orderOwner : orderList[e][2],
+      totalProfit : totalProfitInOrder,
+      numOfItem : numOfItem,
+      totalPay : totalPay
+    }
+  }
+  console.log(listOrderParse);
+}
+
+var listOrderDetailParse;
+
+function parseOrderDetail(){
+  listOrderDetailParse = {};
+  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  for (var e in orderListDetail) {
+    if (!orderListDetail[e][0]) {
+      continue;
+    }
+    if (!listOrderDetailParse[orderListDetail[e][0]]) {
+      listOrderDetailParse[orderListDetail[e][0]] = [];
+    }
+    listOrderDetailParse[orderListDetail[e][0]].push(orderListDetail[e]);
+  }
+
+}
+
+var chosenStartDate;
+var chosenEndDate;
+
+function reportByDate(startDate, endDate) {
+  console.log("reportByDate")
+  var totalProfit = 0;
+  var numOfItem = 0;
+  var totalPay = 0;
+  for (var e in listOrderParse) {
+      var orderDate = new Date(listOrderParse[e].date);
+      if (startDate<=orderDate && orderDate <= endDate){
+        totalProfit += listOrderParse[e].totalProfit;
+        numOfItem += listOrderParse[e].numOfItem;
+        totalPay += listOrderParse[e].totalPay;
+        // console.log(listOrderParse[e])
+      }
+  }
+  $(".reportByDate").html("<div>Tổng lãi:"+totalProfit+"</div>"+
+    "<div>Tổng số mặt hàng:"+numOfItem+"</div>"+
+    "<div>Tổng doanh thu:"+totalPay+"</div>"+
+    "<div class='btn btnNormal5px showOrderByDate'>Xem đơn hàng</div>"
+    )
+  chosenStartDate = startDate.format('YYYY-MM-DD');
+  chosenEndDate = endDate.format('YYYY-MM-DD');
+  $(".showOrderByDate").click(function(){
+    window.location = "listorder.html?startDate="+chosenStartDate+"&endDate="+chosenEndDate;
+    // http://localhost:3000/thuyvu2709.github.io/manager/listorder.html?startDate=2020-07-02&endDate=2020-07-03
+    // http://localhost:3000/thuyvu2709.github.io/manager/listorder.html?startDate=2020-07-02&endDate=2020-07-02
+  })
+}
+
+
+//DatePicker Example
+// Ref: https://www.daterangepicker.com
+$('.datetimepicker').daterangepicker({
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    reportByDate(start,end);
+  });
+
