@@ -120,7 +120,7 @@ function reportByDate(startDateStr, endDateStr) {
   for (var e in listOrderParse) {
       var orderDateRaw = new Date(listOrderParse[e].date);
       var orderDate = new Date(orderDateRaw.getFullYear(), orderDateRaw.getMonth(), orderDateRaw.getDate())
-      console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
+      // console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
       if (startDate<=orderDate && orderDate <= endDate){
         totalProfit += listOrderParse[e].totalProfit;
         numOfItem += listOrderParse[e].numOfItem;
