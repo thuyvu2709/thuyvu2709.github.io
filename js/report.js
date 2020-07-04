@@ -112,7 +112,7 @@ var chosenEndDate;
 function reportByDate(startDateStr, endDateStr) {
   var startDate = new Date(startDateStr);
   var endDate = new Date(endDateStr);
-  console.log("reportByDate")
+  // console.log("reportByDate:"+startDateStr+" "+endDateStr)
   var totalProfit = 0;
   var numOfItem = 0;
   var totalPay = 0;
@@ -120,7 +120,7 @@ function reportByDate(startDateStr, endDateStr) {
   for (var e in listOrderParse) {
       var orderDateRaw = new Date(listOrderParse[e].date);
       var orderDate = new Date(orderDateRaw.getFullYear(), orderDateRaw.getMonth(), orderDateRaw.getDate())
-      // console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
+      console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
       if (startDate<=orderDate && orderDate <= endDate){
         totalProfit += listOrderParse[e].totalProfit;
         numOfItem += listOrderParse[e].numOfItem;
@@ -149,7 +149,7 @@ function reportByDate(startDateStr, endDateStr) {
 // Ref: https://www.daterangepicker.com
 $('.datetimepicker').daterangepicker({
   }, function(start, end, label) {
-    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    reportByDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+    console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+    reportByDate(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'));
   });
 
