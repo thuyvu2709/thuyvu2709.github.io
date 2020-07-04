@@ -59,6 +59,7 @@ var listOrderParse;
 
 function parseOrder(){
   listOrderParse = {};
+  // var totalProfitAll = 0;
   var orderList = JSON.parse(localStorage.getItem("orderList"));
   for (var e in orderList) {
     if (!orderList[e][0]){
@@ -72,10 +73,21 @@ function parseOrder(){
     var numOfItem = 0;
     var totalPay = 0;
     for (var f in lsProduct) {
-      totalProfitInOrder += parseInt(lsProduct[f][9]);
+      // if (lsProduct[f][9]==NaN || lsProduct[f][9]=="NaN") {
+      //   continue;
+      // }
+      var currProfit = parseInt(lsProduct[f][9].replace(",",""));
+      if (isNaN(currProfit)) {
+        continue;
+      }
+      // console.log(currProfit + " "+(isNaN(currProfit)))
+      // console.log(orderList[e][0]+" "+lsProduct[f][9]+" "+parseInt(lsProduct[f][9].replace(",","")))
+      totalProfitInOrder = totalProfitInOrder + currProfit;
       numOfItem += parseInt(lsProduct[f][5]);
       totalPay += parseInt(lsProduct[f][7]);
     }
+    // totalProfitAll = totalProfitAll + totalProfitInOrder;
+    // console.log(totalProfitAll + " "+totalProfitInOrder);
 
     listOrderParse[orderList[e][0]] = {
       orderCode : orderList[e][0],
@@ -86,7 +98,8 @@ function parseOrder(){
       totalPay : totalPay
     }
   }
-  console.log(listOrderParse);
+  // console.log(listOrderParse);
+  // console.log(totalProfitAll);
 }
 
 var listOrderDetailParse;
