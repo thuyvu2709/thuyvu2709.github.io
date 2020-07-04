@@ -239,10 +239,10 @@ function recalculateRefValues(){
 		return;
 	}
 
-	var productEstimateVND = parseFloat(productEstimateVND);
-	var productCount = parseFloat(productCount);
+	var productEstimateVND = Math.round(parseFloat(productEstimateVND));
+	var productCount = parseInt(productCount);
 
-	var productEstimateSellingVND = parseFloat(productEstimateSellingVND);
+	var productEstimateSellingVND = parseInt(productEstimateSellingVND);
 
 	$("#profitPerOneProduct").html(productEstimateSellingVND - productEstimateVND);
 	$("#turnover").html(productEstimateSellingVND * productCount);
@@ -265,8 +265,8 @@ function recalculateProdEstVND(){
 	productWeight = parseFloat(productWeight);
 	shipInternationalFee = parseFloat(shipInternationalFee);
 
-	var productEstimateVND = productOriginalCostEur*EuroVndRate + productWeight * 
-		( shipInternationalFee * EuroVndRate );
+	var productEstimateVND = Math.round(productOriginalCostEur*EuroVndRate + productWeight * 
+		( shipInternationalFee * EuroVndRate ));
 
 	$("#productEstimateVND").val(productEstimateVND);
 
