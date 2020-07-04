@@ -109,27 +109,34 @@ function parseOrderDetail(){
 var chosenStartDate;
 var chosenEndDate;
 
-function reportByDate(startDate, endDate) {
+function reportByDate(startDateStr, endDateStr) {
+  var startDate = new Date(startDateStr);
+  var endDate = new Date(endDateStr);
   console.log("reportByDate")
   var totalProfit = 0;
   var numOfItem = 0;
   var totalPay = 0;
+  var numOfOrder = 0;
   for (var e in listOrderParse) {
-      var orderDate = new Date(listOrderParse[e].date);
+      var orderDateRaw = new Date(listOrderParse[e].date);
+      var orderDate = new Date(orderDateRaw.getFullYear(), orderDateRaw.getMonth(), orderDateRaw.getDate())
+      // console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
       if (startDate<=orderDate && orderDate <= endDate){
         totalProfit += listOrderParse[e].totalProfit;
         numOfItem += listOrderParse[e].numOfItem;
         totalPay += listOrderParse[e].totalPay;
+        numOfOrder += 1;
         // console.log(listOrderParse[e])
       }
   }
   $(".reportByDate").html("<div>Tổng lãi:"+totalProfit+"</div>"+
     "<div>Tổng số mặt hàng:"+numOfItem+"</div>"+
+    "<div>Tổng số đơn hàng:"+numOfOrder+"</div>"+
     "<div>Tổng doanh thu:"+totalPay+"</div>"+
     "<div class='btn btnNormal5px showOrderByDate'>Xem đơn hàng</div>"
     )
-  chosenStartDate = startDate.format('YYYY-MM-DD');
-  chosenEndDate = endDate.format('YYYY-MM-DD');
+  chosenStartDate = startDateStr;
+  chosenEndDate = endDateStr;
   $(".showOrderByDate").click(function(){
     window.location = "listorder.html?startDate="+chosenStartDate+"&endDate="+chosenEndDate;
     // http://localhost:3000/thuyvu2709.github.io/manager/listorder.html?startDate=2020-07-02&endDate=2020-07-03
@@ -143,6 +150,6 @@ function reportByDate(startDate, endDate) {
 $('.datetimepicker').daterangepicker({
   }, function(start, end, label) {
     console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-    reportByDate(start,end);
+    reportByDate(start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
   });
 

@@ -127,7 +127,11 @@ function filterOrderWithDate(){
   var orderList = JSON.parse(localStorage.getItem("orderList"));
 
   for (var e in orderList) {
-      var orderDate = new Date(orderList[e][1]);
+      // var orderDate = new Date(orderList[e][1]);
+      var orderDateRaw = new Date(orderList[e][1]);
+      var orderDate = new Date(orderDateRaw.getFullYear(), orderDateRaw.getMonth(), orderDateRaw.getDate())
+            // console.log(orderDate + " " + startDate +" " + (startDate<=orderDate) +" " +(orderDate <= endDate))
+
       if (startDate <= orderDate && orderDate <= endDate){
         orderWithProdRef.push(orderList[e][0]);
       }
