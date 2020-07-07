@@ -365,7 +365,8 @@ function loadOrderListHtml() {
     }
     // console.log(prodListOrder[o]);
     orderDetailBrief+=(data[e][10] ? "Note:"+data[e][10]+"<br/>" : "");
-    orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
+    // orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box'>x"+numOfProd+"</i> <i class='fas fa-weight'>"+productWeights+"kg</i> )";
+    orderDetailBrief+="Tiền hàng:"+data[e][5]+" ( <i class='fas fa-box'>x"+numOfProd+"</i> )";
     orderDetailBrief+="<hr/>";
     ///
 
