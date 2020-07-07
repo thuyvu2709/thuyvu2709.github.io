@@ -354,7 +354,7 @@ function loadOrderListHtml() {
     }
 
     ///Short description
-    var orderDetailBrief="<hr/>";
+    var orderDetailBrief="";
     var currentOrderDetail = listOrderDetailParse[data[e][0]];
     var numOfProd = 0;
     var productWeights = 0;

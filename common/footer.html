@@ -14,17 +14,17 @@
   <!-- Copyright Section -->
   <section class="copyright py-4 text-center text-white">
     <div class="container">
-      <div class="smallContainer footerLeft text-center textMustard verticalRight">
+<!--       <div class="smallContainer footerLeft text-center textMustard verticalRight">
         Bank
-      </div>
+      </div> -->
       <div class="smallContainer footerMain">
         <small>Xách tay Thuỷ Vũ - Góc Hàng Âu</small><br/>
         <small>Banking account:Le Van Thanh/Techcombank/19034601990019</small>
         <textarea id="textareaBanking"></textarea>
       </div>
-      <div class="smallContainer footerRight text-center textMustard verticalLeft">
+<!--       <div class="smallContainer footerRight text-center textMustard verticalLeft">
         Thank
-      </div>
+      </div> -->
     </div>
   </section>
 
@@ -85,8 +85,8 @@
           $("#textareaBanking").hide();
       })
 
-      $(".footerLeft").click(function(){
-          var allText =  
+      function copyBank() {
+        var allText =  
           //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
           //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
           "Thông tin tài khoản ngân hàng:\n"+
@@ -114,35 +114,48 @@
           document.execCommand("copy");
 
           $("#textareaBanking").hide();
+      }
+
+      $(".copyBank").click(function(){
+        copyBank();
+      })
+      $(".footerLeft").click(function(){
+        copyBank();
       })
 
+      function copyThank() {
+        var allText =  
+        //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
+        //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
+        "Cảm ơn bạn đã ủng hộ !\n"+
+        "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
+        "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
+        "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
+        "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
+        console.log("Copy");
+        $("#textareaBanking").show();
+
+        $("#textareaBanking").val(allText);
+
+        // $("#textareaBanking").select(); 
+        // if ($("#textareaBanking").setSelectionRange) {
+        //   $("#textareaBanking").setSelectionRange(0, 99999); 
+        // }
+        var copyText = document.getElementById("textareaBanking");
+
+        /* Select the text field */
+        copyText.select(); 
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        /*For mobile devices*/
+        document.execCommand("copy");
+
+        $("#textareaBanking").hide();
+      }
       $(".footerRight").click(function(){
-          var allText =  
-          //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
-          //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-          "Cảm ơn bạn đã ủng hộ !\n"+
-          "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
-          "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
-          "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
-          "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
-          console.log("Copy");
-          $("#textareaBanking").show();
-
-          $("#textareaBanking").val(allText);
-
-          // $("#textareaBanking").select(); 
-          // if ($("#textareaBanking").setSelectionRange) {
-          //   $("#textareaBanking").setSelectionRange(0, 99999); 
-          // }
-          var copyText = document.getElementById("textareaBanking");
-
-          /* Select the text field */
-          copyText.select(); 
-          copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-          /*For mobile devices*/
-          document.execCommand("copy");
-
-          $("#textareaBanking").hide();
+          copyThank();
+      })
+      $(".copyThank").click(function(){
+          copyThank();
       })
 
     });
