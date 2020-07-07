@@ -248,7 +248,7 @@ function loadOrderListHtml() {
       if (data[e][11]=="POST_COD" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       }
-    } if (status == 'COMPLETE') {
+    } else if (status == 'COMPLETE') {
       if (!(data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED")) {
         continue;
       }
@@ -258,7 +258,7 @@ function loadOrderListHtml() {
       if (!(data[e][11]=="POST_COD" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED")) {
         continue;
       }
-    } if (status == 'READY') {
+    } else if (status == 'READY') {
       if (data[e][9]<1) {
         continue;
       }
@@ -271,10 +271,17 @@ function loadOrderListHtml() {
       if (data[e][11]=="POST_COD" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       }
-    } if (status == 'SHOPEE') {
+    } else if (status == 'SHOPEE-READY') {
       if (data[e][9]<1) {
         continue;
       }
+      if (orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+        continue;
+      };
+      if (data[e][11]!="SHOPEE") {
+        continue;
+      }
+    } else if (status == 'SHOPEE-PROCESS') {
       if (orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       };
