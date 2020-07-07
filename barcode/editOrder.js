@@ -76,6 +76,10 @@ function fillListOfProduct(prodListOrder) {
 				productIndexInStore = e1;
 			}
 		}
+		
+		if (!prodListOrder[e].turnover) {
+			prodListOrder[e].turnover = parseInt(prodListOrder[e].productCount) * parseInt(prodListOrder[e].productEstimateSellingVND);
+		}
 
 		$("#listProduct").append('<div class="card">'+
         '<div class="card-header" id="heading_"'+e+'>'+

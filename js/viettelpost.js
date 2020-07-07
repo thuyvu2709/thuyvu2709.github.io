@@ -18,6 +18,61 @@ function loginViettelPost(){
 	})
 }
 
+function loginViettelPost2(){
+	var settings = {
+	    "async": true,
+  "crossDomain": true,
+  "url": "https://partner.viettelpost.vn/v2/user/ownerconnect",
+  "method": "POST",
+  "headers": {
+    "Content-Type": "application/json",
+    "Token": "eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiIwMzc2MTgwMTkzIiwiVXNlcklkIjo3MDk0ODQ5LCJGcm9tU291cmNlIjo1LCJUb2tlbiI6IjlPVFFMQldNRUxXIiwiZXhwIjoxNjgwMjg5MjY5LCJQYXJ0bmVyIjo3MDk0ODQ5fQ.o0g6EtmVq6Ixx_V5W4bp3IYgeFZ9hNozyn934SEdnej2F9I4FngYoYpGZA3MMIoaAvXlZEZfGgCAjjUU2i2_4g"
+  },
+	    "data": ''
+	}
+
+	getViettelPostAccess(function(data){
+		console.log(data);
+		settings["data"]=JSON.stringify(data);
+		$.ajax(settings).done(function(response) {
+		    console.log(response);
+	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
+		});
+	})
+}
+
+function tracking(orderId){
+// 	// https://old.viettelpost.com.vn/Tracking?KEY=1606216637308
+// var settings = {
+// 	    "url": "https://buucuc.com/tracking?vid=1606216637308",
+// 	    "method": "POST",
+// 	    "headers": {
+// 	        "Content-Type": "application/json",
+// 	    }
+// 	}
+// 	$.ajax(settings).done(function(response) {
+//     	console.log(response);
+// 	});
+
+
+var link = "https://old.viettelpost.com.vn/Tracking?KEY=1606216637308";
+$.ajax({
+  // url: "http://cors-anywhere.herokuapp.com/"+link, //For local
+  url: "https://cors-anywhere.herokuapp.com/"+link, //For code push
+  type: 'GET',
+  crossDomain: true,
+  success: function(res) {
+    // console.log(res)
+    var data = $.parseHTML(res);  //<----try with $.parseHTML().
+    $(data).find('div.trackingItem').each(function(){
+    	console.log($(this).find("ul"))
+    });
+    // console.log(data);
+  }
+});
+
+}
+
 function createABill(){
 	var settings = {
 	    "async": true,
