@@ -20,7 +20,11 @@ var triggerAfterLoad = function(){
           parseOrderDetail();
           parseOrder();
           // orderList = JSON.parse(localStorage.getItem("orderList"));
+          var todayRaw  = new Date();
+          var today = todayRaw.getFullYear()+"/"+(new Date().getMonth()+1)+"/"+new Date().getDate();
+          console.log(today);
 
+          reportByDate(today,today);
         })
       })
   })
