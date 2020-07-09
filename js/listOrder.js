@@ -381,7 +381,7 @@ function loadOrderListHtml() {
     if (shippingType == "SHIPPER_NO_COD" || shippingType == "POST_NO_COD" || shippingType == "SHIP_BY_THIRD_PARTY") {
       paidDiv = '<select class="mdb-select md-form selectPayment selectPaymentStatus_'+e+'">'+
               optionPaid +
-            '</select>';
+            '</select><br/>';
     }
 
   	$("#listOrder").append(
