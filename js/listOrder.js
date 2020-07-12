@@ -23,7 +23,7 @@ if (historicalData){
   }
 
   if (historicalData.status) {
-    $("#  ").val(historicalData.status);
+    $("#orderFilter").val(historicalData.status);
   }
 }
 
