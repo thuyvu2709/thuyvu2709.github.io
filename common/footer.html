@@ -54,7 +54,7 @@
 
   <script>
     // $(function(){
-    $("#textareaBanking").hide(); 
+    $("#textareaBanking").hide();
     $(".footerMain").click(function(){
         var allText =  
         //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
@@ -99,6 +99,29 @@
         "- Số tài khoản : 19034601990019 \n"+
         "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
         "Cảm ơn bạn đã ủng hộ !";
+
+        console.log("Copy");
+        $("#textareaBanking").show();
+
+        $("#textareaBanking").val(allText);
+
+        // $("#textareaBanking").select(); 
+        // if ($("#textareaBanking").setSelectionRange) {
+        //   $("#textareaBanking").setSelectionRange(0, 99999); 
+        // }
+        var copyText = document.getElementById("textareaBanking");
+
+        /* Select the text field */
+        copyText.select(); 
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        /*For mobile devices*/
+        document.execCommand("copy");
+
+        $("#textareaBanking").hide();
+    }
+
+    function sendCTV(){
+      var allText = "Hiện tại mình đang sống tại Châu Âu (Ý - Pháp) và có em gái mình sống tại Mỹ. Nên mình ĐẢM BẢO NGUỒN HÀNG NHẬP VỀ TRỰC TIẾP, GIÁ CỰC KỲ TỐT, CHẤT LƯỢNG BAO AUTH! Ai làm việc 1 năm qua với mình chắc cũng hiểu rõ! \n\nGiờ mình mọi người quy định đối với CTV:\n\n🍀 HÌNH THỨC HOẠT ĐỘNG\n+ Mình có 1 group chung cho CTV để thông báo sản phẩm và giá cho CTV.\n + CTV không cần comment, thả tim hay tương tác trong group chung, cần gì thì inbox riêng với shop.\n⛔️1 tháng không phát sinh ít nhất 2 đơn hàng thì shop sẽ mời khỏi group chung.\n \n💰 GIÁ CHO CTV:\n+ Shop công bố giá bán cho CTV, còn giá CTV bán ra thì do CTV tự quyết định. \n+ Đơn hàng đầu tiên từ 2 triệu, các đơn hàng tiếp theo yêu cầu tối thiểu  5 sản phẩm bất kỳ thì sẽ được giá CTV ( Trừ hàng Order các nhãn hiệu cao cấp sale off lớn có thể linh động) \n\n✈️ THANH TOÁN VÀ SHIP HÀNG:\n👉CTV chịu phí ship hàng. \n💶 Thanh toán:\n + Với các mặt hàng có sẵn: CTV chuyển khoản 100% giá trị đơn hàng. Mình nhận được đủ tiền sẽ cho đơn đi.\n+ Các mặt hàng order: CTV chuyển khoản cọc 50-70% tuỳ theo yêu cầu. Hàng về chuyển khoản nốt giá trị còn lại\n⛔️ BÊN MÌNH KHÔNG NHẬN SHIP COD DƯỚI MỌI HÌNH THỨC CHO CTV.\n⛔️ CTV ĐẶT HÀNG RỒI THÌ VUI LÒNG KHÔNG HỦY, ĐỔI.\n \n❤️ HỖ TRỢ CHO CTV:\n+ Bill đầy đủ ( trừ hàng Mỹ mình k thể cho Bill. Vì đây là bí quyết kinh doanh riêng).\n+ Cung cấp đầy đủ ảnh đi mua hàng/ clip tại store cho CTV có yêu cầu. ( Đb có dịch vụ mang logo của CTV livestream/ hoặc quay clip tại các cửa hàng - dịch vụ này CTV cần báo trước với mình) \n+ Tư vấn chuyên nghiệp, tận tâm! \n\n🛍  CÁC MẶT HÀNG CHÍNH CỦA SHOP:\n+ Hàng Ý: Đồ hiệu/ Mỹ phẩm/ Đồ gia dụng/ Nước hoa/ Quần áo...\n+ Hàng Pháp: Mỹ phẩm/ TPCN/ Nước hoa/ Quần áo\n+ Hàng Mỹ: Gom đơn order theo các mặt hàng sale giá tốt ( Không có sẵn): Đồng hồ/ Mỹ Phẩm/ Thời trang/TPCN ... giá tốt\n\n👉 Bạn thấy các quy định của shop phù hợp thì xác nhận với mình để mình add vào Group chung.";
 
         console.log("Copy");
         $("#textareaBanking").show();
@@ -197,6 +220,7 @@
         "<div class='btn btnNormal copyBank'>TK ngân hàng</div><br/>"+
         "<div class='btn btnNormal copyThank'>Cảm ơn</div><br/>"+
         "<div class='btn btnNormal pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
+        "<div class='btn btnNormal sendCTV'>Gửi CTV</div><br/>"+
         "</div>"
       $(".modal-content").html(supportDiv);
       $('#simpleModal').modal('toggle');
@@ -208,6 +232,9 @@
       })
       $(".pickupAddress").click(function(){
         pickupAddress();
+      })
+      $(".sendCTV").click(function(){
+        sendCTV();
       })
       
     })
