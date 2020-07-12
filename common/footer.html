@@ -14,17 +14,21 @@
   <!-- Copyright Section -->
   <section class="copyright py-4 text-center text-white">
     <div class="container">
-      <div class="smallContainer footerLeft text-center textMustard verticalRight">
+<!--       <div class="smallContainer footerLeft text-center textMustard verticalRight">
         Bank
-      </div>
+      </div> -->
       <div class="smallContainer footerMain">
         <small>Xách tay Thuỷ Vũ - Góc Hàng Âu</small><br/>
         <small>Banking account:Le Van Thanh/Techcombank/19034601990019</small>
         <textarea id="textareaBanking"></textarea>
       </div>
-      <div class="smallContainer footerRight text-center textMustard verticalLeft">
-        Thank
+      <br/>
+      <div class="smallContainer">
+        <small class="supportPopup">~<i class="fas fa-fan"></i>~</small>
       </div>
+<!--       <div class="smallContainer footerRight text-center textMustard verticalLeft">
+        Thank
+      </div> -->
     </div>
   </section>
 
@@ -49,85 +53,18 @@
   </div>
 
   <script>
-    $(function(){
-      $("#textareaBanking").hide(); 
-      $(".footerMain").click(function(){
-          var allText =  
-          //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
-          //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-          "Thông tin tài khoản ngân hàng:\n"+
-          "- Chủ tài khoản: Le Van Thanh \n"+
-          "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
-          "- Số tài khoản : 19034601990019 \n"+
-          "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
-          "Cảm ơn bạn đã ủng hộ !\n\n"+
-          "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
-          "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
-          "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
-          "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
-          console.log("Copy");
-          $("#textareaBanking").show();
-
-          $("#textareaBanking").val(allText);
-
-          // $("#textareaBanking").select(); 
-          // if ($("#textareaBanking").setSelectionRange) {
-          //   $("#textareaBanking").setSelectionRange(0, 99999); 
-          // }
-          var copyText = document.getElementById("textareaBanking");
-
-          /* Select the text field */
-          copyText.select(); 
-          copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-          /*For mobile devices*/
-          document.execCommand("copy");
-
-          $("#textareaBanking").hide();
-      })
-
-      function copyBank() {
-        var allText =  
-          //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
-          //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-          "Thông tin tài khoản ngân hàng:\n"+
-          "- Chủ tài khoản: Le Van Thanh \n"+
-          "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
-          "- Số tài khoản : 19034601990019 \n"+
-          "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
-          "Cảm ơn bạn đã ủng hộ !";
-
-          console.log("Copy");
-          $("#textareaBanking").show();
-
-          $("#textareaBanking").val(allText);
-
-          // $("#textareaBanking").select(); 
-          // if ($("#textareaBanking").setSelectionRange) {
-          //   $("#textareaBanking").setSelectionRange(0, 99999); 
-          // }
-          var copyText = document.getElementById("textareaBanking");
-
-          /* Select the text field */
-          copyText.select(); 
-          copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-          /*For mobile devices*/
-          document.execCommand("copy");
-
-          $("#textareaBanking").hide();
-      }
-
-      $(".copyBank").click(function(){
-        copyBank();
-      })
-      $(".footerLeft").click(function(){
-        copyBank();
-      })
-
-      function copyThank() {
+    // $(function(){
+    $("#textareaBanking").hide(); 
+    $(".footerMain").click(function(){
         var allText =  
         //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
         //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-        "Cảm ơn bạn đã ủng hộ !\n"+
+        "Thông tin tài khoản ngân hàng:\n"+
+        "- Chủ tài khoản: Le Van Thanh \n"+
+        "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
+        "- Số tài khoản : 19034601990019 \n"+
+        "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
+        "Cảm ơn bạn đã ủng hộ !\n\n"+
         "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
         "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
         "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
@@ -150,15 +87,132 @@
         document.execCommand("copy");
 
         $("#textareaBanking").hide();
-      }
-      $(".footerRight").click(function(){
-          copyThank();
-      })
-      $(".copyThank").click(function(){
-          copyThank();
-      })
+    })
 
-    });
+    function copyBank() {
+      var allText =  
+        //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
+        //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
+        "Thông tin tài khoản ngân hàng:\n"+
+        "- Chủ tài khoản: Le Van Thanh \n"+
+        "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
+        "- Số tài khoản : 19034601990019 \n"+
+        "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
+        "Cảm ơn bạn đã ủng hộ !";
+
+        console.log("Copy");
+        $("#textareaBanking").show();
+
+        $("#textareaBanking").val(allText);
+
+        // $("#textareaBanking").select(); 
+        // if ($("#textareaBanking").setSelectionRange) {
+        //   $("#textareaBanking").setSelectionRange(0, 99999); 
+        // }
+        var copyText = document.getElementById("textareaBanking");
+
+        /* Select the text field */
+        copyText.select(); 
+        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        /*For mobile devices*/
+        document.execCommand("copy");
+
+        $("#textareaBanking").hide();
+    }
+
+    $(".copyBank").click(function(){
+      copyBank();
+    })
+    $(".footerLeft").click(function(){
+      copyBank();
+    })
+
+    function copyThank() {
+      var allText =  
+      //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
+      //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
+      "Cảm ơn bạn đã ủng hộ !\n"+
+      "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
+      "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
+      "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
+      "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
+      console.log("Copy");
+      $("#textareaBanking").show();
+
+      $("#textareaBanking").val(allText);
+
+      // $("#textareaBanking").select(); 
+      // if ($("#textareaBanking").setSelectionRange) {
+      //   $("#textareaBanking").setSelectionRange(0, 99999); 
+      // }
+      var copyText = document.getElementById("textareaBanking");
+
+      /* Select the text field */
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /*For mobile devices*/
+      document.execCommand("copy");
+
+      $("#textareaBanking").hide();
+    }
+
+    function pickupAddress() {
+      var allText =  
+      "Địa chỉ qua nhà lấy đồ:\n"+
+      "👍 Lê An, sdt: 0376180193\n"+
+      "Địa chỉ: Ngách 30 ngõ 153 Phú Đô, Mỹ Đình, Hà Nội\n"+
+      "⛔️Khách qua lấy hàng vui lòng gọi số điện thoại trên hẹn trước.\n"+
+      "⛔️Khi qua lấy hàng gặp An vui lòng cho xem ảnh đơn hàng để An đưa hàng theo đúng đơn\n"+
+      "⛔️Nhận hàng vui lòng kiểm tra hàng trước khi ra về. Hàng cầm ra khỏi nhà, KHÔNG ĐỔI TRẢ KHIẾU NẠI giúp em!\n";
+
+      console.log("Copy");
+      $("#textareaBanking").show();
+
+      $("#textareaBanking").val(allText);
+
+      // $("#textareaBanking").select(); 
+      // if ($("#textareaBanking").setSelectionRange) {
+      //   $("#textareaBanking").setSelectionRange(0, 99999); 
+      // }
+      var copyText = document.getElementById("textareaBanking");
+
+      /* Select the text field */
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /*For mobile devices*/
+      document.execCommand("copy");
+
+      $("#textareaBanking").hide();
+    }
+    $(".footerRight").click(function(){
+        copyThank();
+    })
+    $(".copyThank").click(function(){
+        copyThank();
+    })
+
+    $(".supportPopup").click(function(){
+      var supportDiv = "<div class='model-body' style='margin:auto'>"+
+        "<div style='font-size:25px'>Hỗ trợ</div>"+
+        "<div class='btn btnNormal copyBank'>TK ngân hàng</div><br/>"+
+        "<div class='btn btnNormal copyThank'>Cảm ơn</div><br/>"+
+        "<div class='btn btnNormal pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
+        "</div>"
+      $(".modal-content").html(supportDiv);
+      $('#simpleModal').modal('toggle');
+      $(".copyThank").click(function(){
+        copyThank();
+      })
+      $(".copyBank").click(function(){
+        copyBank();
+      })
+      $(".pickupAddress").click(function(){
+        pickupAddress();
+      })
+      
+    })
+
+    // });
     if (pageName == "index") {
       $(".click-to-back").hide();
     }
