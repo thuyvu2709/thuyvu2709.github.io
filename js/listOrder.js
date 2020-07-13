@@ -27,6 +27,9 @@ if (historicalData){
   }
 }
 
+$(".click-to-select-all").hide();
+$(".click-to-view").hide();
+
 var afterLoadHTML = function(){
   // document.getElementsByClassName
   // console.log("afterLoadHTML");
@@ -789,6 +792,48 @@ function loadOrderListHtml() {
     requestShip(0);
   })
 
+  $(".click-to-view").click(function(){
+    var lsChecked = $(".checkbox");
+    var totalCost = 0;
+    var num = 0;
+    var requestedNum = 0;
+    var stillInStore = 0;
+    // for (e in lsChecked){
+    //   if ($(lsChecked[e]).is(":checked")){
+    var downloadContent = "No, Name, Count, Price, Total\n";
+    var numOfOrder = 0;
+    var totalPay = 0;
+    var totalOwnerPay = 0;
+    var totalProfit = 0;
+    var numOfProd = 0;
+    $('.checkbox').each(function(){ 
+        // this.checked = true; });
+        if (this.checked){
+          numOfOrder = numOfOrder + 1
+          var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+          var currentOrder=getOrder(orderIndex);
+          totalPay = totalPay + parseInt(currentOrder.totalPay);
+          for  (e in currentOrder.prodListOrder) {
+            totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
+            totalProfit = totalProfit + parseInt(currentOrder.prodListOrder[e].profit);
+            numOfProd = numOfProd + parseInt(currentOrder.prodListOrder[e].productCount);          
+          }
+        }
+      }
+    )
+
+    var content = "Số đơn hàng:"+numOfOrder+"<br/>"+
+                  "Số mặt hàng:"+numOfProd+"<br/>"+
+                  "Tổng doanh thu:"+totalPay+"<br/>"+
+                  "Tổng vốn:"+totalOwnerPay+"<br/>"+
+                  "Tổng lãi:"+totalProfit+"<br/>";
+
+    $("#modelContent").html(content);
+    $("#modalYes").click(function(){
+    })
+    $('#myModal').modal('toggle');
+  })
+
 };
 
 function checkSystemConsistent(){
@@ -824,18 +869,18 @@ $(".click-to-notify").click(function(){
   $('#myModal').modal('toggle');
 })
 
-$(".click-to-select").click(function(){
+// $(".click-to-select").click(function(){
   
-  // checkSystemConsistent();
+//   // checkSystemConsistent();
 
-  if($(".checkbox").is(':visible') ) {
-    $(".checkbox").hide();
-    $("#controllMany").hide();
-  } else {
-    $(".checkbox").show();
-    $("#controllMany").show();
-  }
-})
+//   if($(".checkbox").is(':visible') ) {
+//     $(".checkbox").hide();
+//     $("#controllMany").hide();
+//   } else {
+//     $(".checkbox").show();
+//     $("#controllMany").show();
+//   }
+// })
 
 
 
@@ -852,3 +897,43 @@ $("#orderSearchInput").keyup(function(){
   console.log("search:"+searchText);
   loadOrderListHtml();
 });
+
+$(".click-to-select").click(function(){
+  if($(".checkbox").is(':visible') ) {
+    $(".checkbox").hide();
+    $(".prodExtend").hide();
+    $(".click-to-select-all").hide();
+    $("#controllMany").hide();
+    $(".click-to-view").hide();
+
+  } else {
+    $(".checkbox").show();
+    $(".prodExtend").show();
+    $(".click-to-select-all").show();
+    $("#controllMany").show();
+    $(".click-to-view").show();
+
+  }
+})
+
+$(".click-to-select-all").click(function(){
+  // var lsChecked = $(".checkbox");
+  // for (e in lsChecked){
+  //   $(lsChecked[e]).attr("checked", true);
+  // }
+  var count = 0;
+  var check = false;
+  $('.checkbox').each(function(){ 
+    count++;
+    if (count == 1 && this.checked) {
+      check = true;
+    }
+    if (check){
+      this.checked = false; 
+    } else {
+      this.checked = true;
+    }
+  });
+
+})
+
