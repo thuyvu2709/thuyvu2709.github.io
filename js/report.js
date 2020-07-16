@@ -43,6 +43,8 @@ function loadReportHtml() {
 
   var breakevenPoint = parseInt(totalPay - totalTurnover);
 
+  var totalRefund = parseInt(data[6][1]);
+
   $(".totalCurrentProfit").html("Tổng lãi hiện tại: "+totalCurrentProfit);
   $(".totalTurnover").html("Tổng doanh thu: "+totalTurnover);
   $(".totalExpectProfit").html("Tổng lãi dự kiến: "+totalExpectProfit);
@@ -50,7 +52,7 @@ function loadReportHtml() {
 
   $(".totalNumOfRestProduct").html("Tổng số hàng tồn: "+totalNumOfRestProduct);
   $(".totalPayForRestProduct").html("Tổng tiền vốn cho hàng tồn: "+totalPayForRestProduct);
-
+  $(".totalRefund").html("Tổng tiền hoàn:"+totalRefund);
 
   if (breakevenPoint > 0)  {
     $(".breakevenPoint").html("Mục tiêu đến điểm hoà vốn: "+breakevenPoint);
