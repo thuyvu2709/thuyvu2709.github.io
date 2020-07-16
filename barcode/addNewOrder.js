@@ -579,7 +579,8 @@ $("#addNewOrder").click(function(){
 				orderNode,
 				shippingType,
 				otherCost,
-				prepaid	
+				prepaid,
+				0
                 ]
             ]
  	$("#loading-text").html("Thêm thông tin chung đơn hàng");

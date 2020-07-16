@@ -416,7 +416,7 @@ function loadOrderList(callback) {
   var spreadsheetId = mainSheetForProduct;
 
 
-  var indexColumnOfAllData = 13;
+  var indexColumnOfAllData = 14;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   if (passDataLocalhost) {
@@ -591,7 +591,7 @@ function appendOrderDetail(submitData,callback) {
 }
 
 function appendOrder(submitOrderData,callback) {
-  var numOfColumn = 13;
+  var numOfColumn = 14;
   var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn)+'1';
   var spreadsheetId = mainSheetForProduct;
 

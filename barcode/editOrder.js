@@ -842,10 +842,11 @@ $("#editOrder").click(function(){
 				orderNode,
 				shippingType,
 				otherCost,
-				prepaid
+				prepaid,
+				0
                 ]
             ];
-    var numOfColumn = 13;
+    var numOfColumn = 14;
 	var sheetrange = sheetOrder+'!A'+realOrderIndex +":"+ String.fromCharCode(65+numOfColumn) + realOrderIndex;
 
 	$("#loading-text").html("Cập nhật thông tin chung");

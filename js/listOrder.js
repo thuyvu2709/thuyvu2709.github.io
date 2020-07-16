@@ -418,6 +418,7 @@ function loadOrderListHtml() {
             '<div class="btn btnNormal5px requestshipping order_'+e+'" >Yêu cầu giao hàng</div>'+
             '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng có sẵn</div>'+
             '<div class="btn btnNormal5px makecopy order_'+e+'" >Tạo mới y hệt</div>'+
+            '<div class="btn btnNormal5px refundBtn order_'+e+'" >Hoàn tiền</div>'+
           '</div>'+
         '</div>'+
       '</div>'
@@ -521,6 +522,34 @@ function loadOrderListHtml() {
     $('#myModal').modal('toggle');
   })
 
+  $(".refundBtn").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    console.log("refund:"+orderIndex);
+    var refundValue = data[orderIndex][14];
+    refundValue = refundValue ? refundValue : 0;
+    var content = "<div>"+
+    "<h3>Hoàn tiền</h3>"+
+    '<input type="text" class="form-control refundAmount order_'+orderIndex+'" placeholder="Tiền hoàn" value='+refundValue+'>'+
+    "</div>"
+
+    $("#modelContent").html(content);
+    $("#modalYes").click(function(){
+      var orderIndex = $(".refundAmount").attr("class").split(" ").pop().split("_").pop();
+      console.log("Refund : "+ $('.refundAmount').val() + " with "+orderIndex);
+      var newValue = $('.refundAmount').val();
+
+      var realOrderIndex = parseInt(orderIndex) + 1;
+
+      var column = 14; //for refund
+      $("#loadingSpin").show();
+      updateOrderStatus(realOrderIndex,column, newValue , function(){
+        $("#loadingSpin").hide();
+      });
+
+    })
+    $('#myModal').modal('toggle');
+  })
+
   function getOrder(orderIndex) {
     // console.log($(this));
     var orderCode = data[orderIndex][0];
@@ -543,6 +572,7 @@ function loadOrderListHtml() {
       shippingType : data[orderIndex][11],
       otherCost : data[orderIndex][12],
       prepaid : data[orderIndex][13],
+      refund : data[orderIndex][14],
       shipIndex : shipIndex,
       orderIndex : orderIndex
     }
