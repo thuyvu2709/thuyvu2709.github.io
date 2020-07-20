@@ -225,7 +225,12 @@ function updateTitle(){
         var totalTurnover =  parseFloat(data[1][1]);
         var totalPay =  parseFloat(data[3][1]);
         var totalRefund = parseInt(data[6][1]);
+        // console.log("totalTurnover:"+totalTurnover);
+        // console.log("totalPay:"+totalPay);
+        // console.log("totalRefund:"+totalRefund);
+
         totalTurnover = totalTurnover - totalRefund;
+        // console.log("after :"+totalTurnover);
         
         var breakevenPoint = parseFloat(totalPay - totalTurnover);
         if (breakevenPoint <=0) {
