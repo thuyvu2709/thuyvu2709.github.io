@@ -224,7 +224,9 @@ function updateTitle(){
 
         var totalTurnover =  parseFloat(data[1][1]);
         var totalPay =  parseFloat(data[3][1]);
-
+        var totalPayForRestProduct = parseInt(data[5][1]);  
+        totalTurnover = totalTurnover - totalPayForRestProduct;
+        
         var breakevenPoint = parseFloat(totalPay - totalTurnover);
         if (breakevenPoint <=0) {
             var percent = parseInt((totalTurnover - totalPay) * s.length / totalPay);
