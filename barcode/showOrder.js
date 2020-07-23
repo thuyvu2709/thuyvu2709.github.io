@@ -87,7 +87,7 @@ for (i in prodListOrder){
 		continue;
 	}
 	var isAvailable = prodListOrder[i].available == 1 ? "borderMustard" : "";
-	var totalUnit = parseInt(prodListOrder[i].productCount)*parseInt(prodListOrder[i].productEstimateSellingVND)
+	var totalUnit = parseFloat(prodListOrder[i].productCount)*parseFloat(prodListOrder[i].productEstimateSellingVND)
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
     "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
