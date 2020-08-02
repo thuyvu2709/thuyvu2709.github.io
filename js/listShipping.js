@@ -282,8 +282,11 @@ function loadOrderShippingListHtml() {
         continue;
       }
       packedCost+=5;
+
+      console.log(lsOrder[e][0]+">"+lsOrder[e][7]+">"+parseFloat(lsOrder[e][7] ? lsOrder[e][7] : 0)+" "+lsOrder[e][8]);
+
+
       if (lsOrder[e][8] == "SHIPPER_COD" || lsOrder[e][8] == "SHIPPER_NO_COD") {
-        // console.log(lsOrder[e][0]+">"+lsOrder[e][7]+">"+parseFloat(lsOrder[e][7] ? lsOrder[e][7] : 0));
         shippedCost += parseFloat(lsOrder[e][7] ? lsOrder[e][7] : 0);
       } else {
         postAndShopeeCost += parseFloat(lsOrder[e][5] ? lsOrder[e][5] : 0);
