@@ -50,7 +50,7 @@ function loadWarehouseHtml() {
 
     if (scheduleStatus == 0) {
       cardBody += '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div> ';
-      // cardBody += '<div class="btn btn-default btnNormal checkRequest checkImportWithoutChecking_'+e+'" >Hàng đã về</div> <br/>';
+      cardBody += '<div class="btn btn-default btnNormal checkRequest checkImportWithoutChecking_'+e+'" >Hàng đã về</div> <br/>';
     } else {
       cardBody += '<div class="btn btn-default btnNormal" >Hàng tồn:'+data[e][4]+'</div>';      
     }
@@ -82,7 +82,7 @@ function loadWarehouseHtml() {
       )
 
     $(".checkImport_"+e).click(requestToCheckProducts);
-    // $(".checkImportWithoutChecking_"+e).click(isProductArrived);
+    $(".checkImportWithoutChecking_"+e).click(isProductArrived);
     $(".editWH_"+e).click(editWarehouseFn);
     $(".viewProductInWH_"+e).click(viewProductInWH);
     $(".deleteWH_"+e).click(deleteWH);
@@ -172,6 +172,8 @@ function editWarehouseFn() {
 }
 
 function isProductArrived(){
+
+  $("#loadingSpin").show();
 
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   importIndex = parseInt(importIndex);
