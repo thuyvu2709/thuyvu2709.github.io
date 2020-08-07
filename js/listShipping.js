@@ -1058,7 +1058,7 @@ function showTask(){
   $(".delete").click(deleteTask);
   $(".editTask").click(showEditTask);
   $(".payTask").click(payTaskFn);
-  
+
   if (userRole=="manager") {
     $("#addNewItem").show()
     $("#addNewItem").click(addNewTask);
@@ -1066,7 +1066,11 @@ function showTask(){
 }
 
 function addNewTask(){
+  $("#loadingSpin").show();
+
   getLatestTaskCode(function(taskCode){
+      $("#loadingSpin").hide();
+
       console.log("getLatestTaskCode");
       // var submitTaskData = [
       //   [taskCode, title, content, "", ""]
@@ -1092,11 +1096,13 @@ function addNewTask(){
                   ;
       $("#myModal .modal-body").html(modalBody);
       $('#myModal').modal('toggle');
-      $('.taskSaveInfor').click(saveTaskFn);
+      $('.taskSaveInfor').click(appendTaskFn);
   })
 } 
 
 function appendTaskFn(){
+  $("#loadingSpin").show();
+
   var taskCode = $(".taskCode").html();
   var title = $(".taskName").val();
   var taskfee = $(".taskfee").val();
@@ -1108,6 +1114,8 @@ function appendTaskFn(){
   ]
 
   appendTask(submitTaskData, function(){
+    $("#loadingSpin").hide();
+
     console.log("appendTask");
   })
 }
