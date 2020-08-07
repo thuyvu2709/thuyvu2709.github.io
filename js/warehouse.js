@@ -33,6 +33,11 @@ function loadWarehouseHtml() {
         continue;
       }
     }
+    if (importType==1){
+      if (data[e][2]=="1"){
+        continue;
+      }
+    }
 
     if ($("#warehouseSearchInput").val()) {
       if (!data[e][1].toUpperCase().includes($("#warehouseSearchInput").val().toUpperCase())){
