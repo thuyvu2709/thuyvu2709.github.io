@@ -1079,7 +1079,7 @@ function addNewTask(){
       //   console.log("appendTask");
 
       var modalBody = '<div>Thêm thông tin nhiệm vụ:</div><br/>'+
-                  '<div>Mã nhiệm vụ:<div classname="taskCode">'+taskCode+'</div></div><br/>'+
+                  '<div>Mã nhiệm vụ:<div class="taskCode">'+taskCode+'</div></div><br/>'+
                   '<div class="btn btn-default btnNormal">'+
                     'Tên nhiệm vụ:<input class="taskName"/>'+
                   '</div>'+
