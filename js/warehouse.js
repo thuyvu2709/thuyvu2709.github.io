@@ -241,11 +241,15 @@ function requestToCheckProducts(){
     }
     content += "<table/>"
 
+    var warehouseCheckingFee = warehouseData[importIndex][3];
+
     getLatestTaskCode(function(taskCode){
       console.log("getLatestTaskCode");
       var submitTaskData = [
-        [taskCode, title, content, "", ""]
+        [taskCode, title, content, "", "",warehouseCheckingFee]
       ]
+      // [taskCode, title, taskContent, "", "",taskfee]
+
       appendTask(submitTaskData, function(){
         console.log("appendTask");
 

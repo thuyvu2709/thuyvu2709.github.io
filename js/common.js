@@ -627,7 +627,7 @@ function appendOrder(submitOrderData,callback) {
 }
 
 function appendTask(submitTaskData,callback) {
-  var numOfColumn = 4;
+  var numOfColumn = 6;
   var sheetrange = 'Task!A1:'+ String.fromCharCode(65+numOfColumn);
   var spreadsheetId = shippingSheet;
 

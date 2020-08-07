@@ -78,6 +78,9 @@ var triggerAfterLoad = function(){
         getTaskList(function(lsTaskset){
           // console.log("getTaskList");
           lsTask = lsTaskset;
+          if (!lsTask) {
+            lsTask = JSON.parse(localStorage.getItem("tasklist"));
+          }
         })
     });
 
@@ -983,7 +986,6 @@ function shippingReport(){
 
 function showTask(){
   $("#listShippingOrder").empty();
-  
   var mode = $(".orderFilter").val();
 
   $("#note").html("");
@@ -1056,6 +1058,58 @@ function showTask(){
   $(".delete").click(deleteTask);
   $(".editTask").click(showEditTask);
   $(".payTask").click(payTaskFn);
+  
+  if (userRole=="manager") {
+    $("#addNewItem").show()
+    $("#addNewItem").click(addNewTask);
+  }
+}
+
+function addNewTask(){
+  getLatestTaskCode(function(taskCode){
+      console.log("getLatestTaskCode");
+      // var submitTaskData = [
+      //   [taskCode, title, content, "", ""]
+      // ]
+      // appendTask(submitTaskData, function(){
+      //   console.log("appendTask");
+
+      var modalBody = '<div>Thêm thông tin nhiệm vụ:</div><br/>'+
+                  '<div>Mã nhiệm vụ:<div classname="taskCode">'+taskCode+'</div></div><br/>'+
+                  '<div class="btn btn-default btnNormal">'+
+                    'Tên nhiệm vụ:<input class="taskName"/>'+
+                  '</div>'+
+                  '<br/>'+
+                  '<div class="btn btn-default btnNormal">'+
+                  ' Chi phí:<input class="taskfee" />'+
+                  '</div>'+
+                  '<div class="btn btn-default btnNormal">'+
+                  ' Nội dung:<input class="taskContent" />'+
+                  '</div>'+
+                  '<br/>'+
+                  '<div class="btn btn-default taskSaveInfor btnNormal">Lưu thông tin'+
+                  '</div>'
+                  ;
+      $("#myModal .modal-body").html(modalBody);
+      $('#myModal').modal('toggle');
+      $('.taskSaveInfor').click(saveTaskFn);
+  })
+} 
+
+function appendTaskFn(){
+  var taskCode = $(".taskCode").html();
+  var title = $(".taskName").val();
+  var taskfee = $(".taskfee").val();
+  taskfee = taskfee ? taskfee : 0;
+  var taskContent = $(".taskContent").val();
+
+  var submitTaskData = [
+    [taskCode, title, taskContent, "", "",taskfee]
+  ]
+
+  appendTask(submitTaskData, function(){
+    console.log("appendTask");
+  })
 }
 
 function showEditTask(){
