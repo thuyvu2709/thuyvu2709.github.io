@@ -41,6 +41,7 @@ if (!datasetName) {
   mainSheetForProduct = localStorage.getItem("mainSheetForProduct");
   // roleSheet = localStorage.getItem("roleSheet");
   shippingSheet = localStorage.getItem("shippingSheet");
+  $("#pageIcon").html(datasetName);
 }
 
 
