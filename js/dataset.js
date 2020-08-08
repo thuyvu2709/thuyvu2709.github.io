@@ -31,3 +31,19 @@ $("#data2020").click(function(){
   window.location = "/";
 
 })
+
+$("#mila").click(function(){
+  var datasetName = "Mila";
+
+  var mainSheetForProduct = '1xI2dl-_PkgH5coBHJ7rEBEE9G51fq7y4S-kMtv7BoPk';
+  var roleSheet = '1PttgX_vfEPEWPzI2MFtSuWnPQi7ctzcs8QmnQOwxx74';
+  var shippingSheet = '1AZcm1UZ-HgH2g1-qT35Tfzj_5FVHNLBmC0dCMfZ4gt8';
+
+  localStorage.setItem("mainSheetForProduct",mainSheetForProduct);
+  localStorage.setItem("roleSheet",roleSheet);
+  localStorage.setItem("shippingSheet",shippingSheet);
+  localStorage.setItem("datasetName",datasetName);
+
+  window.location = "/";
+
+})
