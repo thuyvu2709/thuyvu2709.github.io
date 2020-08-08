@@ -569,7 +569,7 @@ function loadOrderListHtml() {
       shippingCost : data[orderIndex][6],
       totalPayIncludeShip : data[orderIndex][7],
       paymentStatus : data[orderIndex][8],
-      shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "",
+      shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "Requested",
       shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
       shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
       orderNode : data[orderIndex][10],
