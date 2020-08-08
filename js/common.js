@@ -1330,7 +1330,12 @@ function requestShipping(currentOrder, callback){
     currentOrder.prodListOrder[e].profit = undefined;
     currentOrder.prodListOrder[e].available = undefined;
   }
-
+  if (!currentOrder.shippingStatus) {
+    currentOrder.shippingStatus = "Requested";
+  }
+  if (!currentOrder.shippingPaidStatus) {
+    currentOrder.shippingPaidStatus = "0";
+  }
   var dataShipping = [
     [
       currentOrder.orderCode,
