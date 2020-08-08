@@ -1339,7 +1339,7 @@ function requestShipping(currentOrder, callback){
       JSON.stringify(currentOrder),
       currentOrder.shippingStatus,
       currentOrder.otherCost,
-      "",
+      currentOrder.shippingCompleteTime,
       currentOrder.shippingCost,
       currentOrder.shippingType,
       currentOrder.shippingPaidStatus,

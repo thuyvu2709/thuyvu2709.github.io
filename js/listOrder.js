@@ -174,6 +174,7 @@ function parseOrderShipping(){
       status : lsOrderShipping[e][4],
       stype : lsOrderShipping[e][8],
       paidStatus : lsOrderShipping[e][9],
+      completeTime : lsOrderShipping[e][6],
       sindex : (parseInt(e)+1)
     }
 
@@ -570,6 +571,7 @@ function loadOrderListHtml() {
       paymentStatus : data[orderIndex][8],
       shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "",
       shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
+      shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
       orderNode : data[orderIndex][10],
       shippingType : data[orderIndex][11],
       otherCost : data[orderIndex][12],
