@@ -1337,12 +1337,12 @@ function requestShipping(currentOrder, callback){
       currentOrder.customerAddress,
       "'"+currentOrder.customerPhone,
       JSON.stringify(currentOrder),
-      "Requested",
+      currentOrder.shippingStatus,
       currentOrder.otherCost,
       "",
       currentOrder.shippingCost,
       currentOrder.shippingType,
-      "0",
+      currentOrder.shippingPaidStatus,
       getCurrentDateTime().dateTime
     ]
   ];
@@ -1355,7 +1355,7 @@ function requestShipping(currentOrder, callback){
         JSON.stringify(currentOrder),
         "COMPLETED",
         currentOrder.otherCost,
-        "",
+        getCurrentDateTime().dateTime,
         currentOrder.shippingCost,
         currentOrder.shippingType,
         "1",

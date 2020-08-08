@@ -173,6 +173,7 @@ function parseOrderShipping(){
     orderShipStatus[lsOrderShipping[e][0]] = {
       status : lsOrderShipping[e][4],
       stype : lsOrderShipping[e][8],
+      paidStatus : lsOrderShipping[e][9],
       sindex : (parseInt(e)+1)
     }
 
@@ -567,7 +568,8 @@ function loadOrderListHtml() {
       shippingCost : data[orderIndex][6],
       totalPayIncludeShip : data[orderIndex][7],
       paymentStatus : data[orderIndex][8],
-      shippingStatus : data[orderIndex][9],
+      shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "",
+      shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
       orderNode : data[orderIndex][10],
       shippingType : data[orderIndex][11],
       otherCost : data[orderIndex][12],
