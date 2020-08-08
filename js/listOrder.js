@@ -496,6 +496,8 @@ function loadOrderListHtml() {
 
   $(".deleteelement").click(function(){
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var currentOrder=getOrder(orderIndex);
+
     console.log("delete:"+orderIndex);
 
     var deleteTrigger = function() {
@@ -507,11 +509,30 @@ function loadOrderListHtml() {
       if (orderIndex) {
         var orderCode = data[orderIndex][0];
         console.log("delete orderCode:"+orderCode);
+        $("#loading-text").html("Xoá chi tiết đơn hàng");
 
         removeOrderDetail(orderCode,function(){
+            $("#loading-text").html("Xoá đơn hàng");
+
             removeOrder(orderIndex+1,function(){
               $(".cardElement_"+orderIndex).remove();
-              $("#loadingSpin").hide();
+
+                var shippingIndex = currentOrder.shipIndex;
+
+                if(shippingIndex && shippingIndex > -1) {  
+                  var dataUpdateShipping = [
+                    ["","","","","","","","","",""]
+                  ];
+                  var sheetrange = 'Shipping!A'+shippingIndex+':J'+shippingIndex;
+
+                  $("#loading-text").html("Xoá yêu cầu giao hàng");
+
+                  updateShipping(dataUpdateShipping, sheetrange, function(){
+                    $("#loadingSpin").hide();
+                  }, function(){
+                    console.log("Something wrong");
+                  })
+                }
             })
         })
       }
