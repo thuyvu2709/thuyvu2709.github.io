@@ -11106,3 +11106,11 @@ form .row:first-child .floating-label-form-group {
 .divHide {
   display: none
 }
+
+.starIcon {
+  color: #c57e0f;
+  /*font-size: 25px;  */
+}
+#pageIcon {
+  color: #c57e0f;
+}
