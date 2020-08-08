@@ -517,9 +517,12 @@ function loadOrderListHtml() {
             removeOrder(orderIndex+1,function(){
               $(".cardElement_"+orderIndex).remove();
 
+                $("#loadingSpin").hide();
                 var shippingIndex = currentOrder.shipIndex;
 
                 if(shippingIndex && shippingIndex > -1) {  
+                  $("#loadingSpin").show();
+
                   var dataUpdateShipping = [
                     ["","","","","","","","","",""]
                   ];
