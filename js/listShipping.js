@@ -1220,9 +1220,9 @@ function deleteTask() {
   var taskIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualTaskIndex = parseInt(taskIndex) + 1;
   var dataUpdateTask = [
-    ["","","","",""]
+    ["","","","","","",""]
   ];
-  var sheetrange = 'Task!A'+actualTaskIndex+':E'+actualTaskIndex;
+  var sheetrange = 'Task!A'+actualTaskIndex+':G'+actualTaskIndex;
 
   $("#loadingSpin").show();
 
