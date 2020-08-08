@@ -40,7 +40,7 @@ var afterLoadHTML = function(){
     var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
     var btnOrder = "btnOrder_"+orderIndex;
 
-    console.log("goToClass:"+btnOrder);
+    // console.log("goToClass:"+btnOrder);
 
     var $scrollTo = $('.'+btnOrder);
 
@@ -111,7 +111,7 @@ function filterOrderWithProdRefCode(){
 }
 
 function filterOrderWithDate(){
-  console.log("filterOrderWithDate")
+  // console.log("filterOrderWithDate")
   var startDateStr = url.searchParams.get("startDate");
   if (!startDateStr) {
     return;
@@ -439,7 +439,7 @@ function loadOrderListHtml() {
       if (index < orderListDetail.length) {
         // console.log(orderListDetail[index][0] + " "+orderCode);
         if (orderListDetail[index][0] == orderCode) {
-          console.log(orderListDetail[index][0]+" "+index+" <>")
+          // console.log(orderListDetail[index][0]+" "+index+" <>")
           var realIndex = index + 1;
           gapi.client.sheets.spreadsheets.values.update({
             spreadsheetId: spreadsheetId,
@@ -452,7 +452,7 @@ function loadOrderListHtml() {
           }).then(function(response) {
             
             var result = response.result;
-            console.log(`${result.updatedCells} cells updated.`);
+            // console.log(`${result.updatedCells} cells updated.`);
             
             scanOrderDetail(index+1);
 
@@ -483,7 +483,7 @@ function loadOrderListHtml() {
     }).then(function(response) {
       
       var result = response.result;
-      console.log(`${result.updatedCells} cells updated.`);
+      // console.log(`${result.updatedCells} cells updated.`);
       
       callback();
 
@@ -498,7 +498,7 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
 
-    console.log("delete:"+orderIndex);
+    // console.log("delete:"+orderIndex);
 
     var deleteTrigger = function() {
       $("#loadingSpin").show();
@@ -508,7 +508,7 @@ function loadOrderListHtml() {
       orderIndex = parseInt(orderIndex);
       if (orderIndex) {
         var orderCode = data[orderIndex][0];
-        console.log("delete orderCode:"+orderCode);
+        // console.log("delete orderCode:"+orderCode);
         $("#loading-text").html("Xoá chi tiết đơn hàng");
 
         removeOrderDetail(orderCode,function(){
@@ -725,12 +725,12 @@ function loadOrderListHtml() {
 
     $(".shippingType").click(function(){
       $("#simpleModal").modal('hide');
-      console.log(orderIndex);
-      console.log(willpay);
+      // console.log(orderIndex);
+      // console.log(willpay);
       currentOrder.shippingType =  $(this).attr("class").split(" ").pop();
 
       //////////
-      console.log("shippingType:"+currentOrder.shippingType);
+      // console.log("shippingType:"+currentOrder.shippingType);
       if (currentOrder.shippingType == "POST_COD" 
         || currentOrder.shippingType == "SHOPEE"
         || currentOrder.shippingType == "POST_NO_COD" ) {
@@ -745,7 +745,7 @@ function loadOrderListHtml() {
       var column = 11; //for shipping
       $("#loadingSpin").show();
       updateOrderStatus(realOrderIndex,column,currentOrder.shippingType, function(){
-        console.log("updateOrderStatus for shipping");
+        // console.log("updateOrderStatus for shipping");
         $("#loadingSpin").hide();
       });
 
@@ -753,11 +753,11 @@ function loadOrderListHtml() {
   })
 
   $(".selectPayment").change(function(){
-    console.log("selectPayment:");;
+    // console.log("selectPayment:");;
     var line = $(this).attr("class").split(" ").pop().split("_").pop();
 
-    console.log("selectPayment:"+$(this).attr("class").split(" ").pop().split("_").pop())
-    console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
+    // console.log("selectPayment:"+$(this).attr("class").split(" ").pop().split("_").pop())
+    // console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
     var value = document.getElementsByClassName($(this).attr("class"))[0].value;
     
     line = parseInt(line) + 1;
@@ -952,7 +952,7 @@ $("#orderFilter").change(function(){
 
 $("#orderSearchInput").keyup(function(){
   var searchText = $(this).val();
-  console.log("search:"+searchText);
+  // console.log("search:"+searchText);
   loadOrderListHtml();
 });
 
