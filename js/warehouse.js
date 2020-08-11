@@ -1,6 +1,6 @@
 
 var warehouseData;
-var importType = 0;
+var importType = document.getElementById("importFilter").value;
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
