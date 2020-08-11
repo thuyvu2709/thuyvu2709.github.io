@@ -76,6 +76,7 @@ function loadWarehouseHtml() {
             '<div class="btn btn-default btnNormal editWH_'+e+'" style="margin : 5px">Sửa</div>'+
             '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 5px">Xoá</div>'+
             '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" style="margin : 5px">Xem danh sách hàng</div>'+
+            (scheduleStatus == 1 ? '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div> ' : '')+
           '</div>'+
         '</div>'+
       '</div>'

@@ -12,7 +12,7 @@ $("#receiverAddress").val(currentImport.receiverAddress);
 $("#receiverName").val(currentImport.receiverName);
 $("#bankingAccountNumber").val(currentImport.bankingAccountNumber);
 $("#bankingName").val(currentImport.bankingName);
-
+$("#importStatus").prop('checked',currentImport.importStatus==1);
 
 var mode = "edit";//new
 
@@ -26,6 +26,13 @@ $("#newCopyImport").click(function(){
 })
 
 function editImport(){
+    if ($("#importStatus").prop('checked')) {
+        currentImport.importStatus = 1   
+    } else {
+        currentImport.importStatus = 0;
+    }
+    // console.log("editImport:"+);
+    // return;
 	var submitImportData = [
         [
             $("#importCode").val(),
