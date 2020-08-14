@@ -366,12 +366,12 @@ function loadOrderShippingListHtml() {
     }
 
     if (lsOrder[e][8] == "POST_NO_COD" && lsOrder[e][4] == "Requested") {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post</div>';
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi bên vận chuyển</div>';
         // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
     }
 
     if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested") {
-      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi Post (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+'k) </div>';
+      completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi bên vận chuyển (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+'k) </div>';
       title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +"k)";
     }
 
