@@ -428,7 +428,7 @@ var myvar = '<div lang="en">'+
 '            <label>Phí giao hàng: 30</label>'+
 '          </li>'+
 '          <li>'+
-'            <label>Phương thức giao hàng: Ship VIETTELPOST </label>'+
+'            <label>Phương thức giao hàng: ????? </label>'+
 '          </li>'+
 '          <li>'+
 '            <label>Tổng tiền thanh toán : 180</label>'+

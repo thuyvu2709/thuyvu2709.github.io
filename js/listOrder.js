@@ -181,7 +181,7 @@ function parseOrderShipping(){
     /*
     shipping type: 0: ship, ko thu tien
                    1: ship, co thu tien (COD)
-                   2: ship viettel post
+                   2: ship DVVC
     */
     // console.log(orderShipStatus[lsOrderShipping[e][0]]);
   }
@@ -711,8 +711,8 @@ function loadOrderListHtml() {
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
     '<div class="btn btnNormal5px shippingType SHIPPER_NO_COD" >Shipper không thu tiền</div>'+
     '<div class="btn btnNormal5px shippingType SHIPPER_COD" >Shipper thu '+willpay+'k</div>'+
-    '<div class="btn btnNormal5px shippingType POST_COD" >Ship Poste thu COD</div>'+
-    '<div class="btn btnNormal5px shippingType POST_NO_COD" >Ship Poste ko COD</div>'+
+    '<div class="btn btnNormal5px shippingType POST_COD" >Ship DVVC thu COD</div>'+
+    '<div class="btn btnNormal5px shippingType POST_NO_COD" >Ship DVVC ko COD</div>'+
     '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>' + 
     '<div class="btn btnNormal5px shippingType SHIP_BY_THIRD_PARTY" >Ship từ bên thứ 3</div>';
 

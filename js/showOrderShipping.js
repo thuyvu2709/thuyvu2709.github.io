@@ -44,13 +44,13 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 } else if (currentOrder.shippingType == "POST_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#titleWillpay").html("Thu COD:");
-	$("#shippingType").html("Ship Viettelpost");
+	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển");
 } else if (currentOrder.shippingType == "SHOPEE") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Shopee");
 } else if (currentOrder.shippingType == "POST_NO_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
-	$("#shippingType").html("Ship Viettelpost không COD");
+	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển không COD");
 }
 
 
