@@ -969,7 +969,8 @@ function mergeOrder(){
     }
 
     removeOrderByMerge(0, function(){
-      $("#loadingSpin").hide();
+      // $("#loadingSpin").hide();
+      location.reload();
     })
   });
 }
