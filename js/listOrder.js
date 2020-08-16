@@ -718,7 +718,7 @@ function loadOrderListHtml() {
         }
       }
       // console.log(lsProdChecked);
-      $("#loadingSpin").hide();
+      // $("#loadingSpin").hide();
       splitOrderAsRequested(currentOrder,lsProdChecked,function(){
         location.reload();
       });
