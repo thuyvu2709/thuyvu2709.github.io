@@ -1417,6 +1417,20 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
     for (var e in prodListOrder) {
       if (prodListOrder[e].available == 1) {
         // prodListOrderReady.push(prodListOrder[e]);
+        // dataProdListOrderReady.push([
+        //   orderCode,
+        //   prodListOrder[e].productCode,
+        //   prodListOrder[e].importCode,
+        //   '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+        //   prodListOrder[e].productName,
+        //   prodListOrder[e].productCount,
+        //   prodListOrder[e].productEstimateSellingVND,
+        //   "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
+        //   "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
+        //   "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
+        //   "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
+        // ])
+
         dataProdListOrderReady.push([
           orderCode,
           prodListOrder[e].productCode,
@@ -1428,8 +1442,9 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
           "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
           "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
           "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
-        ])
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
+        ])  
 
         // dataProfListOrderRemoveSplit.push([
         //   "","","","","","","","","","",""
@@ -1438,6 +1453,91 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
 
         dataRangeRemoveSplit.push("OrderDetail!A"+orderDetailIndex+":"+String.fromCharCode(65+numOfColumnOrderDetail)+orderDetailIndex);
       }
+    }
+  }
+
+
+  var splitAddNewOrder = function (callbackSplitAddNew) {
+
+    // var submitOrderData = [
+    //     [
+    //       orderCode,
+    //       currentOrder.orderDate,
+    //       currentOrder.customerName,
+    //       currentOrder.customerAddress,
+    //       "'"+currentOrder.customerPhone,
+    //       "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+    //       currentOrder.shippingCost,
+    //       "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
+    //       "ORDERED",
+    //       "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+    //       currentOrder.orderNode,
+    //       "",
+    //       currentOrder.otherCost
+    //     ]
+    // ]
+
+    var submitOrderData = [
+        [
+          orderCode,
+          currentOrder.orderDate,
+          currentOrder.customerName,
+          currentOrder.customerAddress,
+          "'"+currentOrder.customerPhone,
+          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+          currentOrder.shippingCost,
+          "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
+          "ORDERED",
+          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+          currentOrder.orderNode,
+          currentOrder.shippingType,
+          currentOrder.otherCost,
+          currentOrder.prepaid,
+          0
+        ]
+    ]
+
+    appendOrder(submitOrderData,function(){
+      appendOrderDetail(dataProdListOrderReady,callbackSplitAddNew);
+    });
+  }
+}
+
+function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
+  // $("#loadingSpin").show();
+  //Add new order
+  var orderCode;
+
+  var dataProdListOrderReady = [];
+  var dataProfListOrderRemoveSplit = [];
+  var dataRangeRemoveSplit = []
+  var prodListOrder = currentOrder.prodListOrder;
+  var numOfColumnOrderDetail = 10;
+
+  function prepareProdListOrder(){
+    for (var e in lsProdIndex) {
+        var prod = prodListOrder[lsProdIndex[e]];
+        dataProdListOrderReady.push([
+          orderCode,
+          prod.productCode,
+          prod.importCode,
+          '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+          prod.productName,
+          prod.productCount,
+          prod.productEstimateSellingVND,
+          "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
+          "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
+        ])  
+
+        // dataProfListOrderRemoveSplit.push([
+        //   "","","","","","","","","","",""
+        // ])
+        var orderDetailIndex = parseInt(prod.orderDetailIndex) + 1;
+
+        dataRangeRemoveSplit.push("OrderDetail!A"+orderDetailIndex+":"+String.fromCharCode(65+numOfColumnOrderDetail)+orderDetailIndex);
     }
   }
 
@@ -1457,8 +1557,10 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
           "ORDERED",
           "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
           currentOrder.orderNode,
-          "",
-          currentOrder.otherCost
+          currentOrder.shippingType,
+          currentOrder.otherCost,
+          currentOrder.prepaid,
+          0
         ]
     ]
 

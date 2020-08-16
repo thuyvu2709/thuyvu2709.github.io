@@ -367,6 +367,7 @@ function loadOrderListHtml() {
       // console.log("orderListDetail[e][3]:"+orderListDetail[e][3]);
       var pw = parseFloat(listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : 0);
       orderDetailBrief += "<span class='"+(currentOrderDetail[o][10]==1 ? "textMustard":"")+"'>"
+                        // +'<input type="checkbox" class="checkSubbox checkOrder_'+currentOrderDetail[o][0]+' checkProd_'+e+'"/>'
                         +currentOrderDetail[o][3]+" | "
                         +currentOrderDetail[o][4] 
                         +" (x "+currentOrderDetail[o][5] +" | "+pw+"kg/pc)"
@@ -418,7 +419,7 @@ function loadOrderListHtml() {
             '<div class="btn btnNormal5px editorder order_'+e+'" >Sửa đơn hàng</div>'+
             '<br/>'+
             '<div class="btn btnNormal5px requestshipping order_'+e+'" >Yêu cầu giao hàng</div>'+
-            '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng có sẵn</div>'+
+            '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng</div>'+
             '<div class="btn btnNormal5px makecopy order_'+e+'" >Tạo mới y hệt</div>'+
             '<div class="btn btnNormal5px refundBtn order_'+e+'" >Hoàn tiền</div>'+
           '</div>'+
@@ -428,6 +429,7 @@ function loadOrderListHtml() {
   }
 
   $(".checkbox").hide();
+  // $(".checkSubbox").hide();
 
   afterLoadHTML();
 
@@ -666,19 +668,58 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
 
-    $("#loadingSpin").show();
+    // $("#loadingSpin").show();
 
     saveHistory({
       searchText : $("#orderSearchInput").val(),
       status : $(".orderFilter").val(),
       goToClass : $(this).attr("class")
     })
+    // $(".checkOrder_"+currentOrder.orderCode).show();
+    // splitOrderAvailable(currentOrder,function(){
+    //   location.reload();
+    // });
 
-    splitOrderAvailable(currentOrder,function(){
-      location.reload();
-    });
+    var content = 
+    '<h5>Tách đơn hàng:'+currentOrder.orderCode+' '+currentOrder.customerName+'</h5>';
+    // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
+    var prodListOrder = currentOrder.prodListOrder;
 
-    // window.location = "../barcode/showorder.html";
+    for (e in currentOrder.prodListOrder) {
+      content += "<div class='checksubdiv "+(prodListOrder[e].available==1 ? "textMustard":"")+"'>"
+          +'  <input type="checkbox" class="checkSubbox checkOrder_'+prodListOrder[e].orderCode+' checkProd_'+e+'">'
+          +prodListOrder[e].productName+" | "
+          +"x"+prodListOrder[e].productCount
+          +"</input>"
+          +"</div>"
+          +"<br/>";
+    }
+    content+='<div class="btn btnNormal5px btnSplitNow" >Tách</div>';
+
+    $("#simpleModal .modal-content").html(content);
+    $("#simpleModal").modal('toggle');
+
+    $(".checksubdiv").click(function(){
+      // console.log("check");
+      // console.log(this);
+      // console.log($(this).find("input"));
+      $($(this).find("input")[0]).prop( "checked", true );
+    })
+    $(".btnSplitNow").click(function(){
+      var lsChecked = $(".checkSubbox");
+      $("#loadingSpin").show();
+      var lsProdChecked = []
+      for (e=0;e<lsChecked.length;e++){
+        if ($(lsChecked[e]).is(":checked")){
+          lsProdChecked.push(e);
+        }
+      }
+      // console.log(lsProdChecked);
+      $("#loadingSpin").hide();
+      splitOrderAsRequested(currentOrder,lsProdChecked,function(){
+        location.reload();
+      });
+    })
   })
 
   $(".orderelementdetail").click(function(){
