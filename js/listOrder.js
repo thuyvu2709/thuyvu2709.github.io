@@ -962,8 +962,8 @@ function mergeOrder(){
         return;
       }
       $("#loading-text").html("Remove "+lsRemoveOrderCode[e3].orderCode+" at Index:"+lsRemoveOrderCode[e3].orderIndex);
-
-      removeOrder(lsRemoveOrderCode[e3].orderIndex, function(){
+      var realIndex = parseInt(lsRemoveOrderCode[e3].orderIndex)+1;
+      removeOrder(realIndex, function(){
         removeOrderByMerge(e3+1, callbackE3);
       })
     }
