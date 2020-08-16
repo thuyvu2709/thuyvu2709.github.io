@@ -932,7 +932,7 @@ function mergeOrder(){
             return;
           }
           var dataEditOD = [[keepOrderCode]];
-          var orderDetailIndex = prodListOrder[e2].orderDetailIndex;
+          var orderDetailIndex = parseInt(prodListOrder[e2].orderDetailIndex)+1;
           var rangeEdit = sheetOrderDetail+'!A'+orderDetailIndex+':A'+orderDetailIndex;
           // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
           $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode+" "+prodListOrder[e2].productName);
