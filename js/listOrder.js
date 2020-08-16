@@ -707,7 +707,7 @@ function loadOrderListHtml() {
         objInput.prop( "checked", true );        
       }
     })
-    
+
     $(".btnSplitNow").click(function(){
       var lsChecked = $(".checkSubbox");
       $("#loadingSpin").show();
@@ -894,6 +894,86 @@ function loadOrderListHtml() {
     requestShip(0);
   })
 
+function mergeOrder(){
+  var lsChecked = $(".checkbox");
+  // console.log("Merge theo order:"+$(".mergeByOrder").val());
+  var keepOrderCode = "DONHANG_"+$(".mergeByOrder").val();
+  var sheetOrderDetail = "OrderDetail";
+  var lsRemoveOrderCode = [];
+  // console.log(lsChecked.length);
+  // for (var e1=0;e1<lsChecked.length;e1++){
+    // console.log($(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop()+" "+e1+" "+$(lsChecked[e1]).is(":checked"))
+  $("#loadingSpin").show();
+  
+  var checkOneByOne =function (e1, callbackE1) {  
+    // console.log("checkOneByOne:"+e1+" "+lsChecked.length);
+    if (e1 >= lsChecked.length) {
+      callbackE1();
+      return;
+    }
+    if ($(lsChecked[e1]).is(":checked")){
+      var orderIndex =  $(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop();
+      var currentOrder=getOrder(orderIndex);
+      // console.log(currentOrder.orderCode+" "+orderIndex);
+      if (currentOrder.orderCode!=keepOrderCode) {
+        // console.log("Cut "+currentOrder.orderCode);
+        $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode);
+
+        // console.log(currentOrder);
+        lsRemoveOrderCode.push({
+          orderCode : currentOrder.orderCode,
+          orderIndex : currentOrder.orderIndex
+        });
+
+        var prodListOrder = currentOrder.prodListOrder;
+        var updateEachOrderDetail = function(e2, callbackE2) {
+          if (!prodListOrder[e2]) {
+            callbackE2();
+            return;
+          }
+          var dataEditOD = [keepOrderCode];
+          var orderDetailIndex = prodListOrder[e2].orderDetailIndex;
+          var rangeEdit = sheetOrderDetail+'!A'+orderDetailIndex+':A'+orderDetailIndex;
+          // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
+          $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode+" "+prodListOrder[e2].productName);
+
+          editOrderDetail(dataEditOD, rangeEdit, function(){
+            updateEachOrderDetail(e2+1, callbackE2);
+          })
+        }
+        updateEachOrderDetail(0, function(){
+          checkOneByOne(e1+1, callbackE1);
+        });
+      } else {
+        checkOneByOne(e1+1, callbackE1);
+      }
+    } else {
+      checkOneByOne(e1+1, callbackE1);
+    }
+  }
+
+
+  checkOneByOne(0, function(){
+    // console.log("Remove orders:")
+    // console.log(lsRemoveOrderCode);
+    var removeOrderByMerge = function(e3, callbackE3) {
+      if (!lsRemoveOrderCode[e3]) {
+        callbackE3();
+        return;
+      }
+      $("#loading-text").html("Remove "+lsRemoveOrderCode[e3].orderCode+" at Index:"+lsRemoveOrderCode[e3].orderIndex);
+
+      removeOrder(lsRemoveOrderCode[e3].orderIndex, function(){
+        removeOrderByMerge(e3+1, callbackE3);
+      })
+    }
+
+    removeOrderByMerge(0, function(){
+      $("#loadingSpin").hide();
+    })
+  });
+}
+
   $(".click-to-view").click(function(){
     var lsChecked = $(".checkbox");
     var totalCost = 0;
@@ -928,9 +1008,17 @@ function loadOrderListHtml() {
                   "Số mặt hàng:"+numOfProd+"<br/>"+
                   "Tổng doanh thu:"+totalPay+"<br/>"+
                   "Tổng vốn:"+totalOwnerPay+"<br/>"+
-                  "Tổng lãi:"+totalProfit+"<br/>";
-
+                  "Tổng lãi:"+totalProfit+"<br/>"+
+                  "<hr/>"+
+                  "<div>"+
+                  "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>"+
+                  "<input type='text' class='mergeByOrder'/>"+
+                  "</div>"
+                  ;
     $("#modelContent").html(content);
+
+    $(".mergeOrder").click(mergeOrder);
+
     $("#modalYes").click(function(){
     })
     $('#myModal').modal('toggle');
@@ -946,8 +1034,8 @@ function checkSystemConsistent(){
     if (data[e][11] == "SHIPPER_COD" || data[e][11] == "POST_COD") {
       if (orderShipStatus[data[e][0]]){
         if (orderShipStatus[data[e][0]].status == "COMPLETED" && data[e][8]!="PAID") {
-          console.log(orderShipStatus[data[e][0]]);
-          console.log(data[e]);
+          // console.log(orderShipStatus[data[e][0]]);
+          // console.log(data[e]);
           $(".modal-body").empty();
           $(".modal-body").html("<p id='modelContent'>"+data[e][0]+" : "+data[e][11]+" đã thanh toán?</p>");
           $('#myModal').modal('toggle');

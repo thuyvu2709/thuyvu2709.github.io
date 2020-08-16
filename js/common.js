@@ -1556,7 +1556,7 @@ function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
           "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
           "ORDERED",
           "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
-          currentOrder.orderNode+(currentOrder.prepaid > 0 ? " Note Trả trước: "+currentOrder.prepaid+" ở đơn hàng "+currentOrder.orderCode +" "+currentOrder.customerName : ""),
+          currentOrder.orderNode+(currentOrder.prepaid > 0 ? " Note Trả trước: "+currentOrder.prepaid+"k ở đơn hàng "+currentOrder.orderCode +" "+currentOrder.customerName : ""),
           currentOrder.shippingType,
           currentOrder.otherCost,
           0,
