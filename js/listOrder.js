@@ -700,11 +700,14 @@ function loadOrderListHtml() {
     $("#simpleModal").modal('toggle');
 
     $(".checksubdiv").click(function(){
-      // console.log("check");
-      // console.log(this);
-      // console.log($(this).find("input"));
-      $($(this).find("input")[0]).prop( "checked", true );
+      var objInput = $($(this).find("input")[0]);
+      if (objInput.is(":checked")){
+        objInput.prop( "checked", false );
+      } else {
+        objInput.prop( "checked", true );        
+      }
     })
+    
     $(".btnSplitNow").click(function(){
       var lsChecked = $(".checkSubbox");
       $("#loadingSpin").show();
