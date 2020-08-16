@@ -931,7 +931,7 @@ function mergeOrder(){
             callbackE2();
             return;
           }
-          var dataEditOD = [keepOrderCode];
+          var dataEditOD = [[keepOrderCode]];
           var orderDetailIndex = prodListOrder[e2].orderDetailIndex;
           var rangeEdit = sheetOrderDetail+'!A'+orderDetailIndex+':A'+orderDetailIndex;
           // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
