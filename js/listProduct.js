@@ -3,6 +3,9 @@ var url = new URL(window.location.href);
 var importCode = url.searchParams.get("importCode");
 var lsNotifications = [];
 
+// $( "#listProduct" ).sortable();
+// $( "#listProduct" ).disableSelection();
+
 
 console.log("importCode:"+importCode);
 
@@ -75,7 +78,11 @@ var triggerAfterLoad = function(){
             if (!importSLData[e][0]) {
               continue;
             }
-            $("#importFilter").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+            var importSLDateStr = importSLData[e][0]+" - "+importSLData[e][1];
+            // if (importSLDateStr.length > 50) {
+            importSLDateStr = importSLDateStr.substring(0,39);
+            // }
+            $("#importFilter").append("<option value='"+importSLData[e][0]+"'>"+importSLDateStr+"</option>")
           }
 
           $("#importFilter").append("<option value='-2'>Hàng đã bán hết</option>");
@@ -203,8 +210,6 @@ function loadProductListHtml(){
 
   $(".editproductelement").click(editProductFn);
   $(".deleteproductelement").click(deleteProduct);
-
-  // $( "#listProduct" ).sortable();
 
   $(".showorder").click(showOrder);
   $("#loadingSpin").hide();
