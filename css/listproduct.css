@@ -15,3 +15,8 @@
 	padding-right: 15px; 
 	margin-left: 20px;
 }
+
+.checkbox {
+	color: #c57e0f !important;
+	border: 2px solid;	  
+}
