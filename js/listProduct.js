@@ -204,7 +204,7 @@ function loadProductListHtml(){
   $(".editproductelement").click(editProductFn);
   $(".deleteproductelement").click(deleteProduct);
 
-  $( "#listProduct" ).sortable();
+  // $( "#listProduct" ).sortable();
 
   $(".showorder").click(showOrder);
   $("#loadingSpin").hide();
