@@ -8,3 +8,10 @@
 /*#importFilte {
 	max-width:300px;
 }*/
+
+.iconMove {
+	border : 1px solid;
+	padding-left: 15px;
+	padding-right: 15px; 
+	margin-left: 20px;
+}
