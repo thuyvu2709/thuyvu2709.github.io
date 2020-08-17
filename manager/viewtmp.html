@@ -78,12 +78,29 @@
     // var array = [[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5],[1,2,3,4,5]];
     var content = '<table>';
     // content+="<tr><td style='text-align: center;'>No</td><td>Name</td><td>Count</td><td>Price</td><td>Total</td></tr>"
+    var irow=0;
+    var icol=0;
     array.forEach(function(row) {
-        content += "<tr>";
-        row.forEach(function(cell) {
-            content += "<td>" + cell + "</td>" ;
-        });
-        content += "</tr>";
+        irow = irow + 1;
+        if (irow==1) {
+          content += "<tr style='text-align:center; font-weight:bold;'>";
+          row.forEach(function(cell) {
+              content += "<td>" + cell + "</td>" ;
+          });
+          content += "</tr>";
+        } else {
+          content += "<tr>";
+          icol = 0;
+          row.forEach(function(cell) {
+              icol = icol + 1;
+              if (icol!=2) {
+                content += "<td style='text-align:center'>" + cell + "</td>" ;
+              } else {
+                content += "<td>" + cell + "</td>" ;
+              }
+          });
+          content += "</tr>";
+        }
     });
     content+="</table>";
     // console.log(content)

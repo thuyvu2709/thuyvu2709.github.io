@@ -400,7 +400,7 @@ $(".click-to-view").click(function(){
   var stillInStore = 0;
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
-  var downloadContent = "No, Name, Count, Price, Total\n";
+  var downloadContent = "STT, Tên hàng, SL, Giá, Thành tiền\n";
   var count = 0;
   $('.checkbox').each(function(){ 
       // this.checked = true; });
