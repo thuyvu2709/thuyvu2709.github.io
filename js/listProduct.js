@@ -3,8 +3,27 @@ var url = new URL(window.location.href);
 var importCode = url.searchParams.get("importCode");
 var lsNotifications = [];
 
-// $( "#listProduct" ).sortable();
 // $( "#listProduct" ).disableSelection();
+  // $( "#listProduct" ).sortable();
+
+$("#listProduct").sortable({
+  group: 'no-drop',
+  handle: 'i.iconMove',
+  onDragStart: function ($item, container, _super) {
+    // Duplicate items of the no drop area
+    if(!container.options.drop)
+      $item.clone().insertAfter($item);
+    _super($item, container);
+  }
+});
+$("#listProduct").sortable({
+  group: 'no-drop',
+  drop: false
+});
+$("#listProduct").sortable({
+  group: 'no-drop',
+  drag: false
+});
 
 
 console.log("importCode:"+importCode);
@@ -167,10 +186,11 @@ function loadProductListHtml(){
     if (data[e][19]) {
       imageDiv = '<img class="prodImage" src="'+data[e][19]+'" alt="'+data[e][3]+'" />';
     }
-		$("#listProduct").append('<div class="card">'+
+		$("#listProduct").append('<divli class="card">'+
         '<div class="card-header" id="heading"'+e+'>'+
           '<h5 class="mb-0">'+
             '<input type="checkbox" class="checkbox prodExtend check_'+e+'"/>'+
+            '<i class="fas fa-arrows-alt iconMove text-mustard" style="padding-left:5px;"></i>'+
             '<button class="btn btn-link btnProd_'+e+'" data-toggle="collapse" data-target="#collapse'+e+'" aria-expanded="false" aria-controls="collapse'+e+'">'+
               data[e][0]+" ("+data[e][2]+") | "+data[e][3] + " | " +data[e][17] +
               '<span class="prodExtend" style="color:red">'+
@@ -200,13 +220,13 @@ function loadProductListHtml(){
           '</div>'+
           imageDiv+
         '</div>'+
-      '</div>')
+      '</divli>')
 	}
 
   $(".prodExtend").hide();
+  $(".iconMove").hide();
 
   afterLoadHTML();
-
 
   $(".editproductelement").click(editProductFn);
   $(".deleteproductelement").click(deleteProduct);
@@ -362,6 +382,7 @@ $("#importFilter").change(function(){
 $(".click-to-select").click(function(){
   if($(".checkbox").is(':visible') ) {
     $(".checkbox").hide();
+    $(".iconMove").hide();
     $(".prodExtend").hide();
     $(".click-to-select-all").hide();
     $("#controllMany").hide();
@@ -369,6 +390,7 @@ $(".click-to-select").click(function(){
 
   } else {
     $(".checkbox").show();
+    $(".iconMove").show();
     $(".prodExtend").show();
     $(".click-to-select-all").show();
     $("#controllMany").show();

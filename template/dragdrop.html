@@ -12,12 +12,19 @@
   #sortable li span { position: absolute; margin-left: -1.3em; }
   </style>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+  <link rel="stylesheet" href="../css/jquery-sortable.css">
+
+  <script src="../vendor/jquery/jquery-sortable.js"></script>
+
   <script>
   $( function() {
     $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
+        $( "#sortable2" ).sortable();
+
   } );
+
+  // Ref: https://johnny.github.io/jquery-sortable/
   </script>
 </head>
 <body>
@@ -32,6 +39,17 @@
   <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
 </ul>
  
+<hr/>
+
+<divul id="sortable2">
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</divli>
+  <divli class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</divli>
+</divul>
  
 </body>
 </html>
