@@ -380,6 +380,8 @@ $("#importFilter").change(function(){
 })
 
 $(".click-to-select").click(function(){
+  $("#loadingSpin").show();
+
   if($(".checkbox").is(':visible') ) {
     $(".checkbox").hide();
     $(".iconMove").hide();
@@ -388,6 +390,7 @@ $(".click-to-select").click(function(){
     $("#controllMany").hide();
     $(".click-to-view").hide();
 
+    $("#loadingSpin").hide();
   } else {
     $(".checkbox").show();
     $(".iconMove").show();
@@ -395,6 +398,8 @@ $(".click-to-select").click(function(){
     $(".click-to-select-all").show();
     $("#controllMany").show();
     $(".click-to-view").show();
+
+    $("#loadingSpin").hide();
 
   }
 })
