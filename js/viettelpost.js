@@ -352,19 +352,25 @@ var choosenAddressData = {};
 
 function triggerAutocompleteViettelpost(orginalAddress, callback){
 	// Ref:http://w3schools-fa.ir/howto/tryit5f14.html?filename=tryhow_js_autocomplete
+	var aix = strToAddr(orginalAddress);
+	choosenAddressData["PROVINCE_NAME"]=aix.province;
+	choosenAddressData["DISTRICT_NAME"]=aix.district;
+	choosenAddressData["WARDS_NAME"]=aix.ward;
+	choosenAddressData["OTHER"]=aix.address;
+
 	var content = '<h3>Tìm địa điểm</h3><br/>'
 	+(orginalAddress ? '<div>Đến:'+orginalAddress+'</div>' : '')
 	+'<div class="autocomplete">'
-	+'	<input class="form-control" id="myProvince" type="text" name="myProvince" placeholder="Tỉnh"/>'
+	+'	<input class="form-control" id="myProvince" type="text" name="myProvince" placeholder="Tỉnh" value="'+aix.province+'"/>'
 	+'</div>'
 	+'<div class="autocomplete">'
-	+'	<input class="form-control" id="myDistrict" type="text" name="myDistrict" placeholder="Quận/Huyện"/>'
+	+'	<input class="form-control" id="myDistrict" type="text" name="myDistrict" placeholder="Quận/Huyện" value="'+aix.district+'"/>'
 	+'</div>'
 	+'<div class="autocomplete">'
-	+'	<input class="form-control" id="myWard" type="text" name="myWard" placeholder="Xã/Phường"/>'
+	+'	<input class="form-control" id="myWard" type="text" name="myWard" placeholder="Xã/Phường" value="'+aix.ward+'"/>'
 	+'</div>'
 	+'<div class="autocomplete">'
-	+'	<input class="form-control" id="myDetail" type="text" name="myDetail" placeholder="Thông tin cụ thể khác">'
+	+'	<input class="form-control" id="myDetail" type="text" name="myDetail" placeholder="Thông tin cụ thể khác" value="'+aix.address+'">'
 	+'</div>'
 	+'<div class="autocomplete btn btn-link fixAddress">'
 	+'Đồng ý'

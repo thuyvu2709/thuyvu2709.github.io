@@ -227,6 +227,8 @@ function addNotification(text){
 }
 
 function loadOrderListHtml() {
+  $("#loadingSpin").show();
+
   data = JSON.parse(localStorage.getItem("orderList"));
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
@@ -894,6 +896,10 @@ function loadOrderListHtml() {
     requestShip(0);
   })
 
+  $("#loadingSpin").hide();
+
+};
+
 function mergeOrder(){
   var lsChecked = $(".checkbox");
   // console.log("Merge theo order:"+$(".mergeByOrder").val());
@@ -975,57 +981,55 @@ function mergeOrder(){
   });
 }
 
-  $(".click-to-view").click(function(){
-    var lsChecked = $(".checkbox");
-    var totalCost = 0;
-    var num = 0;
-    var requestedNum = 0;
-    var stillInStore = 0;
-    // for (e in lsChecked){
-    //   if ($(lsChecked[e]).is(":checked")){
-    var downloadContent = "No, Name, Count, Price, Total\n";
-    var numOfOrder = 0;
-    var totalPay = 0;
-    var totalOwnerPay = 0;
-    var totalProfit = 0;
-    var numOfProd = 0;
-    $('.checkbox').each(function(){ 
-        // this.checked = true; });
-        if (this.checked){
-          numOfOrder = numOfOrder + 1
-          var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
-          var currentOrder=getOrder(orderIndex);
-          totalPay = totalPay + parseInt(currentOrder.totalPay);
-          for  (e in currentOrder.prodListOrder) {
-            totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
-            totalProfit = totalProfit + parseInt(currentOrder.prodListOrder[e].profit);
-            numOfProd = numOfProd + parseInt(currentOrder.prodListOrder[e].productCount);          
-          }
+$(".click-to-view").click(function(){
+  var lsChecked = $(".checkbox");
+  var totalCost = 0;
+  var num = 0;
+  var requestedNum = 0;
+  var stillInStore = 0;
+  // for (e in lsChecked){
+  //   if ($(lsChecked[e]).is(":checked")){
+  var downloadContent = "No, Name, Count, Price, Total\n";
+  var numOfOrder = 0;
+  var totalPay = 0;
+  var totalOwnerPay = 0;
+  var totalProfit = 0;
+  var numOfProd = 0;
+  $('.checkbox').each(function(){ 
+      // this.checked = true; });
+      if (this.checked){
+        numOfOrder = numOfOrder + 1
+        var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+        var currentOrder=getOrder(orderIndex);
+        totalPay = totalPay + parseInt(currentOrder.totalPay);
+        for  (e in currentOrder.prodListOrder) {
+          totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
+          totalProfit = totalProfit + parseInt(currentOrder.prodListOrder[e].profit);
+          numOfProd = numOfProd + parseInt(currentOrder.prodListOrder[e].productCount);          
         }
       }
-    )
+    }
+  )
 
-    var content = "Số đơn hàng:"+numOfOrder+"<br/>"+
-                  "Số mặt hàng:"+numOfProd+"<br/>"+
-                  "Tổng doanh thu:"+totalPay+"<br/>"+
-                  "Tổng vốn:"+totalOwnerPay+"<br/>"+
-                  "Tổng lãi:"+totalProfit+"<br/>"+
-                  "<hr/>"+
-                  "<div>"+
-                  "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>"+
-                  "<input type='text' class='mergeByOrder'/>"+
-                  "</div>"
-                  ;
-    $("#modelContent").html(content);
+  var content = "Số đơn hàng:"+numOfOrder+"<br/>"+
+                "Số mặt hàng:"+numOfProd+"<br/>"+
+                "Tổng doanh thu:"+totalPay+"<br/>"+
+                "Tổng vốn:"+totalOwnerPay+"<br/>"+
+                "Tổng lãi:"+totalProfit+"<br/>"+
+                "<hr/>"+
+                "<div>"+
+                "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>"+
+                "<input type='text' class='mergeByOrder'/>"+
+                "</div>"
+                ;
+  $("#modelContent").html(content);
 
-    $(".mergeOrder").click(mergeOrder);
+  $(".mergeOrder").click(mergeOrder);
 
-    $("#modalYes").click(function(){
-    })
-    $('#myModal').modal('toggle');
+  $("#modalYes").click(function(){
   })
-
-};
+  $('#myModal').modal('toggle');
+})
 
 function checkSystemConsistent(){
 

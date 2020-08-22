@@ -134,6 +134,8 @@ function addNotification(text){
 
 
 function loadProductListHtml(){
+  $("#loadingSpin").hide();
+
   data = JSON.parse(localStorage.getItem("productList"));
   var indexColumnOfAllData = 19;
 
@@ -347,6 +349,9 @@ function loadProductListHtml(){
 
     window.location = "../barcode/editproduct.html";
   }
+
+  $("#loadingSpin").hide();
+
 }
 
 $(".click-to-notify").click(function(){

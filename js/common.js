@@ -1664,3 +1664,29 @@ function downloadFile(filename, text) {
 }
 
 // Start file download.
+
+function strToAddr(addr){
+  var aix = {
+    address : addr
+  }
+  try{
+    var ails = aix.address.split(",");
+    var ailg = ails.length;
+    aix.province=ails[ailg-1].trim();
+    aix.district=ails[ailg-2].trim();
+    aix.ward=ails[ailg-3].trim();
+    aix.address=aix.address.split(aix.province).join("")
+            .split(aix.district+",").join("")
+            .split(aix.ward+",").join("").trim();
+    aix.province=aix.province.toUpperCase().split("TỈNH").join("");
+    aix.district=aix.district.toUpperCase();
+    aix.ward=aix.ward.toUpperCase();
+
+    if (aix.address[aix.address.length-1]==",") {
+      aix.address = aix.address.substring(0,aix.address.length-1);
+    }
+  } catch(e) {
+
+  }
+  return aix;
+}

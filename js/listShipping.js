@@ -479,10 +479,13 @@ function loadOrderShippingListHtml() {
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
     orderDetailBrief+="<hr/>";
-
+    var ghtkBtn = "";
     var mark = "";
     if (userRole=="manager"){
       mark = (next2days < new Date() ? "textRed" : "");
+      if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD") {
+        ghtkBtn = '<br/><div class="btn btn-default btnNormal5px ghtkLink order_'+e+'">Liên kết GHTK</div>';
+      }
     }
 
     $("#listShippingOrder").append(
@@ -513,10 +516,11 @@ function loadOrderShippingListHtml() {
 
               '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
               // preparedButton +
-              packageImageBtn+
+              // packageImageBtn+
               completeButton +
               deleteButton +
               payshipButton+
+              ghtkBtn+
             '</div>'+
           '</div>'+
         '</div>'
@@ -612,7 +616,7 @@ function loadOrderShippingListHtml() {
   //     $(".chooseShippingSchedule_"+orderIndex).hide();
   //   }
   // });
-
+  $(".ghtkLink").click(ghtkLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
 }
 
@@ -710,6 +714,20 @@ function deleteShipRequest() {
   }, function(){
     console.log("Something wrong");
   })
+}
+
+function ghtkLinkFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
+
+  saveHistory({
+    orderFilter : $(".orderFilter").val(),
+    goToClass : $(this).attr("class")
+  })
+
+  window.location = "ghtkLink.html";  
 }
 
 function showDetail(){
