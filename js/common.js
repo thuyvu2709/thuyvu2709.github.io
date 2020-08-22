@@ -372,6 +372,40 @@ function getViettelPostAccess(callback) {
   });
 }
 
+function getGhtkAccess(callback) {
+  var spreadsheetId = shippingSheet;
+
+  console.log("getGhtkAccess");
+
+  var indexColumnOfAllData = 1;
+  var sheetrange = 'GHTK!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      callback({
+        "ghtkToken": dataset[0][1],
+      });
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 
 function getLatestImportCode(callback) {
   var spreadsheetId = mainSheetForProduct;

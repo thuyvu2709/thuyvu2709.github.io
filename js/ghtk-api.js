@@ -1,6 +1,8 @@
-localStorage.setItem("ghtkToken","92c01008437d281011c15d5d9530d69B304B0b72");
+ghtkToken = "";
+getGhtkAccess(function(rs){
+	ghtkToken = rs["ghtkToken"]
+})
 
-ghtkToken="92c01008437d281011c15d5d9530d69B304B0b72";
 ghtkUrl="services.giaohangtietkiem.vn"
 isDev=false;
 if (isDev) {
@@ -58,7 +60,7 @@ function createAnOrder(dataOrder, callback){
 
 function getPickAddress(callback){
 	$.ajax({
-	  url: "http://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
+	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
