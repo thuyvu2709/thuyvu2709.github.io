@@ -91,7 +91,7 @@ function cleanHistory() {
   localStorage.setItem("historyPath",JSON.stringify([]));
 }
 function backPage() {
-  console.log("back");
+  // console.log("back");
   historyPath.pop();
   var historyData = historyPath.pop();
   if (!historyData)  {
@@ -99,11 +99,11 @@ function backPage() {
   }
   var backHref = historyData.href;
 
-  console.log(historyPath);
+  // console.log(historyPath);
 
   localStorage.setItem("historyPath",JSON.stringify(historyPath));
   localStorage.setItem("currentHistoryData",JSON.stringify(historyData.data));
-  console.log("backHref:"+backHref);
+  // console.log("backHref:"+backHref);
 
   window.location = backHref;
 }
@@ -123,8 +123,8 @@ function readCurrentHistoryData() {
 
 function comeBackHomeToAuthorize(){
     $("#loadingSpin").hide();
-    console.log("Need to comeBackHomeToAuthorize");
-    console.log(window.location);
+    // console.log("Need to comeBackHomeToAuthorize");
+    // console.log(window.location);
     var hostname = window.location.hostname;
     if (hostname == "localhost" 
         || hostname == "10.7.136.107"
@@ -144,7 +144,7 @@ function loadProductList(callback) {
   var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  console.log("loadProductList:"+sheetrange);
+  // console.log("loadProductList:"+sheetrange);
 
   if (passDataLocalhost) {
     callback();
@@ -178,7 +178,7 @@ function loadImportScheduleList(callback) {
   var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
-  console.log("loadImportScheduleList:"+sheetrange);
+  // console.log("loadImportScheduleList:"+sheetrange);
 
   if (passDataLocalhost) {
     callback();
@@ -209,7 +209,7 @@ function loadImportScheduleList(callback) {
 function getLatestProductCode(callback) {
   var spreadsheetId = mainSheetForProduct;
 
-  console.log("getLatestProductCode");
+  // console.log("getLatestProductCode");
 
   var indexColumnOfAllData = 1;
   var sheetrange = 'Product!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -254,7 +254,7 @@ function getLatestProductCode(callback) {
 function getLatestOrderCode(callback) {
   var spreadsheetId = mainSheetForProduct;
 
-  console.log("getLatestOrderCode");
+  // console.log("getLatestOrderCode");
 
   var indexColumnOfAllData = 1;
   var sheetrange = 'Order!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -302,7 +302,7 @@ function getLatestOrderCode(callback) {
 function getLatestTaskCode(callback) {
   var spreadsheetId = shippingSheet;
 
-  console.log("getLatestTaskCode");
+  // console.log("getLatestTaskCode");
 
   var indexColumnOfAllData = 1;
   var sheetrange = 'Task!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -340,7 +340,7 @@ function getLatestTaskCode(callback) {
 function getViettelPostAccess(callback) {
   var spreadsheetId = shippingSheet;
 
-  console.log("getViettelPostAccess");
+  // console.log("getViettelPostAccess");
 
   var indexColumnOfAllData = 2;
   var sheetrange = 'Viettelpost!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -375,7 +375,7 @@ function getViettelPostAccess(callback) {
 function getGhtkAccess(callback) {
   var spreadsheetId = shippingSheet;
 
-  console.log("getGhtkAccess");
+  // console.log("getGhtkAccess");
 
   var indexColumnOfAllData = 1;
   var sheetrange = 'GHTK!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -410,7 +410,7 @@ function getGhtkAccess(callback) {
 function getLatestImportCode(callback) {
   var spreadsheetId = mainSheetForProduct;
 
-  console.log("getLatestTaskCode");
+  // console.log("getLatestTaskCode");
 
   var indexColumnOfAllData = 1;
   var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
@@ -448,7 +448,7 @@ function getLatestImportCode(callback) {
 
 function loadOrderList(callback) {
 
-  console.log("loadOrderList");
+  // console.log("loadOrderList");
   var spreadsheetId = mainSheetForProduct;
 
 
@@ -483,7 +483,7 @@ function loadOrderList(callback) {
 
 function loadReport(callback) {
 
-  console.log("loadReport");
+  // console.log("loadReport");
   
   var spreadsheetId = mainSheetForProduct;
 
@@ -518,7 +518,7 @@ function loadReport(callback) {
 
 function loadOrderListDetail(callback) {
 
-  console.log("loadOrderListDetail");
+  // console.log("loadOrderListDetail");
 
   var spreadsheetId = mainSheetForProduct;
 
@@ -1148,7 +1148,7 @@ function updateOrderStatus(line, column, value, callback) {
 function getOrderShipping(callback) {
   var spreadsheetId = shippingSheet;
 
-  console.log("getOrderShipping");
+  // console.log("getOrderShipping");
 
   var indexColumnOfAllData = 14;
   var sheetrange = 'Shipping!A:'+String.fromCharCode(65+indexColumnOfAllData);

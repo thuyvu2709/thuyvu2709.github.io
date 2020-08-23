@@ -94,7 +94,10 @@ var triggerAfterLoad = function(){
       parseOrderSheetList();
 
       getGhtkAccess(function(rs){
-        var ghtkToken = rs["ghtkToken"];
+        var ghtkToken = "";
+        if (rs) {
+          ghtkToken = rs["ghtkToken"];
+        }
         localStorage.setItem("ghtkToken",ghtkToken);
       })
 
