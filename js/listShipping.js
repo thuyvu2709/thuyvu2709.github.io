@@ -92,6 +92,12 @@ var triggerAfterLoad = function(){
   if (userRole=="manager"){
     loadOrderList(function(){
       parseOrderSheetList();
+
+      getGhtkAccess(function(rs){
+        var ghtkToken = rs["ghtkToken"];
+        localStorage.setItem("ghtkToken",ghtkToken);
+      })
+
       step2();
     })
   } else {

@@ -3,6 +3,8 @@ $("#footerInclude").load("../common/footer.html");
 
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 var pickList = JSON.parse(localStorage.getItem("pickList"));
+var ghtkToken = localStorage.getItem("ghtkToken");
+
 var ghtkUrl="services.giaohangtietkiem.vn"
 
 // console.log("ghtkUrl:"+ghtkUrl)
@@ -23,25 +25,14 @@ function loadPickList() {
 	}) 	
 }
 
-ghtkToken = "";
-$("#loadingSpin").show();
-var triggerAfterLoad = function(){
-	console.log("triggerAfterLoad");
-	getGhtkAccess(function(rs){
-		ghtkToken = rs["ghtkToken"];
-
-		$("#loadingSpin").hide();
-
-		if (!pickList) {
-			loadPickList();
-		} else {
-			var pickListHtml = '';
-			for (e in pickList){
-				pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
-			}
-			$("#pickList").html(pickListHtml);
-		}
-	})
+if (!pickList) {
+	loadPickList();
+} else {
+	var pickListHtml = '';
+	for (e in pickList){
+		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+	}
+	$("#pickList").html(pickListHtml);
 }
 
 // console.log(pickList);
