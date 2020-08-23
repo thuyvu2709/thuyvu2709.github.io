@@ -49,7 +49,7 @@ function createAnOrder(dataOrder, callback){
 function getPickAddress(callback){
 	console.log("getPickAddress:"+ghtkToken);
 	$.ajax({
-	  url: "http://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
+	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {
 	  	"Token": ghtkToken
 	  },

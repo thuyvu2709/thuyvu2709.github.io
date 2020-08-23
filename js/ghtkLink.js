@@ -26,7 +26,7 @@ function loadPickList() {
 ghtkToken = "";
 $("#loadingSpin").show();
 var triggerAfterLoad = function(){
-	// console.log("triggerAfterLoad");
+	console.log("triggerAfterLoad");
 	getGhtkAccess(function(rs){
 		ghtkToken = rs["ghtkToken"];
 
