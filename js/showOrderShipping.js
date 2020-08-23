@@ -54,6 +54,11 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 }
 
 
+if (currentOrder.otherInfor) {
+    $("#otherInfor").html(currentOrder.otherInfor.isFreeShip==true ? "Freeship cho khách" : "");
+}
+
+
 if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }

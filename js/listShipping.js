@@ -486,7 +486,8 @@ function loadOrderShippingListHtml() {
 
     orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
 
-    orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode : "");
+    orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode+"<br/>" : "");
+    orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].otherInfor ? lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip==true ? "<span class='text-mustard'>Shop thanh toán ship, free ship cho khách</span><br/>" : "" : "")
     orderDetailBrief+="<hr/>";
     var ghtkBtn = "";
     var mark = "";

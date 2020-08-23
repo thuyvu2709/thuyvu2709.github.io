@@ -68,6 +68,17 @@ $("#paymentStatus").html((currentOrder.paymentStatus == "PAID" ? "Khách đã th
 $("#otherCost").html(currentOrder.otherCost);
 
 $("#prepaid").html(currentOrder.prepaid);
+
+if (currentOrder.otherInfor) {
+	$("#isFreeShip").prop('checked', currentOrder.otherInfor.isFreeShip);
+    $("#shopPayShipAns").html(currentOrder.otherInfor.isFreeShip==true ? "Có" : "Không");
+
+} else {
+	currentOrder.otherInfor = {
+		isFreeShip : false
+	}
+}
+
 currentOrder.willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
 
 if (currentOrder.shippingType == "POST_COD") {
@@ -113,6 +124,10 @@ for (i in prodListOrder){
 }
 
 var avgWeight = (Math.round((totalWeight / parseFloat(count)) * 1000) / 1000)*1000;
+if (!totalWeight) {
+	totalWeight = 0;
+	avgWeight = 0;
+}
 $("#totalWeight").html(parseInt(totalWeight*1000));
 $("#prodList").html(count+" x hàng gửi của Thuỷ");
 $("#avgWeight").val(avgWeight);
@@ -147,15 +162,13 @@ $("#updateAddress").click(function(){
 	})
 })
 
-currentOrder.shopPayShip = 0;
-
-$('#shopPayShip').click(function(){
+$('#isFreeShip').click(function(){
     if($(this).is(':checked')){
         $("#shopPayShipAns").html("Có");
-        currentOrder.shopPayShip = 1;
+        currentOrder.otherInfor.isFreeShip = true;
     } else {
         $("#shopPayShipAns").html("Không");
-        currentOrder.shopPayShip = 0;
+        currentOrder.otherInfor.isFreeShip = false;
     }
 });
 
@@ -239,13 +252,13 @@ $("#ghtkPost").click(function(){
 	dataOrder.hamlet = "";
 	dataOrder.id = currentOrder.orderCode;
 	dataOrder.tel = currentOrder.customerPhone;
-	dataOrder.name = currentOrder.customerPhone;
+	dataOrder.name = currentOrder.customerName;
 	if (currentOrder.shippingType == "POST_COD") {
 		dataOrder.pick_money=currentOrder.willpay;		
 	} else {
 		dataOrder.pick_money=0;
 	}
-	dataOrder.is_freeship = currentOrder.shopPayShip;
+	dataOrder.is_freeship = currentOrder.otherInfor.isFreeShip==true ? "1" : "0";
 	dataOrder.note = $("#orderNodeGHTK").val();
 	dataOrder.value = currentOrder.totalPay;
 	dataOrder.transport = $("#transportType").val();
