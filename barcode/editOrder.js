@@ -37,7 +37,7 @@ var productList = JSON.parse(localStorage.getItem("productList"));
 
 var triggerAfterLoad = function(){
 	
-	console.log("triggerAfterLoad");
+	// console.log("triggerAfterLoad");
 
 	$("#loadingSpin").show();
 	loadProductList(function(){
@@ -169,19 +169,19 @@ function fillListOfProduct(prodListOrder) {
 		$(".btnSearchProduct_"+e).click(searchForm);
 	}
 
-	console.log(e);
+	// console.log(e);
 	numOfProType = parseInt(e)+1;
 	addNewFormOfProduct(numOfProType-1);
 }
 
 function addNewFormOfProduct(currentIndex){
-	console.log("addNewFormOfProduct:"+currentIndex+" vs "+ numOfProType);
+	// console.log("addNewFormOfProduct:"+currentIndex+" vs "+ numOfProType);
 
 
 	if (currentIndex != numOfProType - 1)  {
 		return;
 	}
-	console.log("Add new form");
+	// console.log("Add new form");
 
 	e = numOfProType;
 	$("#listProduct").append('<div class="card">'+
@@ -360,7 +360,7 @@ function searchProductChooseInForm(){
 	var index = lsClass.pop().split("_").pop();
 	var indexInStore = lsClass.pop().split("_").pop();
 	// console.log(lsClass);
-	console.log("searchProductChoose:"+index+" "+indexInStore);
+	// console.log("searchProductChoose:"+index+" "+indexInStore);
 
 	var productIndex = parseInt(index);
 
@@ -461,7 +461,7 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 			var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 			productIndex = parseInt(productIndex);
 			productIndexInStore = document.getElementsByClassName($(this).attr("class"))[0].value;
-			console.log(productIndex+" "+productIndexInStore);
+			// console.log(productIndex+" "+productIndexInStore);
 			triggerNextProcessNewOrder(productIndex,"",productIndexInStore);
 		})
 	}
@@ -553,7 +553,7 @@ function inputKeyupfunction() {
 		totalPay = 0;
 		for (var i = 0; i < numOfProType; i++) { 
 			var toi = $(".turnover_"+i).html() ? $(".turnover_"+i).html() : 0;
-			console.log(toi);
+			// console.log(toi);
 			totalPay = totalPay + parseFloat(toi);
 		}
 		$("#totalPay").html(totalPay);
@@ -576,7 +576,7 @@ function inputKeyupfunction() {
 };
 
 function addDetailOrder() {
-	console.log("addDetailOrder");
+	// console.log("addDetailOrder");
 	var numOfColumn = 12;
 	// var sheetrange = 'Test2!A1:'+ String.fromCharCode(65+numOfColumn);
 
@@ -587,7 +587,7 @@ function addDetailOrder() {
 
     // deleteRange = [];
     
-    console.log("numOfProType:"+numOfProType);
+    // console.log("numOfProType:"+numOfProType);
 
 
 	for (var i = 0; i <numOfProType;i++) {
@@ -616,8 +616,8 @@ function addDetailOrder() {
 
 		var productIndexInStore = document.getElementsByClassName("importSchedule_"+i)[0].value;		
 		productIndexInStore = parseInt(productIndexInStore);
-		console.log(productIndexInStore);
-		console.log(productList[productIndexInStore]);
+		// console.log(productIndexInStore);
+		// console.log(productList[productIndexInStore]);
 		prodListOrder[i].importCode = productList[productIndexInStore][2];
 		prodListOrder[i].image = productList[productIndexInStore][19];
 		prodListOrder[i].productImage = productList[productIndexInStore][19];
@@ -685,7 +685,7 @@ function addDetailOrder() {
 	// console.log(rangeEdit);
 
 	var fEdit = function(){
-		console.log("fEdit")
+		// console.log("fEdit")
 		if (submitDataEdit.length > 0) {
 			// var numOfColumn = 6;
 
@@ -695,9 +695,9 @@ function addDetailOrder() {
 					// 	rangeEdit[index] +
 					// 	':'+ String.fromCharCode(65+numOfColumn) +
 					// 	rangeEdit[index];
-					console.log("Edit:");
-					console.log(submitDataEdit[index]);
-					console.log(rangeEdit[index])
+					// console.log("Edit:");
+					// console.log(submitDataEdit[index]);
+					// console.log(rangeEdit[index])
 
 					// gapi.client.sheets.spreadsheets.values.update({
 				 //        spreadsheetId: spreadsheetId,
@@ -776,7 +776,7 @@ function finishOrder(){
 $("#editOrder").click(function(){
 	$("#loadingSpin").show();
 
-	console.log("editOrder");
+	// console.log("editOrder");
 	//orderCode
 	var customerName = $("#customerName").val();
 	var customerAddress = $("#customerAddress").val();
@@ -814,8 +814,12 @@ $("#editOrder").click(function(){
 
 	var shipIndex = currentOrder.shipIndex;
 	var orderIndex = currentOrder.orderIndex;
-	var otherInfor = currentOrder.otherInfor;
-	otherInfor.isFreeShip = $("#isFreeShip").is(":checked");
+
+	otherInfor = {
+		isFreeShip : $("#isFreeShip").is(":checked")
+	}
+	// console.log("isFreeShip:"+ $("#isFreeShip").is(":checked"));
+	// console.log(otherInfor)
 
 	currentOrder  = {
 		orderCode : orderCode,//
@@ -837,7 +841,7 @@ $("#editOrder").click(function(){
 		otherInfor : otherInfor
 	}
 
-	console.log(orderCode);
+	// console.log(orderCode);
 	// addDetailOrder();
 
 	var dataEditOrder = [
@@ -858,6 +862,9 @@ $("#editOrder").click(function(){
 				0
                 ]
             ];
+    // console.log(dataEditOrder);
+    // console.log(otherInfor);
+
     var numOfColumn = 14;
 	var sheetrange = sheetOrder+'!A'+realOrderIndex +":"+ String.fromCharCode(65+numOfColumn) + realOrderIndex;
 
@@ -896,7 +903,7 @@ $("#btnPrintOrder").click(function(){
 })
 
 $(".deleteelement").click(function(){
-	console.log("delete");
+	// console.log("delete");
 	var cardIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 	// $(".btnProductName_"+cardIndex).click();
 	cardIndex = parseInt(cardIndex);

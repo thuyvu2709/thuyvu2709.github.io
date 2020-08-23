@@ -23,7 +23,7 @@ if (makeCopy) {
 
 var triggerAfterLoad = function(){
 	
-	console.log("triggerAfterLoad");
+	// console.log("triggerAfterLoad");
 
 	$("#loadingSpin").show();
 
@@ -57,7 +57,7 @@ function addNewFormOfProduct(currentIndex){
 	if (currentIndex != numOfProType - 1)  {
 		return;
 	}
-	console.log("Add new form");
+	// console.log("Add new form");
 
 	e = numOfProType;
 	$("#listProduct").append('<div class="card">'+
@@ -174,7 +174,7 @@ function addNewFormOfProduct(currentIndex){
 $(".btnSearchProduct_0").click(searchForm);
 
 function searchForm(){
-	console.log("searchForm:");
+	// console.log("searchForm:");
 	var index = $(this).attr("class").split(" ").pop().split("_").pop();
 	
 	$("#myModal2 .modal-body").empty();
@@ -247,7 +247,7 @@ function searchProductChooseInForm(){
 	var index = lsClass.pop().split("_").pop();
 	var indexInStore = lsClass.pop().split("_").pop();
 	// console.log(lsClass);
-	console.log("searchProductChoose:"+index+" "+indexInStore);
+	// console.log("searchProductChoose:"+index+" "+indexInStore);
 
 	var productIndex = parseInt(index);
 
@@ -273,7 +273,7 @@ function filterInSearchForm(index,searchText){
 		}
 		var importCode = document.getElementsByClassName("importSearchProductFilter")[0].value;
 		// importCode = parseInt(importCode);
-		console.log("Dot hang:"+importCode+" ");
+		// console.log("Dot hang:"+importCode+" ");
 		if (importCode > -1) {
 		  if (importCode != productList[e][2]) {
 		    continue;
@@ -348,7 +348,7 @@ function triggerNextProcessNewOrder(productIndex, productCode, productIndexInSto
 			var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 			productIndex = parseInt(productIndex);
 			productIndexInStore = document.getElementsByClassName($(this).attr("class"))[0].value;
-			console.log(productIndex+" "+productIndexInStore);
+			// console.log(productIndex+" "+productIndexInStore);
 			triggerNextProcessNewOrder(productIndex,"",productIndexInStore);
 		})
 	}
@@ -544,8 +544,9 @@ $("#addNewOrder").click(function(){
 
 	var shippingType = $("#shippingType").val();
 
-	var otherInfor = {};
-	otherInfor.isFreeShip = $("#isFreeShip").is(":checked");
+	var otherInfor = {
+		isFreeShip : $("#isFreeShip").is(":checked")
+	}
 
 	var prepaid = $("#prepaid").val();
 	prepaid = prepaid ? prepaid : 0;
