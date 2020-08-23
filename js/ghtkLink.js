@@ -3,6 +3,47 @@ $("#footerInclude").load("../common/footer.html");
 
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 var pickList = JSON.parse(localStorage.getItem("pickList"));
+var ghtkUrl="services.giaohangtietkiem.vn"
+
+// console.log("ghtkUrl:"+ghtkUrl)
+
+var dataOrder = {};
+
+function loadPickList() {
+	getPickAddress(function(rs){
+		// console.log(rs);
+		pickList = rs;
+		localStorage.setItem("pickList",JSON.stringify(pickList));
+
+		var pickListHtml = '';
+		for (e in pickList){
+			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+		}
+		$("#pickList").html(pickListHtml);
+	}) 	
+}
+
+ghtkToken = "";
+$("#loadingSpin").show();
+var triggerAfterLoad = function(){
+	// console.log("triggerAfterLoad");
+	getGhtkAccess(function(rs){
+		ghtkToken = rs["ghtkToken"];
+
+		$("#loadingSpin").hide();
+
+		if (!pickList) {
+			loadPickList();
+		} else {
+			var pickListHtml = '';
+			for (e in pickList){
+				pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+			}
+			$("#pickList").html(pickListHtml);
+		}
+	})
+}
+
 // console.log(pickList);
 // console.log(currentOrder);
 
@@ -126,32 +167,6 @@ $('#shopPayShip').click(function(){
         currentOrder.shopPayShip = 0;
     }
 });
-
-var dataOrder = {};
-
-function loadPickList() {
-	getPickAddress(function(rs){
-		// console.log(rs);
-		pickList = rs;
-		localStorage.setItem("pickList",JSON.stringify(pickList));
-
-		var pickListHtml = '';
-		for (e in pickList){
-			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
-		}
-		$("#pickList").html(pickListHtml);
-	}) 	
-}
-
-if (!pickList) {
-	loadPickList();
-} else {
-	var pickListHtml = '';
-	for (e in pickList){
-		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
-	}
-	$("#pickList").html(pickListHtml);
-}
 
 $("#pickLoadForce").click(function(){
 	loadPickList();
