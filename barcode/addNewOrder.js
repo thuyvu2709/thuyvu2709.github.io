@@ -544,6 +544,9 @@ $("#addNewOrder").click(function(){
 
 	var shippingType = $("#shippingType").val();
 
+	var otherInfor = {};
+	otherInfor.isFreeShip = $("#isFreeShip").is(":checked");
+
 	var prepaid = $("#prepaid").val();
 	prepaid = prepaid ? prepaid : 0;
 
@@ -562,7 +565,8 @@ $("#addNewOrder").click(function(){
 		orderNode : orderNode,
 		otherCost : otherCost,
 		prepaid : prepaid,
-		shippingType: shippingType
+		shippingType: shippingType,
+		otherInfor : otherInfor
 	}
 
 	var submitOrderData = [
@@ -578,7 +582,7 @@ $("#addNewOrder").click(function(){
                 "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
 				shippingType,
-				otherCost,
+				JSON.stringify(otherInfor),
 				prepaid,
 				0
                 ]

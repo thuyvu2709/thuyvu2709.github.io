@@ -18,6 +18,15 @@ $("#orderNode").val(currentOrder.orderNode);
 $("#prepaid").val(currentOrder.prepaid);
 $("#totalWillPay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid));
 
+try {
+	currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
+	if (currentOrder.otherInfor) {
+		$("#isFreeShip").prop('checked', currentOrder.otherInfor.isFreeShip);
+	}
+} catch(e) {
+	currentOrder.otherInfor = {};
+}
+
 if (!currentOrder.shippingType) {
 	$("#shippingType").val(0);
 } else {
@@ -805,7 +814,9 @@ $("#editOrder").click(function(){
 
 	var shipIndex = currentOrder.shipIndex;
 	var orderIndex = currentOrder.orderIndex;
-	
+	var otherInfor = currentOrder.otherInfor;
+	otherInfor.isFreeShip = $("#isFreeShip").is(":checked");
+
 	currentOrder  = {
 		orderCode : orderCode,//
 		customerName : customerName,//
@@ -822,7 +833,8 @@ $("#editOrder").click(function(){
 		otherCost: otherCost,
 		prepaid : prepaid,
 		shippingType : shippingType,
-		shipIndex : shipIndex
+		shipIndex : shipIndex,
+		otherInfor : otherInfor
 	}
 
 	console.log(orderCode);
@@ -841,7 +853,7 @@ $("#editOrder").click(function(){
 				"=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
 				orderNode,
 				shippingType,
-				otherCost,
+				JSON.stringify(otherInfor),
 				prepaid,
 				0
                 ]
@@ -861,11 +873,6 @@ $("#updateAddress").click(function(){
 	triggerAutocompleteViettelpost($("#customerAddress").val(),function(addrData){
 		if (addrData["OTHER"] && addrData["PROVINCE_NAME"] && addrData["DISTRICT_NAME"]) {
 			var addr = addrData["OTHER"]+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
-			if (currentOrder.otherCost == "0" || !currentOrder.otherCost) {
-				currentOrder.otherCost = {
-					address : addrData
-				}
-			}
 			$("#customerAddress").val(addr);
 		}
 	})

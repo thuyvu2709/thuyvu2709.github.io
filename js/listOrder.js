@@ -602,11 +602,12 @@ function loadOrderListHtml() {
       shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
       orderNode : data[orderIndex][10],
       shippingType : data[orderIndex][11],
-      otherCost : data[orderIndex][12],
+      otherInfor : data[orderIndex][12],
       prepaid : data[orderIndex][13],
       refund : data[orderIndex][14],
       shipIndex : shipIndex,
-      orderIndex : orderIndex
+      orderIndex : orderIndex,
+      otherCost : 0
     }
 
     var prodListOrder = {};
