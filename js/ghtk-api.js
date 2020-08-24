@@ -127,4 +127,22 @@ function calculateTransportFeeAPI(data,callback){
 	    }
 	  }
 	});
+
+	$.ajax({
+	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  headers : {
+	  	"Token": ghtkToken
+	  },
+	  type: 'GET',
+	  success: function(res) {
+	    // console.log(res);
+	    if (!res) {
+	    	callback("Không tính được, ktr lại thông tin");
+	    } else if (!res.success) {
+	    	callback("Không tính được, ktr lại thông tin");
+	    } else {
+	    	callback(res.fee.fee);
+	    }
+	  }
+	});
 }
