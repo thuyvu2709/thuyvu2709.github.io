@@ -149,7 +149,7 @@ $(".showImage").click(function(){
 
 $("#updateAddress").click(function(){
 	triggerAutocompleteViettelpost(currentOrder.customerAddress,function(addrData){
-		console.log(addrData);
+		// console.log(addrData);
 
 		if (addrData["OTHER"] && addrData["PROVINCE_NAME"] && addrData["DISTRICT_NAME"]) {
 			var addr = addrData["OTHER"]+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
