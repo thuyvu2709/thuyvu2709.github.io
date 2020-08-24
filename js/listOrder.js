@@ -226,75 +226,12 @@ function addNotification(text){
   $(".click-to-notify").show();
 }
 
-function getOrder(orderIndex) {
-  // console.log($(this));
-  var data = JSON.parse(localStorage.getItem("orderList"));
-  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
-  
-  var orderCode = data[orderIndex][0];
-  var shipIndex = -1;
-  if (orderShipStatus[data[orderIndex][0]]){
-    shipIndex = orderShipStatus[data[orderIndex][0]].sindex
-  }
-  var currentOrder = {
-    orderCode : orderCode,
-    orderDate : data[orderIndex][1],
-    customerName : data[orderIndex][2],
-    customerAddress : data[orderIndex][3],
-    customerPhone : data[orderIndex][4],
-    totalPay : data[orderIndex][5],
-    shippingCost : data[orderIndex][6],
-    totalPayIncludeShip : data[orderIndex][7],
-    paymentStatus : data[orderIndex][8],
-    shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "Requested",
-    shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
-    shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
-    orderNode : data[orderIndex][10],
-    shippingType : data[orderIndex][11],
-    otherInfor : data[orderIndex][12],
-    prepaid : data[orderIndex][13],
-    refund : data[orderIndex][14],
-    shipIndex : shipIndex,
-    orderIndex : orderIndex,
-    otherCost : 0
-  }
-
-  var prodListOrder = {};
-  var prodIndex = 0;
-  for (e in orderListDetail) {
-    if (orderListDetail[e][0] == orderCode){
-      prodListOrder[prodIndex] = {
-        productCode : orderListDetail[e][1],
-        importCode : orderListDetail[e][2],
-        productRefCode : orderListDetail[e][3],
-        productName : orderListDetail[e][4],
-        productCount : orderListDetail[e][5],
-        productEstimateSellingVND : orderListDetail[e][6],
-        turnover : orderListDetail[e][7],
-        totalPay : orderListDetail[e][8],
-        profit : orderListDetail[e][9],
-        available : orderListDetail[e][10],
-        orderDetailIndex : e,
-        productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : "",
-        productWeight : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : ""
-      }
-      prodIndex++;
-    }
-  }
-
-  currentOrder.prodListOrder = prodListOrder;
-
-  localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
-  return currentOrder;
-}
-
 function loadOrderListHtml() {
   $("#loadingSpin").show();
 
-  var data = JSON.parse(localStorage.getItem("orderList"));
-  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
-  var lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
-
+  data = JSON.parse(localStorage.getItem("orderList"));
+  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
   $("#controllMany").hide();
   $("#listOrder").empty();
   // console.log(data);
@@ -643,6 +580,65 @@ function loadOrderListHtml() {
     $('#myModal').modal('toggle');
   })
 
+  function getOrder(orderIndex) {
+    // console.log($(this));
+    var orderCode = data[orderIndex][0];
+    var shipIndex = -1;
+    if (orderShipStatus[data[orderIndex][0]]){
+      shipIndex = orderShipStatus[data[orderIndex][0]].sindex
+    }
+    var currentOrder = {
+      orderCode : orderCode,
+      orderDate : data[orderIndex][1],
+      customerName : data[orderIndex][2],
+      customerAddress : data[orderIndex][3],
+      customerPhone : data[orderIndex][4],
+      totalPay : data[orderIndex][5],
+      shippingCost : data[orderIndex][6],
+      totalPayIncludeShip : data[orderIndex][7],
+      paymentStatus : data[orderIndex][8],
+      shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "Requested",
+      shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
+      shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
+      orderNode : data[orderIndex][10],
+      shippingType : data[orderIndex][11],
+      otherInfor : data[orderIndex][12],
+      prepaid : data[orderIndex][13],
+      refund : data[orderIndex][14],
+      shipIndex : shipIndex,
+      orderIndex : orderIndex,
+      otherCost : 0
+    }
+
+    var prodListOrder = {};
+    var prodIndex = 0;
+    for (e in orderListDetail) {
+      if (orderListDetail[e][0] == orderCode){
+        prodListOrder[prodIndex] = {
+          productCode : orderListDetail[e][1],
+          importCode : orderListDetail[e][2],
+          productRefCode : orderListDetail[e][3],
+          productName : orderListDetail[e][4],
+          productCount : orderListDetail[e][5],
+          productEstimateSellingVND : orderListDetail[e][6],
+          turnover : orderListDetail[e][7],
+          totalPay : orderListDetail[e][8],
+          profit : orderListDetail[e][9],
+          available : orderListDetail[e][10],
+          orderDetailIndex : e,
+          productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : "",
+          productWeight : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : ""
+        }
+        prodIndex++;
+      }
+    }
+
+    currentOrder.prodListOrder = prodListOrder;
+
+    localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+    return currentOrder;
+  }
+
   $(".orderelement").click(function(){
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     getOrder(orderIndex);
@@ -903,138 +899,138 @@ function loadOrderListHtml() {
 
   $("#loadingSpin").hide();
 
-};
+  function mergeOrder(){
+    var lsChecked = $(".checkbox");
+    // console.log("Merge theo order:"+$(".mergeByOrder").val());
+    var keepOrderCode = "DONHANG_"+$(".mergeByOrder").val();
+    var sheetOrderDetail = "OrderDetail";
+    var lsRemoveOrderCode = [];
+    // console.log(lsChecked.length);
+    // for (var e1=0;e1<lsChecked.length;e1++){
+      // console.log($(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop()+" "+e1+" "+$(lsChecked[e1]).is(":checked"))
+    $("#loadingSpin").show();
+    
+    var checkOneByOne =function (e1, callbackE1) {  
+      // console.log("checkOneByOne:"+e1+" "+lsChecked.length);
+      if (e1 >= lsChecked.length) {
+        callbackE1();
+        return;
+      }
+      if ($(lsChecked[e1]).is(":checked")){
+        var orderIndex =  $(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop();
+        var currentOrder=getOrder(orderIndex);
+        // console.log(currentOrder.orderCode+" "+orderIndex);
+        if (currentOrder.orderCode!=keepOrderCode) {
+          // console.log("Cut "+currentOrder.orderCode);
+          $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode);
 
-function mergeOrder(){
-  var lsChecked = $(".checkbox");
-  // console.log("Merge theo order:"+$(".mergeByOrder").val());
-  var keepOrderCode = "DONHANG_"+$(".mergeByOrder").val();
-  var sheetOrderDetail = "OrderDetail";
-  var lsRemoveOrderCode = [];
-  // console.log(lsChecked.length);
-  // for (var e1=0;e1<lsChecked.length;e1++){
-    // console.log($(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop()+" "+e1+" "+$(lsChecked[e1]).is(":checked"))
-  $("#loadingSpin").show();
-  
-  var checkOneByOne =function (e1, callbackE1) {  
-    // console.log("checkOneByOne:"+e1+" "+lsChecked.length);
-    if (e1 >= lsChecked.length) {
-      callbackE1();
-      return;
-    }
-    if ($(lsChecked[e1]).is(":checked")){
-      var orderIndex =  $(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop();
-      var currentOrder=getOrder(orderIndex);
-      // console.log(currentOrder.orderCode+" "+orderIndex);
-      if (currentOrder.orderCode!=keepOrderCode) {
-        // console.log("Cut "+currentOrder.orderCode);
-        $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode);
+          // console.log(currentOrder);
+          lsRemoveOrderCode.push({
+            orderCode : currentOrder.orderCode,
+            orderIndex : currentOrder.orderIndex
+          });
 
-        // console.log(currentOrder);
-        lsRemoveOrderCode.push({
-          orderCode : currentOrder.orderCode,
-          orderIndex : currentOrder.orderIndex
-        });
+          var prodListOrder = currentOrder.prodListOrder;
+          var updateEachOrderDetail = function(e2, callbackE2) {
+            if (!prodListOrder[e2]) {
+              callbackE2();
+              return;
+            }
+            var dataEditOD = [[keepOrderCode]];
+            var orderDetailIndex = parseInt(prodListOrder[e2].orderDetailIndex)+1;
+            var rangeEdit = sheetOrderDetail+'!A'+orderDetailIndex+':A'+orderDetailIndex;
+            // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
+            $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode+" "+prodListOrder[e2].productName);
 
-        var prodListOrder = currentOrder.prodListOrder;
-        var updateEachOrderDetail = function(e2, callbackE2) {
-          if (!prodListOrder[e2]) {
-            callbackE2();
-            return;
+            editOrderDetail(dataEditOD, rangeEdit, function(){
+              updateEachOrderDetail(e2+1, callbackE2);
+            })
           }
-          var dataEditOD = [[keepOrderCode]];
-          var orderDetailIndex = parseInt(prodListOrder[e2].orderDetailIndex)+1;
-          var rangeEdit = sheetOrderDetail+'!A'+orderDetailIndex+':A'+orderDetailIndex;
-          // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
-          $("#loading-text").html("Convert details in DONHANG_"+currentOrder.orderCode+" "+prodListOrder[e2].productName);
-
-          editOrderDetail(dataEditOD, rangeEdit, function(){
-            updateEachOrderDetail(e2+1, callbackE2);
-          })
-        }
-        updateEachOrderDetail(0, function(){
+          updateEachOrderDetail(0, function(){
+            checkOneByOne(e1+1, callbackE1);
+          });
+        } else {
           checkOneByOne(e1+1, callbackE1);
-        });
+        }
       } else {
         checkOneByOne(e1+1, callbackE1);
       }
-    } else {
-      checkOneByOne(e1+1, callbackE1);
     }
+
+
+    checkOneByOne(0, function(){
+      // console.log("Remove orders:")
+      // console.log(lsRemoveOrderCode);
+      var removeOrderByMerge = function(e3, callbackE3) {
+        if (!lsRemoveOrderCode[e3]) {
+          callbackE3();
+          return;
+        }
+        $("#loading-text").html("Remove "+lsRemoveOrderCode[e3].orderCode+" at Index:"+lsRemoveOrderCode[e3].orderIndex);
+        var realIndex = parseInt(lsRemoveOrderCode[e3].orderIndex)+1;
+        removeOrder(realIndex, function(){
+          removeOrderByMerge(e3+1, callbackE3);
+        })
+      }
+
+      removeOrderByMerge(0, function(){
+        // $("#loadingSpin").hide();
+        location.reload();
+      })
+    });
   }
 
-
-  checkOneByOne(0, function(){
-    // console.log("Remove orders:")
-    // console.log(lsRemoveOrderCode);
-    var removeOrderByMerge = function(e3, callbackE3) {
-      if (!lsRemoveOrderCode[e3]) {
-        callbackE3();
-        return;
-      }
-      $("#loading-text").html("Remove "+lsRemoveOrderCode[e3].orderCode+" at Index:"+lsRemoveOrderCode[e3].orderIndex);
-      var realIndex = parseInt(lsRemoveOrderCode[e3].orderIndex)+1;
-      removeOrder(realIndex, function(){
-        removeOrderByMerge(e3+1, callbackE3);
-      })
-    }
-
-    removeOrderByMerge(0, function(){
-      // $("#loadingSpin").hide();
-      location.reload();
-    })
-  });
-}
-
-$(".click-to-view").click(function(){
-  var lsChecked = $(".checkbox");
-  var totalCost = 0;
-  var num = 0;
-  var requestedNum = 0;
-  var stillInStore = 0;
-  // for (e in lsChecked){
-  //   if ($(lsChecked[e]).is(":checked")){
-  var downloadContent = "No, Name, Count, Price, Total\n";
-  var numOfOrder = 0;
-  var totalPay = 0;
-  var totalOwnerPay = 0;
-  var totalProfit = 0;
-  var numOfProd = 0;
-  $('.checkbox').each(function(){ 
-      // this.checked = true; });
-      if (this.checked){
-        numOfOrder = numOfOrder + 1
-        var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
-        var currentOrder=getOrder(orderIndex);
-        totalPay = totalPay + parseInt(currentOrder.totalPay);
-        for  (e in currentOrder.prodListOrder) {
-          totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
-          totalProfit = totalProfit + parseInt(currentOrder.prodListOrder[e].profit);
-          numOfProd = numOfProd + parseInt(currentOrder.prodListOrder[e].productCount);          
+  $(".click-to-view").click(function(){
+    var lsChecked = $(".checkbox");
+    var totalCost = 0;
+    var num = 0;
+    var requestedNum = 0;
+    var stillInStore = 0;
+    // for (e in lsChecked){
+    //   if ($(lsChecked[e]).is(":checked")){
+    var downloadContent = "No, Name, Count, Price, Total\n";
+    var numOfOrder = 0;
+    var totalPay = 0;
+    var totalOwnerPay = 0;
+    var totalProfit = 0;
+    var numOfProd = 0;
+    $('.checkbox').each(function(){ 
+        // this.checked = true; });
+        if (this.checked){
+          numOfOrder = numOfOrder + 1
+          var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+          var currentOrder=getOrder(orderIndex);
+          totalPay = totalPay + parseInt(currentOrder.totalPay);
+          for  (e in currentOrder.prodListOrder) {
+            totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
+            totalProfit = totalProfit + parseInt(currentOrder.prodListOrder[e].profit);
+            numOfProd = numOfProd + parseInt(currentOrder.prodListOrder[e].productCount);          
+          }
         }
       }
-    }
-  )
+    )
 
-  var content = "Số đơn hàng:"+numOfOrder+"<br/>"+
-                "Số mặt hàng:"+numOfProd+"<br/>"+
-                "Tổng doanh thu:"+totalPay+"<br/>"+
-                "Tổng vốn:"+totalOwnerPay+"<br/>"+
-                "Tổng lãi:"+totalProfit+"<br/>"+
-                "<hr/>"+
-                "<div>"+
-                "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>"+
-                "<input type='text' class='mergeByOrder'/>"+
-                "</div>"
-                ;
-  $("#modelContent").html(content);
+    var content = "Số đơn hàng:"+numOfOrder+"<br/>"+
+                  "Số mặt hàng:"+numOfProd+"<br/>"+
+                  "Tổng doanh thu:"+totalPay+"<br/>"+
+                  "Tổng vốn:"+totalOwnerPay+"<br/>"+
+                  "Tổng lãi:"+totalProfit+"<br/>"+
+                  "<hr/>"+
+                  "<div>"+
+                  "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>"+
+                  "<input type='text' class='mergeByOrder'/>"+
+                  "</div>"
+                  ;
+    $("#modelContent").html(content);
 
-  $(".mergeOrder").click(mergeOrder);
+    $(".mergeOrder").click(mergeOrder);
 
-  $("#modalYes").click(function(){
+    $("#modalYes").click(function(){
+    })
+    $('#myModal').modal('toggle');
   })
-  $('#myModal').modal('toggle');
-})
+
+};
 
 function checkSystemConsistent(){
 
