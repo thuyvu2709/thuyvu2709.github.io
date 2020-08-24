@@ -12,6 +12,7 @@ var ghtkUrl="services.giaohangtietkiem.vn"
 var dataOrder = {};
 
 function loadPickList() {
+	$("#loadingSpin").show();
 	getPickAddress(function(rs){
 		// console.log(rs);
 		pickList = rs;
@@ -22,6 +23,7 @@ function loadPickList() {
 			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
 		}
 		$("#pickList").html(pickListHtml);
+		$("#loadingSpin").hide();
 	}) 	
 }
 
@@ -213,8 +215,11 @@ function caluclateTransportFeeFn(){
 	dataFee.weight = parseFloat($("#totalWeight").html());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
+	
+	$("#loadingSpin").show();
 	calculateTransportFeeAPI(dataFee, function(fee){
 		$("#transportFee").html(fee);
+		$("#loadingSpin").hide();
 	});
 }
   
