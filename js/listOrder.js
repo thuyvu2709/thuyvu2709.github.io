@@ -226,12 +226,75 @@ function addNotification(text){
   $(".click-to-notify").show();
 }
 
+function getOrder(orderIndex) {
+  // console.log($(this));
+  var data = JSON.parse(localStorage.getItem("orderList"));
+  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  
+  var orderCode = data[orderIndex][0];
+  var shipIndex = -1;
+  if (orderShipStatus[data[orderIndex][0]]){
+    shipIndex = orderShipStatus[data[orderIndex][0]].sindex
+  }
+  var currentOrder = {
+    orderCode : orderCode,
+    orderDate : data[orderIndex][1],
+    customerName : data[orderIndex][2],
+    customerAddress : data[orderIndex][3],
+    customerPhone : data[orderIndex][4],
+    totalPay : data[orderIndex][5],
+    shippingCost : data[orderIndex][6],
+    totalPayIncludeShip : data[orderIndex][7],
+    paymentStatus : data[orderIndex][8],
+    shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "Requested",
+    shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
+    shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
+    orderNode : data[orderIndex][10],
+    shippingType : data[orderIndex][11],
+    otherInfor : data[orderIndex][12],
+    prepaid : data[orderIndex][13],
+    refund : data[orderIndex][14],
+    shipIndex : shipIndex,
+    orderIndex : orderIndex,
+    otherCost : 0
+  }
+
+  var prodListOrder = {};
+  var prodIndex = 0;
+  for (e in orderListDetail) {
+    if (orderListDetail[e][0] == orderCode){
+      prodListOrder[prodIndex] = {
+        productCode : orderListDetail[e][1],
+        importCode : orderListDetail[e][2],
+        productRefCode : orderListDetail[e][3],
+        productName : orderListDetail[e][4],
+        productCount : orderListDetail[e][5],
+        productEstimateSellingVND : orderListDetail[e][6],
+        turnover : orderListDetail[e][7],
+        totalPay : orderListDetail[e][8],
+        profit : orderListDetail[e][9],
+        available : orderListDetail[e][10],
+        orderDetailIndex : e,
+        productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : "",
+        productWeight : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : ""
+      }
+      prodIndex++;
+    }
+  }
+
+  currentOrder.prodListOrder = prodListOrder;
+
+  localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+  return currentOrder;
+}
+
 function loadOrderListHtml() {
   $("#loadingSpin").show();
 
-  data = JSON.parse(localStorage.getItem("orderList"));
-  orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
-  lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
+  var data = JSON.parse(localStorage.getItem("orderList"));
+  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+  var lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
+
   $("#controllMany").hide();
   $("#listOrder").empty();
   // console.log(data);
@@ -579,65 +642,6 @@ function loadOrderListHtml() {
     })
     $('#myModal').modal('toggle');
   })
-
-  function getOrder(orderIndex) {
-    // console.log($(this));
-    var orderCode = data[orderIndex][0];
-    var shipIndex = -1;
-    if (orderShipStatus[data[orderIndex][0]]){
-      shipIndex = orderShipStatus[data[orderIndex][0]].sindex
-    }
-    var currentOrder = {
-      orderCode : orderCode,
-      orderDate : data[orderIndex][1],
-      customerName : data[orderIndex][2],
-      customerAddress : data[orderIndex][3],
-      customerPhone : data[orderIndex][4],
-      totalPay : data[orderIndex][5],
-      shippingCost : data[orderIndex][6],
-      totalPayIncludeShip : data[orderIndex][7],
-      paymentStatus : data[orderIndex][8],
-      shippingStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].status : "Requested",
-      shippingPaidStatus : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].paidStatus : "0",
-      shippingCompleteTime : orderShipStatus[data[orderIndex][0]] ? orderShipStatus[data[orderIndex][0]].completeTime : "",
-      orderNode : data[orderIndex][10],
-      shippingType : data[orderIndex][11],
-      otherInfor : data[orderIndex][12],
-      prepaid : data[orderIndex][13],
-      refund : data[orderIndex][14],
-      shipIndex : shipIndex,
-      orderIndex : orderIndex,
-      otherCost : 0
-    }
-
-    var prodListOrder = {};
-    var prodIndex = 0;
-    for (e in orderListDetail) {
-      if (orderListDetail[e][0] == orderCode){
-        prodListOrder[prodIndex] = {
-          productCode : orderListDetail[e][1],
-          importCode : orderListDetail[e][2],
-          productRefCode : orderListDetail[e][3],
-          productName : orderListDetail[e][4],
-          productCount : orderListDetail[e][5],
-          productEstimateSellingVND : orderListDetail[e][6],
-          turnover : orderListDetail[e][7],
-          totalPay : orderListDetail[e][8],
-          profit : orderListDetail[e][9],
-          available : orderListDetail[e][10],
-          orderDetailIndex : e,
-          productImage : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].image : "",
-          productWeight : listProductParse[orderListDetail[e][3]] ? listProductParse[orderListDetail[e][3]].productWeight : ""
-        }
-        prodIndex++;
-      }
-    }
-
-    currentOrder.prodListOrder = prodListOrder;
-
-    localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
-    return currentOrder;
-  }
 
   $(".orderelement").click(function(){
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
