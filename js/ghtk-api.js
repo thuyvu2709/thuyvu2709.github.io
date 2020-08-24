@@ -146,3 +146,37 @@ function calculateTransportFeeAPI(data,callback){
 	  }
 	});
 }
+
+function test() {
+	serialize = function(obj) {
+	  var str = [];
+	  for (var p in obj)
+	    if (obj.hasOwnProperty(p)) {
+	      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	    }
+	  return str.join("&");
+	};
+
+	var ghtkUrl="services.giaohangtietkiem.vn"
+
+	var data = {
+	  "pick_province": "Hà Nội",
+	  "pick_district": "Quận Hai Bà Trưng",
+	  "province": "Hà nội",
+	  "district": "Quận Cầu Giấy",
+	  "address": "P.503 tòa nhà Auu Việt, số 1 Lê Đức Thọ",
+	  "weight": 1000,
+	  "value": 3000000,
+	  "transport": "fly"
+	}
+
+	var http_request;
+	http_request = new XMLHTTPRequest();
+	http_request.onreadystatechange = function () {
+		console.log(this)
+	};
+	http_request.open("GET", "https://"+ghtkUrl+"/services/shipment/fee?"+serialize(data));
+	http_request.setRequestHeader("Content-Type", "application/json");
+	http_request.setRequestHeader("Token", "92c01008437d281011c15d5d9530d69B304B0b72");
+	http_request.setRequestHeader("Access-Control-Allow-Origin", "*");
+}
