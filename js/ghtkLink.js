@@ -199,7 +199,28 @@ $('.datetimepicker').daterangepicker({
   	// console.log(start.format('YYYY-MM-DD hh:mm:ss'));
   	dataOrder.pick_date=start.format('YYYY-MM-DD hh:mm:ss');
   });
+
+function caluclateTransportFeeFn(){
+	var pickIndex = $("#pickList").val();
+	var dataFee = {};
+	dataFee.pick_province = pickList[pickIndex].province;
+	dataFee.pick_district = pickList[pickIndex].district;
+	
+	var aix = strToAddr(currentOrder.customerAddress);
+	dataFee.province = aix.province;
+	dataFee.district = aix.district;
+	dataFee.address = aix.address;
+	dataFee.weight = parseFloat($("#totalWeight").html());
+	dataFee.value = currentOrder.totalPay;
+	dataFee.transport = $("#transportType").val();
+	calculateTransportFeeAPI(dataFee, function(fee){
+		$("#transportFee").html(fee);
+	});
+}
   
+$("#calculateFeeLoadForce").click(function(){
+	caluclateTransportFeeFn();
+})
 
 $("#ghtkPost").click(function(){
 	// var dataOrder = {

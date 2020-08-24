@@ -100,3 +100,31 @@ function getOrderStatus(orderId){
 
 };
 // getOrderStatus("S15549745.HN33.AD4b.935261347")
+
+function calculateTransportFeeAPI(data,callback){
+	serialize = function(obj) {
+	  var str = [];
+	  for (var p in obj)
+	    if (obj.hasOwnProperty(p)) {
+	      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	    }
+	  return str.join("&");
+	};
+	$.ajax({
+	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  headers : {
+	  	"Token": ghtkToken
+	  },
+	  type: 'GET',
+	  success: function(res) {
+	    // console.log(res);
+	    if (!res) {
+	    	callback("Không tính được, ktr lại thông tin");
+	    } else if (!res.success) {
+	    	callback("Không tính được, ktr lại thông tin");
+	    } else {
+	    	callback(res.fee.fee);
+	    }
+	  }
+	});
+}
