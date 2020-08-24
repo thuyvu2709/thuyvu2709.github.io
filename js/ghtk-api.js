@@ -127,24 +127,6 @@ function calculateTransportFeeAPI(data,callback){
 	    }
 	  }
 	});
-
-	$.ajax({
-	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
-	  headers : {
-	  	"Token": ghtkToken
-	  },
-	  type: 'GET',
-	  success: function(res) {
-	    // console.log(res);
-	    if (!res) {
-	    	callback("Không tính được, ktr lại thông tin");
-	    } else if (!res.success) {
-	    	callback("Không tính được, ktr lại thông tin");
-	    } else {
-	    	callback(res.fee.fee);
-	    }
-	  }
-	});
 }
 
 function test() {
@@ -171,7 +153,7 @@ function test() {
 	}
 
 	var http_request;
-	http_request = new XMLHTTPRequest();
+	http_request = new XMLHttpRequest();
 	http_request.onreadystatechange = function () {
 		console.log(this)
 	};
@@ -179,4 +161,7 @@ function test() {
 	http_request.setRequestHeader("Content-Type", "application/json");
 	http_request.setRequestHeader("Token", "92c01008437d281011c15d5d9530d69B304B0b72");
 	http_request.setRequestHeader("Access-Control-Allow-Origin", "*");
+	http_request.setRequestHeader("Access-Control-Allow-Headers","*");
+	http_request.setRequestHeader("Access-Control-Allow-Methods","GET")
+	http_request.send();
 }
