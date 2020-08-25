@@ -33,7 +33,7 @@ function createAnOrder(dataOrder, callback){
 	    }
 	};
 	$.ajax({
-	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/order/?ver=1.5",
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/order/?ver=1.5",
 	  headers : {
 	  	"Token": ghtkToken,
 	  	"Content-Type": "application/json" 
@@ -49,7 +49,7 @@ function createAnOrder(dataOrder, callback){
 function getPickAddress(callback){
 	// console.log("getPickAddress:"+ghtkToken);
 	$.ajax({
-	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -88,7 +88,7 @@ function getOrderStatus(orderId){
 	console.log("aaa")
 
 	$.ajax({
-	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -111,7 +111,7 @@ function calculateTransportFeeAPI(data,callback){
 	  return str.join("&");
 	};
 	$.ajax({
-	  url: "https://cors-anywhere.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -127,41 +127,4 @@ function calculateTransportFeeAPI(data,callback){
 	    }
 	  }
 	});
-}
-
-function test() {
-	serialize = function(obj) {
-	  var str = [];
-	  for (var p in obj)
-	    if (obj.hasOwnProperty(p)) {
-	      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-	    }
-	  return str.join("&");
-	};
-
-	var ghtkUrl="services.giaohangtietkiem.vn"
-
-	var data = {
-	  "pick_province": "Hà Nội",
-	  "pick_district": "Quận Hai Bà Trưng",
-	  "province": "Hà nội",
-	  "district": "Quận Cầu Giấy",
-	  "address": "P.503 tòa nhà Auu Việt, số 1 Lê Đức Thọ",
-	  "weight": 1000,
-	  "value": 3000000,
-	  "transport": "fly"
-	}
-
-	var http_request;
-	http_request = new XMLHttpRequest();
-	http_request.onreadystatechange = function () {
-		console.log(this)
-	};
-	http_request.open("GET", "https://"+ghtkUrl+"/services/shipment/fee?"+serialize(data));
-	http_request.setRequestHeader("Content-Type", "application/json");
-	http_request.setRequestHeader("Token", "92c01008437d281011c15d5d9530d69B304B0b72");
-	http_request.setRequestHeader("Access-Control-Allow-Origin", "*");
-	http_request.setRequestHeader("Access-Control-Allow-Headers","*");
-	http_request.setRequestHeader("Access-Control-Allow-Methods","GET")
-	http_request.send();
 }
