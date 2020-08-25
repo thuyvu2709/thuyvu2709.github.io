@@ -215,6 +215,10 @@ $("#pickList").change(function(){
 	caluclateTransportFeeFn(true);//does not show loading
 })
 
+$("#transportType").change(function(){
+	caluclateTransportFeeFn(true);//does not show loading	
+})
+
 function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	$("#transportFee").html($("#transportFee").html()+" - Đang tính...");
 	var pickIndex = $("#pickList").val();
