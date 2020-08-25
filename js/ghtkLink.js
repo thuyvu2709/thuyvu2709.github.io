@@ -5,8 +5,14 @@ var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 var pickList = JSON.parse(localStorage.getItem("pickList"));
 var ghtkToken = localStorage.getItem("ghtkToken");
 
-var ghtkUrl="services.giaohangtietkiem.vn"
+try{
+	currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
+}catch(e){
 
+}
+
+var ghtkUrl="services.giaohangtietkiem.vn"
+// $("#textareaCopy").hide();
 // console.log("ghtkUrl:"+ghtkUrl)
 
 var dataOrder = {};
@@ -295,38 +301,85 @@ $("#ghtkPost").click(function(){
 	// };
 	var pickIndex = $("#pickList").val();
 	// console.log(pickIndex);
-	dataOrder.pick_address = pickList[pickIndex].address;
-	dataOrder.pick_province = pickList[pickIndex].province;
-	dataOrder.pick_district = pickList[pickIndex].district;
-	dataOrder.pick_ward = pickList[pickIndex].ward;
-	dataOrder.pick_name = pickList[pickIndex].name;
-	dataOrder.pick_tel = pickList[pickIndex].tel;
+	dataOrder.order={};
+	dataOrder.order.pick_address = pickList[pickIndex].address;
+	dataOrder.order.pick_province = pickList[pickIndex].province;
+	dataOrder.order.pick_district = pickList[pickIndex].district;
+	dataOrder.order.pick_ward = pickList[pickIndex].ward;
+	dataOrder.order.pick_name = pickList[pickIndex].name;
+	dataOrder.order.pick_tel = pickList[pickIndex].tel;
 
-	dataOrder.province = $("#province").html();
-	dataOrder.district = $("#district").html();
-	dataOrder.ward = $("#ward").html();
-	dataOrder.address = $("#address").html();
-	dataOrder.hamlet = "";
-	dataOrder.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
-	dataOrder.tel = currentOrder.customerPhone;
-	dataOrder.name = currentOrder.customerName;
+	dataOrder.order.province = $("#province").html();
+	dataOrder.order.district = $("#district").html();
+	dataOrder.order.ward = $("#ward").html();
+	dataOrder.order.address = $("#address").html();
+	dataOrder.order.hamlet = "Khác";
+	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
+	dataOrder.order.tel = currentOrder.customerPhone;
+	dataOrder.order.name = currentOrder.customerName;
 	if (currentOrder.shippingType == "POST_COD") {
-		dataOrder.pick_money=currentOrder.willpay;		
+		dataOrder.order.pick_money=currentOrder.willpay*1000;		
 	} else {
-		dataOrder.pick_money=0;
+		dataOrder.order.pick_money=0;
 	}
-	dataOrder.is_freeship = currentOrder.otherInfor.isFreeShip==true ? "1" : "0";
-	dataOrder.note = $("#orderNodeGHTK").val();
-	dataOrder.value = currentOrder.totalPay;
-	dataOrder.transport = $("#transportType").val();
+	dataOrder.order.is_freeship = currentOrder.otherInfor.isFreeShip==true ? "1" : "0";
+	dataOrder.order.note = $("#orderNodeGHTK").val();
+	dataOrder.order.value = currentOrder.totalPay*1000;
+	dataOrder.order.transport = $("#transportType").val();
 	dataOrder.products = [{
 		"name": "Hàng Thuỷ gửi",
-        "weight": $("#avgWeight").val(),
+        "weight": parseFloat($("#avgWeight").val())/1000,
         "quantity": count
 	}]
 	// console.log(dataOrder);
-	// createAnOrder(dataOrder, function(data){
-	// 	$("#modelContent").html(jsonToHtml(data));
-	// 	$('#myModal').modal('toggle');
-	// })
+	
+	$("#loadingSpin").show();
+
+	createAnOrder(dataOrder, function(data){
+
+// {
+//  "success": true,
+//  "message": "Các đơn hàng đã được add vào hệ thống GHTK thành công. Thông tin đơn hàng thành công được trả về trong trường success_orders.
+// GHTK chỉ hỗ trợ chọn phương thức vận chuyển với các đơn hàng đặc biệt hoặc liên miền, gửi từ Hà Nội hoặc Tp. HCM. Các tuyến đường còn lại hoặc không nhận dạng được địa chỉ sẽ được chuyển theo phương thức mặc định : Nội miền/ Nội tỉnh đường bộ & Liên miền : Đường bay.",
+//  "order": {
+//   "partner_id": "ThuyTitVu-DONHANG_865-1598383517256",
+//   "label": "S15549745.HN12.G3.876491853",
+//   "area": "1",
+//   "fee": "18000",
+//   "status_id": "2",
+//   "insurance_fee": "0",
+//   "estimated_pick_time": "Sáng 2020-08-26",
+//   "estimated_deliver_time": "Chiều 2020-08-26",
+//   "products": [],
+//   "tracking_id": 876491853,
+//   "sorting_code": "HN12.G3"
+//  }
+// }
+
+		if (data["success"]==true) {
+			console.log("Copy");
+			$("#textareaBanking").show();
+
+			$("#textareaBanking").val(data["order"]["label"]);
+
+			// $("#textareaBanking").select(); 
+			// if ($("#textareaBanking").setSelectionRange) {
+			//   $("#textareaBanking").setSelectionRange(0, 99999); 
+			// }
+			var copyText = document.getElementById("textareaBanking");
+
+			/* Select the text field */
+			copyText.select(); 
+			copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+			/*For mobile devices*/
+			document.execCommand("copy");
+
+			$("#textareaBanking").hide();
+		}
+
+		$("#loadingSpin").hide();
+
+		$("#modelContent").html(jsonToHtml(data));
+		$('#myModal').modal('toggle');
+	})
 })
