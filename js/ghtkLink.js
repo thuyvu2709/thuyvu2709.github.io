@@ -297,7 +297,7 @@ $("#ghtkPost").click(function(){
 	dataOrder.ward = aix.ward;
 	dataOrder.address = aix.address;
 	dataOrder.hamlet = "";
-	dataOrder.id = currentOrder.orderCode;
+	dataOrder.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.tel = currentOrder.customerPhone;
 	dataOrder.name = currentOrder.customerName;
 	if (currentOrder.shippingType == "POST_COD") {
