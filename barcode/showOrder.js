@@ -241,6 +241,10 @@ $("#makeCopy").click(function(){
 	window.location = "neworder.html?makeCopy=true";
 })
 
+$("#ghtkLink").click(function(){
+  window.location = "../shipper/ghtkLink.html";  
+})
+
 $("#createNewOrder").click(function(){
 	// $("#loadingSpin").show();
 	// getLatestOrderCode(function(){

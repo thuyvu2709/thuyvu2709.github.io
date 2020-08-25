@@ -167,6 +167,8 @@ $("#updateAddress").click(function(){
 			$("#customerAddress").html(
 				'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 			);
+			loadAddressIntoUI();
+			caluclateTransportFeeFn(true);//does not show loading
 		}
 	})
 })
@@ -184,6 +186,16 @@ $('#isFreeShip').click(function(){
 $("#pickLoadForce").click(function(){
 	loadPickList();
 })
+
+function loadAddressIntoUI(){
+	var aix = strToAddr(currentOrder.customerAddress);
+	$("#province").html(aix.province);
+	$("#district").html(aix.district);
+	$("#ward").html(aix.ward);	
+	$("#address").html(aix.address);
+}
+
+loadAddressIntoUI();//load at beginning
 
 function jsonToHtml(data) {
     if (!data) {
@@ -226,10 +238,9 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.pick_province = pickList[pickIndex].province;
 	dataFee.pick_district = pickList[pickIndex].district;
 	
-	var aix = strToAddr(currentOrder.customerAddress);
-	dataFee.province = aix.province;
-	dataFee.district = aix.district;
-	dataFee.address = aix.address;
+	dataFee.province = $("#province").html();
+	dataFee.district = $("#district").html();
+	dataFee.address = $("#address").html();
 	dataFee.weight = parseFloat($("#totalWeight").val());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
@@ -291,11 +302,10 @@ $("#ghtkPost").click(function(){
 	dataOrder.pick_name = pickList[pickIndex].name;
 	dataOrder.pick_tel = pickList[pickIndex].tel;
 
-	var aix = strToAddr(currentOrder.customerAddress);
-	dataOrder.province = aix.province;
-	dataOrder.district = aix.district;
-	dataOrder.ward = aix.ward;
-	dataOrder.address = aix.address;
+	dataOrder.province = $("#province").html();
+	dataOrder.district = $("#district").html();
+	dataOrder.ward = $("#ward").html();
+	dataOrder.address = $("#address").html();
 	dataOrder.hamlet = "";
 	dataOrder.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.tel = currentOrder.customerPhone;
@@ -315,8 +325,8 @@ $("#ghtkPost").click(function(){
         "quantity": count
 	}]
 	// console.log(dataOrder);
-	createAnOrder(dataOrder, function(data){
-		$("#modelContent").html(jsonToHtml(data));
-		$('#myModal').modal('toggle');
-	})
+	// createAnOrder(dataOrder, function(data){
+	// 	$("#modelContent").html(jsonToHtml(data));
+	// 	$('#myModal').modal('toggle');
+	// })
 })
