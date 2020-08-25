@@ -517,6 +517,15 @@ function finishOrder(){
 	$('#myModal').modal('toggle');
 }
 
+$("#updateAddress").click(function(){
+	triggerAutocompleteViettelpost($("#customerAddress").val(),function(addrData){
+		if (addrData["OTHER"] && addrData["PROVINCE_NAME"] && addrData["DISTRICT_NAME"]) {
+			var addr = addrData["OTHER"]+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
+			$("#customerAddress").val(addr);
+		}
+	})
+})
+
 $("#addNewOrder").click(function(){
 	//orderCode
 	$("#addNewOrder").hide();
