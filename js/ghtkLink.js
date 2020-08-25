@@ -130,13 +130,20 @@ if (!totalWeight) {
 	totalWeight = 0;
 	avgWeight = 0;
 }
-$("#totalWeight").html(parseInt(totalWeight*1000));
+$("#totalWeight").val(parseInt(totalWeight*1000));
 $("#prodList").html(count+" x hàng gửi của Thuỷ");
 $("#avgWeight").val(avgWeight);
 
 $("#avgWeight").change(function(){
 	var tw = parseFloat($("#avgWeight").val())*count;
-	$("#totalWeight").html(tw);
+	$("#totalWeight").val(tw);
+	caluclateTransportFeeFn(true);//does not show loading
+})
+
+$("#totalWeight").change(function(){
+	var avgw = parseFloat($("#totalWeight").val()) / count;
+	$("#avgWeight").val(avgw);
+	caluclateTransportFeeFn(true);//does not show loading
 })
 
 $(".showImage").click(function(){
@@ -202,7 +209,14 @@ $('.datetimepicker').daterangepicker({
   	dataOrder.pick_date=start.format('YYYY-MM-DD hh:mm:ss');
   });
 
-function caluclateTransportFeeFn(){
+caluclateTransportFeeFn(true);//does not show loading
+
+$("#pickList").change(function(){
+	caluclateTransportFeeFn(true);//does not show loading
+})
+
+function caluclateTransportFeeFn(notloadShow){//true mean does not show
+	$("#transportFee").html($("#transportFee").html()+" - Đang tính...");
 	var pickIndex = $("#pickList").val();
 	var dataFee = {};
 	dataFee.pick_province = pickList[pickIndex].province;
@@ -212,11 +226,14 @@ function caluclateTransportFeeFn(){
 	dataFee.province = aix.province;
 	dataFee.district = aix.district;
 	dataFee.address = aix.address;
-	dataFee.weight = parseFloat($("#totalWeight").html());
+	dataFee.weight = parseFloat($("#totalWeight").val());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
 	
-	$("#loadingSpin").show();
+	if (!notloadShow) {
+		$("#loadingSpin").show();
+		$("#loading-text").html();
+	}
 	calculateTransportFeeAPI(dataFee, function(fee){
 		$("#transportFee").html(fee);
 		$("#loadingSpin").hide();

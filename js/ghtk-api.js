@@ -1,37 +1,37 @@
 function createAnOrder(dataOrder, callback){
-	var dataOrder = {
-	    "products": [{
-	        "name": "bút",
-	        "weight": 0.1,
-	        "quantity": 1
-	    }, {
-	        "name": "tẩy",
-	        "weight": 0.2,
-	        "quantity": 1
-	    }],
-	    "order": {
-	        "id": "a4",
-	        "pick_name": "HCM-nội thành",
-	        "pick_address": "590 CMT8 P.11",
-	        "pick_province": "TP. Hồ Chí Minh",
-	        "pick_district": "Quận 3",
-	        "pick_ward": "Phường 1",
-	        "pick_tel": "0911222333",
-	        "tel": "0911222333",
-	        "name": "GHTK - HCM - Noi Thanh",
-	        "address": "123 nguyễn chí thanh",
-	        "province": "TP. Hồ Chí Minh",
-	        "district": "Quận 1",
-	        "ward": "Phường Bến Nghé",
-	        "hamlet": "Khác",
-	        "is_freeship": "1",
-	        "pick_date": "2016-09-30",
-	        "pick_money": 47000,
-	        "note": "Khối lượng tính cước tối đa: 1.00 kg",
-	        "value": 3000000,
-	        "transport": "fly"
-	    }
-	};
+	// var dataOrder = {
+	//     "products": [{
+	//         "name": "bút",
+	//         "weight": 0.1,
+	//         "quantity": 1
+	//     }, {
+	//         "name": "tẩy",
+	//         "weight": 0.2,
+	//         "quantity": 1
+	//     }],
+	//     "order": {
+	//         "id": "a4",
+	//         "pick_name": "HCM-nội thành",
+	//         "pick_address": "590 CMT8 P.11",
+	//         "pick_province": "TP. Hồ Chí Minh",
+	//         "pick_district": "Quận 3",
+	//         "pick_ward": "Phường 1",
+	//         "pick_tel": "0911222333",
+	//         "tel": "0911222333",
+	//         "name": "GHTK - HCM - Noi Thanh",
+	//         "address": "123 nguyễn chí thanh",
+	//         "province": "TP. Hồ Chí Minh",
+	//         "district": "Quận 1",
+	//         "ward": "Phường Bến Nghé",
+	//         "hamlet": "Khác",
+	//         "is_freeship": "1",
+	//         "pick_date": "2016-09-30",
+	//         "pick_money": 47000,
+	//         "note": "Khối lượng tính cước tối đa: 1.00 kg",
+	//         "value": 3000000,
+	//         "transport": "fly"
+	//     }
+	// };
 	$.ajax({
 	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/order/?ver=1.5",
 	  headers : {
@@ -118,6 +118,18 @@ function calculateTransportFeeAPI(data,callback){
 	  type: 'GET',
 	  success: function(res) {
 	    // console.log(res);
+		// fee: Object
+		// a: "1"
+		// cost_id: "1848"
+		// delivery: true
+		// delivery_type: "191211-Niemyet-Dacbiet_bay"
+		// dt: "special"
+		// fee: 33000
+		// include_vat: "0"
+		// insurance_fee: 0
+		// name: "area1"
+		// message: ""
+		// success: true
 	    if (!res) {
 	    	callback("Không tính được, ktr lại thông tin");
 	    } else if (!res.success) {
