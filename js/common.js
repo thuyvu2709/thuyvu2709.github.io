@@ -1719,8 +1719,15 @@ function strToAddr(addr){
     if (aix.address[aix.address.length-1]==",") {
       aix.address = aix.address.substring(0,aix.address.length-1);
     }
+
   } catch(e) {
 
   }
+  
+  aix.province = aix.province ? aix.province : "";
+  aix.district = aix.district ? aix.district : "";
+  aix.ward = aix.ward ? aix.ward : "";
+  aix.address = aix.address ? aix.address : "";
+
   return aix;
 }
