@@ -195,6 +195,7 @@ $("#updateAddress").click(function(){
 			);
 			loadAddressIntoUI();
 			saveAddressAsManager();
+			saveAddressAsShipper();
 			caluclateTransportFeeFn(true);//does not show loading
 		}
 	})
@@ -507,7 +508,6 @@ $("#ghtkPost").click(function(){
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
 			saveOtherInforAsManager();
-			saveAddressAsShipper();
 		} else {
 			$("#modelContent").html(jsonToHtml(data));
 			$('#myModal').modal('toggle');
