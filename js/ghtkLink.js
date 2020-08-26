@@ -348,7 +348,7 @@ function saveOtherInforAsShipper(){
 	}
 	dataUpdateShipping = [
 		[
-			JSON.stringify(currentOrder)
+			JSON.stringify(orderCopy)
 		]
 	];
 
@@ -508,6 +508,7 @@ $("#ghtkPost").click(function(){
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
 			saveOtherInforAsManager();
+			saveOtherInforAsShipper();
 		} else {
 			$("#modelContent").html(jsonToHtml(data));
 			$('#myModal').modal('toggle');
