@@ -308,25 +308,6 @@ function saveAddressAsManager(){
     })
 }
 
-function saveAddressAsShipper(){
-	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
-	var dataEditOrder = [
-                [
-                currentOrder.customerAddress
-                ]
-            ];
-    // console.log(dataEditOrder);
-    // console.log(otherInfor);
-
-	var sheetrange = sheetOrder+'!D'+realOrderIndex +":D" + realOrderIndex;
-
-	$("#loading-text").html("Cập nhật địa chỉ lên hệ thống");
-	$("#loadingSpin").show();
-    editOrder(dataEditOrder, sheetrange, function(){
-    	$("#loadingSpin").hide();
-    })
-}
-
 function saveOtherInforAsManager(){
 	if (userRole!="manager"){
 		return;
@@ -348,6 +329,63 @@ function saveOtherInforAsManager(){
     editOrder(dataEditOrder, sheetrange, function(){
     	$("#loadingSpin").hide();
     })
+}
+
+function saveOtherInforAsShipper(){
+	if (currentOrder.shipIndex==-1 || currentOrder.shipIndex==undefined) {
+		return;
+	}
+
+	var actualShipIndex = parseInt(currentOrder.shipIndex) + 1;
+
+	sheetrange = 'Shipping!D'+actualShipIndex+':D'+actualShipIndex;
+	var orderCopy = JSON.parse(JSON.stringify(currentOrder))
+	for (e in orderCopy.prodListOrder) {
+		orderCopy.prodListOrder[e].profit="";
+		orderCopy.prodListOrder[e].totalPay="";
+		orderCopy.prodListOrder[e].turnover="";
+	}
+	dataUpdateShipping = [
+		[
+			JSON.stringify(currentOrder)
+		]
+	];
+
+	// console.log(dataUpdateShipping);
+
+	$("#loadingSpin").show();
+	$("#loading-text").html("Cập nhật thông tin vận đơn của shipper");
+
+	updateShipping(dataUpdateShipping, sheetrange, function(){
+		$("#loadingSpin").hide();
+	},function(){
+		console.log("Something wrong");
+	})
+}
+
+function saveAddressAsShipper(){
+	if (currentOrder.shipIndex==-1 || currentOrder.shipIndex==undefined) {
+		return;
+	}
+
+	var actualShipIndex = parseInt(currentOrder.shipIndex) + 1;
+
+	sheetrange = 'Shipping!B'+actualShipIndex+':B'+actualShipIndex;
+
+	dataUpdateShipping = [
+	[currentOrder.customerAddress]
+	];
+
+	// console.log(dataUpdateShipping);
+
+	$("#loadingSpin").show();
+	$("#loading-text").html("Cập nhật địa chỉ của shipper");
+
+	updateShipping(dataUpdateShipping, sheetrange, function(){
+		$("#loadingSpin").hide();
+	},function(){
+		console.log("Something wrong");
+	})
 }
 
 // 
@@ -469,6 +507,7 @@ $("#ghtkPost").click(function(){
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
 			saveOtherInforAsManager();
+			saveAddressAsShipper();
 		} else {
 			$("#modelContent").html(jsonToHtml(data));
 			$('#myModal').modal('toggle');

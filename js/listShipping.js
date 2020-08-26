@@ -768,9 +768,11 @@ function deleteShipRequest() {
 function ghtkLinkFn(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
-  lsOrder[orderIndex][3].shipIndex = parseInt(orderIndex);
 
-  localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
+  var orderJs = JSON.parse(lsOrder[orderIndex][3]);
+  orderJs.shipIndex = parseInt(orderIndex);
+
+  localStorage.setItem("currentOrder",JSON.stringify(orderJs));
 
   saveHistory({
     orderFilter : $(".orderFilter").val(),
@@ -783,9 +785,11 @@ function ghtkLinkFn(){
 function showDetail(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
-  lsOrder[orderIndex][3].shipIndex = parseInt(orderIndex);
 
-  localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
+  var orderJs = JSON.parse(lsOrder[orderIndex][3]);
+  orderJs.shipIndex = parseInt(orderIndex);
+
+  localStorage.setItem("currentOrder",orderJs);
 
   saveHistory({
     orderFilter : $(".orderFilter").val(),
