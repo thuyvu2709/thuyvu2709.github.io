@@ -149,6 +149,14 @@ $("#copyText").click(function(){
 	textarea.setSelectionRange(0, 99999); /*For mobile devices*/
 	document.execCommand("copy");
 
+	var orderCopy = {
+		customerName : currentOrder.customerName,
+		customerPhone : currentOrder.customerPhone,
+		customerAddress: currentOrder.customerAddress
+	}
+	localStorage.setItem("orderCopy",JSON.stringify(orderCopy));
+
+
 	$(textarea).hide();
 })
 

@@ -526,6 +526,13 @@ $("#updateAddress").click(function(){
 	})
 })
 
+$("#downCustomerInfor").click(function(){
+	var orderCopy = JSON.parse(localStorage.getItem("orderCopy"));
+	$("#customerName").val(orderCopy.customerName);
+	$("#customerAddress").val(orderCopy.customerAddress);
+	$("#customerPhone").val(orderCopy.customerPhone);
+})
+
 $("#addNewOrder").click(function(){
 	//orderCode
 	$("#addNewOrder").hide();
