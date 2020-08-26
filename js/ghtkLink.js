@@ -194,7 +194,7 @@ $("#updateAddress").click(function(){
 				'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 			);
 			loadAddressIntoUI();
-			saveAddressAsManager();
+			// saveAddressAsManager();
 			caluclateTransportFeeFn(true);//does not show loading
 		}
 	})
@@ -446,7 +446,7 @@ $("#ghtkPost").click(function(){
 			$("#textareaBanking").hide();
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
-			saveOtherInforAsManager();
+			// saveOtherInforAsManager();
 		} else {
 			$("#modelContent").html(jsonToHtml(data));
 			$('#myModal').modal('toggle');
