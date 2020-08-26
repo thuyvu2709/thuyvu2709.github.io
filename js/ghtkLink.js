@@ -53,7 +53,7 @@ if (!pickList) {
 // console.log(currentOrder);
 
 $("#orderCode").html(currentOrder.orderCode);
-$("#customerName").html(currentOrder.customerName);
+$("#customerName").val(currentOrder.customerName);
 
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
@@ -377,7 +377,7 @@ $("#ghtkPost").click(function(){
 	dataOrder.order.hamlet = "Khác";
 	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.order.tel = currentOrder.customerPhone;
-	dataOrder.order.name = currentOrder.customerName;
+	dataOrder.order.name = $("#customerName").val();
 	if (currentOrder.shippingType == "POST_COD") {
 		dataOrder.order.pick_money=currentOrder.willpay*1000;		
 	} else {
