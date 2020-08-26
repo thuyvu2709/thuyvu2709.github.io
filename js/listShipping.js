@@ -768,6 +768,7 @@ function deleteShipRequest() {
 function ghtkLinkFn(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
+  lsOrder[orderIndex][3].shipIndex = parseInt(orderIndex);
 
   localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
 
