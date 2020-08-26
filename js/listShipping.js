@@ -789,7 +789,7 @@ function showDetail(){
   var orderJs = JSON.parse(lsOrder[orderIndex][3]);
   orderJs.shipIndex = parseInt(orderIndex);
 
-  localStorage.setItem("currentOrder",orderJs);
+  localStorage.setItem("currentOrder",JSON.stringify(orderJs));
 
   saveHistory({
     orderFilter : $(".orderFilter").val(),
