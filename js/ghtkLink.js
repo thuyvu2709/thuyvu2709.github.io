@@ -7,6 +7,9 @@ var ghtkToken = localStorage.getItem("ghtkToken");
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
+if (!currentOrder.otherInfor){
+	currentOrder.otherInfor = {}
+}
 
 try{
 	currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
