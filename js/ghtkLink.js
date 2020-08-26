@@ -4,6 +4,8 @@ $("#footerInclude").load("../common/footer.html");
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 var pickList = JSON.parse(localStorage.getItem("pickList"));
 var ghtkToken = localStorage.getItem("ghtkToken");
+var sheetOrder = "Order";
+
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
