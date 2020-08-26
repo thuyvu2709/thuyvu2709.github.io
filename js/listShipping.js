@@ -782,7 +782,8 @@ function ghtkLinkFn(){
 function showDetail(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   var actualOrderIndex = parseInt(orderIndex) + 1;
-
+  lsOrder[orderIndex][3].shipIndex = orderIndex;
+  
   localStorage.setItem("currentOrder",lsOrder[orderIndex][3]);
 
   saveHistory({

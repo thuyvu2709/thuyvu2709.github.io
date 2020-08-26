@@ -287,6 +287,28 @@ $("#calculateFeeLoadForce").click(function(){
 })
 
 function saveAddressAsManager(){
+	if (userRole!="manager"){
+		return;
+	}
+	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
+	var dataEditOrder = [
+                [
+                currentOrder.customerAddress
+                ]
+            ];
+    // console.log(dataEditOrder);
+    // console.log(otherInfor);
+
+	var sheetrange = sheetOrder+'!D'+realOrderIndex +":D" + realOrderIndex;
+
+	$("#loading-text").html("Cập nhật địa chỉ lên hệ thống");
+	$("#loadingSpin").show();
+    editOrder(dataEditOrder, sheetrange, function(){
+    	$("#loadingSpin").hide();
+    })
+}
+
+function saveAddressAsShipper(){
 	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
 	var dataEditOrder = [
                 [
@@ -306,9 +328,9 @@ function saveAddressAsManager(){
 }
 
 function saveOtherInforAsManager(){
-	// if (userRole!="manager"){
-	// 	return;
-	// }
+	if (userRole!="manager"){
+		return;
+	}
 
 	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
 	var dataEditOrder = [
