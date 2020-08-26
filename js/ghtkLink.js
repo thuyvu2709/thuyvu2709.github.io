@@ -5,6 +5,9 @@ var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 var pickList = JSON.parse(localStorage.getItem("pickList"));
 var ghtkToken = localStorage.getItem("ghtkToken");
 
+var userRole = JSON.parse(localStorage.getItem("userRole"));
+
+
 try{
 	currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
 }catch(e){
@@ -265,6 +268,58 @@ $("#calculateFeeLoadForce").click(function(){
 	caluclateTransportFeeFn();
 })
 
+function saveAddressAsManager(){
+	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
+	var dataEditOrder = [
+                [
+                currentOrder.customerAddress
+                ]
+            ];
+    // console.log(dataEditOrder);
+    // console.log(otherInfor);
+
+	var sheetrange = sheetOrder+'!D'+realOrderIndex +":D" + realOrderIndex;
+
+	$("#loading-text").html("Cập nhật thông tin chung");
+	$("#loadingSpin").show();
+    editOrder(dataEditOrder, sheetrange, function(){
+    	$("#loadingSpin").hide();
+    })
+}
+
+function saveOtherInforAsManager(){
+	if (userRole!="manager"){
+		return;
+	}
+
+	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
+	var dataEditOrder = [
+                [
+                JSON.stringify(currentOrder.otherInfor)
+                ]
+            ];
+    // console.log(dataEditOrder);
+    // console.log(otherInfor);
+
+	var sheetrange = sheetOrder+'!M'+realOrderIndex +":M" + realOrderIndex;
+
+	$("#loading-text").html("Cập nhật thông tin chung");
+	$("#loadingSpin").show();
+    editOrder(dataEditOrder, sheetrange, function(){
+    	$("#loadingSpin").hide();
+    })
+}
+
+// 
+
+function showOrderPush(){
+	if (currentOrder.otherInfor.order) {
+		$("#showOrderPush").html("<h4>Thông tin vận đơn:</h4>"+jsonToHtml(currentOrder.otherInfor.order)+"<hr/>");
+	}
+}
+
+showOrderPush();
+
 $("#ghtkPost").click(function(){
 	// var dataOrder = {
 	//     "products": [{
@@ -355,31 +410,28 @@ $("#ghtkPost").click(function(){
 //   "sorting_code": "HN12.G3"
 //  }
 // }
+		$("#loadingSpin").hide();
+
+		currentOrder.otherInfor.order = data;
+
+		showOrderPush();
 
 		if (data["success"]==true) {
 			console.log("Copy");
 			$("#textareaBanking").show();
-
 			$("#textareaBanking").val(data["order"]["label"]);
-
-			// $("#textareaBanking").select(); 
-			// if ($("#textareaBanking").setSelectionRange) {
-			//   $("#textareaBanking").setSelectionRange(0, 99999); 
-			// }
 			var copyText = document.getElementById("textareaBanking");
-
-			/* Select the text field */
 			copyText.select(); 
 			copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-			/*For mobile devices*/
 			document.execCommand("copy");
 
 			$("#textareaBanking").hide();
+			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+
+			saveOtherInforAsManager();
+		} else {
+			$("#modelContent").html(jsonToHtml(data));
+			$('#myModal').modal('toggle');
 		}
-
-		$("#loadingSpin").hide();
-
-		$("#modelContent").html(jsonToHtml(data));
-		$('#myModal').modal('toggle');
 	})
 })
