@@ -151,24 +151,24 @@ for (i in prodListOrder){
 	count++;
 }
 
-var avgWeight = (Math.round((totalWeight / parseFloat(count)) * 1000) / 1000)*1000;
+// var avgWeight = (Math.round((totalWeight / parseFloat(count)) * 1000) / 1000)*1000;
 if (!totalWeight) {
 	totalWeight = 0;
-	avgWeight = 0;
+	// avgWeight = 0;
 }
 $("#totalWeight").val(parseInt(totalWeight*1000));
 $("#prodList").html("1 x Hàng ThuyTitVu - "+count+" mặt hàng");
-$("#avgWeight").val(avgWeight);
+// $("#avgWeight").val(avgWeight);
 
-$("#avgWeight").change(function(){
-	var tw = parseFloat($("#avgWeight").val())*count;
-	$("#totalWeight").val(tw);
-	caluclateTransportFeeFn(true);//does not show loading
-})
+// $("#avgWeight").change(function(){
+// 	var tw = parseFloat($("#avgWeight").val())*count;
+// 	$("#totalWeight").val(tw);
+// 	caluclateTransportFeeFn(true);//does not show loading
+// })
 
 $("#totalWeight").change(function(){
-	var avgw = parseFloat($("#totalWeight").val()) / count;
-	$("#avgWeight").val(avgw);
+	// var avgw = parseFloat($("#totalWeight").val()) / count;
+	// $("#avgWeight").val(avgw);
 	caluclateTransportFeeFn(true);//does not show loading
 })
 
