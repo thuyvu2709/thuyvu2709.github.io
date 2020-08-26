@@ -635,7 +635,7 @@ function loadOrderShippingListHtml() {
   // });
   $(".ghtkLink").click(ghtkLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
-  $(".packButton").click(packedFn);
+  $(".packedOrder").click(packedFn);
 }
 
 function getTaskUnpaid(){
