@@ -1346,6 +1346,7 @@ $(".orderFilter").change(function(){
       || mode == "COMPLETED" 
       || mode == "ALL" 
       || mode == "PAYSHIP"
+      || mode == "PACKED"
       ) {
     $(".maintitle").html("Quản lý đơn hàng");
     loadOrderShippingListHtml(lsOrder);
