@@ -294,9 +294,9 @@ function saveAddressAsManager(){
 }
 
 function saveOtherInforAsManager(){
-	if (userRole!="manager"){
-		return;
-	}
+	// if (userRole!="manager"){
+	// 	return;
+	// }
 
 	var realOrderIndex = parseInt(currentOrder.orderIndex)+1;
 	var dataEditOrder = [
