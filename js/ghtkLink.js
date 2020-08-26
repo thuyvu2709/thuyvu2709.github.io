@@ -182,6 +182,7 @@ $("#updateAddress").click(function(){
 				'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 			);
 			loadAddressIntoUI();
+			saveAddressAsManager();
 			caluclateTransportFeeFn(true);//does not show loading
 		}
 	})
@@ -285,7 +286,7 @@ function saveAddressAsManager(){
 
 	var sheetrange = sheetOrder+'!D'+realOrderIndex +":D" + realOrderIndex;
 
-	$("#loading-text").html("Cập nhật thông tin chung");
+	$("#loading-text").html("Cập nhật địa chỉ lên hệ thống");
 	$("#loadingSpin").show();
     editOrder(dataEditOrder, sheetrange, function(){
     	$("#loadingSpin").hide();
