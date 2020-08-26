@@ -277,7 +277,7 @@ function loadOrderShippingListHtml() {
       } else 
       if (mode != lsOrder[e][4]) {
           continue;
-      } 
+      }
     }
 
     if (lsOrder[e][4] == "SHIPPER_RECEIVED_MONEY") {
@@ -374,12 +374,12 @@ function loadOrderShippingListHtml() {
 
     }
 
-    if (lsOrder[e][8] == "POST_NO_COD" && lsOrder[e][4] == "Requested") {
+    if (lsOrder[e][8] == "POST_NO_COD" && lsOrder[e][4] == "Requested" || lsOrder[e][4] == "PACKED") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi bên vận chuyển</div>';
         // '<div class="btn btn-default btnNormal5px shipperReceiveMonney order_'+e+'" >Ship đã nhận tiền</div>';
     }
 
-    if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested") {
+    if (lsOrder[e][8] == "POST_COD" && lsOrder[e][4] == "Requested" || lsOrder[e][4] == "PACKED") {
       completeButton = '<div class="btn btn-default btnNormal5px complete order_'+e+'" >Đã gửi bên vận chuyển (COD thu : '+lsOrderDetail[lsOrder[e][0]].totalPay+'k) </div>';
       title = lsOrder[e][0]+' | '+lsOrderDetail[lsOrder[e][0]].customerName+" | "+lsOrder[e][1] +" | "+shipIcon + " ("+ lsOrderDetail[lsOrder[e][0]].willpay +"k)";
     }
@@ -395,6 +395,12 @@ function loadOrderShippingListHtml() {
         completeButton = '<div class="btn btn-default btnNormal5px order_'+e+'" >Chờ xác nhận từ SHOP</div>';
       }
     }
+
+    var packButton = '';
+    if (lsOrder[e][4] == "Requested") {
+      packButton = '<div class="btn btn-default btnNormal5px packedOrder order_'+e+'" >Đã đóng gói</div>';
+    }
+
 
     if (lsOrder[e][6] && lsOrder[e][4] == "COMPLETED") {
       completeButton = '<div class="btn borderMustard btn-default btnNormal5px" >Hoàn thành lúc '+lsOrder[e][6]+'</div>';
@@ -531,6 +537,7 @@ function loadOrderShippingListHtml() {
               deleteButton +
               payshipButton+
               ghtkBtn+
+              packButton+
             '</div>'+
           '</div>'+
         '</div>'
@@ -628,6 +635,7 @@ function loadOrderShippingListHtml() {
   // });
   $(".ghtkLink").click(ghtkLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
+  $(".packButton").click(packedFn);
 }
 
 function getTaskUnpaid(){
@@ -646,6 +654,37 @@ function getTaskUnpaid(){
     text : text,
     taskPay : taskPay
   }
+}
+
+function packedFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
+
+  var otherCost = lsOrder[orderIndex][5];
+  // console.log("Reply : email:"+emailId);
+
+  sheetrange = 'Shipping!E'+actualOrderIndex+':E'+actualOrderIndex;
+
+  var nextStep = "PACKED"; //FOR SHIPPER_NO_COD, SHOPEE, POST_NO_COD
+  
+  dataUpdateShipping = [
+    [nextStep]
+  ];
+
+  // console.log(dataUpdateShipping);
+
+  $("#loadingSpin").show();
+
+  updateShipping(dataUpdateShipping, sheetrange, function(){
+      $("#loadingSpin").hide();
+
+      $(".cardElement_"+orderIndex).remove();
+
+  },function(){
+    console.log("Something wrong");
+  })
 }
 
 function startPreparingFn(){
