@@ -388,7 +388,7 @@ $("#ghtkPost").click(function(){
 	dataOrder.order.value = currentOrder.totalPay*1000;
 	dataOrder.order.transport = $("#transportType").val();
 	dataOrder.products = [{
-		"name": "Hàng Thuỷ gửi",
+		"name": "Hàng ThuyTitVu",
         "weight": parseFloat($("#avgWeight").val())/1000,
         "quantity": count
 	}]
