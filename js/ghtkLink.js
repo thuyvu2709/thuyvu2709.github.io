@@ -64,7 +64,7 @@ $("#customerPhone").html(
 	'<a href="tel:'+currentOrder.customerPhone+'">'+currentOrder.customerPhone+'</a>'
 );
 
-$("#totalPay").html(currentOrder.totalPay);
+$("#totalPay").val(currentOrder.totalPay);
 
 $("#shippingCost").html(currentOrder.shippingCost);
 
@@ -84,6 +84,16 @@ $("#otherCost").html(currentOrder.otherCost);
 $("#prepaid").html(currentOrder.prepaid);
 
 $("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không giao được thì liên hệ với sđt shop, không tự ý huỷ đơn, gọi điện cho khách trước khi giao")
+
+var totalPay = parseFloat(currentOrder.totalPay);
+
+$("#insuranceFee").html(totalPay > 3000 ? (totalPay*1000)*0.5/100 : 0);
+
+$("#totalPay").change(function(){
+	var totalPay = parseFloat($("#totalPay").val());
+	currentOrder.totalPay = totalPay;
+	$("#insuranceFee").html(totalPay > 3000 ? (totalPay*1000)*0.5/100 : 0);
+})
 
 if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
 	$("#isFreeShip").prop('checked', currentOrder.otherInfor.isFreeShip);
@@ -145,7 +155,7 @@ if (!totalWeight) {
 	avgWeight = 0;
 }
 $("#totalWeight").val(parseInt(totalWeight*1000));
-$("#prodList").html(count+" x hàng gửi của Thuỷ");
+$("#prodList").html("1 x Hàng ThuyTitVu - "+count+" mặt hàng");
 $("#avgWeight").val(avgWeight);
 
 $("#avgWeight").change(function(){
