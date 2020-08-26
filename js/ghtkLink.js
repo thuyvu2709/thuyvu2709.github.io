@@ -85,7 +85,7 @@ $("#prepaid").html(currentOrder.prepaid);
 
 $("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không giao được thì liên hệ với sđt shop, không tự ý huỷ đơn, gọi điện cho khách trước khi giao")
 
-if (currentOrder.otherInfor) {
+if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
 	$("#isFreeShip").prop('checked', currentOrder.otherInfor.isFreeShip);
     $("#shopPayShipAns").html(currentOrder.otherInfor.isFreeShip==true ? "Có" : "Không");
 
