@@ -494,6 +494,26 @@ function loadOrderShippingListHtml() {
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode+"<br/>" : "");
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].otherInfor ? lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip==true ? "<span class='text-mustard'>Shop thanh toán ship, free ship cho khách</span><br/>" : "" : "")
+
+    if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD" ){
+      if (lsOrderDetail[lsOrder[e][0]].otherInfor) {
+        try {
+          lsOrderDetail[lsOrder[e][0]].otherInfor = JSON.parse(lsOrderDetail[lsOrder[e][0]].otherInfor);
+        } catch(execption) {
+
+        }
+        // if (lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip)
+        var label = undefined
+        try {
+          orderDetailBrief+= "GHTK Code: <span class='textRed'><b>" + lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label + "</b></span><br/>";
+          // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
+
+        } catch (execption) {
+
+        }
+      }
+    }
+
     orderDetailBrief+="<hr/>";
     var ghtkBtn = "";
     var mark = "";
@@ -583,7 +603,7 @@ function loadOrderShippingListHtml() {
     $("#note").html("Tiền hàng từ post:"+totalShipperReceivedMoney);
   } else if (mode == "PAYSHIP") {
     
-    var  reportPay = ("Tiền gói hàng (số đơn X 5): "+packedCost+"k<br/>Tiền đi ship: "+shippedCost+"k<br/>Tiền post và shoppe: "+postAndShopeeCost+"k<br/>");
+    var  reportPay = ("Tiền gói hàng (số đơn:"+(packedCost/5)+" X 5): "+packedCost+"k<br/>Tiền đi ship: "+shippedCost+"k<br/>Tiền post và shoppe: "+postAndShopeeCost+"k<br/>");
     var taskPayfn = getTaskUnpaid();
 
     var taskPay = taskPayfn.taskPay;
@@ -595,7 +615,7 @@ function loadOrderShippingListHtml() {
     $("#note").html(reportPay);
   } else {
     var lsCountText = "<hr/>Tổng cộng:<br/>";
-    console.log(lsCount)
+    // console.log(lsCount)
     for (e in lsCount) {
       lsCountText += e + " : " + lsCount[e] + "<br/>"
     }
