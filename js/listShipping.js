@@ -505,7 +505,7 @@ function loadOrderShippingListHtml() {
         // if (lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip)
         var label = undefined
         try {
-          orderDetailBrief+= "GHTK Code: <span class='textRed'><b>" + lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label + "</b></span><br/>";
+          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label + "</span></b><br/>";
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
 
         } catch (execption) {
@@ -656,6 +656,7 @@ function loadOrderShippingListHtml() {
   $(".ghtkLink").click(ghtkLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
   $(".packedOrder").click(packedFn);
+  $(".ghtkCode").click(ghtkShowOrderFn);
 }
 
 function getTaskUnpaid(){
@@ -674,6 +675,30 @@ function getTaskUnpaid(){
     text : text,
     taskPay : taskPay
   }
+}
+
+function jsonToHtml(data) {
+    if (!data) {
+        return "<div/>"
+    }
+    // console.log("jsonToHtml");
+    // console.log(data);
+    var rs1 = JSON.stringify(data, null, "\t");
+    rs1 = rs1.split("\t").join("&nbsp;");
+    rs1 = rs1.split("\n").join("<br/>");
+    return rs1;
+}
+
+function ghtkShowOrderFn(){
+  // var ghtkCode = $(this).html();
+  // // console.log(ghtkCode);
+  // ghtkUrl="services.giaohangtietkiem.vn";
+  // ghtkToken = localStorage.getItem("ghtkToken");
+
+  // getGHTKOrderStatus(ghtkCode, function(data){
+  //     $("#modelContent").html(jsonToHtml(data));
+  //     $('#myModal').modal('toggle');
+  // });
 }
 
 function packedFn(){

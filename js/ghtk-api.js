@@ -84,17 +84,16 @@ function getPickAddress(callback){
 	});
 }
 
-function getOrderStatus(orderId){
-	console.log("aaa")
-
+function getGHTKOrderStatus(orderId, callback){
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
+	  url: "http://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
 	  type: 'GET',
 	  success: function(res) {
-	    console.log(res);
+	    // console.log(res);
+	    callback(res);
 	  }
 	});
 
