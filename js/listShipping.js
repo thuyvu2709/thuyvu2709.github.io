@@ -221,7 +221,7 @@ if (userRole!="manager") {
 
 function loadOrderShippingListHtml() {
 
-  console.log("loadOrderShippingListHtml");
+  // console.log("loadOrderShippingListHtml");
   
   $("#controllMany").hide();
 
@@ -1358,7 +1358,7 @@ function taskComplete(){
 
 $(".orderFilter").change(function(){
   var mode = document.getElementsByClassName($(this).attr("class"))[0].value;
-  console.log("orderFilter:"+mode);
+  // console.log("orderFilter:"+mode);
 
   $("#controllMany").hide();
 
@@ -1423,7 +1423,7 @@ $(".completeMany").click(function(){
 
 $("#orderSearchInput").keyup(function(){
   var searchText = $(this).val();
-  console.log("search:"+searchText);
+  // console.log("search:"+searchText);
   loadOrderShippingListHtml();
 });
 
