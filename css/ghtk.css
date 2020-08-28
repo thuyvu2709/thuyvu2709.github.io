@@ -19,3 +19,11 @@ table {
 #totalWeight {
 	width: 60px
 }
+
+.productName {
+	width: 100%
+}
+
+.productWeight {
+	width: 60px
+}

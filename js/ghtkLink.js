@@ -140,15 +140,19 @@ for (i in prodListOrder){
 		continue;
 	}
 	$("#lsTable").append("<tr>"+
-    "<td>"+(parseInt(i)+1)+"</td>"+
+    "<td class='showImage borderMustard image_"+i+"'>"+(parseInt(i)+1)+"</td>"+
     // "<td>"+prodListOrder[i].productName+"</td>"+
-    "<td class='showImage borderMustard image_"+i+"'>"+prodListOrder[i].productName+"</td>"+
+    "<td>"+
+    	"<input class='productName prodName_"+i+"' value='"+prodListOrder[i].productName+"'></input>"+
+    "</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
-	"<td>"+prodListOrder[i].productWeight+"</td>"+
+	"<td>"+
+    	"<input class='productWeight prodWeight_"+i+"' value='"+prodListOrder[i].productWeight+"'></input>"+
+	"</td>"+
   "</tr>")
-	totalWeight += parseFloat(prodListOrder[i].productWeight);
-	count++;
+	totalWeight += parseFloat(prodListOrder[i].productWeight)*parseFloat(prodListOrder[i].productCount);
+	count+=parseFloat(prodListOrder[i].productCount);
 }
 
 // var avgWeight = (Math.round((totalWeight / parseFloat(count)) * 1000) / 1000)*1000;
@@ -157,7 +161,7 @@ if (!totalWeight) {
 	// avgWeight = 0;
 }
 $("#totalWeight").val(parseInt(totalWeight*1000));
-$("#prodList").html("1 x Hàng ThuyTitVu - "+count+" mặt hàng");
+$("#prodList").html("???????????");
 // $("#avgWeight").val(avgWeight);
 
 // $("#avgWeight").change(function(){
@@ -166,7 +170,23 @@ $("#prodList").html("1 x Hàng ThuyTitVu - "+count+" mặt hàng");
 // 	caluclateTransportFeeFn(true);//does not show loading
 // })
 
+$(".productWeight").change(function(){
+	// console.log("productWeight change")
+	tw = 0;
+	for (i in prodListOrder){
+		if (prodListOrder[i].delete) {
+			continue;
+		}
+		prodListOrder[i].productWeight = parseFloat($(".prodWeight_"+i).val());
+		tw += prodListOrder[i].productWeight * parseFloat(prodListOrder[i].productCount);
+
+	}
+	$("#totalWeight").val(tw * 1000);
+	caluclateTransportFeeFn(true);
+})
+
 $("#totalWeight").change(function(){
+	// console.log("totalWeight change")
 	// var avgw = parseFloat($("#totalWeight").val()) / count;
 	// $("#avgWeight").val(avgw);
 	caluclateTransportFeeFn(true);//does not show loading
@@ -460,12 +480,28 @@ $("#ghtkPost").click(function(){
 	dataOrder.order.note = $("#orderNodeGHTK").val();
 	dataOrder.order.value = currentOrder.totalPay*1000;
 	dataOrder.order.transport = $("#transportType").val();
-	dataOrder.products = [{
-		"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
-        "weight": parseFloat($("#totalWeight").val())/1000,
-        "quantity": 1
-	}]
+	// dataOrder.products = [{
+	// 	"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
+ //        "weight": parseFloat($("#totalWeight").val())/1000,
+ //        "quantity": 1
+	// }]
 	// console.log(dataOrder);
+
+	dataOrder.products = [];
+	for (i in prodListOrder){
+		if (prodListOrder[i].delete) {
+			continue;
+		}
+		dataOrder.products.push({
+			"name": $(".prodName_"+i).val(),
+			"weight": (parseFloat($(".prodWeight_"+i).val())*parseFloat(prodListOrder[i].productCount)),
+			"quantity": parseFloat(prodListOrder[i].productCount)
+		})
+	}
+
+
+	// console.log(dataOrder);
+	// return;
 	
 	$("#loadingSpin").show();
 

@@ -86,7 +86,7 @@ function getPickAddress(callback){
 
 function getGHTKOrderStatus(orderId, callback){
 	$.ajax({
-	  url: "http://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -110,7 +110,7 @@ function calculateTransportFeeAPI(data,callback){
 	  return str.join("&");
 	};
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  url: "http://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
