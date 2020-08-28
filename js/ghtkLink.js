@@ -56,6 +56,7 @@ if (!pickList) {
 
 $("#orderCode").html(currentOrder.orderCode);
 $("#customerName").val(currentOrder.customerName);
+$("#orderDate").html(currentOrder.orderDate)
 
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
@@ -85,7 +86,7 @@ $("#otherCost").html(currentOrder.otherCost);
 
 $("#prepaid").html(currentOrder.prepaid);
 
-$("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không giao được thì liên hệ với sđt shop, không tự ý huỷ đơn, gọi điện cho khách trước khi giao")
+$("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách mở hàng")
 
 var totalPay = parseFloat(currentOrder.totalPay);
 
