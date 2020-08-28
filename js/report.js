@@ -45,9 +45,9 @@ function loadReportHtml() {
 
   var totalRefund = parseInt(data[6][1]);
 
-  $(".totalCurrentProfit").html("Tổng lãi hiện tại: "+totalCurrentProfit);
-  $(".totalTurnover").html("Tổng doanh thu: "+totalTurnover);
-  $(".totalExpectProfit").html("Tổng lãi dự kiến: "+totalExpectProfit);
+  $(".totalCurrentProfit").html("Tổng lãi hiện tại đã bán: "+totalCurrentProfit);
+  $(".totalTurnover").html("Tổng doanh thu đã bán: "+totalTurnover);
+  $(".totalExpectProfit").html("Tổng lãi dự kiến (theo giá bán lẻ): "+totalExpectProfit);
   $(".totalPay").html("Tổng tiền vốn: "+totalPay);
 
   $(".totalNumOfRestProduct").html("Tổng số hàng tồn: "+totalNumOfRestProduct);

@@ -414,6 +414,8 @@ $(".click-to-select-all").click(function(){
   // for (e in lsChecked){
   //   $(lsChecked[e]).attr("checked", true);
   // }
+  $("#loadingSpin").show();
+
   var count = 0;
   var check = false;
   $('.checkbox').each(function(){ 
@@ -427,7 +429,7 @@ $(".click-to-select-all").click(function(){
       this.checked = true;
     }
   });
-
+  $("#loadingSpin").hide();
 })
 
 $(".click-to-view").click(function(){
@@ -436,25 +438,56 @@ $(".click-to-view").click(function(){
   var num = 0;
   var requestedNum = 0;
   var stillInStore = 0;
+  var stillInStoreTotalCost = 0;
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
   var downloadContent = "STT, Tên hàng, SL, Giá, Thành tiền\n";
   var count = 0;
+
+  // --------In page product
+  // Tổng tiền vốn: 214256 
+  // Tổng số lượng (toàn bộ): 1280 
+  // Tổng tiền vốn cho hàng tồn:13524
+  // Số lượng hàng tồn: 90 
+
+  // --------In page report
+  // +Đối với các mặt hàng đã bán trong đơn hàng
+  // Tổng lãi hiện tại đã bán: 62901
+  // Tổng doanh thu đã bán: 263633
+
+  // +Tính dựa trên thông tin nhập của mặt hàng
+  // Tổng lãi dự kiến (theo giá bán lẻ): 132477
+  // Tổng tiền vốn: 214256
+  // Tổng số hàng tồn: 90
+  // Tổng tiền vốn cho hàng tồn: 13524
+
+  // +Tính dựa trên tiền hoàn của đơn hàng
+  // Tổng tiền hoàn:8406
+
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
         var productIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
         // console.log(data[productIndex]);
-        totalCost+= (parseInt(data[productIndex][4]) * parseInt(data[productIndex][11]));
-        num += parseInt(data[productIndex][4]);
-        requestedNum += parseInt(data[productIndex][21]);
-        stillInStore += parseInt(data[productIndex][17]);
+        var count = parseInt(data[productIndex][4] ? data[productIndex][4] : "0");
+        var eachCost = parseInt(data[productIndex][11] ? data[productIndex][11] : "0");
+        totalCost+= (count * eachCost);
+        num += count;
+        var requestedNumEach = parseInt(data[productIndex][21]);
+        // requestedNumEach = requestedNumEach ? requestedNumEach : 0;
+
+        // requestedNum += requestedNumEach;
+        var stillInStoreCountEach = parseInt(data[productIndex][17] ? data[productIndex][17] : "0")
+        stillInStore += stillInStoreCountEach;
+        stillInStoreTotalCost += eachCost * stillInStoreCountEach;
+        // console.log(data[productIndex][0] +data[productIndex][21]+" "+requestedNum);
+
         count++;
         downloadContent += count+","
         +data[productIndex][3]+","
-        +data[productIndex][4]+","
-        +data[productIndex][11]+","
-        +(parseInt(data[productIndex][4]) * parseInt(data[productIndex][11]))
+        +count+","
+        +eachCost+","
+        +(count * eachCost)
         +"\n";
       }
     }
@@ -463,9 +496,10 @@ $(".click-to-view").click(function(){
   downloadContent += "-, Tổng tiền, "+totalCost;
 
   var content = "Tổng tiền vốn: "+totalCost+" <br/>"+
-                "Tổng số lượng: "+num+" <br/>"+
-                "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
-                "Hàng tồn: "+stillInStore+" <br/>"+
+                "Tổng số lượng (toàn bộ): "+num+" <br/>"+
+                // "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
+                "Tổng tiền vốn cho hàng tồn:"+stillInStoreTotalCost+"<br/>"+
+                "Số lượng hàng tồn: "+stillInStore+" <br/>"+
                 "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file</div>"+
                 "<div class='btn btn-primary mb-2 viewProds'>Xem bảng</div>"+
                 " <br/>";
