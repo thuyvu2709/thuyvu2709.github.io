@@ -110,7 +110,7 @@ function calculateTransportFeeAPI(data,callback){
 	  return str.join("&");
 	};
 	$.ajax({
-	  url: "http://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
