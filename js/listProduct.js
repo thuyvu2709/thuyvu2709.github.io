@@ -464,6 +464,7 @@ $(".click-to-view").click(function(){
   // +Tính dựa trên tiền hoàn của đơn hàng
   // Tổng tiền hoàn:8406
 
+  var rcount = 0;
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
@@ -482,8 +483,8 @@ $(".click-to-view").click(function(){
         stillInStoreTotalCost += eachCost * stillInStoreCountEach;
         // console.log(data[productIndex][0] +data[productIndex][21]+" "+requestedNum);
 
-        count++;
-        downloadContent += count+","
+        rcount++;
+        downloadContent += rcount+","
         +data[productIndex][3]+","
         +count+","
         +eachCost+","
