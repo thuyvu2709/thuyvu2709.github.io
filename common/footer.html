@@ -282,6 +282,28 @@
       $("#textareaBanking").hide();
     }
 
+    function thuyIban() {
+      var allText =  "IT80R3608105138249502949522\nVu Thi Le Thuy";
+      console.log("Copy");
+      $("#textareaBanking").show();
+
+      $("#textareaBanking").val(allText);
+
+      // $("#textareaBanking").select(); 
+      // if ($("#textareaBanking").setSelectionRange) {
+      //   $("#textareaBanking").setSelectionRange(0, 99999); 
+      // }
+      var copyText = document.getElementById("textareaBanking");
+
+      /* Select the text field */
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /*For mobile devices*/
+      document.execCommand("copy");
+
+      $("#textareaBanking").hide();
+    }
+
     $(".supportPopup").click(function(){
       var supportDiv = "<div class='model-body' style='margin:auto'>"+
         "<div style='font-size:25px'>Hỗ trợ</div>"+
@@ -292,6 +314,7 @@
         "<div class='btn btnNormal sendOrderPolicy'>Chính sách Order</div><br/>"+
         "<div class='btn btnNormal groupsale'>Group sale</div><br/>"+
         "<div class='btn btnNormal guestInfor'>Infor khách</div><br/>"+
+        "<div class='btn btnNormal thuyIban'>Iban Poste Evolution Thuy</div><br/>"+
         "</div>"
       $(".modal-content").html(supportDiv);
       $('#simpleModal').modal('toggle');
@@ -315,6 +338,9 @@
       })
       $(".guestInfor").click(function(){
         guestInfor();
+      })
+      $(".thuyIban").click(function(){
+        thuyIban();
       })
     })
 
