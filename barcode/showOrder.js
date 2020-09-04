@@ -238,13 +238,13 @@ $("#simplify").click(function(){
 	if ($("#tableWrap").width()/$("#tableWrap").height() > parseFloat(540/230)) {
 		// "background-size" : "width height",
 		$("#tableWrap").css({
-			"background" : "url('../img/LogoOnlyTransparent25.png') no-repeat",
+			"background" : "url('../img/LogoOnlyTransparent20.png') no-repeat",
 			"background-size" : "auto 100%",
 			"background-position" : "center"
 		})
 	} else {
 		$("#tableWrap").css({
-			"background" : "url('../img/LogoOnlyTransparent25.png') no-repeat",
+			"background" : "url('../img/LogoOnlyTransparent20.png') no-repeat",
 			"background-size" : "100% auto",
 			"background-position" : "center"
 		})
