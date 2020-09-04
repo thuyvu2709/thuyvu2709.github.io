@@ -3,11 +3,18 @@ table, td, th {
   text-align : center;
 }
 
-table {
+#tableWrap {
   border-collapse: collapse;
   width: 100%;
+  font-size: 15px
 }
 
 .field-long{
   width: 100%;
 }
+
+/*table {
+	background:url('../img/LogoOnlyTransparent20.png') no-repeat;
+	background-size: 100% 100%;
+	background-position: center; 
+}*/

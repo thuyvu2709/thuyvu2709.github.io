@@ -90,7 +90,8 @@ for (i in prodListOrder){
 	var totalUnit = parseFloat(prodListOrder[i].productCount)*parseFloat(prodListOrder[i].productEstimateSellingVND)
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
-    "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
+    // "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
+    "<td class='showImage image_"+i+"'>"+prodListOrder[i].productName+
    	"   <span class='simply'>(Đh "+prodListOrder[i].importCode+")</span>"+
 	"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
@@ -233,6 +234,21 @@ $("#simplify").click(function(){
 	// 	// $(".prepaid").html("Khách đã thanh toán");
 	// 	// $(".totalPayIncludeShip").html("<h5>Khách đã thanh toán đủ tiền hàng: "+currentOrder.totalPayIncludeShip+"</h5>")
 	// }
+
+	if ($("#tableWrap").width()/$("#tableWrap").height() > parseFloat(540/230)) {
+		// "background-size" : "width height",
+		$("#tableWrap").css({
+			"background" : "url('../img/LogoOnlyTransparent25.png') no-repeat",
+			"background-size" : "auto 100%",
+			"background-position" : "center"
+		})
+	} else {
+		$("#tableWrap").css({
+			"background" : "url('../img/LogoOnlyTransparent25.png') no-repeat",
+			"background-size" : "100% auto",
+			"background-position" : "center"
+		})
+	}
 });
 
 $("#showController").click(function(){
