@@ -140,6 +140,8 @@ for (i in prodListOrder){
 	if (prodListOrder[i].delete) {
 		continue;
 	}
+	var prodWeight = prodListOrder[i].productWeight;
+	prodWeight = prodWeight ? prodWeight : 0;
 	$("#lsTable").append("<tr>"+
     "<td class='showImage borderMustard image_"+i+"'>"+(parseInt(i)+1)+"</td>"+
     // "<td>"+prodListOrder[i].productName+"</td>"+
@@ -149,7 +151,7 @@ for (i in prodListOrder){
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
 	"<td>"+
-    	"<input class='productWeight prodWeight_"+i+"' value='"+prodListOrder[i].productWeight+"'></input>"+
+    	"<input class='productWeight prodWeight_"+i+"' value='"+prodWeight+"'></input>"+
 	"</td>"+
   "</tr>")
 	totalWeight += parseFloat(prodListOrder[i].productWeight)*parseFloat(prodListOrder[i].productCount);
@@ -161,7 +163,7 @@ if (!totalWeight) {
 	totalWeight = 0;
 	// avgWeight = 0;
 }
-$("#totalWeight").val(parseInt(totalWeight*1000));
+$("#totalWeight").html(parseInt(totalWeight*1000));
 $("#prodList").html("???????????");
 // $("#avgWeight").val(avgWeight);
 
@@ -182,16 +184,16 @@ $(".productWeight").change(function(){
 		tw += prodListOrder[i].productWeight * parseFloat(prodListOrder[i].productCount);
 
 	}
-	$("#totalWeight").val(tw * 1000);
+	$("#totalWeight").html(tw * 1000);
 	caluclateTransportFeeFn(true);
 })
 
-$("#totalWeight").change(function(){
-	// console.log("totalWeight change")
-	// var avgw = parseFloat($("#totalWeight").val()) / count;
-	// $("#avgWeight").val(avgw);
-	caluclateTransportFeeFn(true);//does not show loading
-})
+// $("#totalWeight").change(function(){
+// 	// console.log("totalWeight change")
+// 	// var avgw = parseFloat($("#totalWeight").val()) / count;
+// 	// $("#avgWeight").val(avgw);
+// 	caluclateTransportFeeFn(true);//does not show loading
+// })
 
 $(".showImage").click(function(){
 	var index = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -290,7 +292,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.province = $("#province").html();
 	dataFee.district = $("#district").html();
 	dataFee.address = $("#address").html();
-	dataFee.weight = parseFloat($("#totalWeight").val());
+	dataFee.weight = parseFloat($("#totalWeight").html());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
 	
