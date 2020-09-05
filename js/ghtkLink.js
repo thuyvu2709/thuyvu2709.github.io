@@ -56,7 +56,13 @@ if (!pickList) {
 
 $("#orderCode").html(currentOrder.orderCode);
 $("#customerName").val(currentOrder.customerName);
-$("#orderDate").html(currentOrder.orderDate)
+$("#customerNameShow").html(currentOrder.customerName);
+
+$("#customerName").change(function(){
+	$("#customerNameShow").html($("#customerName").val());
+})
+
+$("#orderDate").html(currentOrder.orderDate);
 
 var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
@@ -114,10 +120,12 @@ if (currentOrder.shippingType == "POST_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#titleWillpay").html("Thu COD:");
 	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển có COD");
+	$("#codType").html("Thu hộ tiền");
 } else if (currentOrder.shippingType == "POST_NO_COD") {
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển không COD");
 	currentOrder.willpay = 0;
+	$("#codType").html("Không thu hộ tiền");
 }
 
 $("#willpay").html(currentOrder.willpay);
