@@ -87,7 +87,7 @@ $("#description").html(babyDescription[week-11]);
 var link = "hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before="+beginWeight+"&pwg_height="+height+"&pwg_week="+week;
 $.ajax({
   // url: "http://cors-anywhere.herokuapp.com/"+link, //For local
-  url: "https://cors-anywhere.herokuapp.com/"+link, //For code push
+  url: "https://kenkreck1004.herokuapp.com/"+link, //For code push
   type: 'GET',
   crossDomain: true,
   success: function(res) {
@@ -130,7 +130,7 @@ $.ajax({
 
 // var link = "hellobacsi.com/kiem-tra-suc-khoe/cong-cu-tinh-can-nang-khi-mang-thai/?tool_name=Công+cụ+t%C3%ADnh+cân+nặng+khi+mang+thai&pwg_weight_before=60.1&pwg_height=160&pwg_week=12";
 // $.ajax({
-//   url: "https://cors-anywhere.herokuapp.com/"+link,
+//   url: "https://kenkreck1004.herokuapp.com/"+link,
 //   type: 'GET',
 //   success: function(res) {
 //     // console.log(res)
