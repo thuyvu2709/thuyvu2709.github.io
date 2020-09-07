@@ -39,6 +39,8 @@ function addNewProduct(){
 	var shipInternationalFee = $("#shipInternationalFee").val();
 	var shipItalyFee = $("#shipItalyFee").val();
 
+	var productUrl = $("#productUrl").val();
+
 	var otherFee = $("#otherFee").val();
 
 	var shipVietnamFee = $("#shipVietnamFee").val();
@@ -84,7 +86,7 @@ function addNewProduct(){
                 productOriginalCostEur, //5 F
                 productWeight, //6 G
                 shipInternationalFee, //7 H
-                shipItalyFee, //8 I
+                productUrl, //8 I
                 shipVietnamFee, //9 J
                 otherFee, //10 K
                 productEstimateVND, //11 L

@@ -71,6 +71,7 @@ function editProductFn(){
 	var productWeight = $("#productWeight").val();
 	var shipInternationalFee = $("#shipInternationalFee").val();
 	var shipItalyFee = $("#shipItalyFee").val();
+	var productUrl = $("#productUrl").val();
 
 	var otherFee = $("#otherFee").val();
 
@@ -125,7 +126,8 @@ function editProductFn(){
 		turnover : turnover,
 		totalCost : totalCost,
 		totalProfit : totalProfit,
-		prodImageLink : prodImageLink
+		prodImageLink : prodImageLink,
+		productUrl : productUrl
 	}
 
     localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
@@ -145,7 +147,7 @@ function editProductFn(){
                 productOriginalCostEur, //3 D
                 productWeight, //4 E
                 shipInternationalFee, //5 F
-                shipItalyFee, //6 G
+                productUrl, //6 G
                 shipVietnamFee, //7 H
                 otherFee, //8 I
                 productEstimateVND, //9 J

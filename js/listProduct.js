@@ -216,6 +216,7 @@ function loadProductListHtml(){
             '<p>Cân nặng:'+data[e][6]+'</p>'+
             '<p>Lãi xuất/SP:'+data[e][13]+'</p>'+
             '<p>Hàng tồn:'+data[e][17]+'</p>'+
+            (data[e][8]=="0" ? "" : ('<p>URL:<a href="'+ data[e][8]) +'">'+data[e][8]+'</a></p>')+
             '<div class="btn btnNormal5px editproductelement product_'+e+'" >Sửa mặt hàng</div>'+
             '<div class="btn btnNormal5px textRed deleteproductelement product_'+e+'" >Xoá mặt hàng</div>'+
             '<div class="btn btnNormal5px showorder product_'+e+'" >Xem đơn hàng</div>'+
@@ -324,7 +325,8 @@ function loadProductListHtml(){
       productOriginalCostEur : data[productIndex][5],
       productWeight : data[productIndex][6],
       shipInternationalFee : data[productIndex][7],
-      shipItalyFee : data[productIndex][8],
+      // shipItalyFee : data[productIndex][8],
+      productUrl : (data[productIndex][8]=="0" ? "" : data[productIndex][8]),
       shipVietnamFee : data[productIndex][9],
       otherFee : data[productIndex][10],
       productEstimateVND : data[productIndex][11],
