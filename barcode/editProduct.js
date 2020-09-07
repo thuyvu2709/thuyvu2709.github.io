@@ -100,6 +100,7 @@ function editProductFn(){
 	productWeight = productWeight ? productWeight : 0;
 	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
 	shipItalyFee = shipItalyFee ? shipItalyFee : 0;
+	productUrl = productUrl ? productUrl : "0";
 	shipVietnamFee = shipVietnamFee ? shipVietnamFee : 0;
 	productOriginalCostEur = productOriginalCostEur ? productOriginalCostEur : 0;
 	otherFee = otherFee ? otherFee : 0;
