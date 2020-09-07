@@ -93,6 +93,7 @@ for (i in prodListOrder){
     // "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
     "<td class='showImage image_"+i+"'>"+prodListOrder[i].productName+
    	"   <span class='simply'>(Đh "+prodListOrder[i].importCode+")</span>"+
+   	"	<div class='divImgThumbnail simply'><img class='imgThumbnail' src='"+prodListOrder[i].productImage+"' /></div>"+
 	"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
     "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
@@ -105,6 +106,9 @@ for (i in prodListOrder){
 }
 
 $("#totalCount").html(totalCount);
+$("#showImgDivThumbnail").click(function(){
+	$(".divImgThumbnail").show();
+})
 
 allText = allText +  "Tổng tiền trả cả ship:"+currentOrder.totalPayIncludeShip + "\n";
 

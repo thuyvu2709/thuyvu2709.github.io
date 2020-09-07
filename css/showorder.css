@@ -13,6 +13,13 @@ table, td, th {
   width: 100%;
 }
 
+.imgThumbnail{
+	max-width: 80px;
+}
+.divImgThumbnail {
+	display: none
+}
+
 /*table {
 	background:url('../img/LogoOnlyTransparent20.png') no-repeat;
 	background-size: 100% 100%;
