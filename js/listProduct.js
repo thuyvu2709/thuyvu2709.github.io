@@ -188,8 +188,8 @@ function loadProductListHtml(){
     if (data[e][19]) {
       imageDiv = '<img class="prodImage" src="'+data[e][19]+'" alt="'+data[e][3]+'" />';
     }
-		$("#listProduct").append('<divli class="card">'+
-        '<div class="card-header" id="heading"'+e+'>'+
+		$("#listProduct").append('<divli class="card cardElement_'+e+'">'+
+        '<div class="card-header" id="heading'+e+'">'+
           '<h5 class="mb-0">'+
             '<input type="checkbox" class="checkbox prodExtend check_'+e+'"/>'+
             '<i class="fas fa-arrows-alt iconMove text-mustard"></i>'+
@@ -283,27 +283,28 @@ function loadProductListHtml(){
     var numOfColumn = 20;
     var sheetrange = 'Product!A'+proIndex+':'+ String.fromCharCode(65+numOfColumn)+proIndex+"";
 
-    var deleteTrigger = function() {
-      
+    // var deleteTrigger = function() {
+
+    //   // var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    //   // console.log("delete:"+orderIndex);
+    // }
+
+    $("#modelContent").html("Bạn có chắc chắn muốn xoá không");
+    $("#modalYes").click(function(){
+      // deleteTrigger();
       $("#loadingSpin").show();
 
       editProduct(dataEditP, sheetrange,function(){
           $("#loadingSpin").hide();
           $("#simpleModal .modal-content").html("Đã xoá mặt hàng");
           $('#simpleModal').modal('toggle');
+          $(".cardElement_"+productIndex).remove();
         }, function(){
           $("#loadingSpin").hide();
           $("#simpleModal .modal-content").html("Có lỗi, không thể xoá");
           $('#simpleModal').modal('toggle');
+          // $(".cardElement_"+productIndex).remove();
       })
-
-      var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-      console.log("delete:"+orderIndex);
-    }
-
-    $("#modelContent").html("Bạn có chắc chắn muốn xoá không");
-    $("#modalYes").click(function(){
-      deleteTrigger();
     })
     $('#myModal').modal('toggle');
 
