@@ -24,6 +24,8 @@ var ghtkUrl="services.giaohangtietkiem.vn"
 // console.log("ghtkUrl:"+ghtkUrl)
 
 var dataOrder = {};
+dataOrder.order={};
+
 
 function loadPickList() {
 	$("#loadingSpin").show();
@@ -239,6 +241,16 @@ $('#isFreeShip').click(function(){
     } else {
         $("#shopPayShipAns").html("Không");
         currentOrder.otherInfor.isFreeShip = false;
+    }
+});
+
+$('#isShopBringPkToPost').click(function(){
+    if($(this).is(':checked')){
+        $("#shopBringPkToPostAns").html("Có");
+        dataOrder.order.pick_option = "post";
+    } else {
+        $("#shopBringPkToPostAns").html("Không");
+        dataOrder.order.pick_option = "cod";
     }
 });
 
@@ -466,7 +478,6 @@ $("#ghtkPost").click(function(){
 	// };
 	var pickIndex = $("#pickList").val();
 	// console.log(pickIndex);
-	dataOrder.order={};
 	dataOrder.order.pick_address = pickList[pickIndex].address;
 	dataOrder.order.pick_province = pickList[pickIndex].province;
 	dataOrder.order.pick_district = pickList[pickIndex].district;
