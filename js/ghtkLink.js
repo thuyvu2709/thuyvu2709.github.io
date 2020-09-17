@@ -493,6 +493,9 @@ $("#ghtkPost").click(function(){
 	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.order.tel = currentOrder.customerPhone;
 	dataOrder.order.name = $("#customerName").val();
+
+	dataOrder.order.deliver_work_shift = $("input[type='radio'][name='deliverShift']:checked").val();
+
 	if (currentOrder.shippingType == "POST_COD") {
 		dataOrder.order.pick_money=currentOrder.willpay*1000;		
 	} else {

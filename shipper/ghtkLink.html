@@ -125,19 +125,10 @@
                 <option value="-1">Đang tải...</option>
               </select>
             </div>
-            <div class="row">
+<!--             <div class="row">
               <span>Thời gian lấy hàng:</span>
               <input type="text" class="datetimepicker form-control" id="pickingTime" placeholder="Chọn thời gian lấy hàng"/>
-            </div>
-            <div class="row">
-              <span>Địa điểm giao:</span>
-              <span style="border: 2px solid #c57e0f">
-                Tỉnh/TP:<span id="province" class="textMustard"></span><br/>
-                Quận/Huyện:<span id="district" class="textMustard"></span><br/>
-                Phường/Xã:<span id="ward" class="textMustard"></span><br/>
-                Khác:<span id="address" class="textMustard"></span><br/>
-              </span>
-            </div>
+            </div> -->
 <!--             <div class="row">
               <span>Mặt hàng:</span>
               <span id="prodList" class="textMustard"></span>
@@ -175,6 +166,28 @@
             <div class="row">
               <span>COD:</span>
               <b><span id="codType" class="textMustard"></span></b>
+            </div>
+            <div class="row">
+              <span>Địa điểm giao:</span>
+              <span style="border: 2px solid #c57e0f">
+                Tỉnh/TP:<span id="province" class="textMustard"></span><br/>
+                Quận/Huyện:<span id="district" class="textMustard"></span><br/>
+                Phường/Xã:<span id="ward" class="textMustard"></span><br/>
+                Khác:<span id="address" class="textMustard"></span><br/>
+              </span>
+            </div>
+            <div class="row">
+              <span>Ca giao hàng:</span>
+              <span>
+                <input type="radio" name="deliverShift" checked value="0"/>
+                <label>Random</label>
+                <input type="radio" name="deliverShift" value="1"/>
+                <label>Sáng</label>
+                <input type="radio" name="deliverShift" value="2"/>
+                <label>Chiều</label>
+                <input type="radio" name="deliverShift" value="3"/>
+                <label>Tối</label>
+              </span>
             </div>
             <div class="row">
               <span>Hình thức giao:</span>
