@@ -280,7 +280,7 @@ function notiOrderViaEmail(receiver,cc, currentOrder, status) {
 	// return myvar;
 
 	// var emailContent = myvar;
-	var emailContent = "<p>Access system for more infor</p>";
+	var emailContent = "<p>"+status+"</p><br/><p>Access system for more infor</p>";
 	var subject = currentOrder.orderCode + "-" +removeSpecialAlias(currentOrder.customerName).toUpperCase()+"-"+status;
 
     var headers_obj = {
