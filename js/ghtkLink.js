@@ -194,7 +194,7 @@ $(".productWeight").change(function(){
 		tw += prodListOrder[i].productWeight * parseFloat(prodListOrder[i].productCount);
 
 	}
-	$("#totalWeight").html(tw * 1000);
+	$("#totalWeight").html(parseInt(tw * 1000));
 	caluclateTransportFeeFn(true);
 })
 
@@ -312,7 +312,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.province = $("#province").html();
 	dataFee.district = $("#district").html();
 	dataFee.address = $("#address").html();
-	dataFee.weight = parseFloat($("#totalWeight").html());
+	dataFee.weight = parseInt($("#totalWeight").html());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
 	
