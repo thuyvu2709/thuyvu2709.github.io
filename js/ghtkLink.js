@@ -173,7 +173,7 @@ if (!totalWeight) {
 	totalWeight = 0;
 	// avgWeight = 0;
 }
-$("#totalWeight").html(parseInt(totalWeight*1000));
+$("#totalWeight").html(Math.round(totalWeight*1000));
 $("#prodList").html("???????????");
 // $("#avgWeight").val(avgWeight);
 
@@ -194,7 +194,7 @@ $(".productWeight").change(function(){
 		tw += prodListOrder[i].productWeight * parseFloat(prodListOrder[i].productCount);
 
 	}
-	$("#totalWeight").html(parseInt(tw * 1000));
+	$("#totalWeight").html(Math.round(tw * 1000));
 	caluclateTransportFeeFn(true);
 })
 
