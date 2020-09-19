@@ -2,8 +2,8 @@
 var triggerAfterLoad = function(){
   $("#loadingSpin").show();
   getDatasetList(function(){
-      datasetList = JSON.parse(localStorage.getItem("DataSetList"));
-
+      datasetList = JSON.parse(localStorage.getItem("DatasetList"));
+      // console.log(datasetList);
       var content = '';
       for (e in datasetList) {
         if (e == 0) {
@@ -21,10 +21,10 @@ var triggerAfterLoad = function(){
       }
 
       $("#listOrder").html(content);
-      
+
       $("#loadingSpin").hide();
       $(".datasetItem").click(function(){
-        var setIndex = parsetInt($(this).attr("class").split(" ").pop().split("_").pop());
+        var setIndex = parseInt($(this).attr("class").split(" ").pop().split("_").pop());
         localStorage.setItem("mainSheetForProduct",datasetList[setIndex][1]);
         localStorage.setItem("shippingSheet",datasetList[setIndex][2]);
         localStorage.setItem("datasetName",datasetList[setIndex][0]);
