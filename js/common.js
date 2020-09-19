@@ -953,6 +953,37 @@ function getRoleList(callback) {
   });
 }
 
+function getDatasetList(callback) {
+  var spreadsheetId = roleSheet;
+
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  var indexColumnOfAllData = 3;
+  var sheetrange = 'DataSetList!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("DatasetList",JSON.stringify(dataset));
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 function loadOtherFee(callback) {
   var spreadsheetId = mainSheetForProduct;
 
