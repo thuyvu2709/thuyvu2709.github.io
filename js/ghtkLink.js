@@ -218,7 +218,8 @@ $("#updateAddress").click(function(){
 		// console.log(addrData);
 
 		if (addrData["OTHER"] && addrData["PROVINCE_NAME"] && addrData["DISTRICT_NAME"]) {
-			var addr = addrData["OTHER"]+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
+			var otherAddress = addrData["OTHER"].split(",").join(";");
+			var addr = otherAddress+","+addrData["WARDS_NAME"]+","+addrData["DISTRICT_NAME"]+","+addrData["PROVINCE_NAME"];
 			currentOrder.customerAddress = addr;
 
 			var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
