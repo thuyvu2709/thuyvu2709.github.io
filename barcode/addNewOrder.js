@@ -533,15 +533,23 @@ $("#downCustomerInfor").click(function(){
 	$("#customerPhone").val(orderCopy.customerPhone);
 })
 
+$("#reloadOrderCode").click(function(){
+	getLatestOrderCode(function(){
+		orderCode = localStorage.getItem("orderCode");
+		$("#orderCode").val(orderCode);
+	})
+})
+
 $("#addNewOrder").click(function(){
 	//orderCode
 	$("#addNewOrder").hide();
 	$("#loadingSpin").show();
+	
+	orderCode = $("#orderCode").val()
 
 	var customerName = $("#customerName").val();
 	var customerAddress = $("#customerAddress").val();
 	var customerPhone = $("#customerPhone").val();
-
 	// var today = new Date();
 	// var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 	// var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();

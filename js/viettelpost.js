@@ -382,7 +382,7 @@ function triggerAutocompleteViettelpost(orginalAddress, callback){
 	$('#myModal').modal('toggle');
 
 	$(".fixAddress").click(function(){
-		choosenAddressData["OTHER"] = $("#myDetail").val();
+		choosenAddressData["OTHER"] = $("#myDetail").val().split(",").join(";");
 		callback(choosenAddressData);
 		$('#myModal').modal('toggle');
 	})
