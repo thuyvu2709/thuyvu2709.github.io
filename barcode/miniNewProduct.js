@@ -229,7 +229,7 @@ function newMiniProduct(index){
 	      $.ajax(settings).done(function(response) {
 	        console.log(response);
 	        console.log("link:"+JSON.parse(response).data.link);
-	        $("#prodImageLink").val(JSON.parse(response).data.link);
+	        $("#miniprodImageLink").val(JSON.parse(response).data.link);
 	    	$("#loadingSpin").hide();
 
 	      });
