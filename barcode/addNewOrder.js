@@ -76,6 +76,7 @@ function addNewFormOfProduct(currentIndex){
               '<label for="productCode" class="col-sm-2 col-form-label">'+
               	'Mã sản phẩm'+
               	'<span class="fa fa-search btn btn-default btnSearchProductGeneral btnSearchProduct_'+e+'"></span>'+
+              	'<span class="fa fa-plus btnAddMiniProduct btnAddMiniProduct_'+e+'"></span>'+
           	  '</label>'+
               '<div class="col-sm-10">'+
                 '<input type="text" class="form-control productCode_'+e+'" placeholder="Mã sản phẩm">'+
@@ -158,6 +159,7 @@ function addNewFormOfProduct(currentIndex){
 	$( "input" ).keyup(inputKeyupfunction);
 
 	$(".btnSearchProduct_"+e).click(searchForm);
+	$(".btnAddMiniProduct_"+e).click(addMiniProduct)
 
 
 	// /////////
@@ -172,6 +174,13 @@ function addNewFormOfProduct(currentIndex){
 // }
 
 $(".btnSearchProduct_0").click(searchForm);
+$(".btnAddMiniProduct_0").click(addMiniProduct)
+
+function addMiniProduct(){
+	console.log("addMiniProduct");
+	var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	newMiniProduct(index);
+}
 
 function searchForm(){
 	// console.log("searchForm:");

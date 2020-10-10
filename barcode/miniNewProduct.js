@@ -325,7 +325,7 @@ function addNewMiniProduct(index){
 		$("#loadingSpin").hide();
 		productList.push(dataContent);
 		triggerNextProcessNewOrder(index, productCode, productList.length - 1);
-		// $('#myModal2').modal('toggle');
+		$('#myModal2').modal('toggle');
 
 	}, function(){
 		$("#loadingSpin").hide();
