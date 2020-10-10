@@ -507,14 +507,16 @@ function addDetailOrder() {
 }
 
 function finishOrder(){
-	$("#addNewOrder").hide();
-	$("#btnRefresh").show();
-	$("#btnPrintOrder").show();
-	$("#modelContent").html("Đã lưu đơn hàng");
+	// $("#addNewOrder").hide();
+	// $("#btnRefresh").show();
+	// $("#btnPrintOrder").show();
+	// $("#modelContent").html("Đã lưu đơn hàng");
 
-	$("#loadingSpin").hide();
+	// $("#loadingSpin").hide();
 
-	$('#myModal').modal('toggle');
+	// $('#myModal').modal('toggle');
+	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+ 	window.location = "showorder.html";
 }
 
 $("#updateAddress").click(function(){
