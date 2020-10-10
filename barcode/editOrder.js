@@ -113,6 +113,7 @@ function fillListOfProduct(prodListOrder) {
               '<label for="productCode" class="col-sm-2 col-form-label">'+
               	'Mã sản phẩm'+
               	'<span class="fa fa-search btn btn-default btnSearchProduct_'+e+'"></span>'+
+              	'<span class="fa fa-plus btnAddMiniProduct btnAddMiniProduct_'+e+'"></span>'+
           	  '</label>'+
               '<div class="col-sm-10">'+
                 '<input type="text" class="form-control productCode_'+e+'" placeholder="Mã sản phẩm" value="'+prodListOrder[e].productCode+'">'+
@@ -167,11 +168,20 @@ function fillListOfProduct(prodListOrder) {
       '</div>')
 
 		$(".btnSearchProduct_"+e).click(searchForm);
+		$(".btnAddMiniProduct_"+e).click(addMiniProduct)
+
 	}
+
 
 	// console.log(e);
 	numOfProType = parseInt(e)+1;
 	addNewFormOfProduct(numOfProType-1);
+}
+
+function addMiniProduct(){
+	console.log("addMiniProduct");
+	var index = $(this).attr("class").split(" ").pop().split("_").pop();
+	newMiniProduct(index);
 }
 
 function addNewFormOfProduct(currentIndex){
@@ -203,6 +213,8 @@ function addNewFormOfProduct(currentIndex){
               '<label for="productCode" class="col-sm-2 col-form-label">'+
               	'Mã sản phẩm'+
               	'<span class="fa fa-search btn btn-default btnSearchProduct_'+e+'"></span>'+
+              	'<span class="fa fa-plus btnAddMiniProduct btnAddMiniProduct_'+e+'"></span>'+
+
           	  '</label>'+
               '<div class="col-sm-10">'+
                 '<input type="text" class="form-control productCode_'+e+'" placeholder="Mã sản phẩm">'+
@@ -265,6 +277,7 @@ function addNewFormOfProduct(currentIndex){
   		$(".btnSearchProduct_"+$(this).attr("id").split("_").pop()).click();
 	})
 
+
 	var totalPay = 0;
 	for (var i = 0; i < numOfProType; i++) { 
 		var toi = $(".turnover_"+i).html() ? $(".turnover_"+i).html() : 0;
@@ -282,6 +295,8 @@ function addNewFormOfProduct(currentIndex){
 	$("#totalWillPay").html(totalWillPay);
 
 	$( "input" ).keyup(inputKeyupfunction);
+
+	$(".btnAddMiniProduct_"+e).click(addMiniProduct)
 
 	$(".btnSearchProduct_"+e).click(searchForm);
 
