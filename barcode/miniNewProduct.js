@@ -45,48 +45,48 @@ function newMiniProduct(index){
 	'          <input type="number" class="form-control" id="miniproductCount" placeholder="0" required>'+
 	'        </div>'+
 	'      </div>'+
-	// ''+
-	// '      <div class="form-group row">'+
-	// '        <label for="productOriginalCostEur" class="col-sm-2 col-form-label">Giá gốc (EUR)</label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="miniproductOriginalCostEur" placeholder="0" required>'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row">'+
-	// '        <label for="productWeight" class="col-sm-2 col-form-label">Trọng lượng (kg)</label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="miniproductWeight" placeholder="0.00 kg">'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row">'+
-	// '        <label for="shipInternationalFee" class="col-sm-2 col-form-label">Cước vận chuyển quốc tế (EUR)</label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="minishipInternationalFee" placeholder="0 EUR">'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row" style="display:none">'+
-	// '        <label for="shipItalyFee" class="col-sm-2 col-form-label">Cước vận chuyển trong Italy (EUR)</label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="minishipItalyFee" placeholder="0 EUR">'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row" style="display:none">'+
-	// '        <label for="shipVietnamFee" class="col-sm-2 col-form-label">Cước vận chuyển trong Việt Nam (VND) </label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="minishipVietnamFee" placeholder="0 VND">'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row" style="display:none">'+
-	// '        <label for="otherFee" class="col-sm-2 col-form-label">Chi phí khác (VND) </label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="miniotherFee" placeholder="0 VND">'+
-	// '        </div>'+
-	// '      </div>'+
+	''+
+	'      <div class="form-group row">'+
+	'        <label for="productOriginalCostEur" class="col-sm-2 col-form-label">Giá gốc (EUR)</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="miniproductOriginalCostEur" placeholder="0" required>'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row">'+
+	'        <label for="productWeight" class="col-sm-2 col-form-label">Trọng lượng (kg)</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="miniproductWeight" placeholder="0.00 kg">'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row">'+
+	'        <label for="shipInternationalFee" class="col-sm-2 col-form-label">Cước vận chuyển quốc tế (EUR)</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="minishipInternationalFee" placeholder="0 EUR">'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row" style="display:none">'+
+	'        <label for="shipItalyFee" class="col-sm-2 col-form-label">Cước vận chuyển trong Italy (EUR)</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="minishipItalyFee" placeholder="0 EUR">'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row" style="display:none">'+
+	'        <label for="shipVietnamFee" class="col-sm-2 col-form-label">Cước vận chuyển trong Việt Nam (VND) </label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="minishipVietnamFee" placeholder="0 VND">'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row" style="display:none">'+
+	'        <label for="otherFee" class="col-sm-2 col-form-label">Chi phí khác (VND) </label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="miniotherFee" placeholder="0 VND">'+
+	'        </div>'+
+	'      </div>'+
 	''+
 	'      <div class="form-group row">'+
 	'        <label for="productEstimateVND" class="col-sm-2 col-form-label">Giá gốc sản phẩm (VND) </label>'+
@@ -101,20 +101,20 @@ function newMiniProduct(index){
 	'          <input type="number" class="form-control" id="miniproductEstimateSellingVND" placeholder="0 VND">'+
 	'        </div>'+
 	'      </div>'+
-	// ''+
-	// '      <div class="form-group row">'+
-	// '        <label for="productEstimateSellingVND" class="col-sm-2 col-form-label">Giá bán CTV (VND) </label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="number" class="form-control" id="miniproductEstimateSellingCTV" placeholder="0 VND">'+
-	// '        </div>'+
-	// '      </div>'+
-	// ''+
-	// '      <div class="form-group row">'+
-	// '        <label for="productUrl" class="col-sm-2 col-form-label">Đường dẫn SP</label>'+
-	// '        <div class="col-sm-10">'+
-	// '          <input type="text" class="form-control" id="miniproductUrl" placeholder="">'+
-	// '        </div>'+
-	// '      </div>'+
+	''+
+	'      <div class="form-group row">'+
+	'        <label for="productEstimateSellingVND" class="col-sm-2 col-form-label">Giá bán CTV (VND) </label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="number" class="form-control" id="miniproductEstimateSellingCTV" placeholder="0 VND">'+
+	'        </div>'+
+	'      </div>'+
+	''+
+	'      <div class="form-group row">'+
+	'        <label for="productUrl" class="col-sm-2 col-form-label">Đường dẫn SP</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="text" class="form-control" id="miniproductUrl" placeholder="">'+
+	'        </div>'+
+	'      </div>'+
 	''+
 	'      <div class="form-group row">'+
 	'        <div style=\'height: 0px;width:0px; overflow:hidden;\'>'+
@@ -149,7 +149,7 @@ function newMiniProduct(index){
 	// '      </div>'+
 	''+
 	'      <div class="btn btn-primary mb-2" id="miniaddNewProduct">Thêm mặt hàng</div>'+
-	'      <div class="btn btn-primary mb-2" id="minibtnRefresh">Xoá hết thông tin</div>'+
+	// '      <div class="btn btn-primary mb-2" id="minibtnRefresh">Xoá hết thông tin</div>'+
 	''+
 	'    </form>';
 
@@ -173,6 +173,16 @@ function newMiniProduct(index){
 		getLatestProductCode(function(code){
 			$("#miniproductCode").val(code);
 		})
+	})
+
+	$("#miniproductOriginalCostEur").keyup(function(){
+		recalculateProdEstVND();
+	})
+	$("#miniproductWeight").keyup(function(){
+		recalculateProdEstVND();
+	})
+	$("#minishipInternationalFee").keyup(function(){
+		recalculateProdEstVND();
 	})
 
 	$("#miniaddNewProduct").click(function(){
@@ -237,6 +247,29 @@ function newMiniProduct(index){
 	    }
 	  });
 
+}
+
+function recalculateProdEstVND(){
+	var productOriginalCostEur = $("#miniproductOriginalCostEur").val();
+
+	var productWeight = $("#miniproductWeight").val();
+
+	var shipInternationalFee = $("#minishipInternationalFee").val();
+
+	if (!productOriginalCostEur || !productWeight || !shipInternationalFee) {
+		return;
+	}
+
+	productOriginalCostEur = parseFloat(productOriginalCostEur);
+	productWeight = parseFloat(productWeight);
+	shipInternationalFee = parseFloat(shipInternationalFee);
+
+	var productEstimateVND = Math.round(productOriginalCostEur*EuroVndRate + productWeight * 
+		( shipInternationalFee * EuroVndRate ));
+
+	$("#miniproductEstimateVND").val(productEstimateVND);
+
+	recalculateRefValues();
 }
 
 function addNewMiniProduct(index){
