@@ -209,6 +209,7 @@ function newMiniProduct(index){
 	        $("#loadingSpin").hide();
     		$("#miniimportSchedule").append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 			$("#newImportDiv").hide();
+			$("#miniimportSchedule").val(latestImportCode);
 	    })
 	})
 
