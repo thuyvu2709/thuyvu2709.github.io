@@ -37,13 +37,18 @@ function newMiniProduct(index){
 
 	'      <div class="form-group row" id="newImportDiv">'+
 	'        <label for="productCode" class="col-sm-2 col-form-label">'+
-	'			Đợt hàng mới: '+
-	'		<b id="newImportCode">1</b>'+
+	'			Mã đợt hàng mới: '+
+	'		</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="text" class="form-control" id="newImportCode" placeholder="Mã đợt hàng mới">'+
+	'        </div>'+
+	'        <label for="productCode" class="col-sm-2 col-form-label">'+
+	'			Tên đợt hàng mới: '+
 	'		</label>'+
 	'        <div class="col-sm-10">'+
 	'          <input type="text" class="form-control" id="miniNewImportName" placeholder="Tên đợt hàng mới">'+
-	'			<div class="btn btn-primary" id="addMiniNewImportSchedule">Thêm đợt hàng</div>'+
 	'        </div>'+
+	'		<div class="btn btn-primary" id="addMiniNewImportSchedule">Thêm đợt hàng</div>'+
 	'      </div>'+
 
 	'      '+
@@ -177,18 +182,17 @@ function newMiniProduct(index){
 	$("#newImportDiv").hide();
 
 	$("#btnMiniCreateNewImport").click(function(){
-		console.log("btnMiniCreateNewImport");
+		// console.log("btnMiniCreateNewImport");
 		getLatestImportCode(function(latestImportCode){
 			$("#newImportDiv").show();		
-			$("#newImportCode").html(latestImportCode);
+			$("#newImportCode").val(latestImportCode);
 		})
 
 	})
 	$("#addMiniNewImportSchedule").click(function(){
-		var latestImportCode = $("#newImportCode").html();
+		var latestImportCode = $("#newImportCode").val();
 		var name = $("#miniNewImportName").val();
-		var submitImportData = [
-	      [
+		var submitImportDataSub = [
 	        latestImportCode,
 	        name,
 	        0,
@@ -200,7 +204,9 @@ function newMiniProduct(index){
 	        "",
 	        "",
 	        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!P:P)"
-	      ]
+	      ];
+		var submitImportData = [
+	      submitImportDataSub
 	    ]
     
 	    $("#loadingSpin").show();
@@ -210,6 +216,8 @@ function newMiniProduct(index){
     		$("#miniimportSchedule").append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 			$("#newImportDiv").hide();
 			$("#miniimportSchedule").val(latestImportCode);
+			importSLData.push(submitImportDataSub);
+			$(".importSchedule_"+index).append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 	    })
 	})
 
@@ -323,7 +331,7 @@ function recalculateProdEstVND(){
 
 	$("#miniproductEstimateVND").val(productEstimateVND);
 
-	recalculateRefValues();
+	// recalculateRefValues();
 }
 
 function addNewMiniProduct(index){
