@@ -216,13 +216,13 @@ function newMiniProduct(index){
     		$("#miniimportSchedule").append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 			$("#newImportDiv").hide();
 			$("#miniimportSchedule").val(latestImportCode);
-			importSLData.push(submitImportDataSub);
+			importSLData = importSLData.push(submitImportDataSub);
 			$(".importSchedule_"+index).append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 	    })
 	})
 
 	loadImportScheduleList(function(){
-		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
+		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
 		$("#miniimportSchedule").empty();
 		$("#miniimportSchedule").append("<option disabled selected>Chọn đợt hàng</option>");
