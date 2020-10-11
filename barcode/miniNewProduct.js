@@ -23,7 +23,10 @@ function newMiniProduct(index){
 	'      </div>'+
 	''+
 	'      <div class="form-group row">'+
-	'        <label for="importSchedule" class="col-sm-2 col-form-label">Đợt hàng</label>'+
+	'        <label for="importSchedule" class="col-sm-2 col-form-label">'+
+	'			Đợt hàng'+
+	'			<span class="fa fa-plus" id="btnMiniCreateNewImport"></span>'+
+	'		</label>'+
 	'          <div class="col-sm-10">'+
 	'            <select class="mdb-select md-form" id="miniimportSchedule"'+
 	'              style="width: 100%">'+
@@ -31,6 +34,18 @@ function newMiniProduct(index){
 	'            </select>'+
 	'          </div>'+
 	'      </div>'+
+
+	'      <div class="form-group row" id="newImportDiv">'+
+	'        <label for="productCode" class="col-sm-2 col-form-label">'+
+	'			Đợt hàng mới: '+
+	'		<b id="newImportCode">1</b>'+
+	'		</label>'+
+	'        <div class="col-sm-10">'+
+	'          <input type="text" class="form-control" id="miniNewImportName" placeholder="Tên đợt hàng mới">'+
+	'			<div class="btn btn-primary" id="addMiniNewImportSchedule">Thêm đợt hàng</div>'+
+	'        </div>'+
+	'      </div>'+
+
 	'      '+
 	'      <div class="form-group row">'+
 	'        <label for="productName" class="col-sm-2 col-form-label">Tên sản phẩm</label>'+
@@ -158,6 +173,44 @@ function newMiniProduct(index){
 	$("#myModal2 .modal-body").css('max-height','');
 
 	$("#myModal2 .modal-body").css('overflow','scroll');
+
+	$("#newImportDiv").hide();
+
+	$("#btnMiniCreateNewImport").click(function(){
+		console.log("btnMiniCreateNewImport");
+		getLatestImportCode(function(latestImportCode){
+			$("#newImportDiv").show();		
+			$("#newImportCode").html(latestImportCode);
+		})
+
+	})
+	$("#addMiniNewImportSchedule").click(function(){
+		var latestImportCode = $("#newImportCode").html();
+		var name = $("#miniNewImportName").val();
+		var submitImportData = [
+	      [
+	        latestImportCode,
+	        name,
+	        0,
+	        0,
+	        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!R:R)",
+	        "'0",
+	        "",
+	        "",
+	        "",
+	        "",
+	        "=sumif(Product!C:C,INDIRECT(ADDRESS(ROW(),1)),Product!P:P)"
+	      ]
+	    ]
+    
+	    $("#loadingSpin").show();
+
+	    appendWarehouse(submitImportData,function(){
+	        $("#loadingSpin").hide();
+    		$("#miniimportSchedule").append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
+			$("#newImportDiv").hide();
+	    })
+	})
 
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
