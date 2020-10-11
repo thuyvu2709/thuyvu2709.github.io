@@ -210,14 +210,19 @@ function newMiniProduct(index){
 	    ]
     
 	    $("#loadingSpin").show();
-
+	    // console.log("213----");
 	    appendWarehouse(submitImportData,function(){
+		    // console.log("215----");
+		    // console.log(importSLData);
+
 	        $("#loadingSpin").hide();
     		$("#miniimportSchedule").append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 			$("#newImportDiv").hide();
 			$("#miniimportSchedule").val(latestImportCode);
-			importSLData = importSLData.push(submitImportDataSub);
-			$(".importSchedule_"+index).append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
+			importSLData.push(submitImportDataSub);
+			// console.log(importSLData);
+			// $(".importSchedule_"+index).empty();
+			// $(".importSchedule_"+index).append("<option value='"+latestImportCode+"'>"+latestImportCode+" - "+name+"</option>");
 	    })
 	})
 
