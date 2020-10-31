@@ -25,8 +25,11 @@ $("#customerPhone").html(
 
 $("#shippingCost").html(currentOrder.shippingCost);
 // $("#shippingCost").html("Khách thanh  a a a toán với bên vận chuyển");
-
-$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);
+if (currentOrder.paymentStatus == "PAID") {
+	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip + " <i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
+} else {
+	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);	
+}
 
 $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED" ? "Đã giao" : "Chưa giao hàng"));
 
