@@ -25,15 +25,15 @@ $("#customerPhone").html(
 
 $("#shippingCost").html(currentOrder.shippingCost);
 // $("#shippingCost").html("Khách thanh  a a a toán với bên vận chuyển");
+$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);	
+
 if (currentOrder.paymentStatus == "PAID") {
-	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip + " <i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
-} else {
-	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);	
+	$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
 }
 
 $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED" ? "Đã giao" : "Chưa giao hàng"));
 
-$("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
+// $("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
 
 $("#prepaid").html(currentOrder.prepaid);
 $("#willpay").html(parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0));
