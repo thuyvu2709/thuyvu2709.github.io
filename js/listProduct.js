@@ -220,6 +220,8 @@ function loadProductListHtml(){
             '<div class="btn btnNormal5px editproductelement product_'+e+'" >Sửa mặt hàng</div>'+
             '<div class="btn btnNormal5px textRed deleteproductelement product_'+e+'" >Xoá mặt hàng</div>'+
             '<div class="btn btnNormal5px showorder product_'+e+'" >Xem đơn hàng</div>'+
+            '<div class="btn btnNormal5px makecopy makecopy_'+e+'" >Tạo mới y hệt</div>'+
+
           '</div>'+
           imageDiv+
         '</div>'+
@@ -230,6 +232,7 @@ function loadProductListHtml(){
   $(".iconMove").hide();
 
   afterLoadHTML();
+  $(".makecopy").click(makecopy);
 
   $(".editproductelement").click(editProductFn);
   $(".deleteproductelement").click(deleteProduct);
@@ -308,6 +311,49 @@ function loadProductListHtml(){
     })
     $('#myModal').modal('toggle');
 
+  }
+
+  function makecopy() {
+    var productIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    productIndex = parseInt(productIndex);
+    console.log($(this).attr("class")+" vs "+productIndex);
+    // var productCode = data[productIndex][0];
+    console.log(data[productIndex]);
+    var currentProduct = {
+      productIndex : productIndex,
+      productCode : data[productIndex][0],
+      productRefCode : data[productIndex][1],
+      importCode : data[productIndex][2],
+      productName : data[productIndex][3],
+      productCount : data[productIndex][4],
+      productOriginalCostEur : data[productIndex][5],
+      productWeight : data[productIndex][6],
+      shipInternationalFee : data[productIndex][7],
+      // shipItalyFee : data[productIndex][8],
+      productUrl : (data[productIndex][8]=="0" ? "" : data[productIndex][8]),
+      shipVietnamFee : data[productIndex][9],
+      otherFee : data[productIndex][10],
+      productEstimateVND : data[productIndex][11],
+      productEstimateSellingVND : data[productIndex][12],
+      productEstimateSellingCTV : data[productIndex][20],
+      profitPerOneProduct : data[productIndex][13],
+      turnover : data[productIndex][14],
+      totalCost : data[productIndex][15],
+      totalProfit : data[productIndex][16],
+      numOfRest : data[productIndex][17],
+      totalPayOfRest : data[productIndex][18],
+      prodImageLink : data[productIndex][19]
+    }
+
+    localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
+
+    saveHistory({
+      searchText : $("#prodSearchInput").val(),
+      importCode : $("#importFilter").val(),
+      goToClass : $(this).attr("class")
+    })
+
+    window.location = "../barcode/newproduct.html?makeCopy=true";
   }
 
   function editProductFn() {

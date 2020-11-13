@@ -1,3 +1,19 @@
+var url = new URL(window.location.href);
+
+var makeCopy = url.searchParams.get("makeCopy");
+
+if (makeCopy) {
+  currentImport = JSON.parse(localStorage.getItem("currentImport"));
+  console.log(currentImport);
+  $("#importName").val(currentImport.importName);
+
+  $("#receiverPhone").val(currentImport.receiverPhone);
+  $("#receiverAddress").val(currentImport.receiverAddress);
+  $("#receiverName").val(currentImport.receiverName);
+  $("#bankingAccountNumber").val(currentImport.bankingAccountNumber);
+  $("#bankingName").val(currentImport.bankingName);
+}
+
 var triggerAfterLoad = function(){
 
   // $("#loadingSpin").show();

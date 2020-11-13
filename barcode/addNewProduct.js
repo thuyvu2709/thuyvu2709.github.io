@@ -3,6 +3,49 @@
 // var sheetrange = 'Sheet1!A1:B1000';
 // console.log('Sheet1!A1:'+ String.fromCharCode(65+numOfColumn));
 
+var url = new URL(window.location.href);
+
+var makeCopy = url.searchParams.get("makeCopy");
+console.log(makeCopy);
+if (makeCopy) {
+	var currentProduct = JSON.parse(localStorage.getItem("currentProduct"));
+	console.log(currentProduct);
+
+	$("#productCode").val(currentProduct.productCode);
+	$("#productName").val(currentProduct.productName);
+
+	$("#productCount").val(currentProduct.productCount);
+
+	$("#productOriginalCostEur").val(currentProduct.productOriginalCostEur);
+
+	$("#productWeight").val(currentProduct.productWeight);
+
+	$("#shipInternationalFee").val(currentProduct.shipInternationalFee);
+	$("#shipItalyFee").val(currentProduct.shipItalyFee);
+
+	$("#otherFee").val(currentProduct.otherFee);
+
+	$("#shipVietnamFee").val(currentProduct.shipVietnamFee);
+
+	$("#productEstimateVND").val(currentProduct.productEstimateVND);
+
+	$("#productEstimateSellingVND").val(currentProduct.productEstimateSellingVND);
+
+	$("#productEstimateSellingCTV").val(currentProduct.productEstimateSellingCTV);
+
+
+	$("#profitPerOneProduct").html(currentProduct.profitPerOneProduct);
+
+	$("#turnover").html(currentProduct.turnover);
+
+	$("#totalCost").html(currentProduct.totalCost);
+
+	$("#totalProfit").html(currentProduct.totalProfit);
+
+	$("#prodImageLink").val(currentProduct.prodImageLink);
+
+}
+
 var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){

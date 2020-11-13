@@ -77,6 +77,8 @@ function loadWarehouseHtml() {
             '<div class="btn btn-default btnNormal deleteWH_'+e+'" style="margin : 5px">Xoá</div>'+
             '<div class="btn btn-default btnNormal viewProductInWH_'+e+'" style="margin : 5px">Xem danh sách hàng</div>'+
             (scheduleStatus == 1 ? '<div class="btn btn-default btnNormal checkRequest checkImport_'+e+'" >Yêu cầu kiểm hàng</div> ' : '')+
+            '<div class="btn btn-default btnNormal makecopy_'+e+'" style="margin : 5px">Tạo mới y hệt</div>'+
+
           '</div>'+
         '</div>'+
       '</div>'
@@ -88,6 +90,7 @@ function loadWarehouseHtml() {
     $(".viewProductInWH_"+e).click(viewProductInWH);
     $(".deleteWH_"+e).click(deleteWH);
     $(".showWH_"+e).click(showWH);
+    $(".makecopy_"+e).click(makeCopy)
   }
 };
 
@@ -95,6 +98,28 @@ $("#warehouseSearchInput").change(function(){
   console.log("search"+$("#warehouseSearchInput").val());
   loadWarehouseHtml();
 });
+
+function makeCopy() {
+  var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var realIndex = parseInt(importIndex) + 1;
+  var currentImport = {
+    importIndex : realIndex,
+    importCode : warehouseData[importIndex][0],
+    importName : warehouseData[importIndex][1],
+    importStatus : warehouseData[importIndex][2],
+    importShippingFee : warehouseData[importIndex][3],
+    inventory : warehouseData[importIndex][4],
+    receiverPhone: warehouseData[importIndex][5],
+    receiverAddress: warehouseData[importIndex][6],
+    receiverName: warehouseData[importIndex][7],
+    bankingAccountNumber: warehouseData[importIndex][8],
+    bankingName: warehouseData[importIndex][9],
+    totalPay: warehouseData[importIndex][10]
+  }
+
+  localStorage.setItem("currentImport",JSON.stringify(currentImport));
+  window.location = "newImportSchedule.html?makeCopy=true";
+}
 
 function showWH(){
   var importIndex = $(this).attr("class").split(" ").pop().split("_").pop();
