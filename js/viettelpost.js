@@ -196,7 +196,7 @@ function findPlaceProvince(callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
+	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -212,7 +212,7 @@ function findPlaceDistrict(provinceId, callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
+	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -228,7 +228,7 @@ function findPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
+	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
 	  "method": "GET",
 	  "headers": {
 	  },
