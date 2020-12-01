@@ -22,6 +22,7 @@ try {
 	currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
 	if (currentOrder.otherInfor) {
 		$("#isFreeShip").prop('checked', currentOrder.otherInfor.isFreeShip);
+		$("#ckCTV").prop('checked', currentOrder.otherInfor.ckCTV);
 	}
 } catch(e) {
 	currentOrder.otherInfor = {};
@@ -836,8 +837,9 @@ $("#editOrder").click(function(){
 	var shipIndex = currentOrder.shipIndex;
 	var orderIndex = currentOrder.orderIndex;
 
-	otherInfor = {
-		isFreeShip : $("#isFreeShip").is(":checked")
+	var otherInfor = {
+		isFreeShip : $("#isFreeShip").is(":checked"),
+		ckCTV : $("#ckCTV").is(":checked")
 	}
 	// console.log("isFreeShip:"+ $("#isFreeShip").is(":checked"));
 	// console.log(otherInfor)

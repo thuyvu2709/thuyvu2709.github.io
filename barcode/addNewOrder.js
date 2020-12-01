@@ -580,7 +580,8 @@ $("#addNewOrder").click(function(){
 	var shippingType = $("#shippingType").val();
 
 	var otherInfor = {
-		isFreeShip : $("#isFreeShip").is(":checked")
+		isFreeShip : $("#isFreeShip").is(":checked"),
+		ckCTV : $("#ckCTV").is(":checked")
 	}
 
 	var prepaid = $("#prepaid").val();
