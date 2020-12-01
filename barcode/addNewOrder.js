@@ -19,6 +19,13 @@ if (makeCopy) {
 	$("#customerPhone").val(currentOrder.customerPhone);
 	$("#shippingType").val(currentOrder.shippingType);
 
+	try {
+		currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor);
+		if (currentOrder.otherInfor) {
+			$("#ckCTV").prop('checked', currentOrder.otherInfor.ckCTV);
+		}
+	} catch(e) {
+	}
 }
 
 var triggerAfterLoad = function(){
