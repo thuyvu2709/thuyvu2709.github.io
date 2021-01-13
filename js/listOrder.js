@@ -750,9 +750,13 @@ function loadOrderListHtml() {
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var currentOrder=getOrder(orderIndex);
     var willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
+    var noti4000 = "";
+    if (parseFloat(currentOrder.totalPayIncludeShip) >= 4000) {
+      noti4000 = "<div class='textRed'>Chú ý đơn này giá trị hơn 4 triệu ("+currentOrder.totalPayIncludeShip+"k), có thể yêu cầu shipper đi giao</div>"
+    }
     // console.log(currentOrder.totalPayIncludeShip);
     // console.log(currentOrder.prepaid);    
-    console.log(currentOrder);
+    // console.log(currentOrder);
     var lsBtnShip = 
     '<h5>Chọn kiểu giao hàng</h5>'+
     // '<div class="btn btnNormal5px shippingType type_0 order_'+orderIndex+'" >Ship không thu tiền</div>'+
@@ -761,8 +765,9 @@ function loadOrderListHtml() {
     '<div class="btn btnNormal5px shippingType POST_COD" >Ship DVVC thu COD</div>'+
     '<div class="btn btnNormal5px shippingType POST_NO_COD" >Ship DVVC ko COD</div>'+
     '<div class="btn btnNormal5px shippingType SHOPEE" >Ship Shopee</div>' + 
-    '<div class="btn btnNormal5px shippingType SHIP_BY_THIRD_PARTY" >Ship từ bên thứ 3</div>';
-
+    '<div class="btn btnNormal5px shippingType SHIP_BY_THIRD_PARTY" >Ship từ bên thứ 3</div>'+
+    noti4000;
+    
     $("#simpleModal .modal-content").html(lsBtnShip);
 
     $("."+currentOrder.shippingType).css(
