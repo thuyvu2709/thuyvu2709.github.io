@@ -887,9 +887,9 @@ function editCommonData(spreadsheetId, data,range,callback){
   // var sheetrange = range;
 
   // console.log(sheetrange);
-  console.log("editCommonData:"+spreadsheetId);
-  console.log(data);
-  console.log(range);
+  // console.log("editCommonData:"+spreadsheetId);
+  // console.log(data);
+  // console.log(range);
   if (passDataLocalhost) {
     callback();
   }
