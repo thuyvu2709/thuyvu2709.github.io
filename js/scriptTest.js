@@ -178,8 +178,7 @@ function mergeProcessing(targetMainSheet) {
     for (var p in productData) {
     	if (productIdLs.includes(productData[p][1])) {
     		productSheetData.push(productData[p]);
-    	}
-    	if (parseInt(productData[p][17]) > 0) {
+    	} else if (parseInt(productData[p][17]) > 0) {
     		productSheetData.push(productData[p]);
     		warehouseIdLs.push(productData[p][2]);
     	}
