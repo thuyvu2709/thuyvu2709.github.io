@@ -126,6 +126,9 @@ function mergeProcessing(targetMainSheet) {
 	// var status = $("#orderFilter").val();
 	var orderSheetData = [];
 	var orderDetailSheetData = [];
+
+	orderDetailSheetData.push(orderListDetail[0]);
+
 	var warehouseIdLs = [];
 	var productIdLs = [];
 
@@ -154,7 +157,6 @@ function mergeProcessing(targetMainSheet) {
 		orderSheetData.push(data[e]);
 		for (var f in orderListDetail) {
 			if (f == 0) {
-				orderDetailSheetData.push(orderListDetail[f]);
 				continue;
 			}
 			if (!orderListDetail[f][0]){
