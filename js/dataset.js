@@ -1,4 +1,7 @@
 
+var currentDatasetName = localStorage.getItem("defaultDatasetName");
+var currentDatabaseIndex = 0;
+
 var triggerAfterLoad = function(){
   $("#loadingSpin").show();
   getDatasetList(function(){
@@ -14,8 +17,19 @@ var triggerAfterLoad = function(){
             '<h5 class="mb-0">'+
               '<button class="btn btn-link datasetItem set_'+e+'">'+
                 datasetList[e][0]+
-              '</button>'+
-            '</h5>'+
+              '</button>';
+
+        if (currentDatasetName != datasetList[e][0]) {
+          content = content + '<button class="btn btn-link datasetItemChooseDefault set_'+e+'">'+
+            "Chọn mặc định"+
+          '</button>';
+        } else {
+          content = content + '<button class="btn btn-link textRed set_'+e+'">'+
+            "Đang là mặc định"+
+            '</button>';
+          currentDatabaseIndex = e;
+        }
+        content = content+ '</h5>'+
           '</div>'+
         '</div>';
       }
@@ -30,6 +44,25 @@ var triggerAfterLoad = function(){
         localStorage.setItem("datasetName",datasetList[setIndex][0]);
         window.location = "/";
       })
+      $(".datasetItemChooseDefault").click(function(){
+        var setIndex = parseInt($(this).attr("class").split(" ").pop().split("_").pop());
+
+        editDatasetDefault(currentDatabaseIndex, "", function(){
+          editDatasetDefault(setIndex, "1", function(){
+            localStorage.setItem("mainSheetForProduct",datasetList[setIndex][1]);
+            localStorage.setItem("shippingSheet",datasetList[setIndex][2]);
+            localStorage.setItem("datasetName",datasetList[setIndex][0]);
+            localStorage.setItem("defaultDatasetName",datasetList[setIndex][0]);
+            location.reload();
+          })          
+        })
+      })
+  })
+}
+
+function editDatasetDefault(index, value, callback) {
+  editCommonData(roleSheet, [[value]], "Role!D"+(index+1)+"D"+(index+1), function(){
+    callback();
   })
 }
 

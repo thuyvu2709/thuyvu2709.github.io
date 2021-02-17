@@ -882,6 +882,42 @@ function editWarehouse(dataEditWarehouse,range,callback){
     });
 }
 
+function editCommonData(spreadsheetId, data,range,callback){
+  
+  // var sheetrange = range;
+
+  // console.log(sheetrange);
+  
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": data
+        }
+    }).then(function(response) {
+        var result = response.result;
+      // console.log(`${result.updatedCells} cells updated.`);
+      // $("#modelContent").html("Đã lưu đơn hàng");
+      // $('#myModal').modal('toggle');
+        callback();
+
+    }, function(response) {
+        appendPre('Error: ' + response.result.error.message);
+    });
+}
+
 
 function editProduct(dataEditP, range,callback, callbackError) {
   
@@ -943,11 +979,23 @@ function getRoleList(callback) {
       range: sheetrange,
   }).then(function(response) {
       // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-      dataset = response.result.values;
+      roleset = response.result.values;
       // showList(dataset);
-      localStorage.setItem("roles",JSON.stringify(dataset));
+      localStorage.setItem("roles",JSON.stringify(roleset));
 
-      callback(dataset);
+      getDatasetList(function(datasource){
+          for (var e in datasource) {
+            if (datasource[e][3]==1) {
+                localStorage.setItem("mainSheetForProduct",datasource[e][1]);
+                localStorage.setItem("shippingSheet",datasource[e][2]);
+                localStorage.setItem("datasetName",datasource[e][0]);
+                localStorage.setItem("defaultDatasetName",datasetList[e][0]);
+            }
+          };
+
+          callback(roleset);
+      })
+
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });
@@ -966,7 +1014,7 @@ function getDatasetList(callback) {
     return;
   }
 
-  var indexColumnOfAllData = 3;
+  var indexColumnOfAllData = 4;
   var sheetrange = 'DataSetList!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
   gapi.client.sheets.spreadsheets.values.get({

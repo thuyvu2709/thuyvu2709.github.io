@@ -42,9 +42,9 @@ $("#loadDataToMerge").click(function(){
 })
 
 getDatasetList(function(){
-	console.log("getDatasetList");
+	// console.log("getDatasetList");
   datasetList = JSON.parse(localStorage.getItem("DatasetList"));
-  console.log(datasetList);
+  // console.log(datasetList);
   var content = '';
   for (e in datasetList) {
     if (e == 0) {
@@ -64,7 +64,7 @@ getDatasetList(function(){
       '</div>'+
     '</div>';
   }
-  console.log(content);
+  // console.log(content);
 
   $("#listDataset").html(content);
 
