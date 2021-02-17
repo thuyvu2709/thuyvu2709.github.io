@@ -26,6 +26,7 @@ $("#ImportData").click(function(){
 
 $("#loadDataToMerge").click(function(){
 	console.log("loadDataToMerge");
+	$("#currentDataInfor").html("");
 	loadOrderList(function(){
 		loadOrderListDetail(function(){
 			loadProductList(function(){
