@@ -168,6 +168,20 @@ function mergeProcessing(targetMainSheet) {
 		}
 	}
 
+    // console.log(productIdLs);
+	var productData = JSON.parse(localStorage.getItem("productList"));
+	var productSheetData = [];
+	productSheetData.push(productData[0]);
+
+    for (var p in productData) {
+    	if (productIdLs.includes(productData[p][1])) {
+    		productSheetData.push(productData[p]);
+    	}
+    	if (parseInt(productData[p][17]) > 0) {
+    		productSheetData.push(productData[p]);
+    		warehouseIdLs.push(productData[p][2]);
+    	}
+    }
 
 	var warehouseData = JSON.parse(localStorage.getItem("warehouse"));
 	var warehouseSheetData = [];
@@ -176,17 +190,6 @@ function mergeProcessing(targetMainSheet) {
     for (var w in warehouseData) {
     	if (warehouseIdLs.includes(warehouseData[w][0])) {
     		warehouseSheetData.push(warehouseData[w]);
-    	}
-    }
-
-    // console.log(productIdLs);
-	var productData = JSON.parse(localStorage.getItem("productList"));
-	var productSheetData = [];
-	productSheetData.push(productData[0]);
-
-    for (var p in productData) {
-    	if (productIdLs.includes(productData[p][1]) || parseInt(productData[p][17]) > 0 ) {
-    		productSheetData.push(productData[p]);
     	}
     }
 
