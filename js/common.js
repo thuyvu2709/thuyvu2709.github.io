@@ -989,7 +989,7 @@ function getRoleList(callback) {
                 localStorage.setItem("mainSheetForProduct",datasource[e][1]);
                 localStorage.setItem("shippingSheet",datasource[e][2]);
                 localStorage.setItem("datasetName",datasource[e][0]);
-                localStorage.setItem("defaultDatasetName",datasetList[e][0]);
+                localStorage.setItem("defaultDatasetName",datasource[e][0]);
             }
           };
 
