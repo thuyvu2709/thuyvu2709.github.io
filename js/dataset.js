@@ -43,7 +43,7 @@ var triggerAfterLoad = function(){
         localStorage.setItem("mainSheetForProduct",datasetList[setIndex][1]);
         localStorage.setItem("shippingSheet",datasetList[setIndex][2]);
         localStorage.setItem("datasetName",datasetList[setIndex][0]);
-        window.location = "/";
+        window.location = "/manager/";
       })
       $(".datasetItemChooseDefault").click(function(){
         var setIndex = parseInt($(this).attr("class").split(" ").pop().split("_").pop());
