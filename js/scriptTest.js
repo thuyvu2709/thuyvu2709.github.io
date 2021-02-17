@@ -185,7 +185,7 @@ function mergeProcessing(targetMainSheet) {
 	productSheetData.push(productData[0]);
 
     for (var p in productData) {
-    	if (productIdLs.includes(productData[p][1])) {
+    	if (productIdLs.includes(productData[p][1]) || parseInt(productData[p][17]) > 0 ) {
     		productSheetData.push(productData[p]);
     	}
     }
