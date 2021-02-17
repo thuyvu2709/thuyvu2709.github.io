@@ -14,6 +14,7 @@ var userRole = JSON.parse(localStorage.getItem("userRole"));
 
 // $(".orderFilter").val("Need_Schedule");
 $(".orderFilter").val("Requested");
+$(".maintitle").html("Quản lý đơn hàng - "+localStorage.getItem("datasetName"));
 
 //Load history
 
@@ -1399,7 +1400,7 @@ $(".orderFilter").change(function(){
       || mode == "PAYSHIP"
       || mode == "PACKED"
       ) {
-    $(".maintitle").html("Quản lý đơn hàng");
+      $(".maintitle").html("Quản lý đơn hàng - "+localStorage.getItem("datasetName"));
     loadOrderShippingListHtml(lsOrder);
   } else if (mode == "TASK"
     || mode == "TASKALL"
