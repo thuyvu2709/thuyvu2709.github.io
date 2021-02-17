@@ -41,51 +41,53 @@ $("#loadDataToMerge").click(function(){
 	})
 })
 
-getDatasetList(function(){
-	// console.log("getDatasetList");
-  datasetList = JSON.parse(localStorage.getItem("DatasetList"));
-  // console.log(datasetList);
-  var content = '';
-  for (e in datasetList) {
-    if (e == 0) {
-      continue;
-    }
-    if (datasetList[e][1] == localStorage.getItem("mainSheetForProduct")) {
-    	continue;
-    };
-    content = content + '<div class="card">'+
-      '<div class="card-header">'+
-        '<h5 class="mb-0">'+
-          '<button class="btn btn-link datasetItem set_'+e+'">'+
-            datasetList[e][0]+
-          '</button>'+
-          datasetList[e][1]+
-        '</h5>'+
-      '</div>'+
-    '</div>';
-  }
-  // console.log(content);
+var triggerAfterLoad = function(){
+	getDatasetList(function(){
+		// console.log("getDatasetList");
+	  datasetList = JSON.parse(localStorage.getItem("DatasetList"));
+	  // console.log(datasetList);
+	  var content = '';
+	  for (e in datasetList) {
+	    if (e == 0) {
+	      continue;
+	    }
+	    if (datasetList[e][1] == localStorage.getItem("mainSheetForProduct")) {
+	    	continue;
+	    };
+	    content = content + '<div class="card">'+
+	      '<div class="card-header">'+
+	        '<h5 class="mb-0">'+
+	          '<button class="btn btn-link datasetItem set_'+e+'">'+
+	            datasetList[e][0]+
+	          '</button>'+
+	          datasetList[e][1]+
+	        '</h5>'+
+	      '</div>'+
+	    '</div>';
+	  }
+	  // console.log(content);
 
-  $("#listDataset").html(content);
+	  $("#listDataset").html(content);
 
-  $("#dataMergeSource").html("From:"+localStorage.getItem("datasetName")+" with main id: "+localStorage.getItem("mainSheetForProduct") +" merge to:");
+	  $("#dataMergeSource").html("From:"+localStorage.getItem("datasetName")+" with main id: "+localStorage.getItem("mainSheetForProduct") +" merge to:");
 
-  $(".datasetItem").click(function(){
-    var setIndex = parseInt($(this).attr("class").split(" ").pop().split("_").pop());
-    console.log("mainSheetForProduct"+datasetList[setIndex][1]);
-    console.log("shippingSheet"+datasetList[setIndex][2]);
-    console.log("datasetName"+datasetList[setIndex][0]);
-    mergeProcessing(datasetList[setIndex][1]);
-    // window.location = "/";
-  })
+	  $(".datasetItem").click(function(){
+	    var setIndex = parseInt($(this).attr("class").split(" ").pop().split("_").pop());
+	    console.log("mainSheetForProduct"+datasetList[setIndex][1]);
+	    console.log("shippingSheet"+datasetList[setIndex][2]);
+	    console.log("datasetName"+datasetList[setIndex][0]);
+	    mergeProcessing(datasetList[setIndex][1]);
+	    // window.location = "/";
+	  })
 
-  $("#currentDataInfor").html("Order:"+JSON.parse(localStorage.getItem("orderList")).length+" lines<br/>"+
-  	"OrderDetail:"+JSON.parse(localStorage.getItem("orderListDetail")).length+" lines<br/>"+
-  	"Product:"+JSON.parse(localStorage.getItem("productList")).length+" lines<br/>"+
-  	"Warehouse:"+JSON.parse(localStorage.getItem("warehouse")).length+" lines<br/>"
-  	)
+	  $("#currentDataInfor").html("Order:"+JSON.parse(localStorage.getItem("orderList")).length+" lines<br/>"+
+	  	"OrderDetail:"+JSON.parse(localStorage.getItem("orderListDetail")).length+" lines<br/>"+
+	  	"Product:"+JSON.parse(localStorage.getItem("productList")).length+" lines<br/>"+
+	  	"Warehouse:"+JSON.parse(localStorage.getItem("warehouse")).length+" lines<br/>"
+	  	)
 
-});
+	});
+}
 
 // mergeProcessing();
 
