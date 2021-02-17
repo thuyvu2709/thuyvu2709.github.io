@@ -887,7 +887,7 @@ function editCommonData(spreadsheetId, data,range,callback){
   // var sheetrange = range;
 
   // console.log(sheetrange);
-  console.log("editCommonData:"+spreadsheets);
+  console.log("editCommonData:"+spreadsheetId);
   console.log(data);
   console.log(range);
   if (passDataLocalhost) {
@@ -916,7 +916,7 @@ function editCommonData(spreadsheetId, data,range,callback){
         callback();
 
     }, function(response) {
-        appendPre('Error: ' + response.result.error.message);
+        console.log('Error: ' + response.result.error.message);
     });
 }
 
