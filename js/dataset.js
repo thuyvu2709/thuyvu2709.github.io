@@ -61,7 +61,7 @@ var triggerAfterLoad = function(){
 }
 
 function editDatasetDefault(index, value, callback) {
-  editCommonData(roleSheet, [[value]], "Role!D"+(index+1)+"D"+(index+1), function(){
+  editCommonData(roleSheet, [[value]], "Roles!D"+(index+1)+":D"+(index+1), function(){
     callback();
   })
 }
