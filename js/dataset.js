@@ -1,5 +1,6 @@
 
 var currentDatasetName = localStorage.getItem("defaultDatasetName");
+var currentViewDatasetName = localStorage.getItem("datasetName");
 var currentDatabaseIndex = 0;
 
 var triggerAfterLoad = function(){
@@ -15,7 +16,7 @@ var triggerAfterLoad = function(){
         content = content + '<div class="card">'+
           '<div class="card-header">'+
             '<h5 class="mb-0">'+
-              '<button class="btn btn-link datasetItem set_'+e+'">'+
+              '<button class="btn btn-link '+(currentViewDatasetName==datasetList[e][0] ? "textRed" : "")+' datasetItem set_'+e+'">'+
                 datasetList[e][0]+
               '</button>';
 
