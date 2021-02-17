@@ -53,7 +53,7 @@ var triggerAfterLoad = function(){
             localStorage.setItem("shippingSheet",datasetList[setIndex][2]);
             localStorage.setItem("datasetName",datasetList[setIndex][0]);
             localStorage.setItem("defaultDatasetName",datasetList[setIndex][0]);
-            location.reload();
+            // location.reload();
           })          
         })
       })
