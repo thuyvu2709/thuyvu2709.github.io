@@ -1034,7 +1034,7 @@ function loadOrderListHtml() {
     $(".mergeOrder").click(function(){
       // console.log(lsOrderCodeSelected);
       var mergedOrderCodeInput = $(".mergeByOrder").val();
-      if (mergedOrderCodeInput && lsOrderCodeSelected.includes(mergedOrderCodeInput)) {
+      if (mergedOrderCodeInput && lsOrderCodeSelected.includes("DONHANG_"+mergedOrderCodeInput)) {
             mergeOrder();          
       } else {
         $(".mergeByOrder").val("Sai gì đó rồi!!!");
