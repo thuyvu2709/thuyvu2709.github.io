@@ -694,7 +694,7 @@ $("#saveCustomerInfor").click(function(){
 		[$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
 	]
 	var indexColumnOfAllData = 3;
-	var sheetrange = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
+	var range = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
 	addCommonData(customerSheet, data,range,function(){
 		$("#loadingSpin").hide();
