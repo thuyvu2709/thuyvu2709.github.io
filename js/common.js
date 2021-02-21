@@ -13,6 +13,8 @@ var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
 var mainSheetForProduct = '1DD-wAE56uwKK_7Q7rZ5zigPAiMXwoqHKpiyBa6XJLk8';
 var shippingSheet = '1iSGH0EXjdFOeZYDxWcy98Gv3d9CkvlcrraUZuaTR5ZY';
 
+var customerSheet = '1adxYebta3iQ_pwDaa_RTphWAo3z1uIdluTdEcqJK-mQ';
+
 var storeAddress = {
   "SENDER_FULLNAME": "Lê Phan Xuân An",
   "SENDER_ADDRESS": "ngõ 153, PHƯỜNG PHÚ ĐÔ, QUẬN NAM TỪ LIÊM, Hà Nội",
@@ -165,6 +167,40 @@ function loadProductList(callback) {
       dataset = response.result.values;
       // showList(dataset);
       localStorage.setItem("productList",JSON.stringify(dataset));
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
+function loadCustomerList(callback) {
+  var spreadsheetId = customerSheet;
+  var indexColumnOfAllData = 3;
+  var sheetrange = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  // console.log("loadProductList:"+sheetrange);
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("customerList",JSON.stringify(dataset));
 
       callback(dataset);
   }, function(response) {

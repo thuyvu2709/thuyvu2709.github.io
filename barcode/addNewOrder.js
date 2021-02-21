@@ -28,6 +28,16 @@ if (makeCopy) {
 	}
 }
 
+// var availableTutorials  =  [
+//    "ActionScript",
+//    "Bootstrap",
+//    "C",
+//    "C++",
+// ];
+// $( "#customerName" ).autocomplete({
+//    source: availableTutorials
+// });
+
 var triggerAfterLoad = function(){
 	
 	// console.log("triggerAfterLoad");
@@ -47,6 +57,14 @@ var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
+	})
+
+	loadCustomerList(function(){
+		customerList = JSON.parse(localStorage.getItem("customerList"));
+		var lsCusName = [];
+		for (var e in customerList) {
+			lsCusName.push(customerList[e][2]);
+		}
 	})
 };
 
