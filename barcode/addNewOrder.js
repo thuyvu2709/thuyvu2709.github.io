@@ -691,7 +691,7 @@ $("#btnPrintOrder").click(function(){
 $("#saveCustomerInfor").click(function(){
 	$("#loadingSpin").show();
 	var data = [
-		[$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
+		["'"+$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
 	]
 	var indexColumnOfAllData = 3;
 	var range = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);

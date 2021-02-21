@@ -981,3 +981,17 @@ $(".deleteelement").click(function(){
 	$("#collapse_"+cardIndex).collapse();
 	$("#collapse_"+cardIndex).empty();
 })
+
+
+$("#saveCustomerInfor").click(function(){
+	$("#loadingSpin").show();
+	var data = [
+		["'"+$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
+	]
+	var indexColumnOfAllData = 3;
+	var range = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+	addCommonData(customerSheet, data,range,function(){
+		$("#loadingSpin").hide();
+	})
+})
