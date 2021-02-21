@@ -53,6 +53,9 @@ var triggerAfterLoad = function(){
 		customerList = JSON.parse(localStorage.getItem("customerList"));
 		var lsCusName = [];
 		for (var e in customerList) {
+			if (e==0) {
+				continue;
+			}
 			lsCusName.push({
 				label : customerList[e][1],
 				value : customerList[e][1],
