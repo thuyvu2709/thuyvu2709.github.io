@@ -956,6 +956,45 @@ function editCommonData(spreadsheetId, data,range,callback){
     });
 }
 
+function addCommonData(spreadsheetId, data,range,callback){
+  
+  // var sheetrange = range;
+
+  // console.log(sheetrange);
+  // console.log("editCommonData:"+spreadsheetId);
+  // console.log(data);
+  // console.log(range);
+  if (passDataLocalhost) {
+    callback();
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.append({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: "USER_ENTERED",
+        resource: {
+            "majorDimension": "ROWS",
+            "values": data
+        }
+    }).then(function(response) {
+        var result = response.result;
+      // console.log(`${result.updatedCells} cells updated.`);
+      // $("#modelContent").html("Đã lưu đơn hàng");
+      // $('#myModal').modal('toggle');
+        callback();
+
+    }, function(response) {
+        console.log('Error: ' + response.result.error.message);
+    });
+
+}
+
 
 function editProduct(dataEditP, range,callback, callbackError) {
   

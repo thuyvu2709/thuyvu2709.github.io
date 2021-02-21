@@ -688,6 +688,19 @@ $("#btnPrintOrder").click(function(){
 	// window.print();
 })
 
+$("#saveCustomerInfor").click(function(){
+	$("#loadingSpin").show();
+	var data = [
+		[$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
+	]
+	var indexColumnOfAllData = 3;
+	var sheetrange = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+	addCommonData(customerSheet, data,range,function(){
+		$("#loadingSpin").hide();
+	})
+})
+
 // $(".click-to-fix-address").click(function(){
 
 //   $("#modelContent").html(content);
