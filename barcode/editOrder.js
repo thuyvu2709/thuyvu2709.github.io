@@ -48,6 +48,29 @@ var triggerAfterLoad = function(){
 	loadImportScheduleList(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 	})
+
+	loadCustomerList(function(){
+		customerList = JSON.parse(localStorage.getItem("customerList"));
+		var lsCusName = [];
+		for (var e in customerList) {
+			lsCusName.push({
+				label : customerList[e][1],
+				value : customerList[e][1],
+				data : customerList[e]
+			});
+		}
+		// console.log(lsCusName);
+		$( "#customerName" ).autocomplete({
+			source: lsCusName,
+			select: function( event, ui ) {
+				// console.log(event);
+				// console.log(ui);
+				// $("#customerName").val(ui.item.);
+				$("#customerAddress").val(ui.item.data[2]);
+				$("#customerPhone").val(ui.item.data[0]);
+			}
+		});
+	})
 };
 
 $("#orderCode").val(currentOrder.orderCode);
