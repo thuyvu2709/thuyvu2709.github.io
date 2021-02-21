@@ -999,12 +999,15 @@ function loadOrderListHtml() {
     var totalOwnerPay = 0;
     var totalProfit = 0;
     var numOfProd = 0;
+    var lsOrderCodeSelected = [];
     $('.checkbox').each(function(){ 
         // this.checked = true; });
         if (this.checked){
           numOfOrder = numOfOrder + 1
           var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
           var currentOrder=getOrder(orderIndex);
+
+          lsOrderCodeSelected.push(currentOrder.orderCode);
           totalPay = totalPay + parseInt(currentOrder.totalPay);
           for  (e in currentOrder.prodListOrder) {
             totalOwnerPay = totalOwnerPay + parseInt(currentOrder.prodListOrder[e].totalPay)*parseInt(currentOrder.prodListOrder[e].productCount);
@@ -1028,7 +1031,15 @@ function loadOrderListHtml() {
                   ;
     $("#modelContent").html(content);
 
-    $(".mergeOrder").click(mergeOrder);
+    $(".mergeOrder").click(function(){
+      // console.log(lsOrderCodeSelected);
+      var mergedOrderCodeInput = $(".mergeByOrder").val();
+      if (mergedOrderCodeInput && lsOrderCodeSelected.includes(mergedOrderCodeInput)) {
+            mergeOrder();          
+      } else {
+        $(".mergeByOrder").val("Sai gì đó rồi!!!");
+      }
+    });
 
     $("#modalYes").click(function(){
     })
