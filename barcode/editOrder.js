@@ -4,6 +4,7 @@ var sheetOrder = "Order";
 var sheetOrderDetail = "OrderDetail";
 
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
+var choosenCustomerIndex = -1;
 
 
 // console.log(currentOrder);
@@ -59,7 +60,8 @@ var triggerAfterLoad = function(){
 			lsCusName.push({
 				label : customerList[e][1],
 				value : customerList[e][1],
-				data : customerList[e]
+				data : customerList[e],
+				cusIndex : e
 			});
 		}
 		// console.log(lsCusName);
@@ -71,6 +73,8 @@ var triggerAfterLoad = function(){
 				// $("#customerName").val(ui.item.);
 				$("#customerAddress").val(ui.item.data[2]);
 				$("#customerPhone").val(ui.item.data[0]);
+				choosenCustomerIndex = ui.item.cusIndex;
+				$("#saveCustomerInfor").html("Cập nhật T.T Khách")
 			}
 		});
 	})
@@ -994,7 +998,19 @@ $("#saveCustomerInfor").click(function(){
 	var indexColumnOfAllData = 3;
 	var range = 'Customer!A:'+String.fromCharCode(65+indexColumnOfAllData);
 
-	addCommonData(customerSheet, data,range,function(){
-		$("#loadingSpin").hide();
-	})
+	var realCusIndex = -1;
+	if (choosenCustomerIndex>-1) {
+		// console.log("choosenCustomerIndex:"+(parseInt(choosenCustomerIndex)+1));
+		realCusIndex = (parseInt(choosenCustomerIndex)+1);
+		// console.log("realCusIndex:"+realCusIndex);
+		range = 'Customer!A'+realCusIndex+":"+String.fromCharCode(65+indexColumnOfAllData)+realCusIndex;
+		// console.log(range);
+		editCommonData(customerSheet, data,range,function(){
+			$("#loadingSpin").hide();
+		})
+	} else {
+		addCommonData(customerSheet, data,range,function(){
+			$("#loadingSpin").hide();
+		})
+	}
 })
