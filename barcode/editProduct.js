@@ -48,7 +48,7 @@ var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
-		console.log(importSLData);
+		// console.log(importSLData);
 		$("#importSchedule").empty();
 		for (var e in importSLData) {
 			if (e ==0) {
