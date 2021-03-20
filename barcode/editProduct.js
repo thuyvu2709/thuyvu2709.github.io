@@ -221,37 +221,47 @@ function editProductFn(){
     
 	$("#loadingSpin").show();
 
-	if (mode == "edit") {
-	    editProduct(dataEditP, sheetrange,function(){
-			$("#loadingSpin").hide();
+	var dataAppendCatalog = [[
+        productName, //3 D
+        productOriginalCostEur, //5 F
+        productWeight, //6 G
+        productEstimateVND, //11 L
+        productEstimateSellingVND, //12 M
+		prodImageLink, //19 T
+		productEstimateSellingCTV
+    ]]
+    updateProductCatalog(dataAppendCatalog,function(){
+		if (mode == "edit") {
+		    editProduct(dataEditP, sheetrange,function(){
+				$("#loadingSpin").hide();
 
-			localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
+				localStorage.setItem("currentProduct",JSON.stringify(currentProduct));
 
-		    $("#modelContent").html("Đã sửa mặt hàng");
-		    $('#myModal').modal('toggle');
-	    }, function(){
-			$("#loadingSpin").hide();
+			    $("#modelContent").html("Đã sửa mặt hàng");
+			    $('#myModal').modal('toggle');
+		    }, function(){
+				$("#loadingSpin").hide();
 
-		    $("#modelContent").html("Có lỗi, không thể lưu");
-		    $('#myModal').modal('toggle');
-	    })
-	} else if (mode == "duplicate"){
-		appendProduct(dataEditP, function(){
-			$("#loadingSpin").hide();
+			    $("#modelContent").html("Có lỗi, không thể lưu");
+			    $('#myModal').modal('toggle');
+		    })
+		} else if (mode == "duplicate"){
+			appendProduct(dataEditP, function(){
+				$("#loadingSpin").hide();
 
-			$(".btnModal").click(function(){
-				location.reload();
-			})
-			$("#modelContent").html("Đã lưu mặt hàng");
-			$('#myModal').modal('toggle');
-		}, function(){
-			$("#loadingSpin").hide();
+				$(".btnModal").click(function(){
+					location.reload();
+				})
+				$("#modelContent").html("Đã lưu mặt hàng");
+				$('#myModal').modal('toggle');
+			}, function(){
+				$("#loadingSpin").hide();
 
-			$("#modelContent").html("Có lỗi, không thể lưu");
-			$('#myModal').modal('toggle');
-		}); 
-	}
-
+				$("#modelContent").html("Có lỗi, không thể lưu");
+				$('#myModal').modal('toggle');
+			}); 
+		}
+	})
 	// gapi.client.sheets.spreadsheets.values.update({
  //        spreadsheetId: spreadsheetId,
  //        range: sheetrange,
@@ -271,6 +281,28 @@ function editProductFn(){
 	//     $("#modelContent").html("Có lỗi, không thể lưu");
 	//     $('#myModal').modal('toggle');
  //    });
+}
+
+function updateProductCatalog(data, callback) {
+	var indexColumnOfAllData = 7;
+	
+	var range = 'ProductCatalog!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+	if (choosenProductCatalogIndex == -1) { //=>Add into catalog
+		addCommonData(customerSheet, data,range,function(){
+			callback();
+		})
+    } else if (choosenProductCatalogIndex >= 0) { //=>Edit into catalog
+	 	realPCIndex = (parseInt(choosenProductCatalogIndex)+1);
+		// console.log("realCusIndex:"+realCusIndex);
+		range = 'ProductCatalog!A'+realPCIndex+":"+String.fromCharCode(65+indexColumnOfAllData)+realPCIndex;
+		// console.log(range);
+		editCommonData(customerSheet, data,range,function(){
+			callback();
+		})
+    } else {
+    	callback();
+    }
 }
 
 $("#editProduct").click(function(){
