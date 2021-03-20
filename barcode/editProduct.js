@@ -37,6 +37,8 @@ $("#prodImageLink").val(currentProduct.prodImageLink);
 
 $("#imgThumbnail").attr("src",currentProduct.prodImageLink);
 
+var choosenProductCatalogIndex = -2;
+
 
 $("#importSchedule").html("<option value='"+currentProduct.importCode+"'>"+currentProduct.importCode+"</option>")
 
@@ -106,6 +108,7 @@ var triggerAfterLoad = function(){
 				$("#prodImageLink").val(ui.item.data[5]);
 	
 				$("#imgThumbnail").attr("src",ui.item.data[5]);
+				choosenProductCatalogIndex = ui.item.pcIndex;
 
 			}
 		});
