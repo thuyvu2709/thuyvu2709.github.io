@@ -56,6 +56,54 @@ var triggerAfterLoad = function(){
 			}
 		}
 	})
+
+	loadProductCatalogList(function(){
+		productCatalogList = JSON.parse(localStorage.getItem("productCatalogList"));
+
+		var lsPCName = [];
+		for (var e in productCatalogList) {
+			if (e==0) {
+				continue;
+			}
+			lsPCName.push({
+				label : productCatalogList[e][0],
+				value : productCatalogList[e][0],
+				data : productCatalogList[e],
+				pcIndex : e
+			});
+		}
+		// console.log(lsPCName);
+		$( "#productName" ).autocomplete({
+			max:10,
+			source: function(request, response) {
+		        var results = $.ui.autocomplete.filter(lsPCName, request.term);
+
+		        response(results.slice(0, 10));
+		    },
+			select: function( event, ui ) {
+				// console.log(event);
+				console.log(ui);
+				// $("#customerName").val(ui.item.);
+				// $("#customerAddress").val(ui.item.data[2]);
+				// $("#customerPhone").val(ui.item.data[0]);
+				// choosenCustomerIndex = ui.item.cusIndex;
+				// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
+				$("#productName").val(ui.item.data[0]);
+
+				$("#productOriginalCostEur").val(ui.item.data[1]);
+
+				$("#productWeight").val(ui.item.data[2]);
+
+				$("#productEstimateVND").val(ui.item.data[3]);
+
+				$("#productEstimateSellingVND").val(ui.item.data[4]);
+
+				$("#productEstimateSellingCTV").val(ui.item.data[6]);
+
+				$("#prodImageLink").val(ui.item.data[5]);
+			}
+		});
+	})
 }
 
 function editProductFn(){
