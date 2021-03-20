@@ -43,6 +43,8 @@ if (makeCopy) {
 	$("#totalProfit").html(currentProduct.totalProfit);
 
 	$("#prodImageLink").val(currentProduct.prodImageLink);
+	
+	$("#imgThumbnail").attr("src",currentProduct.prodImageLink);
 
 }
 
@@ -108,6 +110,9 @@ var triggerAfterLoad = function(){
 				$("#productEstimateSellingCTV").val(ui.item.data[6]);
 
 				$("#prodImageLink").val(ui.item.data[5]);
+
+				$("#imgThumbnail").attr("src",ui.item.data[5]);
+
 			}
 		});
 	})
@@ -416,6 +421,8 @@ $("#prodScanImage").on("change", function() {
         console.log(response);
         console.log("link:"+JSON.parse(response).data.link);
         $("#prodImageLink").val(JSON.parse(response).data.link);
+
+		$("#imgThumbnail").attr("src",JSON.parse(response).data.link);
 
     	$("#loadingSpin").hide();
 
