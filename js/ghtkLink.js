@@ -27,44 +27,44 @@ var dataOrder = {};
 dataOrder.order={};
 
 
-var triggerAfterLoad = function(){
+// var triggerAfterLoad = function(){
 	
-	// console.log("triggerAfterLoad");
+// 	// console.log("triggerAfterLoad");
 
-	loadCustomerList(function(){
-		customerList = JSON.parse(localStorage.getItem("customerList"));
-		var lsCusName = [];
-		for (var e in customerList) {
-			if (e==0) {
-				continue;
-			}
-			lsCusName.push({
-				label : customerList[e][1],
-				value : customerList[e][1],
-				data : customerList[e],
-				cusIndex : e
-			});
-		}
-		// console.log(lsCusName);
-		$( "#customerName" ).autocomplete({
-			source: function(request, response) {
-		        var results = $.ui.autocomplete.filter(lsCusName, request.term);
+// 	loadCustomerList(function(){
+// 		customerList = JSON.parse(localStorage.getItem("customerList"));
+// 		var lsCusName = [];
+// 		for (var e in customerList) {
+// 			if (e==0) {
+// 				continue;
+// 			}
+// 			lsCusName.push({
+// 				label : customerList[e][1],
+// 				value : customerList[e][1],
+// 				data : customerList[e],
+// 				cusIndex : e
+// 			});
+// 		}
+// 		// console.log(lsCusName);
+// 		$( "#customerName" ).autocomplete({
+// 			source: function(request, response) {
+// 		        var results = $.ui.autocomplete.filter(lsCusName, request.term);
 
-		        response(results.slice(0, 10));
-		    },
-			select: function( event, ui ) {
-				// console.log(event);
-				console.log(ui);
-				// $("#customerName").val(ui.item.);
-				$("#customerAddress").html(ui.item.data[2]);
-				$("#customerPhone").html(ui.item.data[0]);
+// 		        response(results.slice(0, 10));
+// 		    },
+// 			select: function( event, ui ) {
+// 				// console.log(event);
+// 				console.log(ui);
+// 				// $("#customerName").val(ui.item.);
+// 				$("#customerAddress").html(ui.item.data[2]);
+// 				$("#customerPhone").html(ui.item.data[0]);
 
-				currentOrder.customerAddress = ui.item.data[2];
-				currentOrder.customerPhone = ui.item.data[0];
-			}
-		});
-	})
-};
+// 				currentOrder.customerAddress = ui.item.data[2];
+// 				currentOrder.customerPhone = ui.item.data[0];
+// 			}
+// 		});
+// 	})
+// };
 
 function loadPickList() {
 	$("#loadingSpin").show();
