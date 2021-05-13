@@ -100,6 +100,18 @@ function getGHTKOrderStatus(orderId, callback){
 };
 // getOrderStatus("S15549745.HN33.AD4b.935261347")
 
+// $.ajax({
+//             type : "POST",
+//             url  : "https://kenkreck1004.herokuapp.com/giaohangtietkiem.vn/wp-admin/admin-ajax.php",
+//             data : "action=search_package_api&orderId=S14361.MB11.M1.5.989776188&responseRecaptcha=03AGdBq268YwbYtHlLlvbibayuigGva4kmVfcGsUdYonEvvshxtLwfltbVVwH5Lm4HNYcgZed3w1pmRMoQHF2ci643MpEUtD06lCC1ZqclBv-QWtge0LI7SqdUB_J9ABpDHThMZ7352sVsXwX6LI0dQuJAviGDT_li_M8mLa7VkU7CkPBNohtjoGHt7zJaS1vS5iqQef9bV1pMKz99vs0TiFmt5ywNnIfZpPqjeQsKQou3_Pdnm6NAFF53UYnr_BtHgGbt-tP02aEGiHES6rVt-CBqAiGf6EXz5y0sOmlIkxqpiMD222ByKv_yWDfhptyRLqAEky5f3N1iwK01KBSCopAWD_GuV_jLqPojn6pNNWQhzbxM_e2Ns4GuT4AdtLheFLuVWeKgNIQtc4q38_CZVG5nNaTTQhWhG6C642uLWUf5ZvwXF9myJnhnmlbFYXap7dUpKchpnVi9",
+//             success: function(res){  
+//             	console.log(res)
+//             },
+//             error : function(err){  
+//             	console.log(err)
+//             }
+//         });
+
 function calculateTransportFeeAPI(data,callback){
 	serialize = function(obj) {
 	  var str = [];

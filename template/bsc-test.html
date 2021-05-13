@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+function getTokenPrice(tokenAddr,callback) {
+	$.ajax({
+	  url: "https://kenkreck1004.herokuapp.com/https://api.pancakeswap.info/api/v2/tokens/"+tokenAddr,
+//      	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/tx/0x1c99555325227fd0ca517f337485ef0a18c4a018d97d26f6295b201a03fc1443",
+	  headers : {
+	  	"Content-Type": "application/json" 
+	  },
+	  type: 'GET',
+	  success: function(res) {
+		// console.log(res);
+		callback(res)
+	  }
+	});
+}
+
+function getTXDetail(txAddress,callback) {
+	$.ajax({
+	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/tx/"+txAddress,
+//      	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/tx/0x1c99555325227fd0ca517f337485ef0a18c4a018d97d26f6295b201a03fc1443",
+	  headers : {
+	  	"Content-Type": "application/json" 
+	  },
+	  type: 'POST',
+	  success: function(res) {
+		// console.log(res);
+		var data = $.parseHTML(res);  //<----try with $.parseHTML().
+		//		console.log(data)
+		$(data).find('div#ContentPlaceHolder1_maintable').each(function(){
+			// console.log($(this))
+			// console.log("From:",$($(this).find('a#addressCopy')[0]).html())
+			// console.log($($(this).find('a#addressCopy')[0]).html())
+			// console.log("Contract:",$($(this).find('a#contractCopy')[0]).html())
+			// console.log($(this).find("ul#wrapperContent"))
+			wrapperContent = $(this).find("ul#wrapperContent");
+			if (wrapperContent.length != 2 ){
+				callback({})
+				return;
+			}
+			w1 = wrapperContent[0]
+			w2 = wrapperContent[1]
+			tokenName = ($($(w2).find("a")[5]).text()).split(" ")[0]
+			tokenAddress = $($(w2).find("a")[5]).attr("href").replace("/token/","") 
+			tokenAmount = ($($(w2).find("span.mr-1")[9]).text()).split(" ")[0].replaceAll(",","")
+			// console.log($(w2).find("span.mr-1")[9])
+			bnbAmountText = ($($(w2).find("span.mr-1")[4]).text())
+			bnbAmount = bnbAmountText.split(" ")[0]
+			usdAmount = bnbAmountText.split(" ")[1].replace("(","").replace(")","").replace("$","")
+
+			bnbPrice = $($(this).find("span#ContentPlaceHolder1_spanClosingPrice")[0]).text().split(" ")[0].replace("$","")
+			bnbPrice = parseFloat(bnbPrice)
+			usdAmount = parseFloat(usdAmount)
+			tokenAmount = parseFloat(tokenAmount)
+			tokenPrice = (usdAmount/tokenAmount).toFixed(40)
+
+			executionTime = $($($(this).find("div.row")[3]).children()[1]).text().replaceAll("\n","")
+			// console.log("BNB Amount:"+bnbAmount)
+			// console.log("USDT Amount:"+usdtAmount)
+			// console.log("Token Amount:"+tokenAmount)
+			// console.log("TokenName:"+tokenName)
+			// console.log("Token Address:"+tokenAddress)
+			getTokenPrice(tokenAddress, function(res){
+				currentTokenPrice = res.data.price;
+				gainUSD = parseFloat(currentTokenPrice) * tokenAmount - usdAmount;
+				gainUSDRate = parseInt(gainUSD * 100 / usdAmount);
+				currentUSDAmount = parseFloat(currentTokenPrice) * tokenAmount;
+				callback({
+					bnbAmount,usdAmount,tokenAmount,tokenName,tokenAddress,txAddress,bnbPrice,tokenPrice, executionTime, currentTokenPrice, gainUSD, gainUSDRate,currentUSDAmount
+				})
+			})
+		})
+
+	  }
+	});
+}
+
+function collectTXData(txList,callback) {
+	lsTXDetail = []
+
+	var txi = function(txIndex) {
+		// console.log("txIndex:"+txIndex)
+		if (txIndex < txList.length) {
+			getTXDetail(txList[txIndex], function(rs){
+				if (!$.isEmptyObject(rs)) {
+					lsTXDetail.push(rs);
+				}
+				txi(txIndex+1);
+			})
+		} else {
+			callback(lsTXDetail)
+		}
+	}
+	txi(0)
+}
+
+function getTXListFromAddress(address,callback) {
+	$.ajax({
+	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/address/"+address,
+//      	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/tx/0x1c99555325227fd0ca517f337485ef0a18c4a018d97d26f6295b201a03fc1443",
+	  headers : {
+	  	"Content-Type": "application/json" 
+	  },
+	  type: 'POST',
+	  success: function(res) {
+		// console.log(res);
+		var data = $.parseHTML(res);  //<----try with $.parseHTML().
+		//		console.log(data)
+		// $(data).find('a.hash-tag.text-truncate.myFnExpandBox_searchVal').each(function(){
+		// 	tx = $(this).html()
+		// })
+		lsTxHTML = $(data).find('a.hash-tag.text-truncate.myFnExpandBox_searchVal');
+		lsTxText = []
+		for (var i = 0;i<lsTxHTML.length;i++) {
+			// console.log($(lsTxHTML[i]).html())
+			lsTxText.push($(lsTxHTML[i]).html());
+		}
+		callback(lsTxText);
+	  }
+	});
+}
+
+function getPanCakePrice(callback) {
+	$.ajax({
+	  url: "https://kenkreck1004.herokuapp.com/https://api.pancakeswap.info/api/v2/tokens",
+//      	  url: "https://kenkreck1004.herokuapp.com/https://bscscan.com/tx/0x1c99555325227fd0ca517f337485ef0a18c4a018d97d26f6295b201a03fc1443",
+	  headers : {
+	  	"Content-Type": "application/json" 
+	  },
+	  type: 'GET',
+	  success: function(res) {
+		// console.log(res);
+		callback(res)
+	  }
+	});
+}
+
+// USDTAddress = "0x55d398326f99059fF775485246999027B3197955";
+// getTokenPrice(USDTAddress, function(res){
+// 	USDTPrice = res.data.price;
+
+// safemoonaddr = "0x8076C74C5e3F5852037F31Ff0093Eeb8c8ADd8D3"
+// getTokenPrice(safemoonaddr, function(res){
+// 	price = res.data.price;
+// 	console.log(price)
+// 	console.log(USDTPrice)
+// 	console.log(price/USDTPrice)
+// })
+// })
+
+getTXListFromAddress("0x7D0082DF13699028738a093bC4fd9E11598f864d", function(lsTx){
+	// console.log("lsTx")
+	// console.log(lsTx)
+	collectTXData(lsTx, function(lsTXDetail){
+		console.log(lsTXDetail.length)
+		totalGainUSD = 0;
+		for (e=0;e<lsTXDetail.length;e++) {
+			console.log(e+" "+lsTXDetail[e].tokenName+" "+lsTXDetail[e].gainUSD+" "+lsTXDetail[e].gainUSDRate)
+			totalGainUSD = totalGainUSD + lsTXDetail[e].gainUSD;
+			console.log(e)
+		}
+		console.log(lsTXDetail.length)
+
+		console.log("totalGainUSD:"+totalGainUSD)
+		console.log(lsTXDetail)
+	})
+});
+
+// getTXDetail("0x4cb18fde568b9fb144da4a7a05a720b0ad0464aaf02e7854f7a5bf73087badf9",function(rs){
+// 	console.log(rs);
+// })
+
+</script>
+</head>
+<body>
+
+<button>Send an HTTP GET request to a page and get the result back</button>
+
+</body>
+</html>
