@@ -41,7 +41,7 @@ function loadWarehouseHtml(response) {
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD'+
+              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD | '+data[e].gainUSDRate+' % '+
             '</button>'+
           '</h5>'+
         '</div>'+
