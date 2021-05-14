@@ -49,6 +49,7 @@ function loadWarehouseHtml(response) {
     "<span>Thời gian mua:"+data[e].executionTime+"</span></br>"+
     "<span>USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
     "<span>USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
+    "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
     "<span>"+
     "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
     "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa cảnh báo</div>"+
