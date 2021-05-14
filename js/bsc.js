@@ -4,7 +4,7 @@ function loadWarehouse(callback) {
   $.ajax({
     url: "https://bscaddress.herokuapp.com/lastupdate",
     success: function(res) {
-      console.log(res)
+      // console.log(res)
       callback(res);
     }
   });
@@ -14,7 +14,7 @@ $("#forceFetch").click(function(){
   $.ajax({
     url: "https://bscaddress.herokuapp.com/forceupdate",
     success: function(res) {
-      console.log(res)
+      // console.log(res)
       callback(res);
     }
   });
@@ -105,7 +105,7 @@ function fnEditAlertLower() {
   var tokenIndex = $(this).attr("class").split(" ").pop().split("_").pop();
   tokenIndex = parseInt(tokenIndex);
   console.log(data[tokenIndex])
-  alertUpper = $(".alertUpper_"+tokenIndex).val()
+  alertUpper = $(".alertLower_"+tokenIndex).val()
   $.ajax({
     url: "https://bscaddress.herokuapp.com/setalertlower/"+data[tokenIndex].txAddress+"/"+alertUpper,
     success: function(res) {
