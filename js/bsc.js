@@ -1,3 +1,5 @@
+$("#headerInclude").load("../common/header.html");
+
 function loadWarehouse(callback) {
   $.ajax({
     url: "https://kenkreck1004.herokuapp.com/https://bscaddress.herokuapp.com/lastupdate",
@@ -22,18 +24,16 @@ function loadWarehouseHtml(response) {
   $("#listBSC").empty();
   // console.log(data);
   for(var e in data) {
-    var cardBody = "<p>bnbAmount:"+data[e].bnbAmount+"</p></br>"+
-    "<p>usdAmount:"+data[e].usdAmount+"</p></br>"+
-    "<p>tokenAmount:"+data[e].tokenAmount+"</p></br>"+
-    "<p>tokenName:"+data[e].tokenName+"</p></br>"+
-    "<p>tokenAddress:"+data[e].tokenAddress+"</p></br>"+
-    "<p>bnbPrice:"+data[e].bnbPrice+"</p></br>"+
-    "<p>tokenPrice:"+data[e].tokenPrice+"</p></br>"+
-    "<p>executionTime:"+data[e].executionTime+"</p></br>"+
-    "<p>currentTokenPrice:"+data[e].currentTokenPrice+"</p></br>"+
-    "<p>gainUSD:"+data[e].gainUSD+"</p></br>"+
-    "<p>gainUSDRate:"+data[e].gainUSDRate+"</p></br>"+
-    "<p>currentUSDAmount:"+data[e].currentUSDAmount+"</p></br>";
+    var cardBody = 
+    "<span>USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
+    "<span>Giá token lúc mua:"+data[e].tokenPrice+"</span></br>"+
+    "<span>USD hiện tại:"+data[e].currentUSDAmount+"</span></br>"+
+    "<span>Giá token hiện tại:"+data[e].currentTokenPrice+"</span></br>"+
+    "<span>Số lượng token:"+data[e].tokenAmount+"</span></br>"+
+    "<span>Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
+    "<span>Thời gian mua:"+data[e].executionTime+"</span></br>"+
+    "<span>USD lãi:"+data[e].gainUSD+"</span></br>"+
+    "<span>USD % lãi:"+data[e].gainUSDRate+"</span>";
 
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
