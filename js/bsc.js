@@ -10,6 +10,16 @@ function loadWarehouse(callback) {
   });
 }
 
+$("#forceFetch").click(function(){
+  $.ajax({
+    url: "https://bscaddress.herokuapp.com/forceupdate",
+    success: function(res) {
+      console.log(res)
+      callback(res);
+    }
+  });
+})
+
 $("#loadingSpin").show();
 
 loadWarehouse(function(response){
@@ -23,6 +33,8 @@ var data;
 function loadWarehouseHtml(response) {
   data = response.tx;
   var lastUpdate = response.last
+  var timeAfterLast = (parseFloat(response.timeAfterLast) / (1000*60)).toFixed(1)
+  $("#infor").html("Cập nhật lần cuối:"+timeAfterLast+" phút trước")
   $("#listBSC").empty();
   // console.log(data);
   for(var e in data) {
