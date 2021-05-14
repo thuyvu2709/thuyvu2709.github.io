@@ -2,7 +2,7 @@ $("#headerInclude").load("../common/header.html");
 
 function loadWarehouse(callback) {
   $.ajax({
-    url: "https://kenkreck1004.herokuapp.com/https://bscaddress.herokuapp.com/lastupdate",
+    url: "https://bscaddress.herokuapp.com/lastupdate",
     success: function(res) {
       console.log(res)
       callback(res);
@@ -18,12 +18,15 @@ loadWarehouse(function(response){
   loadWarehouseHtml(response);
 })
 
+var data;
+
 function loadWarehouseHtml(response) {
-  var data = response.tx;
+  data = response.tx;
   var lastUpdate = response.last
   $("#listBSC").empty();
   // console.log(data);
   for(var e in data) {
+    alertUpper = parseFloat(data[e].alertUpper || 0);
     var cardBody = 
     "<span>USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
     "<span>Giá token lúc mua:"+data[e].tokenPrice+"</span></br>"+
@@ -33,7 +36,12 @@ function loadWarehouseHtml(response) {
     "<span>Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
     "<span>Thời gian mua:"+data[e].executionTime+"</span></br>"+
     "<span>USD lãi:"+data[e].gainUSD+"</span></br>"+
-    "<span>USD % lãi:"+data[e].gainUSDRate+"</span>";
+    "<span>USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
+    "<span>"+
+    "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
+    "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa cảnh báo</div>"+
+    "</span>";
+
 
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
@@ -54,4 +62,18 @@ function loadWarehouseHtml(response) {
       '</div>'
       )
   }
+  $(".editAlertUpper").click(fnEditAlertUpper)
 };
+
+function fnEditAlertUpper() {
+  var tokenIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  tokenIndex = parseInt(tokenIndex);
+  console.log(data[tokenIndex])
+  alertUpper = $(".alertUpper_"+tokenIndex).val()
+  $.ajax({
+    url: "https://bscaddress.herokuapp.com/setalert/"+data[tokenIndex].txAddress+"/"+alertUpper,
+    success: function(res) {
+      console.log(res)
+    }
+  });
+}
