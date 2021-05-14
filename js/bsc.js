@@ -39,20 +39,26 @@ function loadWarehouseHtml(response) {
   // console.log(data);
   for(var e in data) {
     alertUpper = parseFloat(data[e].alertUpper || 0);
+    alertLower = parseFloat(data[e].alertLower || 0);
+
     var cardBody = 
-    "<span>USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
-    "<span>Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(10)+"</span></br>"+
-    "<span>USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
-    "<span>Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(10)+"</span></br>"+
-    "<span>Số lượng token:"+data[e].tokenAmount+"</span></br>"+
-    "<span>Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
-    "<span>Thời gian mua:"+data[e].executionTime+"</span></br>"+
-    "<span>USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
-    "<span>USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
+    "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
+    "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(10)+"</span></br>"+
+    "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
+    "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(10)+"</span></br>"+
+    "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
+    "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
+    "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
+    "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
+    "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
     "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
     "<span>"+
     "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
-    "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa cảnh báo</div>"+
+    "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa Upper</div>"+
+    "</span><br/>"+
+    "<span>"+
+    "   <input class='alertLower alertLower_"+e+"' value='"+alertLower+"'>"+
+    "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
     "</span>";
 
 
@@ -76,6 +82,8 @@ function loadWarehouseHtml(response) {
       )
   }
   $(".editAlertUpper").click(fnEditAlertUpper)
+  $(".editAlertLower").click(fnEditAlertLower)
+
 };
 
 function fnEditAlertUpper() {
@@ -84,7 +92,22 @@ function fnEditAlertUpper() {
   console.log(data[tokenIndex])
   alertUpper = $(".alertUpper_"+tokenIndex).val()
   $.ajax({
-    url: "https://bscaddress.herokuapp.com/setalert/"+data[tokenIndex].txAddress+"/"+alertUpper,
+    url: "https://bscaddress.herokuapp.com/setalertupper/"+data[tokenIndex].txAddress+"/"+alertUpper,
+    success: function(res) {
+      console.log(res)
+        $("#myModal .modal-body").html("Đã cập nhật xong");
+        $('#myModal').modal('toggle');
+    }
+  });
+}
+
+function fnEditAlertLower() {
+  var tokenIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  tokenIndex = parseInt(tokenIndex);
+  console.log(data[tokenIndex])
+  alertUpper = $(".alertUpper_"+tokenIndex).val()
+  $.ajax({
+    url: "https://bscaddress.herokuapp.com/setalertlower/"+data[tokenIndex].txAddress+"/"+alertUpper,
     success: function(res) {
       console.log(res)
         $("#myModal .modal-body").html("Đã cập nhật xong");
