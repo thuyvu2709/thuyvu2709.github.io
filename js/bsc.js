@@ -46,9 +46,9 @@ function loadWarehouseHtml(response) {
 
     var cardBody = 
     "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
-    "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(10)+"</span></br>"+
+    "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
     "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
-    "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(10)+"</span></br>"+
+    "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(15)+"</span></br>"+
     "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
     "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
     "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
