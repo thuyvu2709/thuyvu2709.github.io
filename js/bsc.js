@@ -38,8 +38,11 @@ function loadWarehouseHtml(response) {
   $("#listBSC").empty();
   // console.log(data);
   for(var e in data) {
+    // console.log(data[e])
     alertUpper = parseFloat(data[e].alertUpper || 0);
     alertLower = parseFloat(data[e].alertLower || 0);
+
+    // priceLastToUpdate = parseFloat(data[e].priceLastToUpdate) % 1000;
 
     var cardBody = 
     "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
@@ -51,6 +54,7 @@ function loadWarehouseHtml(response) {
     "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
     "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
     "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
+    // "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
     "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
     "<span>"+
     "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
@@ -61,14 +65,14 @@ function loadWarehouseHtml(response) {
     "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
     "</span>";
 
-
+    txLive = data[e].priceSource == "web3" ? "| Live" : "";
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD | '+data[e].gainUSDRate+' % '+
+              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD | '+data[e].gainUSDRate+' % '+ txLive +
             '</button>'+
           '</h5>'+
         '</div>'+
