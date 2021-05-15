@@ -42,7 +42,7 @@ function loadWarehouseHtml(response) {
     alertUpper = parseFloat(data[e].alertUpper || 0);
     alertLower = parseFloat(data[e].alertLower || 0);
 
-    // priceLastToUpdate = parseFloat(data[e].priceLastToUpdate) % 1000;
+    priceLastToUpdate = parseFloat(data[e].priceLastToUpdate) % 1000;
 
     var cardBody = 
     "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
@@ -54,7 +54,7 @@ function loadWarehouseHtml(response) {
     "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
     "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
     "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
-    // "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
+    "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
     "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
     "<span>"+
     "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
