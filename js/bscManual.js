@@ -63,11 +63,13 @@ function loadBSCTransactionHMTL() {
       }
     }
     cardBody = cardBody + "</tbody> </table><br/>";
+    // console.log(coins[e][4])
+    // console.log(coins[e][4] != "0" && coins[e][4])
     cardBody = cardBody + 
       "• <span class='btn btn-default btnNormal addTX addTX_"+e+"'>Thêm giao dịch</span></br>"+
       "<span>• Giá mua trung bình:"+parseFloat(coins[e][3]).toFixed(2)+" USD</span></br>"+
       "<span>• Tổng tiền thanh toán:"+parseFloat(coins[e][2]).toFixed(2)+" USD</span></br>"+
-      (coins[e][4] != "0" && !coins[e][4] ? "<span>• Địa chỉ token:"+coins[e][4]+"</span></br>" : "");
+      (coins[e][4] != "0" && coins[e][4] ? "<span>• Địa chỉ token:"+coins[e][4]+"</span></br>" : "");
 
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
