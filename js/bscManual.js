@@ -2,7 +2,7 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
   loadBSCCoin(function(){
-
+    
     loadBSCTransaction(function(){
       $("#loadingSpin").hide();
       console.log("Gooo");
