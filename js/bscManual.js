@@ -26,12 +26,19 @@ function loadBSCTransactionHMTL() {
 
     var coinName = coins[e][0];
 
-    var cardBody = "<table class='txBscTbl'> <tr> <th>STT</th> <th>Giá (USD)</th> <th>Số lượng</th> <th>Tổng (USD)</th> </tr> <tbody> "
+    var cardBody = "<table class='txBscTbl'> <tr> <th>STT</th> <th>Giá</th> <th>Số lượng</th> <th>Tổng</th> <th>Thời gian</th> <th>Sửa</th></tr><tbody> "
     var txCount =0;
     for(var et in transaction) {
       if (transaction[et][0] == coinName) {
         txCount=txCount+1
-        cardBody=cardBody + "<tr> <td>"+txCount+"</td><td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][2]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>  </tr>"
+        cardBody=cardBody + "<tr> "+
+          "<td>"+txCount+"</td>"+
+          "<td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td>"+
+          "<td>"+parseFloat(transaction[et][2]).toFixed(2)+"</td>"+
+          "<td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>"+
+          "<td>"+(transaction[et][4] ? transaction[et][4] :"")+"</td>"+
+          "<td><i class='fas fa-edit editTX editTX_"+e+"'></i></td>"+
+          "</tr>"
       }
     }
     cardBody = cardBody + "</tbody> </table><br/>";

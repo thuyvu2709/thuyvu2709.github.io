@@ -17,10 +17,11 @@
 	border: 2px solid;	  
 }
 
-.txBscTbl tr,td {
+.txBscTbl td {
 	border: 1px solid;
 }
 
 .txBscTbl {
 	width: 100%;
+	text-align: center;
 }
