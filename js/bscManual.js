@@ -26,7 +26,7 @@ function loadBSCTransactionHMTL() {
 
     var coinName = coins[e][0];
 
-    var cardBody = "<table class='txBscTbl'> <tr> <th>STT</th> <th>Giá</th> <th>Số lượng</th> <th>Tổng</th> <th>Thời gian</th> <th>Sửa</th></tr><tbody> "
+    var cardBody = "<table class='txBscTbl'> <tr> <th>No</th> <th>Giá</th> <th>SL</th> <th>Tổng</th> <th>Thời gian</th> <th>Sửa</th></tr><tbody> "
     var txCount =0;
     for(var et in transaction) {
       if (transaction[et][0] == coinName) {
