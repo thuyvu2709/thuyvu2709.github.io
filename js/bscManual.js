@@ -27,6 +27,7 @@ function loadBSCTransactionHMTL() {
 
   $("#listBSC").empty();
   // console.log(data);
+  var totalPay = 0;
   for(var e in coins) {
     if (e==0 || !coins[e][0]) {
       continue;
@@ -59,7 +60,9 @@ function loadBSCTransactionHMTL() {
           "<td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>"+
           "<td>"+(transaction[et][4] ? transaction[et][4] :"")+"</td>"+
           "<td><i class='fas fa-edit editTX editTX_"+et+"'></i></td>"+
-          "</tr>"
+          "</tr>";
+
+        totalPay = totalPay + parseFloat(transaction[et][3]);
       }
     }
     cardBody = cardBody + "</tbody> </table><br/>";
@@ -92,6 +95,7 @@ function loadBSCTransactionHMTL() {
   }
   $(".addTX").click(addTransaction)
   $(".editTX").click(editTransaction)
+  $("#note").html("Tổng tiền đã thanh toán:"+totalPay.toFixed(2)+" USD");
   addSortableColumns();
 };
 
