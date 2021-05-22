@@ -242,6 +242,40 @@ function loadProductCatalogList(callback) {
   });
 }
 
+function loadBSCTransaction(callback) {
+  var spreadsheetId = customerSheet;
+  var indexColumnOfAllData = 5;
+  var sheetrange = 'BSC!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  // console.log("loadProductList:"+sheetrange);
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("BSC",JSON.stringify(dataset));
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
 function loadImportScheduleList(callback) {
   var spreadsheetId = mainSheetForProduct;
   var indexColumnOfAllData = 5;
