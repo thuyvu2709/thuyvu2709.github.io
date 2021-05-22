@@ -195,7 +195,7 @@ function addFnTX() {
 
     // console.log($(".txPrice").val())
     var data = [
-      [coinData[0],$(".txPrice").val(),$(".txCount").val(),"=B2*C2",$(".txDate").val()]
+      [coinData[0],$(".txPrice").val(),$(".txCount").val(),"=INDIRECT(ADDRESS(ROW(),3))*INDIRECT(ADDRESS(ROW(),2))",$(".txDate").val()]
     ]
     // console.log(data);
     // console.log(bscSheet);
