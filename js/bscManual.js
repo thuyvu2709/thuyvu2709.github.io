@@ -2,7 +2,7 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
   loadBSCCoin(function(){
-    
+    console.log(JSON.parse(localStorage.getItem("BSCCoin")))
     loadBSCTransaction(function(){
       $("#loadingSpin").hide();
       console.log("Gooo");
