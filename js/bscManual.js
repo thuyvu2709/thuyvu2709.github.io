@@ -1,5 +1,4 @@
 var triggerAfterLoad = function(){
-
   $("#loadingSpin").show();
   loadBSCCoin(function(){
     // console.log(JSON.parse(localStorage.getItem("BSCCoin")))
@@ -11,16 +10,19 @@ var triggerAfterLoad = function(){
   })
 }
 
+var coins = []
+var transaction = []
+
 function loadBSCTransactionHMTL() {
-  var coins = JSON.parse(localStorage.getItem("BSCCoin"));
-  var transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
+  coins = JSON.parse(localStorage.getItem("BSCCoin"));
+  transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
   // console.log(coins)
   // console.log(transaction)
 
   $("#listBSC").empty();
   // console.log(data);
   for(var e in coins) {
-    if (e==0) {
+    if (e==0 || !coins[e][0]) {
       continue;
     }
 
@@ -47,26 +49,6 @@ function loadBSCTransactionHMTL() {
       "<span>• Giá mua trung bình:"+parseFloat(coins[e][3]).toFixed(2)+" USD</span></br>"+
       "<span>• Tổng tiền thanh toán:"+parseFloat(coins[e][2]).toFixed(2)+" USD</span></br>";
 
-    // "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
-    // "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
-    // "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
-    // "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(15)+"</span></br>"+
-    // "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
-    // "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
-    // "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
-    // "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
-    // "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
-    // "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
-    // "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
-    // "<span>"+
-    // "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
-    // "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa Upper</div>"+
-    // "</span><br/>"+
-    // "<span>"+
-    // "   <input class='alertLower alertLower_"+e+"' value='"+alertLower+"'>"+
-    // "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
-    // "</span>";
-
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
@@ -86,89 +68,125 @@ function loadBSCTransactionHMTL() {
       '</div>'
       )
   }
-  $(".editAlertUpper").click(fnEditAlertUpper)
-  $(".editAlertLower").click(fnEditAlertLower)
+  $(".addTX").click(addTransaction)
+  $(".editTX").click(editTransaction)
 
 };
 
-function fnEditAlertUpper() {
-  var tokenIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  tokenIndex = parseInt(tokenIndex);
-  console.log(data[tokenIndex])
-  alertUpper = $(".alertUpper_"+tokenIndex).val()
-  $.ajax({
-    url: "https://bscaddress.herokuapp.com/setalertupper/"+data[tokenIndex].txAddress+"/"+alertUpper,
-    success: function(res) {
-      console.log(res)
-        $("#myModal .modal-body").html("Đã cập nhật xong");
-        $('#myModal').modal('toggle');
-    }
-  });
+function editTransaction(){
+  var txIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  txData = transaction[txIndex]
+
+  var modalBody = '<h3>Thông tin giao dịch của '+txData[0]+'</h3><br/>'+
+              '<span>Giá:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txPrice" value="'+txData[1]+'"/>'+
+              '</span><br/>'+
+              '<span>Số lượng:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txCount" value="'+txData[2]+'"/>'+
+              '</span><br/>'+
+              '<span>Ngày:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txDate" value="'+(txData[4] ? txData[4] : "")+'"/>'+
+              '</span><br/>'+
+              "<span class='btn btn-default btnNormal editFnTX editFnTX_"+txIndex+"'>Sửa giao dịch</span>"+
+              "<span class='btn btn-default textRed btnNormal delFnTX delFnTX_"+txIndex+"'>Xoá giao dịch</span></br>"+
+
+              '<br/>'
+              ;
+  $("#myModal .modal-body").html(modalBody);
+
+  $('#myModal').modal('toggle');
+
+  $(".editFnTX").click(editFnTX);
+  $(".delFnTX").click(delFnTX);
+
 }
 
-function fnEditAlertLower() {
-  var tokenIndex = $(this).attr("class").split(" ").pop().split("_").pop();
-  tokenIndex = parseInt(tokenIndex);
-  console.log(data[tokenIndex])
-  alertUpper = $(".alertLower_"+tokenIndex).val()
-  $.ajax({
-    url: "https://bscaddress.herokuapp.com/setalertlower/"+data[tokenIndex].txAddress+"/"+alertUpper,
-    success: function(res) {
-      console.log(res)
-        $("#myModal .modal-body").html("Đã cập nhật xong");
-        $('#myModal').modal('toggle');
-    }
-  });
+
+function editFnTX() {
+    $("#loadingSpin").show();
+
+    var txIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    txData = transaction[txIndex]
+
+    var actualIndexInSheet = parseInt(txIndex) +1;
+    var range = "Transaction!A"+actualIndexInSheet+":E"+actualIndexInSheet;
+
+    // console.log($(".txPrice").val())
+    var data = [
+      [txData[0],$(".txPrice").val(),$(".txCount").val(),"=B2*C2",$(".txDate").val()]
+    ]
+    // console.log(data);
+    // console.log(bscSheet);
+    editCommonData(bscSheet,data, range,function(){
+      $("#loadingSpin").hide();
+    })
 }
 
+function delFnTX() {
+    $("#loadingSpin").show();
 
-function loadBSCToken(response) {
-  data = response.tokens;
-  var lastUpdate = response.last
-  var timeAfterLast = (parseFloat(response.timeAfterLast) / (1000*60)).toFixed(1)
-  $("#infor").html("Cập nhật lần cuối:"+timeAfterLast+" phút trước")
-  $("#listBSC").empty();
-  // console.log(data);
-  for(var e in data) {
-    
+    var txIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    txData = transaction[txIndex]
 
-    priceLastToUpdate = parseFloat(data[e].priceLastToUpdate) % 1000;
+    var actualIndexInSheet = parseInt(txIndex) +1;
+    var range = "Transaction!A"+actualIndexInSheet+":E"+actualIndexInSheet;
 
-    var cardBody = 
-    "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
-    "<span>- Giá token lúc mua cuối:"+parseFloat(data[e].tokenPriceAtBuyingTime).toFixed(15)+"</span></br>"+
-    "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
-    "<span>- Giá token hiện tại:"+parseFloat(data[e].tokenPriceNow).toFixed(15)+"</span></br>"+
-    "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
-    "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
-    "<span>- Lần mua cuối:"+data[e].executionTime+"</span></br>"+
-    "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
-    "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
-    "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
-    "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span>";
+    // console.log($(".txPrice").val())
+    var data = [
+      ["","","","",""]
+    ]
+    // console.log(data);
+    // console.log(bscSheet);
+    editCommonData(bscSheet,data, range,function(){
+      $("#loadingSpin").hide();
+    })
+}
 
-    txLive = data[e].priceSource == "web3" ? "| Live" : "";
+function addTransaction(){
+  var coinIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  coinData = coins[coinIndex]
 
-    $("#listBSC").append(
-      // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
-      '<div class="card cardElement_'+e+'">'+
-        '<div class="card-header" id="heading_"'+e+'>'+
-          '<h5 class="mb-0">'+
-            '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD | '+data[e].gainUSDRate+' % '+ txLive +
-            '</button>'+
-          '</h5>'+
-        '</div>'+
+  var modalBody = '<h3>Thêm giao dịch của '+coinData[0]+'</h3><br/>'+
+              '<span>Giá:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txPrice" value=""/>'+
+              '</span><br/>'+
+              '<span>Số lượng:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txCount" value=""/>'+
+              '</span><br/>'+
+              '<span>Ngày:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="txDate" value=""/>'+
+              '</span><br/>'+
+              "<span class='btn btn-default btnNormal addFnTX addFnTX_"+coinIndex+"'>Thêm giao dịch</span></br>"+
+              '<br/>'
+              ;
+  $("#myModal .modal-body").html(modalBody);
 
-        '<div id="collapse_'+e+'" class="collapse" aria-labelledby="heading_'+e+'" data-parent="#listBSC">'+
-          '<div class="card-body">'+
-            cardBody +
-          '</div>'+
-        '</div>'+
-      '</div>'
-      )
-  }
-  $(".editAlertUpper").click(fnEditAlertUpper)
-  $(".editAlertLower").click(fnEditAlertLower)
+  $('#myModal').modal('toggle');
 
-};
+  $(".addFnTX").click(addFnTX);
+}
+
+function addFnTX() {
+    $("#loadingSpin").show();
+
+    var coinIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    coinData = coins[coinIndex]
+
+    var range = "Transaction!A:E";
+
+    // console.log($(".txPrice").val())
+    var data = [
+      [coinData[0],$(".txPrice").val(),$(".txCount").val(),"=B2*C2",$(".txDate").val()]
+    ]
+    // console.log(data);
+    // console.log(bscSheet);
+    addCommonData(bscSheet,data, range,function(){
+      $("#loadingSpin").hide();
+    })
+}
