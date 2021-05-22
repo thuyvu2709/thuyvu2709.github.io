@@ -25,3 +25,8 @@
 	width: 100%;
 	text-align: center;
 }
+
+.rowRed {
+	background: red;
+	color: white;
+}

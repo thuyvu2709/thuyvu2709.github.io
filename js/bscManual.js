@@ -45,10 +45,17 @@ function loadBSCTransactionHMTL() {
     for(var et in transaction) {
       if (transaction[et][0] == coinName) {
         txCount=txCount+1
-        cardBody=cardBody + "<tr> "+
+        var txCoinCount = parseFloat(transaction[et][2]);
+
+        if (txCoinCount > 0) {
+          cardBody=cardBody + "<tr> ";
+        } else {
+          cardBody=cardBody + "<tr class='rowRed'> ";          
+        }
+        cardBody=cardBody +
           "<td>"+txCount+"</td>"+
           "<td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td>"+
-          "<td>"+parseFloat(transaction[et][2]).toFixed(2)+"</td>"+
+          "<td>"+txCoinCount.toFixed(2)+"</td>"+
           "<td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>"+
           "<td>"+(transaction[et][4] ? transaction[et][4] :"")+"</td>"+
           "<td><i class='fas fa-edit editTX editTX_"+et+"'></i></td>"+
