@@ -231,7 +231,11 @@ function addFnCoin() {
   var range = "Coin!A:E";
 
   var data = [
-    [$(".coinName").val(),"=sumif(Transaction!A:A,A2,Transaction!C:C)","=sumif(Transaction!A:A,A2,Transaction!D:D)","=C2/B2",$(".coinAddress").val()]
+    [$(".coinName").val(),
+     "=sumif(Transaction!A:A,INDIRECT(ADDRESS(ROW(),1)),Transaction!C:C)",
+     "=sumif(Transaction!A:A,INDIRECT(ADDRESS(ROW(),1)),Transaction!D:D)",
+     "=INDIRECT(ADDRESS(ROW(),3))/INDIRECT(ADDRESS(ROW(),2))",
+     $(".coinAddress").val()]
   ]
   // console.log(data);
   // console.log(bscSheet);
