@@ -1,50 +1,47 @@
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
+  loadBSCCoin(function(){
 
-  loadBSCTransaction(function(){
-    $("#loadingSpin").hide();
-    console.log("Gooo");
-    loadBSCTransactionHMTL();
+    loadBSCTransaction(function(){
+      $("#loadingSpin").hide();
+      console.log("Gooo");
+      loadBSCTransactionHMTL();
+    })
   })
 }
 
 function loadBSCTransactionHMTL() {
-  var data = JSON.parse(localStorage.getItem("BSC"));
-  console.log(data)
-  // data = response.tx;
-  var lastUpdate = response.last
-  var timeAfterLast = (parseFloat(response.timeAfterLast) / (1000*60)).toFixed(1)
-  $("#infor").html("Cập nhật lần cuối:"+timeAfterLast+" phút trước")
+  var coins = JSON.parse(localStorage.getItem("BSCCoin"));
+  var transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
+  console.log(coins)
+  console.log(transaction)
+
   $("#listBSC").empty();
   // console.log(data);
-  for(var e in data) {
-    // console.log(data[e])
-    alertUpper = parseFloat(data[e].alertUpper || 0);
-    alertLower = parseFloat(data[e].alertLower || 0);
+  for(var e in coins) {
 
-    priceLastToUpdate = parseFloat(data[e].priceLastToUpdate) % 1000;
 
-    var cardBody = 
-    "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
-    "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
-    "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
-    "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(15)+"</span></br>"+
-    "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
-    "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
-    "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
-    "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
-    "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
-    "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
-    "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
-    "<span>"+
-    "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
-    "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa Upper</div>"+
-    "</span><br/>"+
-    "<span>"+
-    "   <input class='alertLower alertLower_"+e+"' value='"+alertLower+"'>"+
-    "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
-    "</span>";
+    var cardBody = "";
+    // "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
+    // "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
+    // "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
+    // "<span>- Giá token hiện tại:"+parseFloat(data[e].currentTokenPrice).toFixed(15)+"</span></br>"+
+    // "<span>- Số lượng token:"+data[e].tokenAmount+"</span></br>"+
+    // "<span>- Địa chỉ contract:"+data[e].tokenAddress+"</span></br>"+
+    // "<span>- Thời gian mua:"+data[e].executionTime+"</span></br>"+
+    // "<span>- USD lãi:"+parseFloat(data[e].gainUSD).toFixed(2)+"</span></br>"+
+    // "<span>- USD % lãi:"+data[e].gainUSDRate+"</span></br>"+
+    // "<span>- Cập nhật cuối:"+priceLastToUpdate+" s </span></br>"+
+    // "<span><a href='https://poocoin.app/tokens/"+data[e].tokenAddress+"'>Xem chart</a></span></br>"+
+    // "<span>"+
+    // "   <input class='alertUpper alertUpper_"+e+"' value='"+alertUpper+"'>"+
+    // "   <div class='btn btn-default btnNormal editAlertUpper editAlertUpper_"+e+"'>Sửa Upper</div>"+
+    // "</span><br/>"+
+    // "<span>"+
+    // "   <input class='alertLower alertLower_"+e+"' value='"+alertLower+"'>"+
+    // "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
+    // "</span>";
 
     txLive = data[e].priceSource == "web3" ? "| Live" : "";
   	$("#listBSC").append(
@@ -53,7 +50,7 @@ function loadBSCTransactionHMTL() {
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              data[e].tokenName+' | '+parseFloat(data[e].currentUSDAmount).toFixed(2) + ' USD | '+data[e].gainUSDRate+' % '+ txLive +
+              coins[e][0]+' | '+parseFloat(coins[e][3]).toFixed(2) + ' USD | ' +
             '</button>'+
           '</h5>'+
         '</div>'+

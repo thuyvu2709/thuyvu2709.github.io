@@ -43,16 +43,26 @@
   <!-- Portfolio Section -->
   <section class="page-section portfolio" id="portfolio">
     <h2 class="text-center">Quản lý blockchain</h2>
-    <span>
-      By 
-      <a href="bsc.html?filter=transaction">Transaction</a>
-      Or By
-      <a href="bsc.html?filter=token">Token</a>
-    </span><br/>
-    <span id="infor"></span><span class="fas fa-sync" id="forceFetch"></span>
 
+    <div class="btn btn-default">
+      Hiển thị: 
+      <select class="mdb-select md-form" id="importFilter">
+        <option value="-1" selected>Toàn bộ</option>
+        <option value="0">Đợt hàng tồn</option>
+        <option value="1">Đợt hàng cần kiểm</option>
+      </select>
+    </div>
+    <div class="btn btn-default btnNormal addNewProduct"
+        style="float: right">
+        <a href="newImportSchedule.html">
+          <span class="fas fa-plus"></span>
+        </a>
+    </div> 
+
+    <input type="text" id="warehouseSearchInput" class="form-control" placeholder="Tìm kiếm" />
+    
     <div id="listBSC">
-
+      
     </div> 
 
   </section>

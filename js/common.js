@@ -14,6 +14,7 @@ var mainSheetForProduct = '1DD-wAE56uwKK_7Q7rZ5zigPAiMXwoqHKpiyBa6XJLk8';
 var shippingSheet = '1iSGH0EXjdFOeZYDxWcy98Gv3d9CkvlcrraUZuaTR5ZY';
 
 var customerSheet = '1adxYebta3iQ_pwDaa_RTphWAo3z1uIdluTdEcqJK-mQ';
+var bscSheet = '16UKch39mTWBvvyxyrH_KiEBHP7y2l_cQrRpFN8NvMmQ';
 
 var storeAddress = {
   "SENDER_FULLNAME": "Lê Phan Xuân An",
@@ -243,9 +244,9 @@ function loadProductCatalogList(callback) {
 }
 
 function loadBSCTransaction(callback) {
-  var spreadsheetId = customerSheet;
+  var spreadsheetId = bscSheet;
   var indexColumnOfAllData = 5;
-  var sheetrange = 'BSC!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var sheetrange = 'Transaction!A:'+String.fromCharCode(65+indexColumnOfAllData);
   var dataset = [];
 
   // console.log("loadProductList:"+sheetrange);
@@ -268,7 +269,41 @@ function loadBSCTransaction(callback) {
       // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
       // showList(dataset);
-      localStorage.setItem("BSC",JSON.stringify(dataset));
+      localStorage.setItem("BSCTransaction",JSON.stringify(dataset));
+
+      callback(dataset);
+  }, function(response) {
+      console.log('Error: ' + response.result.error.message);
+  });
+}
+
+function loadBSCCoin(callback) {
+  var spreadsheetId = bscSheet;
+  var indexColumnOfAllData = 5;
+  var sheetrange = 'Coin!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var dataset = [];
+
+  // console.log("loadProductList:"+sheetrange);
+
+  if (passDataLocalhost) {
+    callback();
+    return;
+  }
+
+  if(!gapi.client.sheets) {
+    callback();
+    comeBackHomeToAuthorize();
+    return;
+  }
+
+  gapi.client.sheets.spreadsheets.values.get({
+      spreadsheetId: spreadsheetId,
+      range: sheetrange,
+  }).then(function(response) {
+      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+      dataset = response.result.values;
+      // showList(dataset);
+      localStorage.setItem("BSCCoin",JSON.stringify(dataset));
 
       callback(dataset);
   }, function(response) {
