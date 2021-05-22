@@ -135,6 +135,7 @@ function editFnTX() {
     // console.log(bscSheet);
     editCommonData(bscSheet,data, range,function(){
       $("#loadingSpin").hide();
+      $('#myModal').modal('hide');
     })
 }
 
@@ -155,6 +156,7 @@ function delFnTX() {
     // console.log(bscSheet);
     editCommonData(bscSheet,data, range,function(){
       $("#loadingSpin").hide();
+      $('#myModal').modal('hide');
     })
 }
 
@@ -201,6 +203,7 @@ function addFnTX() {
     // console.log(bscSheet);
     addCommonData(bscSheet,data, range,function(){
       $("#loadingSpin").hide();
+      $('#myModal').modal('hide');
     })
 }
 
@@ -241,5 +244,6 @@ function addFnCoin() {
   // console.log(bscSheet);
   addCommonData(bscSheet,data, range,function(){
     $("#loadingSpin").hide();
+    $('#myModal').modal('hide');
   })
 }
