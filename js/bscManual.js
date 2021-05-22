@@ -129,7 +129,7 @@ function editFnTX() {
 
     // console.log($(".txPrice").val())
     var data = [
-      [txData[0],$(".txPrice").val(),$(".txCount").val(),"=B2*C2",$(".txDate").val()]
+      [txData[0],$(".txPrice").val(),$(".txCount").val(),"=INDIRECT(ADDRESS(ROW(),3))*INDIRECT(ADDRESS(ROW(),2))",$(".txDate").val()]
     ]
     // console.log(data);
     // console.log(bscSheet);
