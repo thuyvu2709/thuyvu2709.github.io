@@ -34,7 +34,10 @@ function loadBSCTransactionHMTL() {
         cardBody=cardBody + "<tr> <td>"+txCount+"</td><td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][2]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>  </tr>"
       }
     }
-    cardBody = cardBody + "</tbody> </table>";
+    cardBody = cardBody + "</tbody> </table><br/>";
+    cardBody = cardBody + 
+      "<span>- Giá mua trung bình:"+parseFloat(coins[e][3]).toFixed(2)+" USD</span></br>"+
+      "<span>- Tổng tiền thanh toán:"+parseFloat(coins[e][2]).toFixed(2)+" USD</span></br>";
 
     // "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
     // "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
