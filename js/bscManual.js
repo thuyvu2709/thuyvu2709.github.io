@@ -15,6 +15,10 @@ var transaction = []
 
 $("#addCoin").click(addCoin)
 
+$("#coinSearchInput").change(function(){
+  loadBSCTransactionHMTL();
+});
+
 function loadBSCTransactionHMTL() {
   coins = JSON.parse(localStorage.getItem("BSCCoin"));
   transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
@@ -29,6 +33,12 @@ function loadBSCTransactionHMTL() {
     }
 
     var coinName = coins[e][0];
+
+    if ($("#coinSearchInput").val()) {
+      if (!coinName.toUpperCase().includes($("#coinSearchInput").val().toUpperCase())){
+        continue;
+      }
+    }
 
     var cardBody = "<table class='txBscTbl'> <tr> <th>No</th> <th>Giá</th> <th>SL</th> <th>Tổng</th> <th>Thời gian</th> <th>Sửa</th></tr><tbody> "
     var txCount =0;
