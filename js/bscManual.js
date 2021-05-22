@@ -13,6 +13,8 @@ var triggerAfterLoad = function(){
 var coins = []
 var transaction = []
 
+$("#addCoin").click(addCoin)
+
 function loadBSCTransactionHMTL() {
   coins = JSON.parse(localStorage.getItem("BSCCoin"));
   transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
@@ -189,4 +191,40 @@ function addFnTX() {
     addCommonData(bscSheet,data, range,function(){
       $("#loadingSpin").hide();
     })
+}
+
+function addCoin(){
+
+  var modalBody = '<h3>Thêm thông tin coin</h3><br/>'+
+              '<span>Tên coin:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="coinName" value=""/>'+
+              '</span><br/>'+
+              '<span>Địa chỉ token:</span><br/>'+
+              '<span class="btn btn-default btnNormal">'+
+              ' <input class="coinAddress" value=""/>'+
+              '</span><br/>'+
+              "<span class='btn btn-default btnNormal addFnCoin'>Thêm Coin</span></br>"+
+              '<br/>'
+              ;
+  $("#myModal .modal-body").html(modalBody);
+
+  $('#myModal').modal('toggle');
+
+  $(".addFnCoin").click(addFnCoin);
+}
+
+function addFnCoin() {
+  $("#loadingSpin").show();
+
+  var range = "Coin!A:E";
+
+  var data = [
+    [$(".coinName").val(),"=sumif(Transaction!A:A,A2,Transaction!C:C)","=sumif(Transaction!A:A,A2,Transaction!D:D)","=C2/B2",$(".coinAddress").val()]
+  ]
+  // console.log(data);
+  // console.log(bscSheet);
+  addCommonData(bscSheet,data, range,function(){
+    $("#loadingSpin").hide();
+  })
 }
