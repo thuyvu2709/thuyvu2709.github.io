@@ -2,7 +2,7 @@ var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
   loadBSCCoin(function(){
-    console.log(JSON.parse(localStorage.getItem("BSCCoin")))
+    // console.log(JSON.parse(localStorage.getItem("BSCCoin")))
     loadBSCTransaction(function(){
       $("#loadingSpin").hide();
       console.log("Gooo");
@@ -14,15 +14,28 @@ var triggerAfterLoad = function(){
 function loadBSCTransactionHMTL() {
   var coins = JSON.parse(localStorage.getItem("BSCCoin"));
   var transaction = JSON.parse(localStorage.getItem("BSCTransaction"));
-  console.log(coins)
-  console.log(transaction)
+  // console.log(coins)
+  // console.log(transaction)
 
   $("#listBSC").empty();
   // console.log(data);
   for(var e in coins) {
+    if (e==0) {
+      continue;
+    }
 
+    var coinName = coins[e][0];
 
-    var cardBody = "";
+    var cardBody = "<table class='txBscTbl'> <tr> <th>STT</th> <th>Giá</th> <th>SL</th> <th>Tổng</th> </tr> <tbody> "
+    var txCount =0;
+    for(var et in transaction) {
+      if (transaction[et][0] == coinName) {
+        txCount=txCount+1
+        cardBody=cardBody + "<tr> <td>"+txCount+"</td><td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][2]).toFixed(2)+"</td><td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>  </tr>"
+      }
+    }
+    cardBody = cardBody + "</tbody> </table>";
+
     // "<span>- USD lúc mua token:"+data[e].usdAmount+"</span></br>"+
     // "<span>- Giá token lúc mua:"+parseFloat(data[e].tokenPrice).toFixed(15)+"</span></br>"+
     // "<span>- USD hiện tại:"+parseFloat(data[e].currentUSDAmount).toFixed(2)+"</span></br>"+
@@ -43,14 +56,13 @@ function loadBSCTransactionHMTL() {
     // "   <div class='btn btn-default btnNormal editAlertLower editAlertLower_"+e+"'>Sửa Lower</div>"+
     // "</span>";
 
-    txLive = data[e].priceSource == "web3" ? "| Live" : "";
   	$("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+e+'">'+
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              coins[e][0]+' | '+parseFloat(coins[e][3]).toFixed(2) + ' USD | ' +
+              coins[e][0]+' | '+parseFloat(coins[e][3]).toFixed(2) + ' | ' + parseFloat(coins[e][2]).toFixed(2) + " USD "+
             '</button>'+
           '</h5>'+
         '</div>'+

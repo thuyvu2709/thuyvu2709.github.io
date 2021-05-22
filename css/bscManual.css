@@ -1,0 +1,26 @@
+.prodImage {
+	max-width:50%;
+}
+/*#importFilte {
+	max-width:300px;
+}*/
+
+.iconMove {
+	border : 1px solid;
+	padding-left: 15px;
+	padding-right: 15px; 
+	margin-left: 20px;
+}
+
+.checkbox {
+	color: #c57e0f !important;
+	border: 2px solid;	  
+}
+
+.txBscTbl tr,td {
+	border: 1px solid;
+}
+
+.txBscTbl {
+	width: 100%;
+}
