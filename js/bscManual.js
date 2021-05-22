@@ -110,7 +110,7 @@ function editTransaction(){
               '</span><br/>'+
               '<span>Ngày:</span><br/>'+
               '<span class="btn btn-default btnNormal">'+
-              ' <input class="txDate" value="'+(txData[4] ? txData[4] : "")+'"/>'+
+              ' <input class="txDate" value=""/>'+
               '</span><br/>'+
               "<span class='btn btn-default btnNormal editFnTX editFnTX_"+txIndex+"'>Sửa giao dịch</span>"+
               "<span class='btn btn-default textRed btnNormal delFnTX delFnTX_"+txIndex+"'>Xoá giao dịch</span></br>"+
@@ -120,6 +120,16 @@ function editTransaction(){
   $("#myModal .modal-body").html(modalBody);
 
   $('#myModal').modal('toggle');
+
+  $('.txDate').daterangepicker({
+      singleDatePicker: true,
+  }, function(start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY/MM/DD'));
+  });
+
+  if (txData[4]){
+    $('.txDate').val(txData[4])
+  }
 
   $(".editFnTX").click(editFnTX);
   $(".delFnTX").click(delFnTX);
@@ -192,6 +202,13 @@ function addTransaction(){
   $("#myModal .modal-body").html(modalBody);
 
   $('#myModal').modal('toggle');
+
+// Ref: https://www.daterangepicker.com
+  $('.txDate').daterangepicker({
+        singleDatePicker: true,
+    }, function(start, end, label) {
+      console.log("A new date selection was made: " + start.format('YYYY/MM/DD'));
+    });
 
   $(".addFnTX").click(addFnTX);
 }
