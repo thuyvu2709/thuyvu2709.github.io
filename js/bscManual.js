@@ -13,6 +13,8 @@ var triggerAfterLoad = function(){
 var coins = []
 var transaction = []
 
+var numOfDecimal = 5;
+
 $("#addCoin").click(addCoin)
 
 $("#coinSearchInput").change(function(){
@@ -55,9 +57,9 @@ function loadBSCTransactionHMTL() {
         }
         cardBody=cardBody +
           "<td>"+txCount+"</td>"+
-          "<td>"+parseFloat(transaction[et][1]).toFixed(2)+"</td>"+
-          "<td>"+txCoinCount.toFixed(2)+"</td>"+
-          "<td>"+parseFloat(transaction[et][3]).toFixed(2)+"</td>"+
+          "<td>"+parseFloat(transaction[et][1]).toFixed(numOfDecimal)+"</td>"+
+          "<td>"+txCoinCount.toFixed(numOfDecimal)+"</td>"+
+          "<td>"+parseFloat(transaction[et][3]).toFixed(numOfDecimal)+"</td>"+
           "<td>"+(transaction[et][4] ? transaction[et][4] :"")+"</td>"+
           "<td><i class='fas fa-edit editTX editTX_"+et+"'></i></td>"+
           "</tr>";
@@ -70,8 +72,9 @@ function loadBSCTransactionHMTL() {
     // console.log(coins[e][4] != "0" && coins[e][4])
     cardBody = cardBody + 
       "• <span class='btn btn-default btnNormal addTX addTX_"+e+"'>Thêm giao dịch</span></br>"+
-      "<span>• Giá mua trung bình:"+parseFloat(coins[e][3]).toFixed(2)+" USD</span></br>"+
-      "<span>• Tổng tiền thanh toán:"+parseFloat(coins[e][2]).toFixed(2)+" USD</span></br>"+
+      "<span>• Giá mua trung bình:"+parseFloat(coins[e][3]).toFixed(numOfDecimal)+" USD</span></br>"+
+      "<span>• Tổng tiền thanh toán:"+parseFloat(coins[e][2]).toFixed(numOfDecimal)+" USD</span></br>"+
+      "<span>• Tổng số token:"+parseFloat(coins[e][1]).toFixed(numOfDecimal)+" Token</span></br>"+
       (coins[e][4] != "0" && coins[e][4] ? "<span>• Địa chỉ token:"+coins[e][4]+"</span></br>" : "");
 
   	$("#listBSC").append(
@@ -80,7 +83,7 @@ function loadBSCTransactionHMTL() {
         '<div class="card-header" id="heading_"'+e+'>'+
           '<h5 class="mb-0">'+
             '<button class="btn btn-link btnOrder_'+e+'" data-toggle="collapse" data-target="#collapse_'+e+'" aria-expanded="false" aria-controls="collapse_'+e+'">'+
-              coins[e][0]+' | '+parseFloat(coins[e][3]).toFixed(2) + ' | ' + parseFloat(coins[e][2]).toFixed(2) + " USD "+
+              coins[e][0]+' | '+parseFloat(coins[e][3]).toFixed(numOfDecimal) + ' | ' + parseFloat(coins[e][2]).toFixed(numOfDecimal) + " USD "+
             '</button>'+
           '</h5>'+
         '</div>'+
@@ -95,7 +98,7 @@ function loadBSCTransactionHMTL() {
   }
   $(".addTX").click(addTransaction)
   $(".editTX").click(editTransaction)
-  $("#note").html("Tổng tiền đã thanh toán:"+totalPay.toFixed(2)+" USD");
+  $("#note").html("Tổng tiền đã thanh toán:"+totalPay.toFixed(numOfDecimal)+" USD");
   addSortableColumns();
 };
 
