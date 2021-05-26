@@ -500,17 +500,30 @@ function loadOrderShippingListHtml() {
       if (lsOrderDetail[lsOrder[e][0]].otherInfor) {
         try {
           lsOrderDetail[lsOrder[e][0]].otherInfor = JSON.parse(lsOrderDetail[lsOrder[e][0]].otherInfor);
-        } catch(execption) {
+        } catch(e) {
 
         }
         // if (lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip)
-        var label = undefined
+        var ghtkCodice = undefined
         try {
-          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label + "</span></b><br/>";
+          ghtkCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
+          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + ghtkCodice + "</span></b><br/>";
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
+        } catch (e) {
 
-        } catch (execption) {
-
+        }
+        if (!ghtkCodice) {
+          if (userRole=="manager"){
+            try {
+              savedGHTKRequest = lsOrderDetail[lsOrder[e][0]].otherInfor.savedRequest;
+              if (!savedGHTKRequest) {
+                orderDetailBrief+= '<div class="btn btn-default btnNormal5px getGHTKCodeFromSavedRequest order_'+e+'" >Lấy mã GHTK</div><br/><br/>';
+              }
+              // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
+            } catch (e) {
+              
+            }
+          }
         }
       }
     }
