@@ -536,6 +536,8 @@ $("#saveRequest").click(function(){
 	currentOrder.otherInfor.savedRequest = dataOrder;
 	saveOtherInforAsManager();
 	saveOtherInforAsShipper();
+	$("#modelContent").html("Đã lưu yêu cầu");
+	$('#myModal').modal('toggle');
 })
 
 $("#ghtkPost").click(function(){
