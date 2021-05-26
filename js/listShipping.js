@@ -718,9 +718,9 @@ function getGHTKCodeFromSavedRequestFn(){
     savedGHTKRequest.order.id = savedGHTKRequest.order.id + "-"+(new Date().getTime());
 
     var currentOrder = lsOrderDetail[lsOrder[orderIndex][0]];
-    console.log(savedGHTKRequest);
+    // console.log(savedGHTKRequest);
 
-    return;
+    // return;
     $("#loadingSpin").show();
 
     createAnGHTKOrder(savedGHTKRequest, function(data){
