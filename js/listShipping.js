@@ -516,12 +516,12 @@ function loadOrderShippingListHtml() {
           if (userRole=="manager"){
             try {
               savedGHTKRequest = lsOrderDetail[lsOrder[e][0]].otherInfor.savedRequest;
-              if (!savedGHTKRequest) {
+              if (savedGHTKRequest) {
                 orderDetailBrief+= '<div class="btn btn-default btnNormal5px getGHTKCodeFromSavedRequest order_'+e+'" >Lấy mã GHTK</div><br/><br/>';
               }
               // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
             } catch (e) {
-              
+
             }
           }
         }
