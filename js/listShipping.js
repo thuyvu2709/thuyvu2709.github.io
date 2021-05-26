@@ -522,7 +522,7 @@ function loadOrderShippingListHtml() {
 
         }
         if (!ghtkCodice) {
-          if (userRole=="manager"){
+          // if (userRole=="manager"){
             try {
               savedGHTKRequest = lsOrderDetail[lsOrder[e][0]].otherInfor.savedRequest;
               // console.log(savedGHTKRequest);
@@ -533,7 +533,7 @@ function loadOrderShippingListHtml() {
             } catch (e) {
 
             }
-          }
+          // }
         }
       }
     }
