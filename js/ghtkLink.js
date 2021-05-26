@@ -481,6 +481,63 @@ function showOrderPush(){
 
 showOrderPush();
 
+function prepareDataOrder(){
+	var pickIndex = $("#pickList").val();
+	// console.log(pickIndex);
+	dataOrder.order.pick_address = pickList[pickIndex].address;
+	dataOrder.order.pick_province = pickList[pickIndex].province;
+	dataOrder.order.pick_district = pickList[pickIndex].district;
+	dataOrder.order.pick_ward = pickList[pickIndex].ward;
+	dataOrder.order.pick_name = pickList[pickIndex].name;
+	dataOrder.order.pick_tel = pickList[pickIndex].tel;
+
+	dataOrder.order.province = $("#province").html();
+	dataOrder.order.district = $("#district").html();
+	dataOrder.order.ward = $("#ward").html();
+	dataOrder.order.address = $("#address").html();
+	dataOrder.order.hamlet = "Khác";
+	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
+	dataOrder.order.tel = currentOrder.customerPhone;
+	dataOrder.order.name = $("#customerName").val();
+
+	dataOrder.order.deliver_work_shift = $("input[type='radio'][name='deliverShift']:checked").val();
+
+	if (currentOrder.shippingType == "POST_COD") {
+		dataOrder.order.pick_money=currentOrder.willpay*1000;		
+	} else {
+		dataOrder.order.pick_money=0;
+	}
+	dataOrder.order.is_freeship = currentOrder.otherInfor.isFreeShip==true ? "1" : "0";
+	dataOrder.order.note = $("#orderNodeGHTK").val();
+	dataOrder.order.value = currentOrder.totalPay*1000;
+	dataOrder.order.transport = $("#transportType").val();
+	// dataOrder.products = [{
+	// 	"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
+ //        "weight": parseFloat($("#totalWeight").val())/1000,
+ //        "quantity": 1
+	// }]
+	// console.log(dataOrder);
+
+	dataOrder.products = [];
+	for (i in prodListOrder){
+		if (prodListOrder[i].delete) {
+			continue;
+		}
+		dataOrder.products.push({
+			"name": $(".prodName_"+i).val(),
+			"weight": (parseFloat($(".prodWeight_"+i).val())*parseFloat(prodListOrder[i].productCount)),
+			"quantity": parseFloat(prodListOrder[i].productCount)
+		})
+	}
+}
+
+$("#saveRequest").click(function(){
+	prepareDataOrder();
+	currentOrder.otherInfor.savedRequest = dataOrder;
+	saveOtherInforAsManager();
+	saveOtherInforAsShipper();
+})
+
 $("#ghtkPost").click(function(){
 	// var dataOrder = {
 	//     "products": [{
