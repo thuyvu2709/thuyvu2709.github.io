@@ -748,7 +748,7 @@ function getGHTKCodeFromSavedRequestFn(){
       currentOrder.otherInfor.order = data;
 
       if (data["success"]==true) {
-        $(".getGHTKCodeFromSavedRequest_"+orderIndex).html("Mã GHTK:"+data["order"]["label"]);
+        $(".getGHTKCodeFromSavedRequest_"+orderIndex).html("Lấy Mã GHTK:<span class='textRed'>"+data["order"]["label"]+"</span>");
 
         saveOtherInforAsShipper();
       } else {
