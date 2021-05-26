@@ -669,6 +669,11 @@ $("#ghtkPost").click(function(){
 			saveOtherInforAsManager();
 			saveOtherInforAsShipper();
 		} else {
+			try{
+				data = JSON.parse(data);
+			}catch(e) {
+
+			}
 			$("#modelContent").html(jsonToHtml(data));
 			$('#myModal').modal('toggle');
 		}
