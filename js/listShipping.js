@@ -750,7 +750,7 @@ function getGHTKCodeFromSavedRequestFn(){
       if (data["success"]==true) {
         $(".getGHTKCodeFromSavedRequest_"+orderIndex).html("Lấy Mã GHTK:<span class='textRed'>"+data["order"]["label"]+"</span>");
 
-        saveOtherInforAsShipper();
+        saveOtherInforAsShipper(currentOrder);
       } else {
         $("#modelContent").html(jsonToHtml(data));
         $('#myModal').modal('toggle');
