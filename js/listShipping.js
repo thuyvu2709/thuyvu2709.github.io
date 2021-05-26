@@ -715,7 +715,12 @@ function saveOtherInforAsShipper(currentOrder){
 function getGHTKCodeFromSavedRequestFn(){
     var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
     var savedGHTKRequest = lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.savedRequest;
+    savedGHTKRequest.order.id = savedGHTKRequest.order.id + "-"+(new Date().getTime());
+
     var currentOrder = lsOrderDetail[lsOrder[orderIndex][0]];
+    console.log(savedGHTKRequest);
+
+    return;
     $("#loadingSpin").show();
 
     createAnGHTKOrder(savedGHTKRequest, function(data){
