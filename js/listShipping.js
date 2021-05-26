@@ -9,6 +9,7 @@
 var lsOrder;
 var lsTask;
 var lsOrderDetail;
+var ghtkToken = "";
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
@@ -86,7 +87,6 @@ var triggerAfterLoad = function(){
     });
 
     getGhtkAccess(function(rs){
-      var ghtkToken = "";
       if (rs) {
         ghtkToken = rs["ghtkToken"];
       }
