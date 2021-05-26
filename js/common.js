@@ -29,6 +29,8 @@ var storeAddress = {
   "SENDER_WARD_NAME": "PHƯỜNG PHÚ ĐÔ"
 }
 
+var ghtkUrl="services.giaohangtietkiem.vn"
+
 datasetName = localStorage.getItem("datasetName");
 if (!datasetName) {
   // datasetName = 2019;
@@ -1570,7 +1572,7 @@ function getSpecificRoles(){
   var shipper = "";
   var manager = "";  
   var marketer = "";
-  console.log(roles);
+  // console.log(roles);
   for (var e in roles) {
     if (roles[e][1] == "shipper") {
       shipper += roles[e][0]+";";

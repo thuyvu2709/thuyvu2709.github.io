@@ -1,4 +1,4 @@
-function createAnOrder(dataOrder, callback){
+function createAnGHTKOrder(dataOrder, callback){
 	// var dataOrder = {
 	//     "products": [{
 	//         "name": "bút",

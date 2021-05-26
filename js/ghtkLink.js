@@ -19,7 +19,7 @@ try{
 
 }
 
-var ghtkUrl="services.giaohangtietkiem.vn"
+// var ghtkUrl="services.giaohangtietkiem.vn"
 // $("#textareaCopy").hide();
 // console.log("ghtkUrl:"+ghtkUrl)
 
@@ -626,7 +626,7 @@ $("#ghtkPost").click(function(){
 	
 	$("#loadingSpin").show();
 
-	createAnOrder(dataOrder, function(data){
+	createAnGHTKOrder(dataOrder, function(data){
 
 // {
 //  "success": true,
