@@ -123,6 +123,9 @@ var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim(
 $("#customerAddress").html(
 	'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 );
+
+
+
 $("#customerPhone").html(
 	'<a href="tel:'+currentOrder.customerPhone+'">'+currentOrder.customerPhone+'</a>'
 );
@@ -171,11 +174,18 @@ if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
 currentOrder.willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
 
 if (currentOrder.shippingType == "POST_COD") {
+	console.log("1777777777");
+	// $("#collectMoneyType").val("1").change();
+	$("#collectMoneyType").prop("selectedIndex", 1);
+
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#titleWillpay").html("Thu COD:");
 	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển có COD");
 	$("#codType").html("Thu hộ tiền");
 } else if (currentOrder.shippingType == "POST_NO_COD") {
+
+	$("#collectMoneyType").prop("selectedIndex", 3);
+	
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển không COD");
 	currentOrder.willpay = 0;
@@ -235,6 +245,15 @@ $("#prodList").html("???????????");
 // 	caluclateTransportFeeFn(true);//does not show loading
 // })
 
+var customerAddressObj = {}
+
+addressChecking(currentOrder.customerAddress, function(obj) {
+	customerAddressObj = obj;
+	// console.log(customerAddressObj);
+	$("#addressChecking").html(" > Địa  đã chuẩn :)")
+	caluclateTransportFeeFn(true);
+})
+
 $(".productWeight").change(function(){
 	// console.log("productWeight change")
 	tw = 0;
@@ -264,8 +283,6 @@ $(".showImage").click(function(){
 	$("#myModal .modal-body").html('<img style="width:100%" src="'+prodListOrder[index].productImage+'" />')
     $('#myModal').modal('toggle');
 })
-
-var customerAddressObj = {}
 
 $("#updateAddress").click(function(){
 	triggerAutocompleteViettelpost(currentOrder.customerAddress,function(addrData){
@@ -348,7 +365,7 @@ $('.datetimepicker').daterangepicker({
   	dataOrder.pick_date=start.format('YYYY-MM-DD hh:mm:ss');
   });
 
-caluclateTransportFeeFn(true);//does not show loading
+// caluclateTransportFeeFn(true);//does not show loading
 
 $("#pickList").change(function(){
 	caluclateTransportFeeFn(true);//does not show loading
@@ -388,7 +405,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	  "MONEY_COLLECTION":pick_money,
   	  "TYPE" :1
 	}
-	console.log(feeObj);
+	// console.log(feeObj);
 
 	if (!notloadShow) {
 		$("#loadingSpin").show();
@@ -408,8 +425,35 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 }
   
 $("#calculateFeeLoadForce").click(function(){
-	caluclateTransportFeeFn();
+	caluclateTransportFeeDetailFn();
 })
+
+function caluclateTransportFeeDetailFn(){
+	var pick_money = 0;
+	if (currentOrder.shippingType == "POST_COD") {
+		pick_money=currentOrder.willpay*1000;		
+	}
+	var pickIndex = $("#pickList").val();
+
+	var feeObj = {
+		"PRODUCT_WEIGHT":parseInt($("#totalWeight").html()),
+		"PRODUCT_PRICE":currentOrder.totalPay,
+		"MONEY_COLLECTION":pick_money,
+		"ORDER_SERVICE_ADD":"",
+		"ORDER_SERVICE":$("#transportType").val(),
+		"RECEIVER_PROVINCE":customerAddressObj["RECEIVER_PROVINCE"],
+		"RECEIVER_DISTRICT":customerAddressObj["RECEIVER_DISTRICT"],
+		"SENDER_PROVINCE":pickList[pickIndex].provinceId,
+		"SENDER_DISTRICT":pickList[pickIndex].districtId,
+		"PRODUCT_TYPE":"HH",
+		"NATIONAL_TYPE":1
+	}
+	// console.log(feeObj);
+
+	calculateTransportFeeAPIViettelPostDetail(feeObj, function(res){
+		console.log(res);
+	})
+}
 
 function saveAddressAsManager(){
 	if (userRole!="manager"){

@@ -232,6 +232,23 @@ function findPlaceWard(districtId, callback){ //Tim xa
 	});
 }
 
+function calculateTransportFeeAPIViettelPostDetail(feeObj,callback) {
+	var settings = {
+		    "async": true,
+		    "crossDomain": true,
+		    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/getPrice",
+		    "method": "POST",
+		    "headers": {
+		        "Content-Type": "application/json",
+		        "Token": localStorage.getItem("viettelpostToken")
+		    },
+		    "data": JSON.stringify(feeObj)
+		}
+	$.ajax(settings).done(function(response) {
+	    // console.log(response);
+	    callback(response)
+	});
+}
 
 function calculateTransportFeeAPIViettelPost(feeObj,callback){
 	// feeObj = {
@@ -245,8 +262,8 @@ function calculateTransportFeeAPIViettelPost(feeObj,callback){
 	// 	SENDER_PROVINCE: 10,
 	// 	TYPE: 1
 	// }
-	console.log("feeObj");
-	console.log(feeObj);
+	// console.log("feeObj");
+	// console.log(feeObj);
 
 	var settings = {
 		    "async": true,
@@ -263,6 +280,80 @@ function calculateTransportFeeAPIViettelPost(feeObj,callback){
 	    // console.log(response);
 	    callback(response)
 	});
+}
+
+function addressChecking(addressString, callback) {
+	var aix = strToAddr(addressString);
+	var addressObj = {};
+	addressObj["PROVINCE_NAME"]=aix.province;
+	addressObj["DISTRICT_NAME"]=aix.district;
+	addressObj["WARDS_NAME"]=aix.ward;
+	addressObj["OTHER"]=aix.address;
+	
+	// console.log("addressChecking");
+	// console.log(addressObj);
+	// DISTRICT_NAME: "HUYỆN BA VÌ"
+	// OTHER: "35 Nguyễn Trãi"
+	// PROVINCE_NAME: "Hà Nội"
+	// RECEIVER_DISTRICT: "2"
+	// RECEIVER_PROVINCE: "1"
+	// RECEIVER_WARD: "31"
+	// WARDS_NAME: "XÃ PHÚ PHƯƠNG"
+
+	findPlaceProvinceById(-1, function(resProvince){
+		var listProvince = resProvince.data;
+		for (p in listProvince) {
+			if (listProvince[p]["PROVINCE_NAME"].toUpperCase() == addressObj["PROVINCE_NAME"].toUpperCase()) {
+				
+				addressObj["RECEIVER_PROVINCE"] = listProvince[p]["PROVINCE_ID"];
+				
+				var selectedProvince = listProvince[p];
+				
+				// console.log(selectedProvince)
+
+				findPlaceDistrict(addressObj["RECEIVER_PROVINCE"], function(resProvince){
+					var listDistrict = resProvince.data;
+					// console.log(listDistrict)
+					for (e in listDistrict) {
+						// console.log(listDistrict[e])
+						// console.log(listDistrict[e]["DISTRICT_ID"]+" "+addressObj.districtId+" "+(listDistrict[e]["DISTRICT_ID"] == addressObj.districtId))
+						if (listDistrict[e]["DISTRICT_NAME"].toUpperCase() == addressObj["DISTRICT_NAME"].toUpperCase()) {
+
+							var selectedDistrict = listDistrict[e]
+
+							addressObj["RECEIVER_DISTRICT"] = listDistrict[e]["DISTRICT_ID"];
+
+							// console.log(selectedDistrict);
+
+							findPlaceWard(addressObj["RECEIVER_DISTRICT"], function(resWard){
+								var listWards = resWard.data;
+								// console.log(listWards);
+								for (w in listWards) {
+									if (listWards[w]["WARDS_NAME"].toUpperCase() == addressObj["WARDS_NAME"].toUpperCase()) {
+										var selectedWard = listWards[w]
+										// console.log(selectedWard);
+										addressObj.wardsName = selectedWard["WARDS_NAME"];
+										addressObj.districtValue = selectedDistrict["DISTRICT_VALUE"]
+										addressObj.districtName = selectedDistrict["DISTRICT_NAME"]
+										addressObj.provinceCode = selectedProvince["PROVINCE_CODE"]
+										addressObj.provinceName = selectedProvince["PROVINCE_NAME"]
+										addressObj.province = selectedProvince["PROVINCE_NAME"]
+										addressObj["RECEIVER_WARD"] = selectedWard["WARDS_ID"];
+
+										callback(addressObj);
+										break;
+									}
+								}
+							})
+
+							break;
+						}
+					}
+				})
+				break;
+			}
+		}
+	})
 }
 
 function viettelPostAddressObjToAddressString(addressObj,callback) {
