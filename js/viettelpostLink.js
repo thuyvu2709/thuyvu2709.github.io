@@ -709,7 +709,7 @@ $("#ghtkPost").click(function(){
 		if (data["error"]==false) {
 			console.log("Copy");
 			$("#textareaBanking").show();
-			$("#textareaBanking").val(data["order"]["label"]);
+			$("#textareaBanking").val(data["data"]["ORDER_NUMBER"]);
 			var copyText = document.getElementById("textareaBanking");
 			copyText.select(); 
 			copyText.setSelectionRange(0, 99999); /*For mobile devices*/
