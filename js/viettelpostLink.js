@@ -395,6 +395,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 		$("#loading-text").html();
 	}
 	calculateTransportFeeAPIViettelPost(feeObj, function(feeLs){
+		console.log(feeLs);
 		var feeCt = "";
 		for (e in feeLs) {
 			feeCt = feeCt + "<option value='"+feeLs[e]["MA_DV_CHINH"]+"'>"
@@ -705,6 +706,29 @@ $("#ghtkPost").click(function(){
 		currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
 
 		showOrderPush();
+
+// 		{
+//  "status": 200,
+//  "error": false,
+//  "message": "OK",
+//  "data": {
+//   "ORDER_NUMBER": "14696431294",
+//   "MONEY_COLLECTION": 388000,
+//   "EXCHANGE_WEIGHT": 50,
+//   "MONEY_TOTAL": 26000,
+//   "MONEY_TOTAL_FEE": 23636,
+//   "MONEY_FEE": 0,
+//   "MONEY_COLLECTION_FEE": 0,
+//   "MONEY_OTHER_FEE": 0,
+//   "MONEY_VAS": 0,
+//   "MONEY_VAT": 2364,
+//   "KPI_HT": 24,
+//   "RECEIVER_PROVINCE": 1,
+//   "RECEIVER_DISTRICT": 2,
+//   "RECEIVER_WARDS": 31
+//  },
+//  "viettelPostlabel": "14696431294"
+// }
 
 		if (data["error"]==false) {
 			console.log("Copy");
