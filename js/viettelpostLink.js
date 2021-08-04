@@ -73,13 +73,6 @@ function loadPickList() {
 		// console.log(rs);
 		pickList = rs;
 
-		var pickListHtml = '';
-		for (e in pickList){
-			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
-		}
-		$("#pickList").html(pickListHtml);
-		
-
 		console.log(rs);
 		var readAddrStepByStep = function(index) {
 			if (index < pickList.length) {
@@ -91,7 +84,11 @@ function loadPickList() {
 				$("#loadingSpin").hide();
 				console.log(pickList);
 				localStorage.setItem("viettelPostPickList",JSON.stringify(pickList));
-
+				var pickListHtml = '';
+				for (e in pickList){
+					pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+				}
+				$("#pickList").html(pickListHtml);
 			}
 		}
 		readAddrStepByStep(0)
