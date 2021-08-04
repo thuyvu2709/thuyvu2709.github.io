@@ -699,28 +699,10 @@ $("#ghtkPost").click(function(){
 
 	vietttelPostCreateABill(dataOrder, function(data){
 
-// {
-//  "success": true,
-//  "message": "Các đơn hàng đã được add vào hệ thống GHTK thành công. Thông tin đơn hàng thành công được trả về trong trường success_orders.
-// GHTK chỉ hỗ trợ chọn phương thức vận chuyển với các đơn hàng đặc biệt hoặc liên miền, gửi từ Hà Nội hoặc Tp. HCM. Các tuyến đường còn lại hoặc không nhận dạng được địa chỉ sẽ được chuyển theo phương thức mặc định : Nội miền/ Nội tỉnh đường bộ & Liên miền : Đường bay.",
-//  "order": {
-//   "partner_id": "ThuyTitVu-DONHANG_865-1598383517256",
-//   "label": "S15549745.HN12.G3.876491853",
-//   "area": "1",
-//   "fee": "18000",
-//   "status_id": "2",
-//   "insurance_fee": "0",
-//   "estimated_pick_time": "Sáng 2020-08-26",
-//   "estimated_deliver_time": "Chiều 2020-08-26",
-//   "products": [],
-//   "tracking_id": 876491853,
-//   "sorting_code": "HN12.G3"
-//  }
-// }
 		$("#loadingSpin").hide();
 
 		currentOrder.otherInfor.order = data;
-		currentOrder.otherInfor.order.label = data["data"]["ORDER_NUMBER"];
+		currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
 
 		showOrderPush();
 

@@ -516,15 +516,24 @@ function loadOrderShippingListHtml() {
         }
         // console.log(lsOrderDetail[lsOrder[e][0]].otherInfor)
 
-        var ghtkCodice = undefined
+        var logiticCodice = undefined
         try {
-          ghtkCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
-          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + ghtkCodice + "</span></b><br/>";
+          logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
+          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
 
         }
-        if (!ghtkCodice) {
+        
+        try {
+          logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.viettelPostlabel;
+          orderDetailBrief+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
+        } catch (e) {
+
+        }
+
+        if (!logiticCodice) {
           // if (userRole=="manager"){
             try {
               savedGHTKRequest = lsOrderDetail[lsOrder[e][0]].otherInfor.savedRequest;
