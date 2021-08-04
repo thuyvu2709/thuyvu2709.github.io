@@ -1,4 +1,6 @@
-var herokuPrefix = "http://kenkreck1004.herokuapp.com/";
+// var herokuPrefix = "http://kenkreck1004.herokuapp.com/";
+var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+
 // var viettelpostToken = localStorage.getItem("viettelpostToken");
 
 function loginViettelPost(callback){
