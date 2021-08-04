@@ -174,7 +174,6 @@ if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
 currentOrder.willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
 
 if (currentOrder.shippingType == "POST_COD") {
-	// console.log("1777777777");
 	// $("#collectMoneyType").val("1").change();
 	$("#collectMoneyType").prop("selectedIndex", 1);
 
@@ -299,6 +298,9 @@ $("#updateAddress").click(function(){
 			$("#customerAddress").html(
 				'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 			);
+
+			$("#addressChecking").html("")
+
 			loadAddressIntoUI();
 			saveAddressAsManager();
 			saveAddressAsShipper();
