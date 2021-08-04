@@ -421,7 +421,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 				+feeLs[e]["MA_DV_CHINH"]+"-"+feeLs[e]["GIA_CUOC"]+"-"+feeLs[e]["TEN_DICHVU"]+"-"+feeLs[e]["THOI_GIAN"]
 				+"</option>"
 		}
-		$("#transportType").html(feeCt);
+		// $("#transportType").html(feeCt);
 		$("#loadingSpin").hide();
 	});
 }
