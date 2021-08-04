@@ -749,7 +749,6 @@ $("#ghtkPost").click(function(){
 		$("#loadingSpin").hide();
 
 		currentOrder.otherInfor.order = data;
-		currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
 
 		showOrderPush();
 
@@ -777,6 +776,8 @@ $("#ghtkPost").click(function(){
 // }
 
 		if (data["error"]==false) {
+			currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
+
 			console.log("Copy");
 			$("#textareaBanking").show();
 			$("#textareaBanking").val(data["data"]["ORDER_NUMBER"]);
