@@ -1,3 +1,5 @@
+var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+
 function createAnGHTKOrder(dataOrder, callback){
 	// var dataOrder = {
 	//     "products": [{
@@ -33,7 +35,7 @@ function createAnGHTKOrder(dataOrder, callback){
 	//     }
 	// };
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/order/?ver=1.5",
+	  url: herokuPrefix+ghtkUrl+"/services/shipment/order/?ver=1.5",
 	  headers : {
 	  	"Token": ghtkToken,
 	  	"Content-Type": "application/json" 
@@ -49,7 +51,7 @@ function createAnGHTKOrder(dataOrder, callback){
 function getPickAddress(callback){
 	// console.log("getPickAddress:"+ghtkToken);
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/list_pick_add", 
+	  url: herokuPrefix+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -86,7 +88,7 @@ function getPickAddress(callback){
 
 function getGHTKOrderStatus(orderId, callback){
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/v2/"+orderId, 
+	  url: herokuPrefix+ghtkUrl+"/services/shipment/v2/"+orderId, 
 	  headers : {
 	  	"Token": ghtkToken
 	  },
@@ -122,7 +124,7 @@ function calculateTransportFeeAPI(data,callback){
 	  return str.join("&");
 	};
 	$.ajax({
-	  url: "https://kenkreck1004.herokuapp.com/"+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
+	  url: herokuPrefix+ghtkUrl+"/services/shipment/fee?"+serialize(data), 
 	  headers : {
 	  	"Token": ghtkToken
 	  },

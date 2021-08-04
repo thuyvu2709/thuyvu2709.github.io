@@ -85,13 +85,16 @@ var triggerAfterLoad = function(){
           }
         })
     });
-
-    getGhtkAccess(function(rs){
-      if (rs) {
-        ghtkToken = rs["ghtkToken"];
-      }
-      localStorage.setItem("ghtkToken",ghtkToken);
-    })
+    if (userRole=="manager") {
+      getGhtkAccess(function(rs){
+        if (rs) {
+          ghtkToken = rs["ghtkToken"];
+        }
+        localStorage.setItem("ghtkToken",ghtkToken);
+      })
+      loginViettelPost(function(){
+      })
+    }
 
     getShippingReport(function(shippingRpData){
       $(".textBottomCenter").html(shippingRpData ? shippingRpData[5][1] : 0);
@@ -544,7 +547,9 @@ function loadOrderShippingListHtml() {
     if (userRole=="manager"){
       mark = (next2days < new Date() ? "textRed" : "");
       if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD") {
-        ghtkBtn = '<br/><div class="btn btn-default btnNormal5px ghtkLink order_'+e+'">Liên kết GHTK</div>';
+        ghtkBtn = '<br/>'
+          +'<div class="btn btn-default btnNormal5px ghtkLink order_'+e+'">Liên kết GHTK</div>'
+          +'<div class="btn btn-default btnNormal5px viettelpostLink order_'+e+'">Liên kết ViettelPost</div>';
       }
     }
 
@@ -678,6 +683,7 @@ function loadOrderShippingListHtml() {
   //   }
   // });
   $(".ghtkLink").click(ghtkLinkFn);
+  $(".viettelpostLink").click(viettelpostLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
   $(".packedOrder").click(packedFn);
   $(".ghtkCode").click(ghtkShowOrderFn);
@@ -926,6 +932,29 @@ function ghtkLinkFn(){
   })
 
   window.location = "ghtkLink.html";  
+}
+
+function viettelpostLinkFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var orderJs = JSON.parse(lsOrder[orderIndex][3]);
+  orderJs.shipIndex = parseInt(orderIndex);
+
+  localStorage.setItem("currentOrder",JSON.stringify(orderJs));
+
+  $("#loadingSpin").show();
+
+  // loginViettelPost(function(){
+  //   $("#loadingSpin").hide();
+
+  saveHistory({
+    orderFilter : $(".orderFilter").val(),
+    goToClass : $(this).attr("class")
+  })
+
+  window.location = "viettelpostLink.html";  
+  // })
 }
 
 function showDetail(){

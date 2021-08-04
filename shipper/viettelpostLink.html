@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <meta name="google-signin-client_id" content="553433448879-lund4kt725a4ha6358ep0eu5csnckgni.apps.googleusercontent.com">
+
+      <title>Xách tay Thuỷ Vũ</title>
+      <!-- Custom fonts for this theme -->
+      <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+      <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+      <!-- Theme CSS -->
+      <link href="../css/freelancer.css" rel="stylesheet">
+
+      <link href="../css/ghtk.css" rel="stylesheet">
+      <link href="../css/autocomplete.css" rel="stylesheet">
+      <link href="../css/jquery-ui.css" rel="stylesheet">
+
+      <script type="text/javascript">
+         var pageName = "showordershipping";
+         var pageRole = "shipper"
+      </script>
+
+  <link rel="icon" href="../img/avatarfacebook.png" type="image/png" sizes="16x16"/>
+  <link rel="apple-touch-icon" href="../img/avatar150.png">
+  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
+
+
+   </head>
+   <body id="page-top">
+
+<!--       <header class="minihead">
+      </header>
+
+      <h5 class="text-center">
+        <a href="/shipper/index.html" class="textMustard">
+          XÁCH TAY THUỶ VŨ - GÓC HÀNG ÂU
+        </a>
+      </h5> -->
+
+      <!-- Portfolio Section -->
+      <section class="page-section portfolio" id="portfolio">
+         <form class="needs-validation container" novalidate>
+            <h3 class="text-center">
+              <a href="/shipper/index.html" class="textMustard">
+                Liên kết Giao Hàng ViettelPost
+              </a>
+            </h3>
+            <p class="text-center">
+              Mã đơn hàng: 
+                <span id="orderCode">DONHANG_45</span></br>
+                Ngày đặt hàng :<span id="orderDate">10/03</span>
+              </p>
+            <!-- </div> -->
+<!--             <div class="row">
+               <label for="orderCode" class="col-sm-2 col-form-label simply">Mã đơn hàng</label>
+               <div class="col-sm">
+                  <label id="orderCode" class="form-control"></label>
+               </div>
+            </div> -->
+            <div class="row">
+               <!-- <label for="customerName" class="col-sm col-form-label simply"> -->
+                <span>Tên khách hàng : </span>
+                <input id="customerName" class="form-control textMustard"></input>
+               <!-- </label> -->
+            </div>
+            <div class="row">
+              <span id="updateAddress">
+                Địa chỉ :<i class="fas fa-map-marked-alt"></i>
+              </span>
+              <span id="customerAddress" class="textMustard"></span>
+            </div>
+            <div class="row">
+              <span>Số điện thoại : </span>
+              <span id="customerPhone" class="textMustard"></span>
+            </div>
+
+<!-- table is here -->
+            <table style="width: 100%;border-collapse: collapse;">
+              <tr>
+                <th>STT</th>
+                <th>Tên hàng</th>
+                <th>SL</th>
+                <th>Giá</th>
+                <th>Kg</th>
+              </tr>
+              <tbody id = "lsTable">
+                
+              </tbody>
+            </table>
+<!-- end table -->
+            <br/>
+            <div class="form-group row shippingCost">
+               <label for="node" class="col-sm-2 col-form-label">Ghi chú của shop</label>
+               <div class="col-sm-10">
+                  <textarea id="orderNode" class="field-textarea form-control" readonly/></textarea>
+               </div>
+            </div>
+
+            <div class="row">
+              <h5>Phương thức giao hàng : </h5>
+              <h5 id="shippingType" class="textBlue"></h5>
+            </div>
+
+            <div class="row">
+              <h5>Tổng tiền : </h5>
+              <input id="totalPay" class="form-control"></input>
+            </div>
+
+            <div class="row willpay">
+              <h5 id="titleWillpay">Khách sẽ thanh toán : </h5>
+              <h5 id="willpay">0</h5>
+            </div>
+
+            <hr/>
+            <h4>Hiển thị trên ViettelPost:</h4>
+            <div class="row">
+              <span >
+                Tên khách hàng:
+              </span>
+              <span id="customerNameShow" class="textMustard"></span>
+            </div>
+            <div class="row">
+              <span >
+                Địa điểm lấy hàng:
+                <span class="fas fa-sync" id="pickLoadForce"></span>
+              </span>
+              <select id="pickList">
+                <option value="-1">Đang tải...</option>
+              </select>
+            </div>
+<!--             <div class="row">
+              <span>Thời gian lấy hàng:</span>
+              <input type="text" class="datetimepicker form-control" id="pickingTime" placeholder="Chọn thời gian lấy hàng"/>
+            </div> -->
+<!--             <div class="row">
+              <span>Mặt hàng:</span>
+              <span id="prodList" class="textMustard"></span>
+            </div> -->
+
+<!--             <div class="row">
+              <span>Cân nặng mặt hàng (avg - gram):</span>
+              <input type="text" id="avgWeight" />
+            </div> -->
+            <div class="row">
+              <span>Tổng cân nặng ( gram):</span>
+              <span type="text" id="totalWeight" ></span>
+            </div>
+
+            <div class="row shippingCost">
+               <span for="node" class="col-sm-2 col-form-label">Ghi chú gửi ViettelPost</span>
+               <div class="col-sm-10">
+                  <input id="orderNodeGHTK" class="field-textarea form-control" value="Nhẹ tay" /></input>
+               </div>
+            </div>
+            <div class="row">
+              <span>Shop gửi hàng tại bưu cục:</span>
+              <span>
+                <input type="checkbox" id="isShopBringPkToPost"/>
+                <span id="shopBringPkToPostAns">Không</span>
+              </span>
+            </div>
+<!--             <div class="row">
+              <span>Shop thanh toán ship:</span>
+              <span>
+                <input type="checkbox" id="isFreeShip"/>
+                <span id="shopPayShipAns">Không</span>
+              </span>
+            </div> -->
+            <div class="row">
+              <span>COD:</span>
+              <b><span id="codType" class="textMustard"></span></b>
+            </div>
+            <div class="row">
+              <span>Địa điểm giao:</span>
+              <span style="border: 2px solid #c57e0f">
+                Tỉnh/TP:<span id="province" class="textMustard"></span><br/>
+                Quận/Huyện:<span id="district" class="textMustard"></span><br/>
+                Phường/Xã:<span id="ward" class="textMustard"></span><br/>
+                Khác:<span id="address" class="textMustard"></span><br/>
+              </span>
+            </div>
+            <div class="row">
+              <span>Kích thước hộp:</span>
+              <span>
+                    <input id="packHeight" class="field-textarea form-control" value="" placeholder="Cao (cm)" type="number"/></input>
+                    <input id="packWidth" class="field-textarea form-control" value="" placeholder="Rộng (cm)" type="number"/></input>
+                    <input id="packLength" class="field-textarea form-control" value="" placeholder="Dài ()" type="number"/></input>
+              </span>
+            </div>
+            <div class="row">
+              <span>Hình thức giao:</span>
+              <select id="transportType">
+                <option value="fly">Đang tính...</option>
+              </select>
+            </div>
+            <div class="row">
+              <span>Hình thức thu tiền:</span>
+              <select id="collectMoneyType">
+                <option value="1">Không thu tiền</option>
+                <option value="2">Thu phí ship và tiền hàng</option>
+                <option value="3">Chỉ thu tiền hàng</option>
+                <option value="4">Chỉ thu phí ship</option>
+              </select>
+            </div>
+<!--             <div class="row">
+              <span>Phí ship (dự kiến):
+                <span class="fas fa-sync" id="calculateFeeLoadForce">
+              </span>
+              <select id="transportType">
+                <option value="fly">Hàng không</option>
+                <option value="road">Đường bộ</option>
+              </select>
+            </div> -->
+<!--             <div class="row">
+              <span>Phí bảo hiểm (dự kiến-shop trả):
+              </span>
+              <span id="insuranceFee" class="textMustard">....</span>
+            </div> -->
+            <hr/>
+<!--           <textarea id="textareaCopy"></textarea>
+ -->
+            <div class="row" id="showOrderPush">
+
+            </div>
+           <div class="btn btn-primary mb-2" id="ghtkPost">Yêu cầu đơn hàng lên ViettelPost</div>
+           <!-- <div class="btn btn-primary mb-2" id="saveRequest">Lưu yêu cầu</div> -->
+
+         </form>
+         
+      </section>
+
+      <div id="footerInclude"></div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+           <div class="modal-content">
+              <!--           <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h4 class="modal-title">Thông tin</h4>
+                 </div>
+                 -->          
+              <div class="modal-body">
+                 <p id="modelContent">Đã lưu mặt hàng</p>
+              </div>
+              <!-- <div class="modal-footer"> -->
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <!-- </div> -->
+           </div>
+        </div>
+      </div>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="../vendor/jquery/jquery.min.js"></script>
+      <script src="../vendor/jquery/jquery-ui.js"></script>
+
+      <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Contact Form JavaScript -->
+      <!-- Custom scripts for this template -->
+      <!-- <script src="../js/freelancer.min.js"></script> -->
+       <!-- <script type="text/javascript" src="../js/verifyform.js"></script> -->
+
+      <script type="text/javascript" src="../js/common.js"></script>
+      <script type="text/javascript" src="../js/authorize.js"></script>
+
+      <script type="text/javascript" src="../js/moment.min.js"></script>
+
+      <script type="text/javascript" src="../js/daterangepicker.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="../css/daterangepicker.css" />
+
+      <script type="text/javascript" src="../js/viettelpost.js"></script>
+
+      <script type="text/javascript" src="../js/viettelpostLink.js"></script>
+
+      <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+      </script>
+
+   </body>
+</html>

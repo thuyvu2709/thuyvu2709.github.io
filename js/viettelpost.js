@@ -1,6 +1,9 @@
-function loginViettelPost(){
+var herokuPrefix = "http://kenkreck1004.herokuapp.com/";
+// var viettelpostToken = localStorage.getItem("viettelpostToken");
+
+function loginViettelPost(callback){
 	var settings = {
-	    "url": "https://partner.viettelpost.vn/v2/user/Login",
+	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/Login",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
@@ -10,36 +13,61 @@ function loginViettelPost(){
 
 	getViettelPostAccess(function(data){
 		console.log(data);
+		data = {
+	        "USERNAME": "lean23062001@gmail.com",
+        	"PASSWORD": "23062001"
+		}
 		settings["data"]=JSON.stringify(data);
 		$.ajax(settings).done(function(response) {
 		    console.log(response);
 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
+	        viettelpostToken = response["data"]["token"];
+	        callback(response["data"]["token"]);
 		});
 	})
 }
 
-function loginViettelPost2(){
-	var settings = {
-	    "async": true,
-  "crossDomain": true,
-  "url": "https://partner.viettelpost.vn/v2/user/ownerconnect",
-  "method": "POST",
-  "headers": {
-    "Content-Type": "application/json",
-    "Token": "eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiIwMzc2MTgwMTkzIiwiVXNlcklkIjo3MDk0ODQ5LCJGcm9tU291cmNlIjo1LCJUb2tlbiI6IjlPVFFMQldNRUxXIiwiZXhwIjoxNjgwMjg5MjY5LCJQYXJ0bmVyIjo3MDk0ODQ5fQ.o0g6EtmVq6Ixx_V5W4bp3IYgeFZ9hNozyn934SEdnej2F9I4FngYoYpGZA3MMIoaAvXlZEZfGgCAjjUU2i2_4g"
-  },
-	    "data": ''
-	}
-
-	getViettelPostAccess(function(data){
-		console.log(data);
-		settings["data"]=JSON.stringify(data);
-		$.ajax(settings).done(function(response) {
-		    console.log(response);
-	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
-		});
-	})
+function viettelPostGetPickAddress(callback){
+	// console.log("getPickAddress:"+ghtkToken);
+	$.ajax({
+	  url: herokuPrefix+"https://partner.viettelpost.vn/v2/user/listInventory", 
+	  headers : {
+	  	"Token": viettelpostToken
+	  },
+	  type: 'GET',
+	  success: function(res) {
+	  	// console.log(res)
+	    if (res.error) {
+	    	callback(undefined)
+	    	return;
+	    }
+	    callback(res.data);
+	  }
+	});
 }
+
+// function loginViettelPost2(){
+// 	var settings = {
+// 	    "async": true,
+//   "crossDomain": true,
+//   "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/ownerconnect",
+//   "method": "POST",
+//   "headers": {
+//     "Content-Type": "application/json",
+//     "Token": "eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiIwMzc2MTgwMTkzIiwiVXNlcklkIjo3MDk0ODQ5LCJGcm9tU291cmNlIjo1LCJUb2tlbiI6IjlPVFFMQldNRUxXIiwiZXhwIjoxNjgwMjg5MjY5LCJQYXJ0bmVyIjo3MDk0ODQ5fQ.o0g6EtmVq6Ixx_V5W4bp3IYgeFZ9hNozyn934SEdnej2F9I4FngYoYpGZA3MMIoaAvXlZEZfGgCAjjUU2i2_4g"
+//   },
+// 	    "data": ''
+// 	}
+
+// 	getViettelPostAccess(function(data){
+// 		console.log(data);
+// 		settings["data"]=JSON.stringify(data);
+// 		$.ajax(settings).done(function(response) {
+// 		    console.log(response);
+// 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
+// 		});
+// 	})
+// }
 
 function tracking(orderId){
 // 	// https://old.viettelpost.com.vn/Tracking?KEY=1606216637308
@@ -73,73 +101,22 @@ $.ajax({
 
 }
 
-function createABill(){
+function vietttelPostCreateABill(dataOrder,callback){
 	var settings = {
 	    "async": true,
 	    "crossDomain": true,
-	    "url": "https://partner.viettelpost.vn/v2/order/createOrder",
+	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/createOrder",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
 	        "Token": localStorage.getItem("viettelpostToken")
 	    },
-	    "data": JSON.stringify({
-		    "ORDER_NUMBER": "12",
-		    "GROUPADDRESS_ID": 5818802,
-		    "CUS_ID": 722,
-		    "DELIVERY_DATE": "11/10/2018 15:09:52",
-		    "SENDER_FULLNAME": "Yanme Shop",
-		    "SENDER_ADDRESS": "Số 5A ngách 22 ngõ 282 Kim Giang, Đại Kim (0967.363.789), Quận Hoàng Mai, Hà Nội",
-		    "SENDER_PHONE": "0967.363.789",
-		    "SENDER_EMAIL": "vanchinh.libra@gmail.com",
-		    "SENDER_WARD": 0,
-		    "SENDER_DISTRICT": 4,
-		    "SENDER_PROVINCE": 1,
-		    "SENDER_LATITUDE": 0,
-		    "SENDER_LONGITUDE": 0,
-		    "RECEIVER_FULLNAME": "Hoàng - Test",
-		    "RECEIVER_ADDRESS": "1 NKKN P.Nguyễn Thái Bình, Quận 1, TP Hồ Chí Minh",
-		    "RECEIVER_PHONE": "0907882792",
-		    "RECEIVER_EMAIL": "hoangnh50@fpt.com.vn",
-		    "RECEIVER_WARD": 0,
-		    "RECEIVER_DISTRICT": 43,
-		    "RECEIVER_PROVINCE": 2,
-		    "RECEIVER_LATITUDE": 0,
-		    "RECEIVER_LONGITUDE": 0,
-		    "PRODUCT_NAME": "Máy xay sinh tố Philips HR2118 2.0L ",
-		    "PRODUCT_DESCRIPTION": "Máy xay sinh tố Philips HR2118 2.0L ",
-		    "PRODUCT_QUANTITY": 1,
-		    "PRODUCT_PRICE": 2292764,
-		    "PRODUCT_WEIGHT": 40000,
-		    "PRODUCT_LENGTH": 38,
-		    "PRODUCT_WIDTH": 24,
-		    "PRODUCT_HEIGHT": 25,
-		    "PRODUCT_TYPE": "HH",
-		    "ORDER_PAYMENT": 3,
-		    "ORDER_SERVICE": "VCN",
-		    "ORDER_SERVICE_ADD": "",
-		    "ORDER_VOUCHER": "",
-		    "ORDER_NOTE": "cho xem hàng, không cho thử",
-		    "MONEY_COLLECTION": 2292764,
-		    "MONEY_TOTALFEE": 0,
-		    "MONEY_FEECOD": 0,
-		    "MONEY_FEEVAS": 0,
-		    "MONEY_FEEINSURRANCE": 0,
-		    "MONEY_FEE": 0,
-		    "MONEY_FEEOTHER": 0,
-		    "MONEY_TOTALVAT": 0,
-		    "MONEY_TOTAL": 0,
-		    "LIST_ITEM": [{
-		        "PRODUCT_NAME": "Máy xay sinh tố Philips HR2118 2.0L ",
-		        "PRODUCT_PRICE": 2150000,
-		        "PRODUCT_WEIGHT": 2500,
-		        "PRODUCT_QUANTITY": 1
-		    }]
-		})
+	    "data": JSON.stringify(dataOrder)
 	}
-$.ajax(settings).done(function(response) {
-    console.log(response);
-});
+	$.ajax(settings).done(function(response) {
+	    console.log(response);
+	    callback(response);
+	});
 }
 
 function updateBillStatus(){
@@ -163,7 +140,7 @@ function updateBillStatus(){
 	});
 }
 
-function calculateShippingCost(infor){
+function vietttelPostCalculateShippingCost(infor){
 	// "data": JSON.stringify({
 	// "SENDER_PROVINCE" : 2,
 	// "SENDER_DISTRICT" : 53,
@@ -208,6 +185,22 @@ function findPlaceProvince(callback){
 	});
 }
 
+function findPlaceProvinceById(provinceId,callback){
+	var settings = {
+	  "async": true,
+	  "crossDomain": true,
+	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
+	  "method": "GET",
+	  "headers": {
+	  },
+	}
+
+	$.ajax(settings).done(function (response) {
+	  console.log(response);
+	  callback(response);
+	});
+}
+
 function findPlaceDistrict(provinceId, callback){
 	var settings = {
 	  "async": true,
@@ -240,6 +233,90 @@ function findPlaceWard(districtId, callback){ //Tim xa
 	});
 }
 
+
+function calculateTransportFeeAPIViettelPost(feeObj,callback){
+	// feeObj = {
+	// 	MONEY_COLLECTION: 0,
+	// 	PRODUCT_PRICE: "3380",
+	// 	PRODUCT_TYPE: "HH",
+	// 	PRODUCT_WEIGHT: 1400,
+	// 	RECEIVER_DISTRICT: "30",
+	// 	RECEIVER_PROVINCE: "1",
+	// 	SENDER_DISTRICT: 122,
+	// 	SENDER_PROVINCE: 10,
+	// 	TYPE: 1
+	// }
+	console.log("feeObj");
+	console.log(feeObj);
+
+	var settings = {
+		    "async": true,
+		    "crossDomain": true,
+		    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/getPriceAll",
+		    "method": "POST",
+		    "headers": {
+		        "Content-Type": "application/json",
+		        "Token": localStorage.getItem("viettelpostToken")
+		    },
+		    "data": JSON.stringify(feeObj)
+		}
+	$.ajax(settings).done(function(response) {
+	    // console.log(response);
+	    callback(response)
+	});
+}
+
+function viettelPostAddressObjToAddressString(addressObj,callback) {
+	// addressObj= {
+	// 	address: "số 34 đường Trường Chinh",
+	// 	cusId: 7094849,
+	// 	districtId: 122,
+	// 	groupaddressId: 7183005,
+	// 	merchant: null,
+	// 	name: "Lê Phan Xuân An",
+	// 	phone: "0376180193",
+	// 	postId: null,
+	// 	provinceId: 10,
+	// 	wardsId: 1739
+	// }
+	findPlaceProvinceById(addressObj.provinceId, function(resProvince){
+		var selectedProvince = resProvince.data[0];
+		// console.log(selectedProvince)
+		findPlaceDistrict(addressObj.provinceId, function(resProvince){
+			var listDistrict = resProvince.data;
+			// console.log(listDistrict)
+			for (e in listDistrict) {
+				// console.log(listDistrict[e])
+				// console.log(listDistrict[e]["DISTRICT_ID"]+" "+addressObj.districtId+" "+(listDistrict[e]["DISTRICT_ID"] == addressObj.districtId))
+				if (listDistrict[e]["DISTRICT_ID"] == addressObj.districtId) {
+					var selectedDistrict = listDistrict[e]
+					// console.log(selectedDistrict);
+
+					findPlaceWard(addressObj.districtId, function(resWard){
+						var listWards = resWard.data;
+						// console.log(listWards);
+						for (w in listWards) {
+							if (listWards[w]["WARDS_ID"] == addressObj.wardsId) {
+								var selectedWard = listWards[w]
+								// console.log(selectedWard);
+								addressObj.wardsName = selectedWard["WARDS_NAME"];
+								addressObj.districtValue = selectedDistrict["DISTRICT_VALUE"]
+								addressObj.districtName = selectedDistrict["DISTRICT_NAME"]
+								addressObj.provinceCode = selectedProvince["PROVINCE_CODE"]
+								addressObj.provinceName = selectedProvince["PROVINCE_NAME"]
+								addressObj.province = selectedProvince["PROVINCE_NAME"]
+								callback(addressObj);
+								break;
+							}
+						}
+					})
+
+					break;
+				}
+			}
+		})
+	})
+}
 
 function autocomplete(inp, arr, textAttr, idAttr, callback) {
   /*the autocomplete function takes two arguments,
