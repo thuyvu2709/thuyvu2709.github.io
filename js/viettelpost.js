@@ -15,10 +15,10 @@ function loginViettelPost(callback){
 
 	getViettelPostAccess(function(data){
 		console.log(data);
-		data = {
-	        "USERNAME": "lean23062001@gmail.com",
-        	"PASSWORD": "23062001"
-		}
+		// data = {
+	 //        "USERNAME": "lean23062001@gmail.com",
+  //       	"PASSWORD": "23062001"
+		// }
 		settings["data"]=JSON.stringify(data);
 		$.ajax(settings).done(function(response) {
 		    console.log(response);
