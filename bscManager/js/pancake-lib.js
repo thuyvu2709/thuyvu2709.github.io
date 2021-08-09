@@ -128,15 +128,15 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 
 // calculateCurrentPrice('1','0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c','0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',1);
 
-function calculateCurrentPriceInBUSD(amountIn, tokenIn, slippage,callback) {
+function calculateCurrentPriceInBUSD(amountInFull, tokenIn, slippage,callback) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xA781f67c8097394449217246FA3fF3303d91F018"
 	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 		var decimalTokenIn = result;
-		var amountInFull = (amountIn * ( 10 ** result )).toLocaleString('fullwide', { useGrouping: false })
+		// var amountInFull = (amountIn * ( 10 ** result )).toLocaleString('fullwide', { useGrouping: false })
 		// console.log(amountIn)
-		if (amountIn == 0) {
+		if (amountInFull.toString() == 0) {
 			callback("0","0",new BN("0"),new BN("0"),new BN("0"),0,0);
 			return;
 		}
@@ -235,7 +235,7 @@ function getTokenInfor(tokenIn, userAddr, callback){
 				// console.log(result)
 				var bal = (result / (10 ** decimal)).toFixed(5)
 				// console.log(bal)
-				callback(name, decimal,bal);
+				callback(name, decimal,bal,result);
 			})
 		})
 	})
@@ -258,6 +258,14 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 	// const path = [INPUT_TOKEN.address, OUTPUT_TOKEN.address]
 	// const to = account.address;
 	const deadline = Math.floor(Date.now() / 1000) + 60 * 20
+
+    // console.log("estimateTrx:"+amountInFull.toString()+" "+amountOutMin.toString()+" "+path+" "+accAddr+" "+deadline)
+	// estimateTrx:
+		// 15000000000000000 
+		// 3381471008340863396 
+		// 0xfa363022816abf82f18a9c2809dcd2bb393f6ac5,0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c,0xe9e7cea3dedca5984780bafc599bd69add087d56 
+		// 0x7175dCBAe09E494A11f8EF52Ea6d7F55b4489bB7 
+		// 1628518255
 
 	web3.eth.estimateGas({
 		from : accAddr,

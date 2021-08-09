@@ -183,9 +183,10 @@ $(document).ready(function() {
 	// })
 
 	function testSlip(){
-		var amountIn = 1;
-		var tokenIn = "0x0b771e34526886d9fff8e764cf557d1cb5943c89";//WCOMP
+		var amountIn = 0.015;
+		// var tokenIn = "0x0b771e34526886d9fff8e764cf557d1cb5943c89";//WCOMP
 		// var tokenIn = "0xce4a4a15fccd532ead67be3ecf7e6122c61d06bb";//THUNDERCAKE
+		var tokenIn = "0xfa363022816abf82f18a9c2809dcd2bb393f6ac5";//Honey
 
 		var slippage = 1;
 		var accAddr = "0x7175dCBAe09E494A11f8EF52Ea6d7F55b4489bB7";
@@ -205,6 +206,7 @@ $(document).ready(function() {
 					// 		runEachSlippage(slippage + 1);
 					// 	}
 					// });
+
 					calculateSlippage(accAddr, amountInFull, amountOutFull, tokenIn, data.BUSD,[],	1,20,function(suitableSlippage, transactionFee, amountOutMin){
 						console.log(suitableSlippage);
 						console.log(transactionFee);
@@ -214,7 +216,7 @@ $(document).ready(function() {
 				})
 	}
 	
-	// testSlip();
+	testSlip();
 
 	function calculateSlippage(accAddr, amountInFull, amountOutFull, tokenIn, tokenOut, path, initSlip, maxSlippage, callback) {
 		// var slippage = 1;
@@ -230,7 +232,7 @@ $(document).ready(function() {
 			}
 	
 	        var amountOutMin = amountOutFull.sub(amountOutFull.mul(new BN(slippage)).div(new BN(100)))
-	        // console.log("Check Slip:"+slippage+" "+amountOutMin);
+	        console.log("Check Slip: inFull:"+amountInFull.toString()+" outfull:"+amountOutFull.toString()+" "+slippage+" "+amountOutMin);
 			// calculateCurrentPriceInBUSD(amountIn,tokenIn,slippage, 
 			// 	function(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull){
 			// 		console.log(amountOutFullFixed);
@@ -298,7 +300,7 @@ $(document).ready(function() {
  // 		})
 	// }
 	// getTokenRate(0.03, data.WBNB, 18, data.BUSD, 18,function(){
-		
+
 	// })
 
 	function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, tokenIn, tokenOut, path, callback) {
@@ -315,6 +317,14 @@ $(document).ready(function() {
 		// const path = [INPUT_TOKEN.address, OUTPUT_TOKEN.address]
 		// const to = account.address;
 		const deadline = Math.floor(Date.now() / 1000) + 60 * 20
+
+        console.log("estimateTrx:"+amountInFull.toString()+" "+amountOutMin.toString()+" "+path+" "+accAddr+" "+deadline)
+		// estimateTrx:
+			// 15000000000000000 
+			// 3381471008340863396 
+			// 0xfa363022816abf82f18a9c2809dcd2bb393f6ac5,0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c,0xe9e7cea3dedca5984780bafc599bd69add087d56 
+			// 0x7175dCBAe09E494A11f8EF52Ea6d7F55b4489bB7 
+			// 1628518255
 
 		web3.eth.estimateGas({
 			from : accAddr,
