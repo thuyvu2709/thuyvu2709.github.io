@@ -84,7 +84,7 @@ function runLoop() {
 
       loopCount++;
 
-      // runLoop();
+      runLoop();
     })
   }, 3000);
 }
@@ -167,7 +167,10 @@ function triggerAction(tokenIndex,callback) {
 
   if (token.sellInStrategy==true) {
     console.log(token.strategyCmd);
-    var cmdLs = JSON.parse(token.strategyCmd);
+    if (!token.strategyCmd){
+      callback();
+    }
+    var cmdLs = token.strategyCmd;
     var mulPrecision = 1;
     for (var e in cmdLs) {
       if (!cmdLs[e]) {
@@ -245,7 +248,7 @@ function triggerAction(tokenIndex,callback) {
 
   if (swapNow) {
       // swapToken(account, tokenList[e].amountInFull, tokenList[e].amountOutMin, tokenList[e].address, data.BUSD, [], tokenList[e].slippage)
-      swapToken(account, tokenList[e].amountInFull, tokenList[e].amountOutMin, tokenList[e].address, data.BUSD, [], tokenList[e].slippage, tokenList[e].gasLimit);
+      swapToken(account, tokenList[tokenIndex].amountInFull, tokenList[tokenIndex].amountOutMin, tokenList[tokenIndex].address, data.BUSD, [], tokenList[tokenIndex].slippage, tokenList[tokenIndex].gasLimit);
 
       console.log("Swap Now");
       callback();
