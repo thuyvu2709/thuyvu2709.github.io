@@ -212,7 +212,7 @@ function triggerAction(tokenIndex,callback) {
       }
       var v = parseInt(parseFloat(cmdLs[e])*mulPrecision);
       var av = parseInt(parseFloat(token.amountOutFullFixed)*mulPrecision)
-      console.log(e);
+      // console.log(e);
 
       if (e=="precision") {
         mulPrecision = 10 ** parseInt(cmdLs[e])
