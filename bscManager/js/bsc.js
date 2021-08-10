@@ -72,7 +72,9 @@ $( "#privateKey" ).change(function() {
 var lastTime = new Date().getTime();
 
 // loadBUSDPrice()
-runLoop();
+if (tokenList.length > 0 ){
+  runLoop();
+}
 
 var loopCount = 0;
 var busdRate = 300;
