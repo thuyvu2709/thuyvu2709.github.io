@@ -30,7 +30,13 @@ $("#privateKey").val(privateKey);
 
 $("#addNewToken").click(function(){
   var addr = $("#newTokenAddress").val();
-  if (addr && tokenList.indexOf(addr)==-1) {
+  if (addr) {
+    for (var e in tokenList) {
+      if (tokenList[e].address == addr) {
+        return;
+      }
+    }
+
     tokenList.push({
       address : addr,
       slippage : 1,
@@ -379,14 +385,14 @@ function updateUIToken(tokenIndex){
             '      <input type="text" readonly class="form-control transactionFee_'+tokenAddr+'" placeholder="" value="'+transactionFeeView+'">'+
             '    </div>'+
             '  </div>'+
-            '  <div class="form-group row">'+
-            '    <label for="customerName" class="col col-form-label">'+
-            '      Token muốn swap sang'+
-            '    </label>'+
-            '    <div class="col">'+
-            '      <input type="text" class="form-control expectedSwapToken_'+tokenAddr+'" id="" placeholder="Optional,default BUSD" value="'+(token.expectedSwapToken ? token.expectedSwapToken : data.BUSD )+'">'+
-            '    </div>'+
-            '  </div>'+
+            // '  <div class="form-group row">'+
+            // '    <label for="customerName" class="col col-form-label">'+
+            // '      Token muốn swap sang'+
+            // '    </label>'+
+            // '    <div class="col">'+
+            // '      <input type="text" class="form-control expectedSwapToken_'+tokenAddr+'" id="" placeholder="Optional,default BUSD" value="'+(token.expectedSwapToken ? token.expectedSwapToken : data.BUSD )+'">'+
+            // '    </div>'+
+            // '  </div>'+
             '  <div class="form-group row">'+
             // "     <div class='col btn btn-default btnNormal tokenSave tokenSave_"+tokenAddr+"'>Lưu</div>"+
             "     <div class='col btn btn-default btnNormal tokenSellNow_"+tokenAddr+"'>Bán ngay</div>"+
@@ -402,8 +408,8 @@ function updateUIToken(tokenIndex){
     // $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
     $(".tokenDelete_"+tokenAddr).click(tokenDeleteFn);
     $(".tokenSellNow_"+tokenAddr).click(tokenSellNowFn);
-    $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
-    $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
+    // $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
+    // $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
     // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
     $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn);
     $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
@@ -461,40 +467,40 @@ function setSellAtExpectFn(){
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
-function editMaxSlippageFn(){
-  console.log("editMaxSlippageFn");
-  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+// function editMaxSlippageFn(){
+//   console.log("editMaxSlippageFn");
+//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
 
-  for (var e in tokenList) {
-    if (tokenList[e].address == tokenAddr) {
-      tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
-      break;
-    }
-// address : addr,
-// slippage : 1,
-// maxSlippage : 1
-  }
-  console.log(tokenList);
-  localStorage.setItem("tokenList",JSON.stringify(tokenList));
-}
+//   for (var e in tokenList) {
+//     if (tokenList[e].address == tokenAddr) {
+//       tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
+//       break;
+//     }
+// // address : addr,
+// // slippage : 1,
+// // maxSlippage : 1
+//   }
+//   console.log(tokenList);
+//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
+// }
 
-function setAlertAtPriceFn(){
-  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  var checked = $(this).is(":checked");
-  console.log("set alert token "+tokenAddr+" "+checked);
+// function setAlertAtPriceFn(){
+//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+//   var checked = $(this).is(":checked");
+//   console.log("set alert token "+tokenAddr+" "+checked);
 
-  for (var e in tokenList) {
-    if (tokenList[e].address == tokenAddr) {
-      tokenList[e].alert = checked;
-      break;
-    }
-// address : addr,
-// slippage : 1,
-// maxSlippage : 1
-  }
-  console.log(tokenList);
-  localStorage.setItem("tokenList",JSON.stringify(tokenList));
-}
+//   for (var e in tokenList) {
+//     if (tokenList[e].address == tokenAddr) {
+//       tokenList[e].alert = checked;
+//       break;
+//     }
+// // address : addr,
+// // slippage : 1,
+// // maxSlippage : 1
+//   }
+//   console.log(tokenList);
+//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
+// }
 
 // function tokenSaveFn(){
 //   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
