@@ -483,7 +483,7 @@ function tokenSaveFn(){
       tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
       tokenList[e].expectedSell = $(".expectedSell_"+tokenAddr).val();
       tokenList[e].expectedSwapToken = $(".expectedSwapToken_"+tokenAddr).val();
-      tokenList[e].strategyCmd = $(".strategyCmd_"+tokenAddr).val();
+      // tokenList[e].strategyCmd = $(".strategyCmd_"+tokenAddr).val();
       break;
     }
 // address : addr,
