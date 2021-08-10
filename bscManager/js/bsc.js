@@ -203,91 +203,92 @@ function triggerAction(tokenIndex,callback) {
     return;
   }
 
-  if (token.sellInStrategy==true) {
-    console.log(token);
-    console.log(token.strategyCmd);
-    if (!token.strategyCmd){
-      callback();
-      return;
-    }
-    var cmdLs = token.strategyCmd;
-    var mulPrecision = 1;
-    for (var e in cmdLs) {
-      if (!cmdLs[e]) {
-        continue;
-      }
-      var v = parseInt(parseFloat(cmdLs[e])*mulPrecision);
-      var av = parseInt(parseFloat(token.amountOutMinFixed)*mulPrecision)
-      // console.log(e);
-
-      if (e=="precision") {
-        mulPrecision = 10 ** parseInt(cmdLs[e])
-      } else if (e=="alert") {
-        if (v == av) {
-          window.alert(token.tokenName + " at "+cmdLs[e]);
-        }
-      } else if (e=="alertGreaterThan") {
-        if (v < av) {
-          window.alert(token.tokenName + " greater than "+cmdLs[e]);
-        }
-      } else if (e=="alertSmallerThan") {
-        if (v > av) {
-          window.alert(token.tokenName + " smaller than "+cmdLs[e]);
-        }
-      } else if (e=="swap") {
-        if (v == av) {
-          swapNow = true;
-        }
-      } else if (e=="swapIfGreaterThan") {
-        if (v < av) {
-          swapNow = true;
-        }
-      } else if (e=="swapIfSmallerThan") {
-        if (v > av) {
-          swapNow = true;
-        }
-      } 
-    }
-  } else {
-    if (token.expectedSell == "0" || !token.expectedSell) {
-      callback();
-      return;
-    }
-    // console.log("Alert:"+token.alert)
-    var lsExpectedSell = token.expectedSell.split(",");
-
-    // var minV = parseInt(token.amountOutFullFixed * 10000);
-    // var maxV = 0;
-
-    for (var e in lsExpectedSell) {
-      var v = parseInt(lsExpectedSell[e])
-      if (v == parseInt(token.amountOutFullFixed)){
-        
-        if (token.alert==true) {
-          window.alert(token.tokenName + " at "+v);
-        }
-        if (token.sellAtExpect==true) {
-          swapNow = true;
-        }
-      }
-      // if (v < minV) {
-      //   minV = v;
-      // } 
-      // if (v > maxV) {
-      //   maxV = v;
-      // }
-    }
-
-    // if (minV > parseInt(token.amountOutFullFixed) && token.alert==true) {
-    //   window.alert(token.tokenName + " reach minium");
-    // }
-    // if (maxV < parseInt(token.amountOutFullFixed) && token.alert==true) {
-    //   window.alert(token.tokenName + " reach maximum");
-    // }
+  // if (token.sellInStrategy==true) {
+  console.log(token);
+  console.log(token.strategyCmd);
+  if (!token.strategyCmd){
+    callback();
+    return;
   }
+  var cmdLs = token.strategyCmd;
+  var mulPrecision = 1;
+  for (var e in cmdLs) {
+    if (!cmdLs[e]) {
+      continue;
+    }
+    var v = parseInt(parseFloat(cmdLs[e])*mulPrecision);
+    var av = parseInt(parseFloat(token.amountOutMinFixed)*mulPrecision)
+    // console.log(e);
+    // console.log("v:"+v)
+    // console.log("av:"+av)
+
+    if (e=="precision") {
+      mulPrecision = 10 ** parseInt(cmdLs[e])
+    } else if (e=="alert") {
+      if (v == av) {
+        window.alert(token.tokenName + " at "+cmdLs[e]);
+      }
+    } else if (e=="alertGreaterThan") {
+      if (v < av) {
+        window.alert(token.tokenName + " greater than "+cmdLs[e]);
+      }
+    } else if (e=="alertSmallerThan") {
+      if (v > av) {
+        window.alert(token.tokenName + " smaller than "+cmdLs[e]);
+      }
+    } else if (e=="swap") {
+      if (v == av) {
+        swapNow = true;
+      }
+    } else if (e=="swapIfGreaterThan") {
+      if (v < av) {
+        swapNow = true;
+      }
+    } else if (e=="swapIfSmallerThan") {
+      if (v > av) {
+        swapNow = true;
+      }
+    } 
+  }
+  // } else {
+  //   if (token.expectedSell == "0" || !token.expectedSell) {
+  //     callback();
+  //     return;
+  //   }
+  //   // console.log("Alert:"+token.alert)
+  //   var lsExpectedSell = token.expectedSell.split(",");
+
+  //   // var minV = parseInt(token.amountOutFullFixed * 10000);
+  //   // var maxV = 0;
+
+  //   for (var e in lsExpectedSell) {
+  //     var v = parseInt(lsExpectedSell[e])
+  //     if (v == parseInt(token.amountOutFullFixed)){
+        
+  //       if (token.alert==true) {
+  //         window.alert(token.tokenName + " at "+v);
+  //       }
+  //       if (token.sellAtExpect==true) {
+  //         swapNow = true;
+  //       }
+  //     }
+  //     // if (v < minV) {
+  //     //   minV = v;
+  //     // } 
+  //     // if (v > maxV) {
+  //     //   maxV = v;
+  //     // }
+  //   }
+
+  //   // if (minV > parseInt(token.amountOutFullFixed) && token.alert==true) {
+  //   //   window.alert(token.tokenName + " reach minium");
+  //   // }
+  //   // if (maxV < parseInt(token.amountOutFullFixed) && token.alert==true) {
+  //   //   window.alert(token.tokenName + " reach maximum");
+  //   // }
+  // }
 
   if (swapNow) {
-      // swapToken(account, tokenList[e].amountInFull, tokenList[e].amountOutMin, tokenList[e].address, data.BUSD, [], tokenList[e].slippage)
       swapToken(account, tokenList[tokenIndex].amountInFull, tokenList[tokenIndex].amountOutMin, tokenList[tokenIndex].address, data.BUSD, [], tokenList[tokenIndex].slippage, tokenList[tokenIndex].gasLimit);
 
       console.log("Swap Now");
@@ -323,24 +324,25 @@ function updateUIToken(tokenIndex){
         '<div id="collapse_'+tokenAddr+'" class="collapse" aria-labelledby="heading_'+tokenAddr+'" data-parent="#listBSC">'+
           '<div class="card-body">'+
             '<form class="container">'+
-            '  <div class="form-group row">'+
-            '    <label for="customerName" class="col col-form-label">'+
-            '      Expectation:<br/>'+
-            '      <span class="textRed">Alert:<input type="checkbox" class="alertAtPrice_'+tokenAddr+'" '+(token.alert==true ? "checked" : "")+'></span>'+
-            '      <span class="textRed">Bán:<input type="checkbox" class="sellAtExpect_'+tokenAddr+'" '+(token.sellAtExpect==true ? "checked" : "")+'></span>'+
-            '      <span class="textRed">Strategy:<input type="checkbox" class="sellInStrategy_'+tokenAddr+'" '+(token.sellInStrategy==true ? "checked" : "")+'></span>'+
-            '    </label>'+
-            '    <div class="col">'+
-            '      <input type="text" class="form-control expectedSell_'+tokenAddr+'" placeholder="" value="'+(token.expectedSell ? token.expectedSell : 0 )+'" '+(token.sellInStrategy==true ? "readonly" : "")+'>'+
-            '    </div>'+
-            '  </div>'+
+            // '  <div class="form-group row">'+
+            // '    <label for="customerName" class="col col-form-label">'+
+            // '      Expectation:<br/>'+
+            // '      <span class="textRed">Alert:<input type="checkbox" class="alertAtPrice_'+tokenAddr+'" '+(token.alert==true ? "checked" : "")+'></span>'+
+            // '      <span class="textRed">Bán:<input type="checkbox" class="sellAtExpect_'+tokenAddr+'" '+(token.sellAtExpect==true ? "checked" : "")+'></span>'+
+            // '      <span class="textRed">Strategy:<input type="checkbox" class="sellInStrategy_'+tokenAddr+'" '+(token.sellInStrategy==true ? "checked" : "")+'></span>'+
+            // '    </label>'+
+            // '    <div class="col">'+
+            // '      <input type="text" class="form-control expectedSell_'+tokenAddr+'" placeholder="" value="'+(token.expectedSell ? token.expectedSell : 0 )+'" '+(token.sellInStrategy==true ? "readonly" : "")+'>'+
+            // '    </div>'+
+            // '  </div>'+
             '  '+
             '  <div class="form-group row">'+
             '    <label for="customerName" class="col col-form-label">'+
             '      Strategy:'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" class="form-control strategyCmd_'+tokenAddr+'" placeholder="" value="'+(token.strategyCmd ? token.strategyCmd : "" )+'" '+(token.sellInStrategy==true ? "" : "readonly")+ ' >'+
+            // '      <input type="text" class="form-control strategyCmd_'+tokenAddr+'" placeholder="" value="'+(token.strategyCmd ? token.strategyCmd : "" )+'" '+(token.sellInStrategy==true ? "" : "readonly")+ ' >'+
+            '      <div class="btn btn-default btnNormal strategyCmd_'+tokenAddr+'">Set Strategy</div>'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -384,7 +386,7 @@ function updateUIToken(tokenIndex){
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
-            "     <div class='col btn btn-default btnNormal tokenSave tokenSave_"+tokenAddr+"'>Lưu</div>"+
+            // "     <div class='col btn btn-default btnNormal tokenSave tokenSave_"+tokenAddr+"'>Lưu</div>"+
             "     <div class='col btn btn-default btnNormal tokenSellNow_"+tokenAddr+"'>Bán ngay</div>"+
             "     <div class='col btn btn-default btnNormal tokenDelete tokenDelete_"+tokenAddr+"'>Xoá</div>"+
             "     <div class='col btn btn-default btnNormal'><a href='https://poocoin.app/tokens/"+tokenAddr+"'>Xem chart</a></div>"+
@@ -395,12 +397,12 @@ function updateUIToken(tokenIndex){
         '</div>'+
       '</div>'
       )
-    $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
+    // $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
     $(".tokenDelete_"+tokenAddr).click(tokenDeleteFn);
     $(".tokenSellNow_"+tokenAddr).click(tokenSellNowFn);
     $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
     $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
-    $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
+    // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
     $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn);
     $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
     } else {
@@ -412,32 +414,32 @@ function updateUIToken(tokenIndex){
     }
 }
 
-function setSellInStrategyFn(){
-  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  var checked = $(this).is(":checked");
-  console.log("set sell in strategy "+tokenAddr+" "+checked);
+// function setSellInStrategyFn(){
+//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+//   var checked = $(this).is(":checked");
+//   console.log("set sell in strategy "+tokenAddr+" "+checked);
 
-  for (var e in tokenList) {
-    if (tokenList[e].address == tokenAddr) {
-      tokenList[e].sellInStrategy = checked;
-      if (checked==true){
-          $(".expectedSell_"+tokenAddr).val("0");
-          $(".expectedSell_"+tokenAddr).prop('readonly', true);
-          $(".strategyCmd_"+tokenAddr).prop('readonly', false);
-      } else {
-          $(".expectedSell_"+tokenAddr).prop('readonly', false);
-          $(".strategyCmd_"+tokenAddr).prop('readonly', true);
-          $(".strategyCmd_"+tokenAddr).val("")
-      }
-      break;
-    }
-// address : addr,
-// slippage : 1,
-// maxSlippage : 1
-  }
-  console.log(tokenList);
-  localStorage.setItem("tokenList",JSON.stringify(tokenList));
-}
+//   for (var e in tokenList) {
+//     if (tokenList[e].address == tokenAddr) {
+//       tokenList[e].sellInStrategy = checked;
+//       if (checked==true){
+//           $(".expectedSell_"+tokenAddr).val("0");
+//           $(".expectedSell_"+tokenAddr).prop('readonly', true);
+//           $(".strategyCmd_"+tokenAddr).prop('readonly', false);
+//       } else {
+//           $(".expectedSell_"+tokenAddr).prop('readonly', false);
+//           $(".strategyCmd_"+tokenAddr).prop('readonly', true);
+//           $(".strategyCmd_"+tokenAddr).val("")
+//       }
+//       break;
+//     }
+// // address : addr,
+// // slippage : 1,
+// // maxSlippage : 1
+//   }
+//   console.log(tokenList);
+//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
+// }
 
 function setSellAtExpectFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -492,25 +494,25 @@ function setAlertAtPriceFn(){
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
-function tokenSaveFn(){
-  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  console.log("Save token "+tokenAddr);
+// function tokenSaveFn(){
+//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+//   console.log("Save token "+tokenAddr);
 
-  for (var e in tokenList) {
-    if (tokenList[e].address == tokenAddr) {
-      tokenList[e].slippage = $(".slippage_"+tokenAddr).val();
-      tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
-      tokenList[e].expectedSell = $(".expectedSell_"+tokenAddr).val();
-      tokenList[e].expectedSwapToken = $(".expectedSwapToken_"+tokenAddr).val();
-      // tokenList[e].strategyCmd = $(".strategyCmd_"+tokenAddr).val();
-      break;
-    }
-// address : addr,
-// slippage : 1,
-// maxSlippage : 1
-  }
-  localStorage.setItem("tokenList",JSON.stringify(tokenList));
-}
+//   for (var e in tokenList) {
+//     if (tokenList[e].address == tokenAddr) {
+//       tokenList[e].slippage = $(".slippage_"+tokenAddr).val();
+//       tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
+//       tokenList[e].expectedSell = $(".expectedSell_"+tokenAddr).val();
+//       tokenList[e].expectedSwapToken = $(".expectedSwapToken_"+tokenAddr).val();
+//       // tokenList[e].strategyCmd = $(".strategyCmd_"+tokenAddr).val();
+//       break;
+//     }
+// // address : addr,
+// // slippage : 1,
+// // maxSlippage : 1
+//   }
+//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
+// }
 
 function tokenDeleteFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
