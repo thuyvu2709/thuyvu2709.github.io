@@ -154,30 +154,35 @@ function updateEachToken(tokenIndex,callback) {
         // console.log(amount)
         // console.log(tokenName)
         // console.log(amountInFull.toString());
-        calculateSlippage(walletAddress, amountInFull, amountOutFull, tokenAddr, data.BUSD,[],  1, tokenList[tokenIndex].maxSlippage,
-          function(suitableSlippage, transactionFee, gasLimit, amountOutMin){
+        try {
+          calculateSlippage(walletAddress, amountInFull, amountOutFull, tokenAddr, data.BUSD,[],  1, tokenList[tokenIndex].maxSlippage,
+            function(suitableSlippage, transactionFee, gasLimit, amountOutMin){
 
-            // console.log(suitableSlippage);
-            // console.log(transactionFee);
-            var amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
-            // console.log(amountOutMinFixed)
-            tokenList[tokenIndex].tokenName = tokenName;
-            tokenList[tokenIndex].slippage = suitableSlippage;
-            tokenList[tokenIndex].amountOutMin = amountOutMin;
-            tokenList[tokenIndex].amountInFull = amountInFull;
-            tokenList[tokenIndex].amountOutFull = amountOutFull;
-            tokenList[tokenIndex].transactionFee = transactionFee;
-            tokenList[tokenIndex].balance = balance;
-            tokenList[tokenIndex].amountOutFullFixed = amountOutFullFixed;
-            tokenList[tokenIndex].amountOutMinFixed = amountOutMinFixed;
-            tokenList[tokenIndex].gasLimit = gasLimit;
+              // console.log(suitableSlippage);
+              // console.log(transactionFee);
+              var amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
+              // console.log(amountOutMinFixed)
+              tokenList[tokenIndex].tokenName = tokenName;
+              tokenList[tokenIndex].slippage = suitableSlippage;
+              tokenList[tokenIndex].amountOutMin = amountOutMin;
+              tokenList[tokenIndex].amountInFull = amountInFull;
+              tokenList[tokenIndex].amountOutFull = amountOutFull;
+              tokenList[tokenIndex].transactionFee = transactionFee;
+              tokenList[tokenIndex].balance = balance;
+              tokenList[tokenIndex].amountOutFullFixed = amountOutFullFixed;
+              tokenList[tokenIndex].amountOutMinFixed = amountOutMinFixed;
+              tokenList[tokenIndex].gasLimit = gasLimit;
 
-            triggerAction(tokenIndex,function(){
-              updateUIToken(tokenIndex);              
-              callback();
-              return;
+              triggerAction(tokenIndex,function(){
+                updateUIToken(tokenIndex);              
+                callback();
+                return;
+              })
             })
-          })
+        }catch(e){
+          callback();
+          return;
+        }
     }) 
   })
 }
