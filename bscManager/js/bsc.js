@@ -8,6 +8,9 @@ try {
   tokenList = JSON.parse(localStorage.getItem("tokenList"))
 }catch(e){
 } 
+if (!tokenList){
+  tokenList = [];
+}
 var walletAddress = JSON.parse(localStorage.getItem("walletAddress")) || ''
 var privateKey = JSON.parse(localStorage.getItem("privateKey")) || ''
 var account = {}
