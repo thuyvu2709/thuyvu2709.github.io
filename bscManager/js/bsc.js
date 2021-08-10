@@ -112,7 +112,7 @@ function runLoop() {
 // loadBSC(function(){});
 
 function loadBSC(callback){
-  if (tokenList.length==0) {
+  if (!tokenList || tokenList.length==0) {
     callback();
     return;
   }
