@@ -1,6 +1,7 @@
 $("#headerInclude").load("../common/header.html");
 $("#footerInclude").load("../common/footer.html");
 
+var startTrading = false;
 
 var tokenList = [];
 try {
@@ -39,6 +40,10 @@ $("#addNewToken").click(function(){
       $("#loadingSpin").hide();
     })
   }
+})
+
+$("#startTrading").click(function(){
+  startTrading = true;
 })
 
 $( "#walletAddress" ).change(function() {
@@ -80,7 +85,7 @@ function runLoop() {
       
       var timeAfterLast = (parseFloat(new Date().getTime() - lastTime) / (1000)).toFixed(1)
       lastTime = new Date().getTime();
-      $("#infor").html("Cập nhật lần cuối:"+timeAfterLast+" giây trước")
+      $("#infor").html("Last update:"+timeAfterLast+" s")
 
       loopCount++;
 
@@ -156,6 +161,11 @@ function updateEachToken(tokenIndex,callback) {
 }
 
 function triggerAction(tokenIndex,callback) {
+
+  if (startTrading==false)  {
+    callback();
+  }
+
   var token = tokenList[tokenIndex];
 
   var swapNow = false;
