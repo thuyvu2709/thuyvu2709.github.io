@@ -86,7 +86,7 @@ function runLoop() {
       }
     })
   }
-  var timeout = 3000;
+  var timeout = 2000;
   // if (tokenList.length < 5) {
   //   timeout = 5000;
   // }
