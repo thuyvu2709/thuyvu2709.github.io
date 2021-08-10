@@ -74,24 +74,39 @@ var loopCount = 0;
 var busdRate = 300;
 
 function runLoop() {
-  if (loopCount%100) {
+  if (loopCount%100==0) {
     getTokenRate(1, data.WBNB, 18, data.BUSD, 18,function(usdRate){
       busdRate = usdRate;
+      if (loopCount>=150) {
+        loopCount = 100;
+      }
     })
   }
+  var timeout = 3000;
+  // if (tokenList.length < 5) {
+  //   timeout = 5000;
+  // }
+
   setTimeout(function(){
-    loadBSC(function(){
-      console.log("Done loop, run again");
-      
+    loadBSC(function(){      
       var timeAfterLast = (parseFloat(new Date().getTime() - lastTime) / (1000)).toFixed(1)
+      
+      // if (timeAfterLast*1000 < timeout) {
+      //   continue;
+      // }
+      console.log("Done loop, run again:"+timeAfterLast+" loopCount:"+loopCount);
+
+      // console.log(timeAfterLast);
+      
       lastTime = new Date().getTime();
+
       $("#infor").html("Last update:"+timeAfterLast+" s")
 
       loopCount++;
 
       runLoop();
     })
-  }, 3000);
+  }, timeout);
 }
 
 // loadBSC(function(){});
@@ -101,18 +116,20 @@ function loadBSC(callback){
     callback();
     return;
   }
+
   var runEachToken = function(step) {
     if (step >= tokenList.length) {
       callback();
       return;
-    }
-    try {
-      updateEachToken(step,function(){
+    } else {
+      try {
+        updateEachToken(step,function(){
+          runEachToken(step+1);
+        })
+      }catch(exp){
+        console.log(exp);
         runEachToken(step+1);
-      })
-    }catch(exp){
-      console.log(exp);
-      runEachToken(step+1);
+      }
     }
   }
   runEachToken(0)
@@ -154,6 +171,7 @@ function updateEachToken(tokenIndex,callback) {
             triggerAction(tokenIndex,function(){
               updateUIToken(tokenIndex);              
               callback();
+              return;
             })
           })
     }) 
@@ -164,6 +182,7 @@ function triggerAction(tokenIndex,callback) {
 
   if (startTrading==false)  {
     callback();
+    return;
   }
 
   var token = tokenList[tokenIndex];
@@ -179,6 +198,7 @@ function triggerAction(tokenIndex,callback) {
     console.log(token.strategyCmd);
     if (!token.strategyCmd){
       callback();
+      return;
     }
     var cmdLs = token.strategyCmd;
     var mulPrecision = 1;
@@ -262,8 +282,10 @@ function triggerAction(tokenIndex,callback) {
 
       console.log("Swap Now");
       callback();
+      return;
   } else {
     callback();
+    return;
   }
 }
 

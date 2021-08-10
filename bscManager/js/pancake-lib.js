@@ -1,4 +1,6 @@
-const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
+// var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+var herokuPrefix = "";
+const web3 = new Web3(herokuPrefix+'https://bsc-dataseed1.binance.org:443');
 const BN = web3.utils.BN;
 
 
