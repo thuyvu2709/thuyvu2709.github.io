@@ -204,6 +204,7 @@ function triggerAction(tokenIndex,callback) {
   }
 
   if (token.sellInStrategy==true) {
+    console.log(token);
     console.log(token.strategyCmd);
     if (!token.strategyCmd){
       callback();
@@ -216,7 +217,7 @@ function triggerAction(tokenIndex,callback) {
         continue;
       }
       var v = parseInt(parseFloat(cmdLs[e])*mulPrecision);
-      var av = parseInt(parseFloat(token.amountOutFullFixed)*mulPrecision)
+      var av = parseInt(parseFloat(token.amountOutMinFixed)*mulPrecision)
       // console.log(e);
 
       if (e=="precision") {
