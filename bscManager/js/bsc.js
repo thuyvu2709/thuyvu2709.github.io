@@ -46,6 +46,7 @@ $("#addNewToken").click(function(){
 })
 
 $("#startTrading").click(function(){
+  $("#startTrading").html("Trading...");
   startTrading = true;
 })
 
