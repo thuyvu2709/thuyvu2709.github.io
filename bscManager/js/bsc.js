@@ -402,6 +402,7 @@ function updateUIToken(tokenIndex){
     $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
     $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
     $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn);
+    $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
     } else {
     // console.log("update btnToken_"+tokenAddr+" Only");
     $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
@@ -446,6 +447,23 @@ function setSellAtExpectFn(){
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
       tokenList[e].sellAtExpect = checked;
+      break;
+    }
+// address : addr,
+// slippage : 1,
+// maxSlippage : 1
+  }
+  console.log(tokenList);
+  localStorage.setItem("tokenList",JSON.stringify(tokenList));
+}
+
+function editMaxSlippageFn(){
+  console.log("editMaxSlippageFn");
+  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+
+  for (var e in tokenList) {
+    if (tokenList[e].address == tokenAddr) {
+      tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
       break;
     }
 // address : addr,
