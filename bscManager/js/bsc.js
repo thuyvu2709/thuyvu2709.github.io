@@ -159,14 +159,17 @@ function updateEachToken(tokenIndex,callback) {
   }
   getTokenInfor(tokenAddr, walletAddress, function(tokenName, decimal,balance, balanceFull){
 
-    var amountToSell = 0
+    var amountToSellFull = 0
     if (!tokenList[tokenIndex].amountToSell) {
-      amountToSell = balanceFull;
+      amountToSellFull = balanceFull;
     } else {
-      amountToSell = new BN((tokenList[tokenIndex].amountToSell * (10 ** decimal)).toString());
+      amountToSellFull = new BN((tokenList[tokenIndex].amountToSell * (10 ** decimal)).toString());
+      if (amountToSellFull > balanceFull) {
+        amountToSellFull = balanceFull;
+      }
     }
 
-    calculateCurrentPriceInBUSD(amountToSell, tokenAddr, token.slippage, 
+    calculateCurrentPriceInBUSD(amountToSellFull, tokenAddr, token.slippage, 
       function(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull, decimalTokenIn, decimalTokenOut){
         // console.log("Line 106")
         // console.log(amount)
@@ -194,8 +197,14 @@ function updateEachToken(tokenIndex,callback) {
               tokenList[tokenIndex].amountOutMinFixed = amountOutMinFixed;
               tokenList[tokenIndex].gasLimit = gasLimit;
 
+              console.log(tokenList[tokenIndex].amountToSell);
+
               if (!tokenList[tokenIndex].amountToSell) {
                 tokenList[tokenIndex].amountToSell = balanceFull / (10 ** decimal);
+              } else {
+                if (tokenList[tokenIndex].amountToSell > balanceFull / (10 ** decimal)) {
+                  tokenList[tokenIndex].amountToSell = balanceFull / (10 ** decimal);
+                } 
               }
 
               triggerAction(tokenIndex,function(){
@@ -441,11 +450,12 @@ function updateUIToken(tokenIndex){
       $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
       $(".amountToSellToken_"+tokenAddr).change(editAmountToSellTokenFn);
     } else {
-    // console.log("update btnToken_"+tokenAddr+" Only");
-    $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
-    $(".amountOutMin_"+tokenAddr).val(token.amountOutMinFixed+"$");
-    $(".slippage_"+tokenAddr).val(token.slippage)
-    $(".transactionFee_"+tokenAddr).val(transactionFeeView)
+      // console.log("update btnToken_"+tokenAddr+" Only");
+      $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
+      $(".amountOutMin_"+tokenAddr).val(token.amountOutMinFixed+"$");
+      $(".slippage_"+tokenAddr).val(token.slippage)
+      $(".transactionFee_"+tokenAddr).val(transactionFeeView)
+      $(".amountToSellToken_"+tokenAddr).val(token.amountToSell);
     }
 }
 
@@ -478,8 +488,7 @@ function updateUIToken(tokenIndex){
 
 function editAmountToSellTokenFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  var checked = $(this).is(":checked");
-  console.log("set sell token "+tokenAddr+" "+checked);
+  console.log("editAmountToSellTokenFn "+tokenAddr);
 
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
@@ -489,6 +498,12 @@ function editAmountToSellTokenFn(){
         console.log(v);
         console.log(tokenList[e])
         v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal)) * (parseFloat(percent) / 100);
+        tokenList[e].amountToSell = v;
+        $(".amountToSellToken_"+tokenAddr).val(v);
+      } else {
+        if (v > (tokenList[e].balanceFull / (10 ** tokenList[e].decimal))) {
+          v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal));
+        }
         tokenList[e].amountToSell = v;
         $(".amountToSellToken_"+tokenAddr).val(v);
       }
