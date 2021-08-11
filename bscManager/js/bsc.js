@@ -116,7 +116,9 @@ function runLoop() {
 
       loopCount++;
 
-      runLoop();
+      if (tokenList.length > 0 ){
+        runLoop();
+      }
     })
   }, timeout);
 }
@@ -156,7 +158,15 @@ function updateEachToken(tokenIndex,callback) {
     return;
   }
   getTokenInfor(tokenAddr, walletAddress, function(tokenName, decimal,balance, balanceFull){
-    calculateCurrentPriceInBUSD(balanceFull, tokenAddr, token.slippage, 
+
+    var amountToSell = 0
+    if (!tokenList[tokenIndex].amountToSell) {
+      amountToSell = balanceFull;
+    } else {
+      amountToSell = new BN((tokenList[tokenIndex].amountToSell * (10 ** decimal)).toString());
+    }
+
+    calculateCurrentPriceInBUSD(amountToSell, tokenAddr, token.slippage, 
       function(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull, decimalTokenIn, decimalTokenOut){
         // console.log("Line 106")
         // console.log(amount)
@@ -177,9 +187,16 @@ function updateEachToken(tokenIndex,callback) {
               tokenList[tokenIndex].amountOutFull = amountOutFull;
               tokenList[tokenIndex].transactionFee = transactionFee;
               tokenList[tokenIndex].balance = balance;
+              tokenList[tokenIndex].balanceFull = balanceFull;
+              tokenList[tokenIndex].decimal = decimal;
+
               tokenList[tokenIndex].amountOutFullFixed = amountOutFullFixed;
               tokenList[tokenIndex].amountOutMinFixed = amountOutMinFixed;
               tokenList[tokenIndex].gasLimit = gasLimit;
+
+              if (!tokenList[tokenIndex].amountToSell) {
+                tokenList[tokenIndex].amountToSell = balanceFull / (10 ** decimal);
+              }
 
               triggerAction(tokenIndex,function(){
                 updateUIToken(tokenIndex);              
@@ -318,6 +335,7 @@ function updateUIToken(tokenIndex){
   
   if (!$('.cardElement_'+tokenAddr)[0]) {
     var cardBody ="abc"
+
     $("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
       '<div class="card cardElement_'+tokenAddr+'">'+
@@ -351,6 +369,14 @@ function updateUIToken(tokenIndex){
             '    <div class="col">'+
             // '      <input type="text" class="form-control strategyCmd_'+tokenAddr+'" placeholder="" value="'+(token.strategyCmd ? token.strategyCmd : "" )+'" '+(token.sellInStrategy==true ? "" : "readonly")+ ' >'+
             '      <div class="btn btn-default btnNormal strategyCmd_'+tokenAddr+'">Set Strategy</div>'+
+            '    </div>'+
+            '  </div>'+
+            '  <div class="form-group row">'+
+            '    <label for="customerName" class="col col-form-label">'+
+            '      SL Token muốn bán'+
+            '    </label>'+
+            '    <div class="col">'+
+            '      <input type="text" class="form-control amountToSellToken_'+tokenAddr+'" placeholder="" value="'+(token.amountToSell)+'" >'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -405,14 +431,15 @@ function updateUIToken(tokenIndex){
         '</div>'+
       '</div>'
       )
-    // $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
-    $(".tokenDelete_"+tokenAddr).click(tokenDeleteFn);
-    $(".tokenSellNow_"+tokenAddr).click(tokenSellNowFn);
-    // $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
-    // $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
-    // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
-    $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn);
-    $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
+      // $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
+      $(".tokenDelete_"+tokenAddr).click(tokenDeleteFn);
+      $(".tokenSellNow_"+tokenAddr).click(tokenSellNowFn);
+      // $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
+      // $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
+      // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
+      $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn);
+      $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
+      $(".amountToSellToken_"+tokenAddr).change(editAmountToSellTokenFn);
     } else {
     // console.log("update btnToken_"+tokenAddr+" Only");
     $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
@@ -449,31 +476,43 @@ function updateUIToken(tokenIndex){
 //   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 // }
 
-function setSellAtExpectFn(){
+function editAmountToSellTokenFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
   var checked = $(this).is(":checked");
   console.log("set sell token "+tokenAddr+" "+checked);
 
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
-      tokenList[e].sellAtExpect = checked;
+      var v = $(".amountToSellToken_"+tokenAddr).val();
+      if (v.indexOf("%")>0) {
+        var percent = v.substring(0,v.indexOf("%"));
+        console.log(v);
+        console.log(tokenList[e])
+        v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal)) * (parseFloat(percent) / 100);
+        tokenList[e].amountToSell = v;
+        $(".amountToSellToken_"+tokenAddr).val(v);
+      }
       break;
     }
 // address : addr,
 // slippage : 1,
 // maxSlippage : 1
   }
-  console.log(tokenList);
+  // console.log(tokenList);
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
-// function editMaxSlippageFn(){
-//   console.log("editMaxSlippageFn");
+// function setSellAtExpectFn(){
 //   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
 
 //   for (var e in tokenList) {
 //     if (tokenList[e].address == tokenAddr) {
-//       tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
+//       var v = $(".amountToSellToken_"+tokenAddr).val();
+//       if (v.indexOf("%")>0) {
+//         v = v.substring(0,v.indexOf("%"));
+//         console.log(v);
+//       }
+//       tokenList[e].amountToSell = v;
 //       break;
 //     }
 // // address : addr,
@@ -483,6 +522,23 @@ function setSellAtExpectFn(){
 //   console.log(tokenList);
 //   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 // }
+
+function editMaxSlippageFn(){
+  console.log("editMaxSlippageFn");
+  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+
+  for (var e in tokenList) {
+    if (tokenList[e].address == tokenAddr) {
+      tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
+      break;
+    }
+// address : addr,
+// slippage : 1,
+// maxSlippage : 1
+  }
+  // console.log(tokenList);
+  localStorage.setItem("tokenList",JSON.stringify(tokenList));
+}
 
 // function setAlertAtPriceFn(){
 //   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -558,7 +614,6 @@ function tokenSellNowFn(){
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
-
 function editStrategyCmdFn() {
     var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
     var tokenIndex = -1;
@@ -597,6 +652,146 @@ function editStrategyCmdFn() {
     $("#simpleModal .modal-content").html(lsBtnShip);
 
     $("#simpleModal").modal('toggle');
+
+    $(".saveSM").click(function(){
+      console.log("Save Sm:"+tokenIndex);
+      tokenList[tokenIndex].strategyCmd["precision"] = $(".smPrecision").val();
+      tokenList[tokenIndex].strategyCmd["alert"] = $(".smAlertAt").val();
+      tokenList[tokenIndex].strategyCmd["alertGreaterThan"] = $(".smAlertGreaterThan").val();
+      tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val();
+      tokenList[tokenIndex].strategyCmd["swap"] = $(".smSwapAt").val();
+      tokenList[tokenIndex].strategyCmd["swapIfGreaterThan"] = $(".smSwapGreaterThan").val();
+      tokenList[tokenIndex].strategyCmd["swapIfSmallerThan"] = $(".smSwapSmallerThan").val();
+
+      $(".strategyCmd_"+tokenAddr).val(tokenList[tokenIndex].strategyCmd)
+
+      localStorage.setItem("tokenList",JSON.stringify(tokenList));
+
+      $("#simpleModal").modal('hide');
+    });
+}
+
+function editStrategyCmdFn2() {
+    var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+    var tokenIndex = -1;
+    for (var e in tokenList) {
+      if (tokenList[e].address == tokenAddr) {
+        tokenIndex = e;
+        break;
+      }
+    }
+
+    if (!tokenList[tokenIndex].strategyCmd) {
+      tokenList[tokenIndex].strategyCmd = {
+        precision : "",
+        alert : "",
+        alertGreaterThan : "",
+        alertSmallerThan : "",
+        swap : "",
+        swapIfGreaterThan : "",
+        swapIfSmallerThan : ""
+      }
+    }
+    // console.log(tokenList[tokenIndex].strategyCmd)
+
+    var lsBtnShip = 
+      '    <h5>Build Strategy</h5>'+
+      '    <form class="container">'+
+      '      <div class="form-group">'+
+      '        <label for="importSchedule" class="col-form-label">'+
+      '         Select'+
+      '       </label>'+
+      '          <div class="">'+
+      '            <select class="mdb-select md-form form-control cmdMiniSelect"'+
+      '              >'+
+      '              <option value="precision">Precision</option>'+
+      '              <option value="alert">Alert</option>'+
+      '              <option value="alertGreaterThan">Alert If greater than</option>'+
+      '              <option value="alertSmallerThan">Alert If smaller than</option>'+
+      '              <option value="swap">swap at</option>'+
+      '              <option value="swapIfGreaterThan">swap If greater than</option>'+
+      '              <option value="swapIfSmallerThan">swap If smaller than</option>'+
+      '            </select>'+
+      '          </div>'+
+      '      </div>'+
+
+      '      '+
+      '      <div class="cmdMiniContent">'+
+      '      </div>'+
+
+      '      <div class="btn btn-primary mb-2" id="miniaddNewProduct">Add Strategy</div>'+
+      // '      <div class="btn btn-primary mb-2" id="minibtnRefresh">Xoá hết thông tin</div>'+
+      ''+
+      '    </form>';
+    
+    $("#simpleModal .modal-content").html(lsBtnShip);
+
+    $("#simpleModal").modal('toggle');
+
+    $(".cmdMiniSelect").change(function(){
+      console.log($(".cmdMiniSelect").val())
+      if ($(".cmdMiniSelect").val()=="precision"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+
+          '        <label for="productName" class="col-form-label">Precision at (0-6)</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smPrecision"  placeholder="" value="'+tokenList[tokenIndex].strategyCmd["precision"]+'">'+
+          '        </div>'+
+          '     </div>'
+          )
+        $(".smPrecision").change(function(){
+          tokenList[tokenIndex].strategyCmd["precision"] = $(".smPrecision").val()
+        })
+      } else if ($(".cmdMiniSelect").val()=="alert"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+
+          '        <label for="productName" class="col-form-label">Alert At</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smAlertAt"  placeholder="" value="'+tokenList[tokenIndex].strategyCmd["alert"]+'">'+
+          '        </div>'+          
+          '     </div>'
+          )
+        $(".smAlertAt").change(function(){
+          tokenList[tokenIndex].strategyCmd["alert"] = $(".smAlertAt").val()
+        })
+      } else if ($(".cmdMiniSelect").val()=="alertGreaterThan"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+
+          '        <label for="productName" class="col-form-label">Alert If Greater Than</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smAlertGreaterThan"  placeholder="" value="'+tokenList[tokenIndex].strategyCmd["alertGreaterThan"]+'">'+
+          '        </div>'+          
+          '     </div>'
+          )
+        $(".smAlertGreaterThan").change(function(){
+          tokenList[tokenIndex].strategyCmd["alertGreaterThan"] = $(".smAlertGreaterThan").val()
+        })
+      } else if ($(".cmdMiniSelect").val()=="alertSmallerThan"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+          
+          '        <label for="productName" class="col-form-label">Alert If Greater Than</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smAlertSmallerThan"  placeholder="" value="'+tokenList[tokenIndex].strategyCmd["alertSmallerThan"]+'">'+
+          '        </div>'+          
+          '     </div>'
+          )
+        $(".smAlertSmallerThan").change(function(){
+          tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
+        })
+      } else if ($(".cmdMiniSelect").val()=="swap"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+          
+          '        <label for="productName" class="col-form-label">Alert If Greater Than</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smAlertSmallerThan"  placeholder="" value="'+tokenList[tokenIndex].strategyCmd["alertSmallerThan"]+'">'+
+          '        </div>'+          
+          '     </div>'
+          )
+        $(".smAlertSmallerThan").change(function(){
+          tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
+        })
+      }
+    })
 
     $(".saveSM").click(function(){
       console.log("Save Sm:"+tokenIndex);
