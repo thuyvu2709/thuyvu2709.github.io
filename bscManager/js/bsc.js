@@ -197,7 +197,7 @@ function updateEachToken(tokenIndex,callback) {
               tokenList[tokenIndex].amountOutMinFixed = amountOutMinFixed;
               tokenList[tokenIndex].gasLimit = gasLimit;
 
-              console.log(tokenList[tokenIndex].amountToSell);
+              // console.log(tokenList[tokenIndex].amountToSell);
 
               if (!tokenList[tokenIndex].amountToSell) {
                 tokenList[tokenIndex].amountToSell = balanceFull / (10 ** decimal);
