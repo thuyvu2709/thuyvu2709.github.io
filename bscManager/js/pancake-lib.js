@@ -130,55 +130,71 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 
 // calculateCurrentPrice('1','0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c','0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',1);
 
-function calculateCurrentPriceInBUSD(amountInFull, tokenIn, slippage,callback) {
+function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xA781f67c8097394449217246FA3fF3303d91F018"
 	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
+		if (error) {
+        	callback(0, new BN("0"), new BN("0"), 0, 0);
+			return;
+		}
+
 		var decimalTokenIn = result;
 		// var amountInFull = (amountIn * ( 10 ** result )).toLocaleString('fullwide', { useGrouping: false })
 		// console.log(amountIn)
 		if (amountInFull.toString() == 0) {
-			callback("0","0",new BN("0"),new BN("0"),new BN("0"),0,0);
+        	callback(0, new BN("0"), new BN("0"), 0, 0);
 			return;
 		}
 		// console.log(result)
 		// console.log(amountInFull)
 		// var pathExchange = [tokenIn, tokenOut];
-		
-		routerContract.methods.getAmountsOut(amountInFull, [tokenIn, data.WBNB, data.BUSD]).call({from: fakeAddr}, function(error, result){
-			// console.log(error)
-			// console.log(result)
-			var amounts = result;
-	        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
-	        // console.log(amountOutMin)
-	        // tokenOutDecimal = 18;
-            // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
-            tokenOutContract = new web3.eth.Contract(data.ERCABI,data.BUSD);
-            // console.log(tokenOutContract);
-            // console.log(bvalue.sub(bvalue.mul((1/100))))
+		try{
+			routerContract.methods.getAmountsOut(amountInFull, [tokenIn, data.WBNB, data.BUSD]).call({from: fakeAddr}, function(error, result){
 
-            tokenOutContract.methods.decimals().call({from: fakeAddr}, function(error, result){
-				// var decimal = result;
-				var decimalTokenOut = result;
+				if (error) {
+	            	callback(0, new BN("0"), new BN("0"), 0, 0);
+					return;
+				}
 
-				// console.log(decimal)
-				// var vDecimal = new BN(10).pow(new BN(decimal)); 
-				// console.log(vDecimal);
-	            var amountOutMin = new BN(amounts[2]);
-	            var amountOutFull = new BN(amounts[2]);
+				var amounts = result;
+		        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
+		        // console.log(amountOutMin)
+		        // tokenOutDecimal = 18;
+	            // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
+	            tokenOutContract = new web3.eth.Contract(data.ERCABI,data.BUSD);
+	            // console.log(tokenOutContract);
+	            // console.log(bvalue.sub(bvalue.mul((1/100))))
 
-	            amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
-	            // console.log(amountOutMin.toString())
-	            amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
-	            amountOutFullFixed = (amountOutFull / (10 ** decimalTokenOut)).toFixed(5)
-	            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
-	            // console.log(ethers)
-	            // console.log(amountIn+" "+amountOutFull+" "+amountOutMin);
-	            // console.log(amountOutFullFixed+" "+amountOutMinFixed);
-	            callback(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull, decimalTokenIn, decimalTokenOut);
-            })
-		});
+	            tokenOutContract.methods.decimals().call({from: fakeAddr}, function(error, result){
+					// var decimal = result;
+					var decimalTokenOut = result;
+
+					// console.log(decimal)
+					// var vDecimal = new BN(10).pow(new BN(decimal)); 
+					// console.log(vDecimal);
+		            // var amountOutMin = new BN(amounts[2]);
+
+		            var amountOutFull = new BN(amounts[2]);
+
+		            // amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
+		            // console.log(amountOutMin.toString())
+		            // amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
+		            amountOutFullFixed = (amountOutFull / (10 ** decimalTokenOut)).toFixed(5)
+		            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
+		            // console.log(ethers)
+		            // console.log(amountIn+" "+amountOutFull+" "+amountOutMin);
+		            // console.log(amountOutFullFixed+" "+amountOutMinFixed);
+		            // callback(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull, decimalTokenIn, decimalTokenOut);
+		            callback(amountOutFullFixed, amountOutFull, amountInFull, decimalTokenIn, decimalTokenOut);
+	            })
+			});
+		}catch(e){
+			console.log(e);
+            callback(0, new BN("0"), new BN("0"), 0, 0);
+            return;
+		}
 	})
 }
 
@@ -187,18 +203,19 @@ function calculateSlippage(accAddr, amountInFull, amountOutFull, tokenIn, tokenO
 	// console.log("calculate Slippage")
 	// console.log(amountInFull.toString())
 	if (amountInFull.toString() == "0") {
-		callback(initSlip, 0, new BN("0"));
+		// callback(initSlip, 0, new BN("0"));
+		callback(initSlip, 0, 0, new BN("0"))
 		return;
 	};
 
 	if (initSlip >= maxSlippage) {
-		callback(initSlip, 0, new BN("0"));
+		callback(initSlip, 0, 0, new BN("0"))
 		return;
 	}
 
 	var runEachSlippage = function(slippage) {
 		if (slippage >= maxSlippage) {
-			callback(slippage, 0, new BN("0"));
+			callback(maxSlippage, 0, 0, new BN("0"))
 			return;
 		}
 
@@ -229,11 +246,29 @@ function getTokenInfor(tokenIn, userAddr, callback){
 	var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
 	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
+
+		if (error) {
+        	callback(0, 0, 0, new BN("0"));
+			return;
+		}
+
 		var decimal = result;
 		tokenInContract.methods.name().call({from: fakeAddr}, function(error, result){
+
+			if (error) {
+	        	callback(0, 0, 0, new BN("0"));
+				return;
+			}
+
 			var name = result;
 			// console.log("Name:"+name+" Decimals"+decimal)
 			tokenInContract.methods.balanceOf(userAddr).call({from: fakeAddr}, function(error, result){
+
+				if (error) {
+		        	callback(0, 0, 0, new BN("0"));
+					return;
+				}
+
 				// console.log(result)
 				var bal = (result / (10 ** decimal)).toFixed(5)
 				// console.log(bal)
@@ -288,7 +323,7 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 	}); // estimate the gas limit for this transaction
 }
 
-function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, slippage, gasLimit){
+function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, slippage, gasLimit, callback){
 	// tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
@@ -314,7 +349,18 @@ function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, 
 	
 	console.log(tx);
 	
-	signAndSend(tx,account.privateKey)
+	signAndSend(tx,account.privateKey, function(sendCk, receipt){
+		if (sendCk == true) {
+			console.log(receipt);
+			if (receipt.status==false) {
+				callback(false, undefined);
+			} else {
+				callback(true, receipt);
+			}
+		} else {
+			callback(false, undefined);
+		}
+	})
 	// })
 }
 
@@ -349,7 +395,8 @@ function sendETH(fromAddress,toAddress,gasLimit,value, privateKey){
 	signAndSend(tx,privateKey)
 }
 
-function signAndSend(tx,privateKey){
+function signAndSend(tx,privateKey, callback){
+	var sendCallBack = false;
 	const signPromise = web3.eth.accounts.signTransaction(tx, privateKey);
 	signPromise.then((signedTx) => {
 	  // raw transaction string may be available in .raw or 
@@ -359,13 +406,28 @@ function signAndSend(tx,privateKey){
 	  sentTx.on("receipt", receipt => {
 	    // do something when receipt comes back
 	    console.log(receipt);
+	    if (!sendCallBack) {
+	    	sendCallBack = true;
+	    	callback(true, receipt);
+	    	return;
+	    }
 	  });
 	  sentTx.on("error", err => {
 	    // do something on transaction error
 	    console.log(err)
+    	if (!sendCallBack) {
+	    	sendCallBack = true;
+	    	callback(false, undefined);
+	    	return;
+	    }
 	  });
 	}).catch((err) => {
 	  // do something when promise fails
 	  console.log(err)
+	  if (!sendCallBack) {
+	  	sendCallBack = true;
+	  	callback(false, undefined);
+	  	return;
+	  }
 	});
 }
