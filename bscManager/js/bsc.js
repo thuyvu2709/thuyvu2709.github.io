@@ -731,7 +731,7 @@ function swapNowFn(tokenIndex, callback){
         $(".modal-body").html("<p id='modelContent'>DONE: Swap "+parseFloat(tokenList[tokenIndex].amountInExpected).toFixed(3)+" "+tokenList[tokenIndex].tokenName
             +" for "+parseFloat(tokenList[tokenIndex].amountOutExpected).toFixed(3)+" BUSD"+"</p>");
       } else{
-        $(".modal-body").html("<p id='modelContent'>CAN NOT: Swap "+tokenList[tokenIndex].amountInExpected.toFixed(3)+" "+tokenList[tokenIndex].tokenName
+        $(".modal-body").html("<p id='modelContent'>CAN NOT: Swap "+parseFloat(tokenList[tokenIndex].amountInExpected).toFixed(3)+" "+tokenList[tokenIndex].tokenName
             +" for "+parseFloat(tokenList[tokenIndex].amountOutExpected).toFixed(3)+" BUSD"+"</p>");
       }
       $('#myModal').modal('toggle');
