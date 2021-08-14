@@ -415,6 +415,8 @@ function triggerAction(tokenIndex,callback) {
         console.log(status,tx);
         if (status == true) {
           tokenList[tokenIndex].strategyLs[step] = {};
+          console.log("True");
+          saveTokenList();
         }
 
         runStrategyStep(step + 1);
@@ -726,11 +728,11 @@ function swapNowFn(tokenIndex, callback){
       $(".modal-body").empty();
 
       if (status == true) {
-        $(".modal-body").html("<p id='modelContent'>Swap "+tokenList[tokenIndex].amountInExpected.toFixed(3)+" "+tokenList[tokenIndex].tokenName
-            +" for "+tokenList[tokenIndex].amountOutExpected.toFixed(3)+" BUSD"+"</p>");
+        $(".modal-body").html("<p id='modelContent'>DONE: Swap "+parseFloat(tokenList[tokenIndex].amountInExpected).toFixed(3)+" "+tokenList[tokenIndex].tokenName
+            +" for "+parseFloat(tokenList[tokenIndex].amountOutExpected).toFixed(3)+" BUSD"+"</p>");
       } else{
-        $(".modal-body").html("<p id='modelContent'>CAN NOT Swap "+tokenList[tokenIndex].amountInExpected.toFixed(3)+" "+tokenList[tokenIndex].tokenName
-            +" for "+tokenList[tokenIndex].amountOutExpected.toFixed(3)+" BUSD"+"</p>");
+        $(".modal-body").html("<p id='modelContent'>CAN NOT: Swap "+tokenList[tokenIndex].amountInExpected.toFixed(3)+" "+tokenList[tokenIndex].tokenName
+            +" for "+parseFloat(tokenList[tokenIndex].amountOutExpected).toFixed(3)+" BUSD"+"</p>");
       }
       $('#myModal').modal('toggle');
 
