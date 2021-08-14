@@ -177,14 +177,17 @@ function findNearestExpectedBalanceToAmountToSell(tokenIndex) {
     if (!strItem.key) {
       continue;
     }
-    if (strItem.key == "swap" || strItem.key == "swapIfGreaterThan" || strItem == "swapIfSmallerThan") {
-      // console.log(strItem)
+    // console.log(strItem)
+
+    if (strItem.key == "swap" || strItem.key == "swapIfGreaterThan" || strItem.key == "swapIfSmallerThan") {
       var expectedBalance = strItem.value;
       var distance = Math.abs(currentBalance - expectedBalance);
+      // console.log(currentBalance)
+      // console.log(expectedBalance);
       // console.log(distance)
       // console.log(nearestDistance)
       if (distance < nearestDistance && strItem.amount < amountInFull) {
-        distance = nearestDistance;
+        nearestDistance = distance;
         nearestAmountInFull = strItem.amount;
       }
     }
@@ -486,7 +489,7 @@ function updateUIToken(tokenIndex){
             '      SL Token muốn bán'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" class="form-control amountToSellToken_'+tokenAddr+'" placeholder="" value="'+(token.amountToSell)+'" >'+
+            '      <input type="text" class="form-control amountToSellToken_'+tokenAddr+'" placeholder="" value="'+(token.amountToSell)+'" readonly>'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -549,7 +552,7 @@ function updateUIToken(tokenIndex){
       // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
       $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn2);
       $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
-      $(".amountToSellToken_"+tokenAddr).change(editAmountToSellTokenFn);
+      // $(".amountToSellToken_"+tokenAddr).change(editAmountToSellTokenFn);
     } else {
       // console.log("update btnToken_"+tokenAddr+" Only");
       $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
@@ -592,36 +595,36 @@ function updateUIToken(tokenIndex){
 //   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 // }
 
-function editAmountToSellTokenFn(){
-  var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  console.log("editAmountToSellTokenFn "+tokenAddr);
+// function editAmountToSellTokenFn(){
+//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
+//   console.log("editAmountToSellTokenFn "+tokenAddr);
 
-  for (var e in tokenList) {
-    if (tokenList[e].address == tokenAddr) {
-      var v = $(".amountToSellToken_"+tokenAddr).val();
-      if (v.indexOf("%")>0) {
-        var percent = v.substring(0,v.indexOf("%"));
-        console.log(v);
-        console.log(tokenList[e])
-        v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal)) * (parseFloat(percent) / 100);
-        tokenList[e].amountToSell = v;
-        $(".amountToSellToken_"+tokenAddr).val(v);
-      } else {
-        if (v > (tokenList[e].balanceFull / (10 ** tokenList[e].decimal))) {
-          v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal));
-        }
-        tokenList[e].amountToSell = v;
-        $(".amountToSellToken_"+tokenAddr).val(v);
-      }
-      break;
-    }
-// address : addr,
-// slippage : 1,
-// maxSlippage : 1
-  }
-  // console.log(tokenList);
-  localStorage.setItem("tokenList",JSON.stringify(tokenList));
-}
+//   for (var e in tokenList) {
+//     if (tokenList[e].address == tokenAddr) {
+//       var v = $(".amountToSellToken_"+tokenAddr).val();
+//       if (v.indexOf("%")>0) {
+//         var percent = v.substring(0,v.indexOf("%"));
+//         console.log(v);
+//         console.log(tokenList[e])
+//         v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal)) * (parseFloat(percent) / 100);
+//         tokenList[e].amountToSell = v;
+//         $(".amountToSellToken_"+tokenAddr).val(v);
+//       } else {
+//         if (v > (tokenList[e].balanceFull / (10 ** tokenList[e].decimal))) {
+//           v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal));
+//         }
+//         tokenList[e].amountToSell = v;
+//         $(".amountToSellToken_"+tokenAddr).val(v);
+//       }
+//       break;
+//     }
+// // address : addr,
+// // slippage : 1,
+// // maxSlippage : 1
+//   }
+//   // console.log(tokenList);
+//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
+// }
 
 // function setSellAtExpectFn(){
 //   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
@@ -824,6 +827,34 @@ function saveTokenList(){
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
+var addTokenPercentFn = function(target,tokenIndex){
+  // console.log("addTokenPercentFn");
+  // console.log($(this));
+  // target.val(123);
+  //       var v = $(".amountToSellToken_"+tokenAddr).val();
+//       if (v.indexOf("%")>0) {
+//         v = v.substring(0,v.indexOf("%"));
+//         console.log(v);
+//       }
+//       tokenList[e].amountToSell = v;
+  
+  var v = target.val();
+
+  if (v.indexOf("%")>0) {
+    var percent = v.substring(0,v.indexOf("%"));
+    // console.log(v);
+    // console.log(tokenList[tokenIndex])
+    v = (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal)) * (parseFloat(percent) / 100);
+    target.val(v);
+  } else {
+    if (v > (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal))) {
+      v = (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal));
+    }
+    target.val(v);
+  }
+
+}
+
 function editStrategyCmdFn2() {
     var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
     var tokenIndex = -1;
@@ -1000,7 +1031,7 @@ function editStrategyCmdFn2() {
       } else if ($(".cmdMiniSelect").val()=="alertSmallerThan"){
         $(".cmdMiniContent").html(
           '     <div class="form-group">'+          
-          '        <label for="productName" class="col-form-label">Alert If Greater Than</label>'+
+          '        <label for="productName" class="col-form-label">Alert If Smaller Than</label>'+
           '        <div class="">'+
           '          <input type="text" class="form-control smAlertSmallerThan"  placeholder="" >'+
           '        </div>'+          
@@ -1038,7 +1069,9 @@ function editStrategyCmdFn2() {
           '        </div>'+      
           '     </div>'
           )
-
+        $(".smSwapAtAmount").change(function(){
+          addTokenPercentFn($(this),tokenIndex);
+        });
         $(".miniaddNewStrategy").click(function(){
           // tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
           // tokenList[tokenIndex].strategyLs.append({
@@ -1075,6 +1108,9 @@ function editStrategyCmdFn2() {
           '     </div>'
           )
 
+        $(".smSwapIfGreaterThanAmount").change(function(){
+          addTokenPercentFn($(this),tokenIndex);
+        });
         $(".miniaddNewStrategy").click(function(){
           // tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
           // tokenList[tokenIndex].strategyLs.append({
@@ -1113,6 +1149,9 @@ function editStrategyCmdFn2() {
           '     </div>'
           )
 
+        $(".smSwapIfSmallerThanAmount").change(function(){
+          addTokenPercentFn($(this),tokenIndex);
+        });
         $(".miniaddNewStrategy").click(function(){
           // tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
           // tokenList[tokenIndex].strategyLs.append({
