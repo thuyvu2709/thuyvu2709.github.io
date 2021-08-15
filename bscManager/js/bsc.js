@@ -88,7 +88,7 @@ var busdRate = 300;
 
 function runLoop() {
   if (loopCount%100==0) {
-    getTokenRate(1, data.WBNB, 18, data.BUSD, 18,function(usdRate){
+    getTokenRate(1, web3data.WBNB, 18, web3data.BUSD, 18,function(usdRate){
       busdRate = usdRate;
       if (loopCount>=150) {
         loopCount = 100;
@@ -258,7 +258,7 @@ function updateEachToken(tokenIndex,callback) {
 
 
         try {
-          calculateSlippage(walletAddress, amountInExpectedBN, amountOutExpectedBN, tokenAddr, data.BUSD,[],  1, tokenList[tokenIndex].maxSlippage,
+          calculateSlippage(walletAddress, amountInExpectedBN, amountOutExpectedBN, tokenAddr, web3data.BUSD,[],  1, tokenList[tokenIndex].maxSlippage,
             function(suitableSlippage, transactionFee, gasLimit, amountOutMin){
                     // 2,              0.0003,         21000,    290 * 10^18
               // console.log(suitableSlippage);
@@ -310,6 +310,8 @@ function triggerAction(tokenIndex,callback) {
   var token = tokenList[tokenIndex];
 
   var swapNow = false;
+  var alertNow = false;
+
   var strSwapIndex = -1;
 
   if (token.amountOutFullFixed == "0") {
@@ -361,31 +363,34 @@ function triggerAction(tokenIndex,callback) {
       var av = parseInt(value * mulPrecision);
 
       if (v == av) {
-        window.alert(token.tokenName + " at "+value);
-        tokenList[tokenIndex].strategyLs[step] = {};
+        // window.alert(token.tokenName + " at "+value);
+        // tokenList[tokenIndex].strategyLs[step] = {};
+        alertNow = true;
       }
-      runStrategyStep(step+1);
-      return;
+      // runStrategyStep(step+1);
+      // return;
     } else if (key=="alertGreaterThan") {
       var v = parseInt(referedValue * mulPrecision);
       var av = parseInt(value * mulPrecision);
 
       if (v < av) {
-        window.alert(token.tokenName + " greater than "+value);
-        tokenList[tokenIndex].strategyLs[step] = {};
+        // window.alert(token.tokenName + " greater than "+value);
+        // tokenList[tokenIndex].strategyLs[step] = {};
+        alertNow = true;
       }
-      runStrategyStep(step+1);
-      return;
+      // runStrategyStep(step+1);
+      // return;
     } else if (key=="alertSmallerThan") {
       var v = parseInt(referedValue * mulPrecision);
       var av = parseInt(value * mulPrecision);
 
       if (v > av) {
-        window.alert(token.tokenName + " smaller than "+value);
-        tokenList[tokenIndex].strategyLs[step] = {};
+        // window.alert(token.tokenName + " smaller than "+value);
+        // tokenList[tokenIndex].strategyLs[step] = {};
+        alertNow = true;
       }
-      runStrategyStep(step+1);
-      return;
+      // runStrategyStep(step+1);
+      // return;
     } else if (key=="swap") {
       var v = parseInt(referedValue * mulPrecision);
       var av = parseInt(value * mulPrecision);
@@ -409,6 +414,27 @@ function triggerAction(tokenIndex,callback) {
       if (v < av) {
         swapNow = true;
       }
+    }
+    console.log("alertNow:"+alertNow);
+    if (alertNow && alertReceiver) {
+      console.log("Lets alert");
+      var headers_obj = {
+        'To': alertReceiver,
+        'Subject': "ALERT "+token.tokenName + " at "+value,
+        'Content-Type': 'text/html; charset="UTF-8"'
+      };
+
+      sendEmail(headers_obj,"<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a>", function(){
+        tokenList[tokenIndex].strategyLs[step] = {};
+        console.log("Send Email");
+        saveTokenList();
+
+        runStrategyStep(step + 1);
+        return;
+      });
+    } else {
+      runStrategyStep(step + 1);
+      return;
     }
 
     console.log("swapNow:"+swapNow)
@@ -450,7 +476,7 @@ function updateUIToken(tokenIndex){
     var cardBody ="abc"
 
     $("#listBSC").append(
-      // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+data[e][0]+' | '+data[e][2]+' | '+data[e][5]+'</a>'
+      // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+web3data[e][0]+' | '+web3data[e][2]+' | '+web3data[e][5]+'</a>'
       '<div class="card cardElement_'+tokenAddr+'">'+
         '<div class="card-header classheading_'+tokenAddr+'" id="heading_'+tokenAddr+'">'+
           '<h5 class="mb-0">'+
@@ -724,7 +750,7 @@ function swapNowFn(tokenIndex, callback){
 
   swapToken(account, 
     tokenList[tokenIndex].amountInExpectedBN, tokenList[tokenIndex].amountOutExpectedBN, 
-    tokenList[tokenIndex].address, data.BUSD, [], tokenList[tokenIndex].slippage, 
+    tokenList[tokenIndex].address, web3data.BUSD, [], tokenList[tokenIndex].slippage, 
     tokenList[tokenIndex].gasLimit,function(status,tx){
       $("#loadingSpin").hide();
 
@@ -752,7 +778,7 @@ function tokenSellNowFn(){
 
       console.log(tokenList[e]);
       // swapToken(tokenList[e]);
-      // swapToken(account, tokenList[e].amountInFull, tokenList[e].amountOutMin, tokenList[e].address, data.BUSD, [], tokenList[e].slippage, tokenList[e].gasLimit)
+      // swapToken(account, tokenList[e].amountInFull, tokenList[e].amountOutMin, tokenList[e].address, web3data.BUSD, [], tokenList[e].slippage, tokenList[e].gasLimit)
       swapNowFn(e, function(status,tx){
         console.log(status,tx);
       })

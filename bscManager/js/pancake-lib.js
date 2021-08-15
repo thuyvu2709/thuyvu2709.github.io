@@ -4,7 +4,7 @@ const web3 = new Web3(herokuPrefix+'https://bsc-dataseed1.binance.org:443');
 const BN = web3.utils.BN;
 
 
-var data = {
+var web3data = {
 	BUSD: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
 	WBNB: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", //wbnb
 	factory: "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73",  //PancakeSwap V2 factory
@@ -16,10 +16,10 @@ var data = {
 	factoryABI: [{"inputs":[{"internalType":"address","name":"_feeToSetter","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"token0","type":"address"},{"indexed":true,"internalType":"address","name":"token1","type":"address"},{"indexed":false,"internalType":"address","name":"pair","type":"address"},{"indexed":false,"internalType":"uint256","name":"","type":"uint256"}],"name":"PairCreated","type":"event"},{"constant":true,"inputs":[],"name":"INIT_CODE_PAIR_HASH","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"allPairs","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"allPairsLength","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"tokenA","type":"address"},{"internalType":"address","name":"tokenB","type":"address"}],"name":"createPair","outputs":[{"internalType":"address","name":"pair","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"feeTo","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"feeToSetter","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"getPair","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_feeTo","type":"address"}],"name":"setFeeTo","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_feeToSetter","type":"address"}],"name":"setFeeToSetter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}],
 	ERCABI:   [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"guy","type":"address"},{"name":"wad","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint256"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"deposit","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":true,"name":"guy","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":true,"name":"dst","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"dst","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Deposit","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"src","type":"address"},{"indexed":false,"name":"wad","type":"uint256"}],"name":"Withdrawal","type":"event"}]
 }
-
-routerContract = new web3.eth.Contract(data.routerABI,data.router);
-factoryContract = new web3.eth.Contract(data.factoryABI,data.factory);
-wbnbContract = new web3.eth.Contract(data.ERCABI,data.WBNB);
+// console.log(data)
+routerContract = new web3.eth.Contract(web3data.routerABI,web3data.router);
+factoryContract = new web3.eth.Contract(web3data.factoryABI,web3data.factory);
+wbnbContract = new web3.eth.Contract(web3data.ERCABI,web3data.WBNB);
 
 function makeAccount(privateKey) {
 	var account =  web3.eth.accounts.privateKeyToAccount(privateKey) 
@@ -52,7 +52,7 @@ function checkLiq(tokenIn, tokenOut) {
 function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
-	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
 		var amountInFull = (amountIn * ( 10 ** result )).toString()
@@ -63,11 +63,11 @@ function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
 			console.log(error)
 			console.log(result)
 			var amounts = result;
-	        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
+	        // var amountOutMin = amounts[1].sub(amounts[1] (web3data.Slippage));
 	        // console.log(amountOutMin)
 	        // tokenOutDecimal = 18;
             // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
-            tokenOutContract = new web3.eth.Contract(data.ERCABI,tokenOut);
+            tokenOutContract = new web3.eth.Contract(web3data.ERCABI,tokenOut);
             // console.log(tokenOutContract);
             // console.log(bvalue.sub(bvalue.mul((1/100))))
 
@@ -91,7 +91,7 @@ function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
 function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenOut, callback) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
-	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 		// var amountIn = 1;
 
@@ -103,11 +103,11 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 			// console.log(error)
 			// console.log(result)
 			var amounts = result;
-	        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
+	        // var amountOutMin = amounts[1].sub(amounts[1] (web3data.Slippage));
 	        // console.log(amountOutMin)
 	        // tokenOutDecimal = 18;
             // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
-            tokenOutContract = new web3.eth.Contract(data.ERCABI,tokenOut);
+            tokenOutContract = new web3.eth.Contract(web3data.ERCABI,tokenOut);
             // console.log(tokenOutContract);
             // console.log(bvalue.sub(bvalue.mul((1/100))))
 
@@ -133,7 +133,7 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xA781f67c8097394449217246FA3fF3303d91F018"
-	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 		if (error) {
         	callback(0, new BN("0"), new BN("0"), 0, 0);
@@ -151,7 +151,7 @@ function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 		// console.log(amountInFull)
 		// var pathExchange = [tokenIn, tokenOut];
 		try{
-			routerContract.methods.getAmountsOut(amountInFull, [tokenIn, data.WBNB, data.BUSD]).call({from: fakeAddr}, function(error, result){
+			routerContract.methods.getAmountsOut(amountInFull, [tokenIn, web3data.WBNB, web3data.BUSD]).call({from: fakeAddr}, function(error, result){
 
 				if (error) {
 	            	callback(0, new BN("0"), new BN("0"), 0, 0);
@@ -159,11 +159,11 @@ function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 				}
 
 				var amounts = result;
-		        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
+		        // var amountOutMin = amounts[1].sub(amounts[1] (web3data.Slippage));
 		        // console.log(amountOutMin)
 		        // tokenOutDecimal = 18;
 	            // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
-	            tokenOutContract = new web3.eth.Contract(data.ERCABI,data.BUSD);
+	            tokenOutContract = new web3.eth.Contract(web3data.ERCABI,web3data.BUSD);
 	            // console.log(tokenOutContract);
 	            // console.log(bvalue.sub(bvalue.mul((1/100))))
 
@@ -244,7 +244,7 @@ function calculateSlippage(accAddr, amountInFull, amountOutFull, tokenIn, tokenO
 
 function getTokenInfor(tokenIn, userAddr, callback){
 	var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
-	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
 		if (error) {
@@ -282,14 +282,14 @@ function getTokenInfor(tokenIn, userAddr, callback){
 // });
 
 function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, tokenIn, tokenOut, path, callback) {
-	// tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	// tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
 	// console.log(amountInFull)
     // var amountOutMin = amountOutFull.sub(amountOutFull.mul(new BN(slippage)).div(new BN(100)))
     // console.log("amountOutMin:"+amountOutMin.toString())
 	if (path.length == 0) {
-		path = [tokenIn, data.WBNB, data.BUSD]
+		path = [tokenIn, web3data.WBNB, web3data.BUSD]
 	}
 
 	// const path = [INPUT_TOKEN.address, OUTPUT_TOKEN.address]
@@ -306,7 +306,7 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 
 	web3.eth.estimateGas({
 		from : accAddr,
-		to : data.router,
+		to : web3data.router,
 		gas : 5,
 		data: routerContract.methods.swapExactTokensForTokens(amountInFull.toString(),amountOutMin.toString(),path,accAddr,deadline).encodeABI() 
 	}).then((gasLimit) => {
@@ -324,12 +324,12 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 }
 
 function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, slippage, gasLimit, callback){
-	// tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	// tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
 	// console.log(amountInFull)
 	if (path.length == 0) {
-		path = [tokenIn, data.WBNB, data.BUSD]
+		path = [tokenIn, web3data.WBNB, web3data.BUSD]
 	}
 	if (!gasLimit || gasLimit == 0) {
 		return;
@@ -341,7 +341,7 @@ function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, 
 
 	const tx = {
 		from : account.address,
-		to : data.router,
+		to : web3data.router,
 		gas : 5,
 		gasLimit : gasLimit,
 		data: routerContract.methods.swapExactTokensForTokens(amountInFull.toString(),amountOutMin.toString(),path,account.address,deadline).encodeABI() 
