@@ -52,10 +52,11 @@ $("#addNewToken").click(function(){
 })
 
 
-var alertReceiver = "";
+var alertReceiver = localStorage.getItem("alertReceiver");
 
 $("#alertReceiver").change(function(){
   alertReceiver = $("#alertReceiver").val()
+  localStorage.setItem("alertReceiver",alertReceiver);
 })
 
 $("#startTrading").click(function(){
