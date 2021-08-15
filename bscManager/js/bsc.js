@@ -458,7 +458,7 @@ function triggerAction(tokenIndex,callback) {
           if (alertReceiver) {
             var headers_obj = {
               'To': alertReceiver,
-              'Subject': "SWAP "+token.tokenName + " at "+value,
+              'Subject': "SWAP "+token.tokenName +" "+token.amountInExpected + " at "+value,
               'Content-Type': 'text/html; charset="UTF-8"'
             };
 
