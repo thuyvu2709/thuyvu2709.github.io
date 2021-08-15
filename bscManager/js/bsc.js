@@ -51,6 +51,13 @@ $("#addNewToken").click(function(){
   }
 })
 
+
+var alertReceiver = "";
+
+$("#alertReceiver").change(function(){
+  alertReceiver = $("#alertReceiver").val()
+})
+
 $("#startTrading").click(function(){
   $("#startTrading").html("Trading...");
   startTrading = true;
