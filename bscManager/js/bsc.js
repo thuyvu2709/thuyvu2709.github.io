@@ -424,7 +424,9 @@ function triggerAction(tokenIndex,callback) {
       }
     }
     console.log("alertNow:"+alertNow);
+
     if (alertNow && alertReceiver) {
+
       console.log("Lets alert");
       var headers_obj = {
         'To': alertReceiver,
@@ -440,6 +442,7 @@ function triggerAction(tokenIndex,callback) {
         runStrategyStep(step + 1);
         return;
       });
+
     } else {
       runStrategyStep(step + 1);
       return;
@@ -451,6 +454,21 @@ function triggerAction(tokenIndex,callback) {
       swapNowFn(tokenIndex, function(status,tx){
         console.log(status,tx);
         if (status == true) {
+
+          if (alertReceiver) {
+            var headers_obj = {
+              'To': alertReceiver,
+              'Subject': "SWAP "+token.tokenName + " at "+value,
+              'Content-Type': 'text/html; charset="UTF-8"'
+            };
+
+            var mbody = "<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a><br/>"+tx;
+
+            sendEmail(headers_obj, mbody, function(){
+              console.log("Send Email");
+            });
+          }
+
           tokenList[tokenIndex].strategyLs[step] = {};
           console.log("True");
           saveTokenList();
