@@ -53,8 +53,9 @@ $("#addNewToken").click(function(){
 
 
 var alertReceiver = localStorage.getItem("alertReceiver");
+console.log(alertReceiver);
 if (alertReceiver) {
-  localStorage.setItem("alertReceiver",alertReceiver);
+  $("#alertReceiver").val(alertReceiver);
 }
 $("#alertReceiver").change(function(){
   alertReceiver = $("#alertReceiver").val()
