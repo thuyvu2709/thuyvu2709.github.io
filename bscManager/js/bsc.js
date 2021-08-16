@@ -447,6 +447,10 @@ function triggerAction(tokenIndex,callback) {
           'Content-Type': 'text/html; charset="UTF-8"'
         };
 
+        var mbody = "<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a><br/>"+
+                  "<p>Token</p><br/>"+
+                  "<span>"+token.address+"</span>";
+
         sendEmail(headers_obj,"<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a>", function(){
           console.log("Send Email");
         });
