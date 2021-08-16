@@ -24,16 +24,22 @@ var EuroVndRate = 29;
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
 if (userRole) {
-    if (userRole == "shipper") {
-        $("#headerInclude").load("../common/headerShipper.html");
-    } else if (userRole == "manager"){
+    // if (userRole == "shipper") {
+    //     $("#headerInclude").load("../common/headerShipper.html");
+    // } else 
+    if (userRole == "manager"){
         $("#headerInclude").load("../common/header.html");
+    } else {
+        $("#headerInclude").load("../common/headerShipper.html");
     }
 } else {
-    if (pageRole == "shipper") {
-        $("#headerInclude").load("../common/headerShipper.html");
-    } else if (pageRole == "manager"){
+    // if (pageRole == "shipper") {
+    //     $("#headerInclude").load("../common/headerShipper.html");
+    // } else 
+    if (pageRole == "manager"){
         $("#headerInclude").load("../common/header.html");
+    } else {
+        $("#headerInclude").load("../common/headerShipper.html");
     }
 }
 
