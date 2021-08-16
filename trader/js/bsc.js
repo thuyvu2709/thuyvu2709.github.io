@@ -224,6 +224,10 @@ function updateEachToken(tokenIndex,callback) {
   }
   getTokenInfor(tokenAddr, walletAddress, function(tokenName, decimal,balance, balanceFull){
                                                   // ERC20,    18,    100(BNB), 100 000 000 000 000 000 000  
+    if (!tokenList[tokenIndex]) {
+      callback();
+      return;
+    }
     tokenList[tokenIndex].tokenName = tokenName;
     tokenList[tokenIndex].balance = balance;
     tokenList[tokenIndex].balanceFull = balanceFull;
