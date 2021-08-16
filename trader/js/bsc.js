@@ -1,5 +1,5 @@
-$("#headerInclude").load("../common/header.html");
-$("#footerInclude").load("../common/footer.html");
+// $("#headerInclude").load("../common/header.html");
+// $("#footerInclude").load("../common/footer.html");
 
 var startTrading = false;
 
