@@ -333,7 +333,7 @@ function triggerAction(tokenIndex,callback) {
   // if (token.sellInStrategy==true) {
   // console.log(token);
   // console.log(token.strategyLs);
-  if (tokenList[tokenIndex].strategyLs.length==0){
+  if (!tokenList[tokenIndex].strategyLs || tokenList[tokenIndex].strategyLs.length==0){
     callback();
     return;
   }
