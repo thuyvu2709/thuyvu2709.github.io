@@ -383,7 +383,7 @@ function triggerAction(tokenIndex,callback) {
       var v = parseInt(referedValue * mulPrecision);
       var av = parseInt(value * mulPrecision);
 
-      if (v < av) {
+      if (v > av) {
         // window.alert(token.tokenName + " greater than "+value);
         // tokenList[tokenIndex].strategyLs[step] = {};
         alertNow = true;
@@ -394,7 +394,7 @@ function triggerAction(tokenIndex,callback) {
       var v = parseInt(referedValue * mulPrecision);
       var av = parseInt(value * mulPrecision);
 
-      if (v > av) {
+      if (v < av) {
         // window.alert(token.tokenName + " smaller than "+value);
         // tokenList[tokenIndex].strategyLs[step] = {};
         alertNow = true;
