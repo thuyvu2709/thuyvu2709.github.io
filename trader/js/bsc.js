@@ -28,7 +28,7 @@ $("#privateKey").val(privateKey);
 
 // console.log(tokenList)
 
-$("#addNewToken").click(function(){
+$("#newTokenAddress").change(function(){
   var addr = $("#newTokenAddress").val();
   if (addr) {
     for (var e in tokenList) {
@@ -47,6 +47,7 @@ $("#addNewToken").click(function(){
     updateEachToken(tokenList.length-1,function(){
       console.log("Add token");
       $("#loadingSpin").hide();
+      $("#newTokenAddress").val("");
     })
   }
 })
