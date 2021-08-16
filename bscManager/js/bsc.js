@@ -425,25 +425,30 @@ function triggerAction(tokenIndex,callback) {
     }
     console.log("alertNow:"+alertNow);
 
-    if (alertNow && alertReceiver) {
+    if (alertNow) {
+
+      $(".modal-body").empty();
+
+      $(".modal-body").html("<p id='modelContent'>"+key+ " " +token.tokenName + " now at "+value+" </p>");
+
+      $('#myModal').modal('toggle');
+
+      tokenList[tokenIndex].strategyLs[step] = {};
+      saveTokenList();
 
       console.log("Lets alert");
-      var headers_obj = {
-        'To': alertReceiver,
-        'Subject': "ALERT "+token.tokenName + " at "+value,
-        'Content-Type': 'text/html; charset="UTF-8"'
-      };
+      if (alertReceiver){
+        var headers_obj = {
+          'To': alertReceiver,
+          'Subject': key+" "+token.tokenName + " at "+value,
+          'Content-Type': 'text/html; charset="UTF-8"'
+        };
 
-      sendEmail(headers_obj,"<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a>", function(){
-        tokenList[tokenIndex].strategyLs[step] = {};
-        console.log("Send Email");
-        saveTokenList();
+        sendEmail(headers_obj,"<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a>", function(){
+          console.log("Send Email");
+        });
+      }
 
-        runStrategyStep(step + 1);
-        return;
-      });
-
-    } else {
       runStrategyStep(step + 1);
       return;
     }
