@@ -345,8 +345,8 @@ function triggerAction(tokenIndex,callback) {
 
   var runStrategyStep = function(step) {
     cmdLs = tokenList[tokenIndex].strategyLs;
-    console.log("runStrategyStep:"+step)
-    console.log(cmdLs); 
+    // console.log("runStrategyStep:"+step)
+    // console.log(cmdLs); 
     if (step > cmdLs.length) {
       callback()
       return;
