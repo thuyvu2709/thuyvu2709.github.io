@@ -474,7 +474,10 @@ function triggerAction(tokenIndex,callback) {
               'Content-Type': 'text/html; charset="UTF-8"'
             };
 
-            var mbody = "<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a><br/>"+tx;
+            var mbody = "<a href='https://poocoin.app/tokens/"+token.address+"'>Xem chart</a><br/>"+
+                  "<a href='https://bscscan.com/tx/"+tx.transactionHash+"'>Xem transaction</a><br/>"+
+                  "<p>Token</p><br/>"+
+                  "<span>"+token.address+"</span>";
 
             sendEmail(headers_obj, mbody, function(){
               console.log("Send Email");
