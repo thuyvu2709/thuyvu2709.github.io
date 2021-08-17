@@ -21,6 +21,28 @@ routerContract = new web3.eth.Contract(web3data.routerABI,web3data.router);
 factoryContract = new web3.eth.Contract(web3data.factoryABI,web3data.factory);
 wbnbContract = new web3.eth.Contract(web3data.ERCABI,web3data.WBNB);
 
+function convertNumToBN(num, decimal){
+  // return new BN(new BigNumber(num.toString()).mul(10 ** decimal).toString());
+  var vbn =  new BN(web3.utils.toWei(num.toString()));
+  if (decimal < 18) {
+  	vbn = vbn.div(new BN((10 ** (18-decimal)).toString()))
+  } else if (decimal > 18) {
+  	vbn = vbn.mul(new BN((10 ** (decimal-18)).toString()))
+  }
+  return vbn;
+}
+
+function convertBNToNum(bnNum, decimal) {
+  var vf = web3.utils.fromWei(bnNum);
+  vf = parseFloat(vf);
+  if (decimal > 18) {
+  	vf = vf / (10 ** (decimal - 18));
+  } else if (decimal < 18) {
+  	vf = vf * (10 ** (18 - decimal));
+  }
+  return vf;
+}
+
 function makeAccount(privateKey) {
 	var account =  web3.eth.accounts.privateKeyToAccount(privateKey) 
 	console.log("makeAccount")
@@ -55,7 +77,8 @@ function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
 	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
-		var amountInFull = (amountIn * ( 10 ** result )).toString()
+		// var amountInFull = (amountIn * ( 10 ** result )).toString()
+		var amountInFull = (convertNumToBN(amountIn, result)).toString();
 		console.log(amountInFull)
 		// var pathExchange = [tokenIn, tokenOut];
 
@@ -79,7 +102,8 @@ function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
 	            var amountOutMin = new BN(amounts[1]);
 	            amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
 	            // console.log(amountOutMin.toString())
-	            amountOutMin = (amountOutMin / (10 ** decimal)).toFixed(5)
+	            // amountOutMin = (amountOutMin / (10 ** decimal)).toFixed(5)
+	            amountOutMin = (convertBNToNum(amountOutMin, decimal)).toFixed(5);
 	            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
 	            // console.log(ethers)
 	            console.log(amountIn+" "+amountOutMin);
@@ -95,7 +119,7 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 		// var amountIn = 1;
 
-		var amountInFull = (amountIn * ( 10 ** decimalTokenIn )).toString()
+		var amountInFull = (convertNumToBN(amountIn, decimalTokenIn)).toString();//(amountIn * ( 10 ** decimalTokenIn )).toString()
 		// console.log(amountInFull)
 		// var pathExchange = [tokenIn, tokenOut];
 
@@ -118,7 +142,7 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 				// console.log(vDecimal);
 	            var amountOut = new BN(amounts[1]);
 
-	            amountOutFull = (amountOut / (10 ** decimalTokenOut))
+	            amountOutFull = convertBNToNum(amountOut, decimalTokenOut); //(amountOut / (10 ** decimalTokenOut))
 
 	            // console.log("Rate:"+(amountOutFull))
 
@@ -181,7 +205,7 @@ function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 		            // amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
 		            // console.log(amountOutMin.toString())
 		            // amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
-		            amountOutFullFixed = (amountOutFull / (10 ** decimalTokenOut)).toFixed(5)
+		            amountOutFullFixed = convertBNToNum(amountOutFull, decimalTokenOut).toFixed(5); //(amountOutFull / (10 ** decimalTokenOut)).toFixed(5)
 		            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
 		            // console.log(ethers)
 		            // console.log(amountIn+" "+amountOutFull+" "+amountOutMin);
@@ -270,7 +294,7 @@ function getTokenInfor(tokenIn, userAddr, callback){
 				}
 
 				// console.log(result)
-				var bal = (result / (10 ** decimal)).toFixed(5)
+				var bal =  convertBNToNum(result, decimal).toFixed(5); //(result / (10 ** decimal)).toFixed(5)
 				// console.log(bal)
 				callback(name, decimal,bal,result);
 			})
@@ -294,7 +318,7 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 
 	// const path = [INPUT_TOKEN.address, OUTPUT_TOKEN.address]
 	// const to = account.address;
-	const deadline = Math.floor(Date.now() / 1000) + 60 * 20
+	const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
     // console.log("estimateTrx:"+amountInFull.toString()+" "+amountOutMin.toString()+" "+path+" "+accAddr+" "+deadline)
 	// estimateTrx:
@@ -308,7 +332,8 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 		from : accAddr,
 		to : web3data.router,
 		gas : 5,
-		data: routerContract.methods.swapExactTokensForTokens(amountInFull.toString(),amountOutMin.toString(),path,accAddr,deadline).encodeABI() 
+		// data: routerContract.methods.swapExactTokensForTokens(amountInFull.toString(),amountOutMin.toString(),path,accAddr,deadline).encodeABI() 
+		data: routerContract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountInFull.toString(),amountOutMin.toString(),path,accAddr,deadline).encodeABI() 		
 	}).then((gasLimit) => {
 		// console.log(gasLimit)
 		// console.log(gasLimit);
@@ -344,7 +369,7 @@ function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, 
 		to : web3data.router,
 		gas : 5,
 		gasLimit : gasLimit,
-		data: routerContract.methods.swapExactTokensForTokens(amountInFull.toString(),amountOutMin.toString(),path,account.address,deadline).encodeABI() 
+		data: routerContract.methods.swapExactTokensForTokensSupportingFeeOnTransferTokens(amountInFull.toString(),amountOutMin.toString(),path,account.address,deadline).encodeABI() 
 	};
 	
 	console.log(tx);

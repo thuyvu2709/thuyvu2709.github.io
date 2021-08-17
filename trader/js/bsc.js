@@ -177,9 +177,9 @@ function findNearestExpectedBalanceToAmountToSell(tokenIndex) {
 
   // console.log(tokenList[tokenIndex]);
 
-  var currentBalance = tokenList[tokenIndex].amountOutFull / (10 ** tokenList[tokenIndex].decimalTokenOut);//IN BUSD
+  var currentBalance = convertBNToNum(tokenList[tokenIndex].amountOutFull, tokenList[tokenIndex].decimalTokenOut); //tokenList[tokenIndex].amountOutFull / (10 ** tokenList[tokenIndex].decimalTokenOut);//IN BUSD
   var nearestDistance = 10 ** tokenList[tokenIndex].decimalTokenOut;
-  var amountInFull = tokenList[tokenIndex].amountInFull / (10 ** tokenList[tokenIndex].decimalTokenIn);
+  var amountInFull = convertBNToNum(tokenList[tokenIndex].amountInFull, tokenList[tokenIndex].decimalTokenIn); //tokenList[tokenIndex].amountInFull / (10 ** tokenList[tokenIndex].decimalTokenIn);
   var nearestAmountInFull = amountInFull
 
   var rate = currentBalance / nearestAmountInFull;
@@ -200,16 +200,30 @@ function findNearestExpectedBalanceToAmountToSell(tokenIndex) {
       // console.log(nearestDistance)
       if (distance < nearestDistance && strItem.amount < amountInFull) {
         nearestDistance = distance;
-        nearestAmountInFull = strItem.amount;
+        nearestAmountInFull = parseFloat(strItem.amount);
       }
     }
   }
   amountOutExpected = nearestAmountInFull * rate;
+  // console.log(tokenList[tokenIndex]);
   // console.log(nearestAmountInFull);
+  // console.log(
+  //   new BN(new BigNumber(amountOutExpected * (10 ** tokenList[tokenIndex].decimalTokenOut)).toString())  
+  // )
+  // console.log(new BN((nearestAmountInFull * 10 ** tokenList[tokenIndex].decimalTokenIn).toLocaleString('fullwide', {useGrouping:false})).toString());
+  // console.log(convertNumToBN(nearestAmountInFull).toString())
+
+  // console.log(amountOutExpected)
+  // console.log(convertNumToBN(amountOutExpected).toString())
+  // console.log(new BN((amountOutExpected * 10 ** tokenList[tokenIndex].decimalTokenOut).toLocaleString('fullwide', {useGrouping:false})).toString())
+
   return {
-    amountInExpectedBN: new BN((nearestAmountInFull * (10 ** tokenList[tokenIndex].decimalTokenIn)).toString()),
+    // amountInExpectedBN: ((new BN(nearestAmountInFull)).mul(new BN(10).pow(new BN(tokenList[tokenIndex].decimalTokenIn.toString())))),
+    amountInExpectedBN: convertNumToBN(nearestAmountInFull, tokenList[tokenIndex].decimalTokenIn),//new BN((nearestAmountInFull * 10 ** tokenList[tokenIndex].decimalTokenIn).toLocaleString('fullwide', {useGrouping:false})),
     amountInExpected : nearestAmountInFull,
-    amountOutExpectedBN : new BN((amountOutExpected * (10 ** tokenList[tokenIndex].decimalTokenOut)).toString()),
+    // amountOutExpectedBN: ((new BN(amountOutExpected)).mul(new BN(10).pow(new BN(tokenList[tokenIndex].decimalTokenOut.toString())))),
+    // amountOutExpectedBN : new BN((amountOutExpected * 10 ** tokenList[tokenIndex].decimalTokenOut).toLocaleString('fullwide', {useGrouping:false})),
+    amountOutExpectedBN : convertNumToBN(amountOutExpected, tokenList[tokenIndex].decimalTokenOut),
     amountOutExpected : amountOutExpected
   }
 }
@@ -259,12 +273,19 @@ function updateEachToken(tokenIndex,callback) {
         tokenList[tokenIndex].amountOutFullFixed = amountOutFullFixed;
 
         var nearestStrategy = findNearestExpectedBalanceToAmountToSell(tokenIndex);        
+        // console.log("findNearestExpectedBalanceToAmountToSell");
 
         var amountInExpectedBN = nearestStrategy.amountInExpectedBN;
         var amountOutExpectedBN = nearestStrategy.amountOutExpectedBN;
         var amountInExpected = nearestStrategy.amountInExpected;
         var amountOutExpected = nearestStrategy.amountOutExpected;
         var amountToSell = nearestStrategy.amountInExpected;
+
+        // console.log(nearestStrategy);
+        // console.log(amountInExpectedBN.toString());
+        // console.log(amountInExpected);
+        // console.log(amountOutExpectedBN.toString());
+        // console.log(amountOutExpected)
 
         tokenList[tokenIndex].amountInExpectedBN = amountInExpectedBN;
         tokenList[tokenIndex].amountOutExpectedBN = amountOutExpectedBN;
@@ -281,7 +302,7 @@ function updateEachToken(tokenIndex,callback) {
               // console.log(transactionFee);
               // console.log(amountOutMin.toString());
 
-              var amountOutMinFixed = (amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
+              var amountOutMinFixed =  convertBNToNum(amountOutMin, decimalTokenOut).toFixed(5); //(amountOutMin / (10 ** decimalTokenOut)).toFixed(5)
               // console.log(amountOutMinFixed)
               tokenList[tokenIndex].slippage = suitableSlippage;
               tokenList[tokenIndex].amountOutMin = amountOutMin;
@@ -345,7 +366,8 @@ function triggerAction(tokenIndex,callback) {
 
   var cmdLs = tokenList[tokenIndex].strategyLs;
   var mulPrecision = 1;
-  var referedValue  = tokenList[tokenIndex].amountOutFull / (10 ** tokenList[tokenIndex].decimalTokenOut);
+  var referedValue  = convertBNToNum(tokenList[tokenIndex].amountOutFull, tokenList[tokenIndex].decimalTokenOut);
+  //var referedValue  =  tokenList[tokenIndex].amountOutFull / (10 ** tokenList[tokenIndex].decimalTokenOut);
 
 
   var runStrategyStep = function(step) {
@@ -507,9 +529,12 @@ function triggerAction(tokenIndex,callback) {
 }
 
 function updateUIToken(tokenIndex){
-
+  // console.log("updateUIToken");
   var token = tokenList[tokenIndex];
+  // console.log(token);
   var tokenAddr = token.address;
+  // var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $";
+  // var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $ / "+token.transactionFee+" BNB";
   var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $";
 
   // console.log(token);
@@ -911,16 +936,17 @@ var addTokenPercentFn = function(target,tokenIndex){
 //       tokenList[e].amountToSell = v;
   
   var v = target.val();
-
+  var balanceF = (convertBNToNum(tokenList[tokenIndex].balanceFull, tokenList[tokenIndex].decimal));
   if (v.indexOf("%")>0) {
     var percent = v.substring(0,v.indexOf("%"));
     // console.log(v);
     // console.log(tokenList[tokenIndex])
-    v = (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal)) * (parseFloat(percent) / 100);
+    // v = (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal)) * (parseFloat(percent) / 100);
+    v = balanceF * (parseFloat(percent) / 100);
     target.val(v);
   } else {
-    if (v > (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal))) {
-      v = (tokenList[tokenIndex].balanceFull / (10 ** tokenList[tokenIndex].decimal));
+    if (v > balanceF) {
+      v = balanceF;
     }
     target.val(v);
   }

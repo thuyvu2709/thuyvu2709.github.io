@@ -73,43 +73,43 @@ $(document).ready(function() {
 
 	// checkLiq('0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82','0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c')
 
-	function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
-		// var amountInToWei = web3.utils.toWei(amountIn)
-		var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
-		tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
-		tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
+	// function calculateCurrentPrice(amountIn, tokenIn, tokenOut, slippage) {
+	// 	// var amountInToWei = web3.utils.toWei(amountIn)
+	// 	var fakeAddr = "0xf4Aa5a106188E003CBDced3456769EA03cA45cBD"
+	// 	tokenInContract = new web3.eth.Contract(data.ERCABI,tokenIn);
+	// 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
-			var amountInFull = (amountIn * ( 10 ** result )).toString()
-			console.log(amountInFull)
+	// 		var amountInFull = (amountIn * ( 10 ** result )).toString()
+	// 		console.log(amountInFull)
 
-			routerContract.methods.getAmountsOut(amountInFull, [tokenIn, tokenOut]).call({from: fakeAddr}, function(error, result){
-				console.log(error)
-				console.log(result)
-				var amounts = result;
-		        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
-		        // console.log(amountOutMin)
-		        // tokenOutDecimal = 18;
-	            // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
-	            tokenOutContract = new web3.eth.Contract(data.ERCABI,tokenOut);
-	            // console.log(tokenOutContract);
-	            // console.log(bvalue.sub(bvalue.mul((1/100))))
+	// 		routerContract.methods.getAmountsOut(amountInFull, [tokenIn, tokenOut]).call({from: fakeAddr}, function(error, result){
+	// 			console.log(error)
+	// 			console.log(result)
+	// 			var amounts = result;
+	// 	        // var amountOutMin = amounts[1].sub(amounts[1] (data.Slippage));
+	// 	        // console.log(amountOutMin)
+	// 	        // tokenOutDecimal = 18;
+	//             // var amountOutMinParam = ethers.utils.parseUnits(web3.utils.fromWei(amountOutMin.toString()), 18);
+	//             tokenOutContract = new web3.eth.Contract(data.ERCABI,tokenOut);
+	//             // console.log(tokenOutContract);
+	//             // console.log(bvalue.sub(bvalue.mul((1/100))))
 
-	            tokenOutContract.methods.decimals().call({from: fakeAddr}, function(error, result){
-					var decimal = result;
-					console.log(decimal)
-					// var vDecimal = new BN(10).pow(new BN(decimal)); 
-					// console.log(vDecimal);
-		            var amountOutMin = new BN(amounts[1]);
-		            amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
-		            // console.log(amountOutMin.toString())
-		            amountOutMin = (amountOutMin / (10 ** decimal)).toFixed(5)
-		            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
-		            // console.log(ethers)
-		            console.log(amountIn+" "+amountOutMin);
-	            })
-			});
-		})
-	}
+	//             tokenOutContract.methods.decimals().call({from: fakeAddr}, function(error, result){
+	// 				var decimal = result;
+	// 				// console.log(decimal)
+	// 				// var vDecimal = new BN(10).pow(new BN(decimal)); 
+	// 				// console.log(vDecimal);
+	// 	            var amountOutMin = new BN(amounts[1]);
+	// 	            amountOutMin = amountOutMin.sub(amountOutMin.mul(new BN(slippage)).div(new BN(100)))
+	// 	            // console.log(amountOutMin.toString())
+	// 	            amountOutMin = (amountOutMin / (10 ** decimal)).toFixed(5)
+	// 	            // amountOutMin = ethers.utils.parseUnits(amountOutMin, decimal)
+	// 	            // console.log(ethers)
+	// 	            console.log(amountIn+" "+amountOutMin);
+	//             })
+	// 		});
+	// 	})
+	// }
 
 	// calculateCurrentPrice('1','0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c','0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',1);
 
