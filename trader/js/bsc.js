@@ -257,7 +257,7 @@ function updateEachToken(tokenIndex,callback) {
     //   }
     // }
 
-    calculateCurrentPriceInBUSD(balanceFull, tokenAddr, 
+    calculateCurrentPriceInBUSD(balanceFull, tokenAddr, tokenList[tokenIndex].path,
                               // 100 (BNB),       0xabc
       // function(amountOutFullFixed, amountOutMinFixed, amountOutFull, amountOutMin, amountInFull, decimalTokenIn, decimalTokenOut){
       function(amountOutFullFixed, amountOutFull, amountInFull, decimalTokenIn, decimalTokenOut){
@@ -295,7 +295,7 @@ function updateEachToken(tokenIndex,callback) {
 
 
         try {
-          calculateSlippage(walletAddress, amountInExpectedBN, amountOutExpectedBN, tokenAddr, web3data.BUSD,[],  1, tokenList[tokenIndex].maxSlippage,
+          calculateSlippage(walletAddress, amountInExpectedBN, amountOutExpectedBN, tokenAddr, web3data.BUSD,tokenList[tokenIndex].path,  1, tokenList[tokenIndex].maxSlippage,
             function(suitableSlippage, transactionFee, gasLimit, amountOutMin){
                     // 2,              0.0003,         21000,    290 * 10^18
               // console.log(suitableSlippage);
@@ -338,7 +338,7 @@ function updateEachToken(tokenIndex,callback) {
 }
 
 function triggerAction(tokenIndex,callback) {
-
+  // console.log("triggerAction");
   if (startTrading==false)  {
     callback();
     return;
@@ -346,12 +346,20 @@ function triggerAction(tokenIndex,callback) {
 
   var token = tokenList[tokenIndex];
 
+  // console.log(tokenList[tokenIndex])
   var swapNow = false;
   var alertNow = false;
 
   var strSwapIndex = -1;
 
-  if (token.amountOutFullFixed == "0") {
+  var tokenBalance = 0
+  try {
+    tokenBalance = parseFloat(token.balance)
+  }catch(e) {
+    tokenBalance = 0;
+  }
+
+  if (token.balance == 0) {
     callback();
     return;
   }
@@ -394,6 +402,12 @@ function triggerAction(tokenIndex,callback) {
 
     if (key=="precision") {
       mulPrecision = 10 ** parseInt(value)
+      runStrategyStep(step+1);
+      return;
+    } else if (key=="changePath") {
+      tokenList[tokenIndex].path = value.split(",");
+      // saveTokenList();
+      // console.log(tokenList[tokenIndex]);
       runStrategyStep(step+1);
       return;
     } else if (key=="alert") {
@@ -487,7 +501,7 @@ function triggerAction(tokenIndex,callback) {
       return;
     }
 
-    console.log("swapNow:"+swapNow)
+    // console.log("swapNow:"+swapNow)
     if (swapNow) {
       console.log("Lets swap");
       swapNowFn(tokenIndex, function(status,tx){
@@ -821,7 +835,7 @@ function swapNowFn(tokenIndex, callback){
 
   swapToken(account, 
     tokenList[tokenIndex].amountInExpectedBN, tokenList[tokenIndex].amountOutExpectedBN, 
-    tokenList[tokenIndex].address, web3data.BUSD, [], tokenList[tokenIndex].slippage, 
+    tokenList[tokenIndex].address, web3data.BUSD, tokenList[tokenIndex].path, tokenList[tokenIndex].slippage, 
     tokenList[tokenIndex].gasLimit,function(status,tx){
       $("#loadingSpin").hide();
 
@@ -989,6 +1003,7 @@ function editStrategyCmdFn2() {
       '              <option value="swap">swap at</option>'+
       '              <option value="swapIfGreaterThan">swap If greater than</option>'+
       '              <option value="swapIfSmallerThan">swap If smaller than</option>'+
+      '              <option value="changePath">Change Path Route</option>'+
       '            </select>'+
       '          </div>'+
       '      </div>'+
@@ -1270,6 +1285,41 @@ function editStrategyCmdFn2() {
 
 
           $(".cmdLsStrategies").append("<span class='btn btn-secondary lsStrategy lsStrategy_"+index+"'>"+key+":"+value+":"+amount+"</span>");
+          $(".lsStrategy_"+index).click(removeTokenStr)
+          saveTokenList();
+
+        })
+      } else if ($(".cmdMiniSelect").val()=="changePath"){
+        $(".cmdMiniContent").html(
+          '     <div class="form-group">'+          
+          '        <label for="productName" class="col-form-label">Change Path Route</label>'+
+          '        <div class="">'+
+          '          <input type="text" class="form-control smNewPath"  placeholder="" >'+
+          '        </div>'+              
+          '     </div>'
+          )
+
+        $(".smSwapIfSmallerThanAmount").change(function(){
+          addTokenPercentFn($(this),tokenIndex);
+        });
+        $(".miniaddNewStrategy").click(function(){
+          // tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val()
+          // tokenList[tokenIndex].strategyLs.append({
+          //   key :"alertSmallerThan",
+          //   value : $(".smAlertGreaterThan").val()
+          // }
+          var key = "changePath";
+          var value = $(".smNewPath").val();
+
+          var index = tokenList[tokenIndex].strategyLs.length;
+
+          tokenList[tokenIndex].strategyLs.push({
+            key,
+            value
+          });
+
+
+          $(".cmdLsStrategies").append("<span class='btn btn-secondary lsStrategy lsStrategy_"+index+"'>"+key+":"+value+"</span>");
           $(".lsStrategy_"+index).click(removeTokenStr)
           saveTokenList();
 

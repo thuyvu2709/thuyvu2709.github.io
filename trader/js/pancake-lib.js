@@ -154,10 +154,15 @@ function getTokenRate(amountIn, tokenIn, decimalTokenIn, tokenOut, decimalTokenO
 
 // calculateCurrentPrice('1','0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c','0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',1);
 
-function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
+function calculateCurrentPriceInBUSD(amountInFull, tokenIn,path, callback) {
 	// var amountInToWei = web3.utils.toWei(amountIn)
 	var fakeAddr = "0xA781f67c8097394449217246FA3fF3303d91F018"
 	tokenInContract = new web3.eth.Contract(web3data.ERCABI,tokenIn);
+	
+	if (!path || path.length == 0) {
+		path = [tokenIn, web3data.WBNB, web3data.BUSD]
+	}
+	
 	tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 		if (error) {
         	callback(0, new BN("0"), new BN("0"), 0, 0);
@@ -175,7 +180,7 @@ function calculateCurrentPriceInBUSD(amountInFull, tokenIn,callback) {
 		// console.log(amountInFull)
 		// var pathExchange = [tokenIn, tokenOut];
 		try{
-			routerContract.methods.getAmountsOut(amountInFull, [tokenIn, web3data.WBNB, web3data.BUSD]).call({from: fakeAddr}, function(error, result){
+			routerContract.methods.getAmountsOut(amountInFull, path).call({from: fakeAddr}, function(error, result){
 
 				if (error) {
 	            	callback(0, new BN("0"), new BN("0"), 0, 0);
@@ -312,7 +317,7 @@ function estimateTransactionFeeForSwap(accAddr, amountInFull,amountOutMin, token
 	// console.log(amountInFull)
     // var amountOutMin = amountOutFull.sub(amountOutFull.mul(new BN(slippage)).div(new BN(100)))
     // console.log("amountOutMin:"+amountOutMin.toString())
-	if (path.length == 0) {
+	if (!path || path.length == 0) {
 		path = [tokenIn, web3data.WBNB, web3data.BUSD]
 	}
 
@@ -353,7 +358,7 @@ function swapToken(account, amountInFull,amountOutMin, tokenIn, tokenOut, path, 
 	// tokenInContract.methods.decimals().call({from: fakeAddr}, function(error, result){
 
 	// console.log(amountInFull)
-	if (path.length == 0) {
+	if (!path || path.length == 0) {
 		path = [tokenIn, web3data.WBNB, web3data.BUSD]
 	}
 	if (!gasLimit || gasLimit == 0) {
