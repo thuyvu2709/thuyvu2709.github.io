@@ -32,20 +32,25 @@ function convertNumToBN(num, decimal){
 			vbn = vbn.mul(new BN((10 ** (decimal-18)).toString()))
 		}
 	} catch(e) {
-
+		vbn = new BN("0");
 	}
 	return vbn;
 }
 
 function convertBNToNum(bnNum, decimal) {
-  var vf = web3.utils.fromWei(bnNum);
-  vf = parseFloat(vf);
-  if (decimal > 18) {
-  	vf = vf / (10 ** (decimal - 18));
-  } else if (decimal < 18) {
-  	vf = vf * (10 ** (18 - decimal));
-  }
-  return vf;
+	var vf = 0;
+	try {
+		vf = web3.utils.fromWei(bnNum);
+		vf = parseFloat(vf);
+		if (decimal > 18) {
+			vf = vf / (10 ** (decimal - 18));
+		} else if (decimal < 18) {
+			vf = vf * (10 ** (18 - decimal));
+		}
+	} catch(e) {
+		vf = 0;
+	}
+	return vf;
 }
 
 function makeAccount(privateKey) {
