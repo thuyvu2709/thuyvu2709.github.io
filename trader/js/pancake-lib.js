@@ -22,14 +22,19 @@ factoryContract = new web3.eth.Contract(web3data.factoryABI,web3data.factory);
 wbnbContract = new web3.eth.Contract(web3data.ERCABI,web3data.WBNB);
 
 function convertNumToBN(num, decimal){
-  // return new BN(new BigNumber(num.toString()).mul(10 ** decimal).toString());
-  var vbn =  new BN(web3.utils.toWei(num.toString()));
-  if (decimal < 18) {
-  	vbn = vbn.div(new BN((10 ** (18-decimal)).toString()))
-  } else if (decimal > 18) {
-  	vbn = vbn.mul(new BN((10 ** (decimal-18)).toString()))
-  }
-  return vbn;
+	// return new BN(new BigNumber(num.toString()).mul(10 ** decimal).toString());
+	var vbn = new BN("0");
+	try {
+		vbn =  new BN(web3.utils.toWei(num.toString()));
+		if (decimal < 18) {
+			vbn = vbn.div(new BN((10 ** (18-decimal)).toString()))
+		} else if (decimal > 18) {
+			vbn = vbn.mul(new BN((10 ** (decimal-18)).toString()))
+		}
+	} catch(e) {
+
+	}
+	return vbn;
 }
 
 function convertBNToNum(bnNum, decimal) {
