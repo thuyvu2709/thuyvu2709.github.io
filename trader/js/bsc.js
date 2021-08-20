@@ -548,8 +548,8 @@ function updateUIToken(tokenIndex){
   // console.log(token);
   var tokenAddr = token.address;
   // var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $";
-  // var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $ / "+token.transactionFee+" BNB";
-  var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $";
+  var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $ / "+token.transactionFee+" BNB";
+  // var transactionFeeView = token.transactionFee == 0 ? "Không tính được" : (token.transactionFee * busdRate).toFixed(6) + " $";
 
   // console.log(token);
 
