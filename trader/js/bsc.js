@@ -323,7 +323,7 @@ function updateEachToken(tokenIndex,callback) {
               // }
 
               triggerAction(tokenIndex,function(){
-                updateUIToken(tokenIndex);              
+                updateUIToken(walletAddress, tokenIndex);              
                 callback();
                 return;
               })
@@ -542,7 +542,7 @@ function triggerAction(tokenIndex,callback) {
   runStrategyStep(0);
 }
 
-function updateUIToken(tokenIndex){
+function updateUIToken(walletAddress, tokenIndex){
   // console.log("updateUIToken");
   var token = tokenList[tokenIndex];
   // console.log(token);
@@ -557,21 +557,21 @@ function updateUIToken(tokenIndex){
   // if (startTrading == true) {
   //   addHearderColor = "themeMustard";
   // }
-  if (!$('.cardElement_'+tokenAddr)[0]) {
+  if (!$('.cardElement_'+walletAddress+'_'+tokenAddr)[0]) {
     var cardBody ="abc"
 
     $("#listBSC").append(
       // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+web3data[e][0]+' | '+web3data[e][2]+' | '+web3data[e][5]+'</a>'
-      '<div class="card cardElement_'+tokenAddr+'">'+
-        '<div class="card-header classheading_'+tokenAddr+'" id="heading_'+tokenAddr+'">'+
+      '<div class="card cardElement_'+walletAddress+'_'+tokenAddr+'">'+
+        '<div class="card-header classheading_'+walletAddress+'_'+tokenAddr+'" id="heading_'+walletAddress+'_'+tokenAddr+'">'+
           '<h5 class="mb-0">'+
-            '<button class="btn btn-link btnToken_'+tokenAddr+'" data-toggle="collapse" data-target="#collapse_'+tokenAddr+'" aria-expanded="false" aria-controls="collapse_'+tokenAddr+'">'+
+            '<button class="btn btn-link btnToken_'+walletAddress+'_'+tokenAddr+'" data-toggle="collapse" data-target="#collapse_'+walletAddress+'_'+tokenAddr+'" aria-expanded="false" aria-controls="collapse_'+walletAddress+'_'+tokenAddr+'">'+
               token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD"+
             '</button>'+
           '</h5>'+
         '</div>'+
 
-        '<div id="collapse_'+tokenAddr+'" class="collapse" aria-labelledby="heading_'+tokenAddr+'" data-parent="#listBSC">'+
+        '<div id="collapse_'+walletAddress+'_'+tokenAddr+'" class="collapse" aria-labelledby="heading_'+walletAddress+'_'+tokenAddr+'" data-parent="#listBSC">'+
           '<div class="card-body">'+
             '<form class="container">'+
             // '  <div class="form-group row">'+
@@ -592,7 +592,7 @@ function updateUIToken(tokenIndex){
             '    </label>'+
             '    <div class="col">'+
             // '      <input type="text" class="form-control strategyCmd_'+tokenAddr+'" placeholder="" value="'+(token.strategyCmd ? token.strategyCmd : "" )+'" '+(token.sellInStrategy==true ? "" : "readonly")+ ' >'+
-            '      <div class="btn btn-default btnNormal strategyCmd_'+tokenAddr+'">Set Strategy</div>'+
+            '      <div class="btn btn-default btnNormal strategyCmd_'+walletAddress+'_'+tokenAddr+'">Set Strategy</div>'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -600,7 +600,7 @@ function updateUIToken(tokenIndex){
             '      SL Token muốn bán'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" class="form-control amountToSellToken_'+tokenAddr+'" placeholder="" value="'+(token.amountToSell)+'" readonly>'+
+            '      <input type="text" class="form-control amountToSellToken_'+walletAddress+'_'+tokenAddr+'" placeholder="" value="'+(token.amountToSell)+'" readonly>'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -608,7 +608,7 @@ function updateUIToken(tokenIndex){
             '      Slippage Phù hợp'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" class="form-control slippage_'+tokenAddr+'" placeholder="" value="'+(token.slippage )+'" readonly>'+
+            '      <input type="text" class="form-control slippage_'+walletAddress+'_'+tokenAddr+'" placeholder="" value="'+(token.slippage )+'" readonly>'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -616,7 +616,7 @@ function updateUIToken(tokenIndex){
             '      Max Slippage'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" class="form-control maxSlippage_'+tokenAddr+'" placeholder="" value="'+(token.maxSlippage ? token.maxSlippage : 0 )+'">'+
+            '      <input type="text" class="form-control maxSlippage_'+walletAddress+'_'+tokenAddr+'" placeholder="" value="'+(token.maxSlippage ? token.maxSlippage : 0 )+'">'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -624,7 +624,7 @@ function updateUIToken(tokenIndex){
             '      Số tiền nhận sau slippage'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" readonly class="form-control amountOutMin_'+tokenAddr+'" placeholder="" value="'+token.amountOutMinFixed+' $">'+
+            '      <input type="text" readonly class="form-control amountOutMin_'+walletAddress+'_'+tokenAddr+'" placeholder="" value="'+token.amountOutMinFixed+' $">'+
             '    </div>'+
             '  </div>'+
             '  <div class="form-group row">'+
@@ -632,7 +632,7 @@ function updateUIToken(tokenIndex){
             '      Transaction Fee'+
             '    </label>'+
             '    <div class="col">'+
-            '      <input type="text" readonly class="form-control transactionFee_'+tokenAddr+'" placeholder="" value="'+transactionFeeView+'">'+
+            '      <input type="text" readonly class="form-control transactionFee_'+walletAddress+'_'+tokenAddr+'" placeholder="" value="'+transactionFeeView+'">'+
             '    </div>'+
             '  </div>'+
             // '  <div class="form-group row">'+
@@ -640,14 +640,14 @@ function updateUIToken(tokenIndex){
             // '      Token muốn swap sang'+
             // '    </label>'+
             // '    <div class="col">'+
-            // '      <input type="text" class="form-control expectedSwapToken_'+tokenAddr+'" id="" placeholder="Optional,default BUSD" value="'+(token.expectedSwapToken ? token.expectedSwapToken : data.BUSD )+'">'+
+            // '      <input type="text" class="form-control expectedSwapToken_'+walletAddress+'_'+tokenAddr+'" id="" placeholder="Optional,default BUSD" value="'+(token.expectedSwapToken ? token.expectedSwapToken : data.BUSD )+'">'+
             // '    </div>'+
             // '  </div>'+
             '  <div class="form-group row">'+
-            // "     <div class='col btn btn-default btnNormal tokenSave tokenSave_"+tokenAddr+"'>Lưu</div>"+
-            "     <div class='col btn btn-default btnNormal tokenSellNow_"+tokenAddr+"'>Bán ngay</div>"+
-            "     <div class='col btn btn-default btnNormal tokenDelete tokenDelete_"+tokenAddr+"'>Xoá</div>"+
-            "     <div class='col btn btn-default btnNormal'><a href='https://poocoin.app/tokens/"+tokenAddr+"'>Xem chart</a></div>"+
+            // "     <div class='col btn btn-default btnNormal tokenSave tokenSave_"+walletAddress+'_'+tokenAddr+"'>Lưu</div>"+
+            "     <div class='col btn btn-default btnNormal tokenSellNow_"+walletAddress+'_'+tokenAddr+"'>Bán ngay</div>"+
+            "     <div class='col btn btn-default btnNormal tokenDelete tokenDelete_"+walletAddress+'_'+tokenAddr+"'>Xoá</div>"+
+            "     <div class='col btn btn-default btnNormal'><a href='https://poocoin.app/tokens/"+walletAddress+'_'+tokenAddr+"'>Xem chart</a></div>"+
             '  </div>'+
             ''+
             '</form>'+
@@ -655,108 +655,30 @@ function updateUIToken(tokenIndex){
         '</div>'+
       '</div>'
       )
-      // $(".tokenSave_"+tokenAddr).click(tokenSaveFn);
-      $(".tokenDelete_"+tokenAddr).click(tokenDeleteFn);
-      $(".tokenSellNow_"+tokenAddr).click(tokenSellNowFn);
-      // $(".alertAtPrice_"+tokenAddr).click(setAlertAtPriceFn);
-      // $(".sellAtExpect_"+tokenAddr).click(setSellAtExpectFn);
-      // $(".sellInStrategy_"+tokenAddr).click(setSellInStrategyFn);
-      $(".strategyCmd_"+tokenAddr).click(editStrategyCmdFn2);
-      $(".maxSlippage_"+tokenAddr).click(editMaxSlippageFn);
-      // $(".amountToSellToken_"+tokenAddr).change(editAmountToSellTokenFn);
+      // $(".tokenSave_"+walletAddress+'_'+tokenAddr).click(tokenSaveFn);
+      $(".tokenDelete_"+walletAddress+'_'+tokenAddr).click(tokenDeleteFn);
+      $(".tokenSellNow_"+walletAddress+'_'+tokenAddr).click(tokenSellNowFn);
+      // $(".alertAtPrice_"+walletAddress+'_'+tokenAddr).click(setAlertAtPriceFn);
+      // $(".sellAtExpect_"+walletAddress+'_'+tokenAddr).click(setSellAtExpectFn);
+      // $(".sellInStrategy_"+walletAddress+'_'+tokenAddr).click(setSellInStrategyFn);
+      $(".strategyCmd_"+walletAddress+'_'+tokenAddr).click(editStrategyCmdFn2);
+      $(".maxSlippage_"+walletAddress+'_'+tokenAddr).click(editMaxSlippageFn);
+      // $(".amountToSellToken_"+walletAddress+'_'+tokenAddr).change(editAmountToSellTokenFn);
     } else {
-      // console.log("update btnToken_"+tokenAddr+" Only");
-      $(".btnToken_"+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
-      $(".amountOutMin_"+tokenAddr).val(token.amountOutMinFixed+"$");
-      $(".slippage_"+tokenAddr).val(token.slippage)
-      $(".transactionFee_"+tokenAddr).val(transactionFeeView)
-      $(".amountToSellToken_"+tokenAddr).val(token.amountToSell);
+      // console.log("update btnToken_"+walletAddress+'_'+tokenAddr+" Only");
+      $(".btnToken_"+walletAddress+'_'+tokenAddr).html(token.tokenName+' | '+token.balance + ' Token | '+ token.amountOutFullFixed +" BUSD")
+      $(".amountOutMin_"+walletAddress+'_'+tokenAddr).val(token.amountOutMinFixed+"$");
+      $(".slippage_"+walletAddress+'_'+tokenAddr).val(token.slippage)
+      $(".transactionFee_"+walletAddress+'_'+tokenAddr).val(transactionFeeView)
+      $(".amountToSellToken_"+walletAddress+'_'+tokenAddr).val(token.amountToSell);
       if (startTrading) {
-        $("#heading_"+tokenAddr).css("background-color","#c57e0f")
+        $("#heading_"+walletAddress+'_'+tokenAddr).css("background-color","#c57e0f")
       }
-      // $("#heading_"+tokenAddr).css("color","white")
+      // $("#heading_"+walletAddress+'_'+tokenAddr).css("color","white")
 
     }
 }
 
-// function setSellInStrategyFn(){
-//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-//   var checked = $(this).is(":checked");
-//   console.log("set sell in strategy "+tokenAddr+" "+checked);
-
-//   for (var e in tokenList) {
-//     if (tokenList[e].address == tokenAddr) {
-//       tokenList[e].sellInStrategy = checked;
-//       if (checked==true){
-//           $(".expectedSell_"+tokenAddr).val("0");
-//           $(".expectedSell_"+tokenAddr).prop('readonly', true);
-//           $(".strategyCmd_"+tokenAddr).prop('readonly', false);
-//       } else {
-//           $(".expectedSell_"+tokenAddr).prop('readonly', false);
-//           $(".strategyCmd_"+tokenAddr).prop('readonly', true);
-//           $(".strategyCmd_"+tokenAddr).val("")
-//       }
-//       break;
-//     }
-// // address : addr,
-// // slippage : 1,
-// // maxSlippage : 1
-//   }
-//   console.log(tokenList);
-//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-// }
-
-// function editAmountToSellTokenFn(){
-//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-//   console.log("editAmountToSellTokenFn "+tokenAddr);
-
-//   for (var e in tokenList) {
-//     if (tokenList[e].address == tokenAddr) {
-//       var v = $(".amountToSellToken_"+tokenAddr).val();
-//       if (v.indexOf("%")>0) {
-//         var percent = v.substring(0,v.indexOf("%"));
-//         console.log(v);
-//         console.log(tokenList[e])
-//         v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal)) * (parseFloat(percent) / 100);
-//         tokenList[e].amountToSell = v;
-//         $(".amountToSellToken_"+tokenAddr).val(v);
-//       } else {
-//         if (v > (tokenList[e].balanceFull / (10 ** tokenList[e].decimal))) {
-//           v = (tokenList[e].balanceFull / (10 ** tokenList[e].decimal));
-//         }
-//         tokenList[e].amountToSell = v;
-//         $(".amountToSellToken_"+tokenAddr).val(v);
-//       }
-//       break;
-//     }
-// // address : addr,
-// // slippage : 1,
-// // maxSlippage : 1
-//   }
-//   // console.log(tokenList);
-//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-// }
-
-// function setSellAtExpectFn(){
-//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-
-//   for (var e in tokenList) {
-//     if (tokenList[e].address == tokenAddr) {
-//       var v = $(".amountToSellToken_"+tokenAddr).val();
-//       if (v.indexOf("%")>0) {
-//         v = v.substring(0,v.indexOf("%"));
-//         console.log(v);
-//       }
-//       tokenList[e].amountToSell = v;
-//       break;
-//     }
-// // address : addr,
-// // slippage : 1,
-// // maxSlippage : 1
-//   }
-//   console.log(tokenList);
-//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-// }
 
 function editMaxSlippageFn(){
   console.log("editMaxSlippageFn");
@@ -764,7 +686,7 @@ function editMaxSlippageFn(){
 
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
-      tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
+      tokenList[e].maxSlippage = $(".maxSlippage_"+walletAddress+'_'+tokenAddr).val();
       break;
     }
 // address : addr,
@@ -775,52 +697,15 @@ function editMaxSlippageFn(){
   localStorage.setItem("tokenList",JSON.stringify(tokenList));
 }
 
-// function setAlertAtPriceFn(){
-//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-//   var checked = $(this).is(":checked");
-//   console.log("set alert token "+tokenAddr+" "+checked);
-
-//   for (var e in tokenList) {
-//     if (tokenList[e].address == tokenAddr) {
-//       tokenList[e].alert = checked;
-//       break;
-//     }
-// // address : addr,
-// // slippage : 1,
-// // maxSlippage : 1
-//   }
-//   console.log(tokenList);
-//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-// }
-
-// function tokenSaveFn(){
-//   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-//   console.log("Save token "+tokenAddr);
-
-//   for (var e in tokenList) {
-//     if (tokenList[e].address == tokenAddr) {
-//       tokenList[e].slippage = $(".slippage_"+tokenAddr).val();
-//       tokenList[e].maxSlippage = $(".maxSlippage_"+tokenAddr).val();
-//       tokenList[e].expectedSell = $(".expectedSell_"+tokenAddr).val();
-//       tokenList[e].expectedSwapToken = $(".expectedSwapToken_"+tokenAddr).val();
-//       // tokenList[e].strategyCmd = $(".strategyCmd_"+tokenAddr).val();
-//       break;
-//     }
-// // address : addr,
-// // slippage : 1,
-// // maxSlippage : 1
-//   }
-//   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-// }
 
 function tokenDeleteFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  console.log("Delete token "+tokenAddr);
+  console.log("Delete token "+walletAddress+'_'+tokenAddr);
 
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
       tokenList.splice(e, 1); 
-      $(".cardElement_"+tokenAddr).remove();
+      $(".cardElement_"+walletAddress+'_'+tokenAddr).remove();
       break;
     }
 // address : addr,
@@ -856,7 +741,7 @@ function swapNowFn(tokenIndex, callback){
 
 function tokenSellNowFn(){
   var tokenAddr = $(this).attr("class").split(" ").pop().split("_").pop();
-  console.log("Sell now token "+tokenAddr);
+  console.log("Sell now token "+walletAddress+'_'+tokenAddr);
 
   for (var e in tokenList) {
     if (tokenList[e].address == tokenAddr) {
@@ -916,22 +801,6 @@ function editStrategyCmdFn() {
 
     $("#simpleModal").modal('toggle');
 
-    // $(".saveSM").click(function(){
-    //   console.log("Save Sm:"+tokenIndex);
-    //   tokenList[tokenIndex].strategyCmd["precision"] = $(".smPrecision").val();
-    //   tokenList[tokenIndex].strategyCmd["alert"] = $(".smAlertAt").val();
-    //   tokenList[tokenIndex].strategyCmd["alertGreaterThan"] = $(".smAlertGreaterThan").val();
-    //   tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val();
-    //   tokenList[tokenIndex].strategyCmd["swap"] = $(".smSwapAt").val();
-    //   tokenList[tokenIndex].strategyCmd["swapIfGreaterThan"] = $(".smSwapGreaterThan").val();
-    //   tokenList[tokenIndex].strategyCmd["swapIfSmallerThan"] = $(".smSwapSmallerThan").val();
-
-    //   $(".strategyCmd_"+tokenAddr).val(tokenList[tokenIndex].strategyCmd)
-
-    //   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-
-    //   $("#simpleModal").modal('hide');
-    // });
 }
 
 function saveTokenList(){
@@ -1326,23 +1195,4 @@ function editStrategyCmdFn2() {
         })
       }
     })
-
-    // $(".saveSM").click(function(){
-    //   console.log("Save Sm:"+tokenIndex);
-    //   tokenList[tokenIndex].strategyCmd["precision"] = $(".smPrecision").val();
-    //   tokenList[tokenIndex].strategyCmd["alert"] = $(".smAlertAt").val();
-    //   tokenList[tokenIndex].strategyCmd["alertGreaterThan"] = $(".smAlertGreaterThan").val();
-    //   tokenList[tokenIndex].strategyCmd["alertSmallerThan"] = $(".smAlertSmallerThan").val();
-    //   tokenList[tokenIndex].strategyCmd["swap"] = $(".smSwapAt").val();
-    //   tokenList[tokenIndex].strategyCmd["swapIfGreaterThan"] = $(".smSwapGreaterThan").val();
-    //   tokenList[tokenIndex].strategyCmd["swapIfSmallerThan"] = $(".smSwapSmallerThan").val();
-
-    //   $(".strategyCmd_"+tokenAddr).val(tokenList[tokenIndex].strategyCmd)
-
-    //   localStorage.setItem("tokenList",JSON.stringify(tokenList));
-
-    //   $("#simpleModal").modal('hide');
-    // });
-
-    // $(".lsStrategy").click(removeTokenStr)
 }
