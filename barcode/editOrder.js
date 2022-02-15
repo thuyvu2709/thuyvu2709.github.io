@@ -69,7 +69,7 @@ var triggerAfterLoad = function(){
 			source: function(request, response) {
 		        var results = $.ui.autocomplete.filter(lsCusName, request.term);
 
-		        response(results.slice(0, 10));
+		        response(results.slice(0, 20));
 		    },
 			select: function( event, ui ) {
 				// console.log(event);
