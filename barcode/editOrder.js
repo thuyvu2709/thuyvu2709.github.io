@@ -63,6 +63,9 @@ var triggerAfterLoad = function(){
 				data : customerList[e],
 				cusIndex : e
 			});
+			if (currentOrder.customerPhone == customerList[e][1]) {
+				choosenCustomerIndex = e
+			}
 		}
 		// console.log(lsCusName);
 		$( "#customerName" ).autocomplete({
