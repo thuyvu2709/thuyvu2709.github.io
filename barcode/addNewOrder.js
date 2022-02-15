@@ -703,7 +703,7 @@ $("#btnPrintOrder").click(function(){
 	// window.print();
 })
 
-saveCustomerInforFn(callback){
+function saveCustomerInforFn(callback){
 	$("#loadingSpin").show();
 	var data = [
 		["'"+$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
