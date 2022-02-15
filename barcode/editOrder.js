@@ -828,7 +828,7 @@ function finishOrder(){
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 	 		window.location = "showorder.html";
 		}
-	}
+	})
 }
 
 $("#editOrder").click(function(){
