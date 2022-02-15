@@ -51,6 +51,7 @@ var triggerAfterLoad = function(){
 	})
 
 	loadCustomerList(function(){
+		console.log("customerList");
 		customerList = JSON.parse(localStorage.getItem("customerList"));
 		var lsCusName = [];
 		for (var e in customerList) {
@@ -63,7 +64,7 @@ var triggerAfterLoad = function(){
 				data : customerList[e],
 				cusIndex : e
 			});
-			if (currentOrder.customerPhone == customerList[e][1]) {
+			if (currentOrder.customerPhone == customerList[e][0]) {
 				choosenCustomerIndex = e
 			}
 		}
