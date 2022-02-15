@@ -78,7 +78,7 @@ var triggerAfterLoad = function(){
 				$("#customerAddress").val(ui.item.data[2]);
 				$("#customerPhone").val(ui.item.data[0]);
 				choosenCustomerIndex = ui.item.cusIndex;
-				$("#saveCustomerInfor").html("Cập nhật T.T Khách")
+				// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
 			}
 		});
 	})
@@ -1023,8 +1023,8 @@ function saveCustomerInforFn(callback){
 	}
 }
 
-$("#saveCustomerInfor").click(function(){
-	saveCustomerInforFn(function(){
-		console.log("saveCustomerInfor")
-	})
-})
+// $("#saveCustomerInfor").click(function(){
+// 	saveCustomerInforFn(function(){
+// 		console.log("saveCustomerInfor")
+// 	})
+// })
