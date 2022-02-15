@@ -804,29 +804,31 @@ function finishOrder(){
 	$("#btnRefresh").show();
 	$("#btnPrintOrder").show();
 
+	saveCustomerInforFn(function(){
+		console.log("saveCustomerInfor")
 	
-	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+		localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
 
-	if (currentOrder.shipIndex && currentOrder.shipIndex > 0) {
-		requestShipping(currentOrder,function(){
+		if (currentOrder.shipIndex && currentOrder.shipIndex > 0) {
+			requestShipping(currentOrder,function(){
+				$("#loadingSpin").hide();
+				// $(".modal-body").empty();
+				// $(".modal-body").html("<p id='modelContent'>Đã sửa và cập nhật yêu cầu</p>");
+				// $('#myModal').modal('toggle');
+
+				localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+				window.location = "showorder.html";
+			});
+		} else {
 			$("#loadingSpin").hide();
 			// $(".modal-body").empty();
-			// $(".modal-body").html("<p id='modelContent'>Đã sửa và cập nhật yêu cầu</p>");
+			// $(".modal-body").html("<p id='modelContent'>Đã sửa đơn hàng</p>");
 			// $('#myModal').modal('toggle');
 
 			localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
-			window.location = "showorder.html";
-		});
-	} else {
-		$("#loadingSpin").hide();
-		// $(".modal-body").empty();
-		// $(".modal-body").html("<p id='modelContent'>Đã sửa đơn hàng</p>");
-		// $('#myModal').modal('toggle');
-
-		localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
- 		window.location = "showorder.html";
+	 		window.location = "showorder.html";
+		}
 	}
-
 }
 
 $("#editOrder").click(function(){
@@ -994,7 +996,7 @@ $(".deleteelement").click(function(){
 })
 
 
-$("#saveCustomerInfor").click(function(){
+saveCustomerInforFn(callback){
 	$("#loadingSpin").show();
 	var data = [
 		["'"+$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
@@ -1011,10 +1013,18 @@ $("#saveCustomerInfor").click(function(){
 		// console.log(range);
 		editCommonData(customerSheet, data,range,function(){
 			$("#loadingSpin").hide();
+			callback();
 		})
 	} else {
 		addCommonData(customerSheet, data,range,function(){
 			$("#loadingSpin").hide();
+			callback();
 		})
 	}
+}
+
+$("#saveCustomerInfor").click(function(){
+	saveCustomerInforFn(function(){
+		console.log("saveCustomerInfor")
+	})
 })

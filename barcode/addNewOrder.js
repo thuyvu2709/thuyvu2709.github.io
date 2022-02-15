@@ -576,8 +576,11 @@ function finishOrder(){
 	// $("#loadingSpin").hide();
 
 	// $('#myModal').modal('toggle');
-	localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
- 	window.location = "showorder.html";
+	saveCustomerInforFn(function(){
+		console.log("saveCustomerInfor")
+		localStorage.setItem("currentOrder",JSON.stringify(currentOrder));
+		window.location = "showorder.html";
+	})
 }
 
 $("#updateAddress").click(function(){
@@ -700,7 +703,7 @@ $("#btnPrintOrder").click(function(){
 	// window.print();
 })
 
-$("#saveCustomerInfor").click(function(){
+saveCustomerInforFn(callback){
 	$("#loadingSpin").show();
 	var data = [
 		["'"+$("#customerPhone").val(), $("#customerName").val(), $("#customerAddress").val()]
@@ -717,12 +720,20 @@ $("#saveCustomerInfor").click(function(){
 		// console.log(range);
 		editCommonData(customerSheet, data,range,function(){
 			$("#loadingSpin").hide();
+			callback();
 		})
 	} else {
 		addCommonData(customerSheet, data,range,function(){
 			$("#loadingSpin").hide();
+			callback();
 		})
 	}
+}
+
+$("#saveCustomerInfor").click(function(){
+	saveCustomerInforFn(function(){
+		console.log("saveCustomerInfor")
+	})
 })
 
 // $(".click-to-fix-address").click(function(){
