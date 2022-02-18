@@ -93,12 +93,10 @@
       var allText =  
         //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
         //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-        "Thông tin tài khoản ngân hàng:\n"+
-        "- Chủ tài khoản: Le Van Thanh \n"+
-        "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
-        "- Số tài khoản : 19034601990019 \n"+
-        "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
-        "Cảm ơn bạn đã ủng hộ !";
+        "STK: \n"+
+        "Le Van Thanh - 19034601990019\n"+
+        "Techcombank chi nhánh Phúc Yên, Vĩnh Phúc\n"+
+        "Chuyển khoản chỉ ghi tên fb người gửi";
 
         console.log("Copy");
         $("#textareaBanking").show();
@@ -154,11 +152,11 @@
       var allText =  
       //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
       //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-      "Cảm ơn bạn đã ủng hộ !\n"+
-      "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
-      "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
-      "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
-      "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
+        "Cảm ơn bạn đã ủng hộ ! \n"+
+        "Bạn có thể tham khảo thêm các mặt hàng tại: \n"+
+        "❌ Group gom order: https://bit.ly/3H1J0lp \n"+
+        "❌ Fanpage: https://bit.ly/3H0zwHk \n"+
+        "❌ Fb cá nhân ( nhắn khi khẩn cấp): https://fb.com/thuytitvu2709 \n"
       console.log("Copy");
       $("#textareaBanking").show();
 
@@ -238,27 +236,27 @@
         copyThank();
     })
 
-    function groupsale() {
-      var allText =  "Em đang gom rất nhiều deal Kiko sale 70% tại group săn sale nhà em. C có thể tham gia group để xem thêm nha c\n❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/";
-      console.log("Copy");
-      $("#textareaBanking").show();
+    // function groupsale() {
+    //   var allText =  "Em đang gom rất nhiều deal Kiko sale 70% tại group săn sale nhà em. C có thể tham gia group để xem thêm nha c\n❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/";
+    //   console.log("Copy");
+    //   $("#textareaBanking").show();
 
-      $("#textareaBanking").val(allText);
+    //   $("#textareaBanking").val(allText);
 
-      // $("#textareaBanking").select(); 
-      // if ($("#textareaBanking").setSelectionRange) {
-      //   $("#textareaBanking").setSelectionRange(0, 99999); 
-      // }
-      var copyText = document.getElementById("textareaBanking");
+    //   // $("#textareaBanking").select(); 
+    //   // if ($("#textareaBanking").setSelectionRange) {
+    //   //   $("#textareaBanking").setSelectionRange(0, 99999); 
+    //   // }
+    //   var copyText = document.getElementById("textareaBanking");
 
-      /* Select the text field */
-      copyText.select(); 
-      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-      /*For mobile devices*/
-      document.execCommand("copy");
+    //   /* Select the text field */
+    //   copyText.select(); 
+    //   copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+    //   /*For mobile devices*/
+    //   document.execCommand("copy");
 
-      $("#textareaBanking").hide();
-    }
+    //   $("#textareaBanking").hide();
+    // }
 
     function guestInfor() {
       var allText =  "Bạn cho mình xin tên người nhận, sdt và địa chỉ ( bao gồm đầy đủ tên Phường/xã, quận/huyện, tỉnh) để t lưu đơn nhé ạ";
@@ -282,8 +280,8 @@
       $("#textareaBanking").hide();
     }
 
-    function thuyIban() {
-      var allText =  "IT80R3608105138249502949522\nVu Thi Le Thuy";
+    function thuyIbanPoste() {
+      var allText =  "POSTE PAY Evolution \n IT80R3608105138249502949522 \n Vu Thi Le Thuy";
       console.log("Copy");
       $("#textareaBanking").show();
 
@@ -304,8 +302,52 @@
       $("#textareaBanking").hide();
     }
 
-    function shipBaoNgoc() {
-      var allText =  "Nguyen Thi Bao Ngoc ThuytitVu\nVia isola di montecristo 6, 00040 Lanuvio (RM)\n3284240802";
+    function thuyIbanUnicredit() {
+      var allText =  "Unicredit Genius Card \n STK: 5264309210317587 \n IBAN: IT68A 0200832974001479649663 \n Vu Thi Le Thuy";
+      console.log("Copy");
+      $("#textareaBanking").show();
+
+      $("#textareaBanking").val(allText);
+
+      // $("#textareaBanking").select(); 
+      // if ($("#textareaBanking").setSelectionRange) {
+      //   $("#textareaBanking").setSelectionRange(0, 99999); 
+      // }
+      var copyText = document.getElementById("textareaBanking");
+
+      /* Select the text field */
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /*For mobile devices*/
+      document.execCommand("copy");
+
+      $("#textareaBanking").hide();
+    }
+
+    function shipVinhPhuc() {
+      var allText =  "Le An, \n Số 34, Trường Chinh, Xuân Hoà, Phúc Yên, Vĩnh Phúc, \n SĐT: 0376180193";
+      console.log("Copy");
+      $("#textareaBanking").show();
+
+      $("#textareaBanking").val(allText);
+
+      // $("#textareaBanking").select(); 
+      // if ($("#textareaBanking").setSelectionRange) {
+      //   $("#textareaBanking").setSelectionRange(0, 99999); 
+      // }
+      var copyText = document.getElementById("textareaBanking");
+
+      /* Select the text field */
+      copyText.select(); 
+      copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+      /*For mobile devices*/
+      document.execCommand("copy");
+
+      $("#textareaBanking").hide();
+    }
+
+    function shipMeLinh() {
+      var allText =  "Nguyễn Thị Tuyết, \n Xóm 4, Yên Bài, Tự Lập, Mê Linh, Hà Nội\n SĐT: 0989160859";
       console.log("Copy");
       $("#textareaBanking").show();
 
@@ -330,14 +372,15 @@
       var supportDiv = "<div class='model-body' style='margin:auto'>"+
         "<div style='font-size:25px'>Hỗ trợ</div>"+
         "<div class='btn btnNormal copyBank'>TK ngân hàng</div><br/>"+
+        "<div class='btn btnNormal shipVinhPhuc'>Ship Vĩnh Phúc</div><br/>"+
+        "<div class='btn btnNormal shipMeLinh'>Ship Mê Linh </div><br/>"+
+        "<div class='btn btnNormal guestInfor'>Infor khách</div><br/>"+
         "<div class='btn btnNormal copyThank'>Cảm ơn</div><br/>"+
         "<div class='btn btnNormal pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
         "<div class='btn btnNormal sendCTV'>Chính sách CTV</div><br/>"+
         "<div class='btn btnNormal sendOrderPolicy'>Chính sách Order</div><br/>"+
-        "<div class='btn btnNormal groupsale'>Group sale</div><br/>"+
-        "<div class='btn btnNormal guestInfor'>Infor khách</div><br/>"+
-        "<div class='btn btnNormal thuyIban'>Iban Poste Evolution Thuy</div><br/>"+
-        "<div class='btn btnNormal shipBaoNgoc'>Ship Bảo Ngọc Italy</div><br/>"+
+        "<div class='btn btnNormal thuyIbanPoste'>Iban Poste Thuy</div><br/>"+
+        "<div class='btn btnNormal thuyIbanUnicredit'>Iban Unicredit Thuy</div><br/>"+
         "</div>"
       $(".modal-content").html(supportDiv);
       $('#simpleModal').modal('toggle');
@@ -356,17 +399,23 @@
       $(".sendOrderPolicy").click(function(){
         sendOrderPolicy();
       })
-      $(".groupsale").click(function(){
-        groupsale();
-      })
+      // $(".groupsale").click(function(){
+      //   groupsale();
+      // })
       $(".guestInfor").click(function(){
         guestInfor();
       })
-      $(".thuyIban").click(function(){
-        thuyIban();
+      $(".thuyIbanPoste").click(function(){
+        thuyIbanPoste();
       })
-      $(".shipBaoNgoc").click(function(){
-        shipBaoNgoc();
+      $(".thuyIbanUnicredit").click(function(){
+        thuyIbanUnicredit();
+      })
+      $(".shipVinhPhuc").click(function(){
+        shipVinhPhuc();
+      })
+      $(".shipMeLinh").click(function(){
+        shipMeLinh();
       })
     })
 
