@@ -519,7 +519,9 @@ function loadOrderShippingListHtml() {
         var logiticCodice = undefined
         try {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
-          orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          if (logiticCodice){
+            orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
 
@@ -527,7 +529,9 @@ function loadOrderShippingListHtml() {
         
         try {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.viettelPostlabel;
-          orderDetailBrief+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          if (logiticCodice){
+            orderDetailBrief+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
 
