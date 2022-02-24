@@ -26,6 +26,7 @@ $("#customerPhone").html(
 $("#shippingCost").html(currentOrder.shippingCost);
 // $("#shippingCost").html("Khách thanh  a a a toán với bên vận chuyển");
 $("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);	
+$("#totalPay").html(currentOrder.totalPay);
 
 $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED" ? "Đã giao" : "Chưa giao hàng"));
 
@@ -44,20 +45,33 @@ if (!currentOrder.shippingCost) {
 	$(".shippingCost").hide();
 }
 
+// console.log(currentOrder)
 // console.log(">>"+currentOrder.shippingType);
 if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType) {
 	$("#shippingType").html("Shipper không thu tiền - Khách chuyển khoản trước qua:");
 } else if (currentOrder.shippingType == "SHIPPER_COD") {
 	$("#shippingType").html("Shipper thu tiền " + $("#willpay").html());
 } else if (currentOrder.shippingType == "POST_COD") {
-	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	if (currentOrder.shippingCost=="0") {
+		$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	} else {
+		$("#shippingCost").html(currentOrder.shippingCost)
+	}
 	$("#titleWillpay").html("Thu COD:");
 	$("#shippingType").html("COD qua dịch vụ vận chuyển");
 } else if (currentOrder.shippingType == "SHOPEE") {
-	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	if (currentOrder.shippingCost=="0") {
+		$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	} else {
+		$("#shippingCost").html(currentOrder.shippingCost)
+	}
 	$("#shippingType").html("Shopee");
 } else if (currentOrder.shippingType == "POST_NO_COD") {
-	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	if (currentOrder.shippingCost=="0") {
+		$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
+	} else {
+		$("#shippingCost").html(currentOrder.shippingCost)
+	}
 	$("#shippingType").html("Dịch vụ vận chuyển (không COD) - Khách chuyển khoản trước qua:");
 }  else {
 	$("#shippingCost").html("");
@@ -229,6 +243,7 @@ $("#simplify").click(function(){
 		$(".prepaid").hide();
 		$(".willpay").hide();
 	}
+
 	$(".click-to-back").hide();
 	$(".controlOrder").hide();
 	$("#headerInclude").hide();
