@@ -399,6 +399,11 @@ $("#productWeight").keyup(function(){
 $("#shipInternationalFee").keyup(function(){
 	recalculateProdEstVND();
 })
+
+$( "#otherFee" ).keyup(function() {
+	recalculateProdEstVND();
+})
+
 $( "#productEstimateVND" ).keyup(function() {
 	recalculateRefValues();
 })
@@ -433,17 +438,27 @@ function recalculateProdEstVND(){
 	var productWeight = $("#productWeight").val();
 
 	var shipInternationalFee = $("#shipInternationalFee").val();
+	var otherFee = $("#otherFee").val();
 
-	if (!productOriginalCostEur || !productWeight || !shipInternationalFee) {
+	if (!shipInternationalFee) {
+		shipInternationalFee = 0;
+	}
+
+	if (!otherFee) {
+		otherFee = 0;
+	}
+
+	if (!productOriginalCostEur || !productWeight) {
 		return;
 	}
 
 	productOriginalCostEur = parseFloat(productOriginalCostEur);
 	productWeight = parseFloat(productWeight);
 	shipInternationalFee = parseFloat(shipInternationalFee);
-
+	otherFee = parseFloat(otherFee);
+	
 	var productEstimateVND = Math.round(productOriginalCostEur*EuroVndRate + productWeight * 
-		( shipInternationalFee * EuroVndRate ));
+		( shipInternationalFee * EuroVndRate ))+ otherFee;
 
 	$("#productEstimateVND").val(productEstimateVND);
 
