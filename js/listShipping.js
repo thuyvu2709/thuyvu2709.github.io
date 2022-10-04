@@ -917,7 +917,7 @@ function startPreparingFn(){
           // '            .render();';
           script2.type = "text/javascript";
           // script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
-          script2.src = "http://localhost:3000/thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+          script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
 
           w.document.body.appendChild(script2);
 
