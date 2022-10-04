@@ -903,11 +903,11 @@ function startPreparingFn(){
           
           w.document.body.innerHTML = content;
 
-          var script1 = w.document.createElement('script');
-          script1.type = "text/javascript";
-          // script1.src = '../vendor/JsBarcode/JsBarcode.all.min.js';
-          script1.src = "https://thuyvu2709.github.io/vendor/JsBarcode/JsBarcode.all.min.js"
-          w.document.body.appendChild(script1);
+          // var script1 = w.document.createElement('script');
+          // script1.type = "text/javascript";
+          // // script1.src = '../vendor/JsBarcode/JsBarcode.all.min.js';
+          // script1.src = "https://thuyvu2709.github.io/vendor/JsBarcode/JsBarcode.all.min.js"
+          // w.document.body.appendChild(script1);
 
           var script2 = w.document.createElement('script');
 
@@ -916,7 +916,8 @@ function startPreparingFn(){
           // '            .code128a("'+orderDetail.otherInfor.order.order.tracking_id+'", {height: 55})'+
           // '            .render();';
           script2.type = "text/javascript";
-          script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+          // script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+          script2.src = "http://localhost:3000/thuyvu2709.github.io/js/printerAPI-genBarcode.js";
 
           w.document.body.appendChild(script2);
 
@@ -934,7 +935,7 @@ function startPreparingFn(){
           // }
 
           // checkForContent();
-          // w.print();
+          w.print();
         }
       }catch(eprint) {
 
