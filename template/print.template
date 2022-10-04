@@ -1,0 +1,15 @@
+<epos-print xmlns="http://www.epson-pos.com/schemas/2011/03/epos-print">
+<text align="center"/>
+<text font="special_a"/>
+<text reverse="false" ul="false" em="true" color="color_1"/>
+<text>THUYTITVU SHOP&#10;</text>
+<text>XÁCH TAY HÀNG Ý PHÁP ĐỨC MỸ&#10;</text>
+<text font="font_b"/>
+<text align="left"/>
+<text reverse="false" ul="false" em="false" color="color_1"/>
+<text>Mã GHTK: 12345&#10;</text>
+<barcode type="code39" hri="none" font="font_a" width="2" height="32">12345</barcode>
+<text>Thông tin người nhận: Lê Văn Thanh&#10;</text>
+<text>Địa chỉ: 34 Trường chinh, Xuân Hòa, Phúc Yên, Vĩnh Phúc&#10;</text>
+<text>SĐT: 0376180193&#10;</text>
+</epos-print>

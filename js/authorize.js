@@ -148,11 +148,11 @@ function checkRole() {
     $("#loadingSpin").show();
 
     var currentUser = getCurrentUser();
-
+    
     if (window.location.hostname == "localhost" ||
         window.location.hostname == "172.20.10.6" ||
         window.location.hostname == "172.20.10.11"||
-        window.location.hostname == "192.168.1.103"
+        window.location.hostname == "192.168.100.12"
         ) {
         currentUser = {
             email : "kenkreck1004@gmail.com",

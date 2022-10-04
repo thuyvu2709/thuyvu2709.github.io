@@ -53,7 +53,7 @@ if (!datasetName) {
 
 
 var hostname = window.location.hostname;
-var passDataLocalhost = (hostname == "localhost" || hostname=="172.20.10.6" || hostname=="192.168.1.103");
+var passDataLocalhost = (hostname == "localhost" || hostname=="172.20.10.6" || hostname=="192.168.100.12");
 
 var historyPath = [];
 // var currentHistoryData;
@@ -135,7 +135,7 @@ function comeBackHomeToAuthorize(){
         || hostname == "10.7.136.107"
         || hostname == "172.20.10.6"
         || hostname == "172.20.10.11"
-        || hostname == "192.168.1.103"
+        || hostname == "192.168.100.12"
         || pageName == "index") {
         return;
     } else {

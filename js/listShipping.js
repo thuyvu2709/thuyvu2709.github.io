@@ -868,8 +868,10 @@ function startPreparingFn(){
       $(".modal-body").empty();
       var content = prodListOrder[index].productName + "<span class='textRed'> (sl : "+prodListOrder[index].productCount +")</span><br/>";
       content+='<img style="width:100%" src="'+prodListOrder[index].productImage+'" />'
-      content+='<div class="btn btn-default btnNormal textViolet prepareBack">Back</div>';
-      content+='<div class="btn btn-default btnNormal textBlue prepareNext">Next</div>';
+      content+='<div>';
+      content+='<div class="btn btn-default btnNormal textViolet prepareBack">Quay lại</div>';
+      content+='<div class="btn btn-default btnNormal textBlue prepareNext">Tiếp</div>';
+      content+='</div>';
       $(".modal-body").html(content);
     } else {
       console.log("prepare done")

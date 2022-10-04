@@ -11,7 +11,7 @@ $("#ExportData").click(function(){
 })
 
 $("#ImportData").click(function(){
-	$.getJSON( "/localstorage.txt", function(data) {
+	$.getJSON( "/localStorage.txt", function(data) {
 	    // Success
 	    console.log("Import success")
 	    console.log(data);
