@@ -1,0 +1,40 @@
+<html>
+    <style>
+        .title1 {
+            font-size : 15px;
+            font-weight: 900;
+        }
+        .title2 {
+            font-size : 12px;
+            font-weight: 900;
+        }
+        .normal {
+            font-size : 10px;
+        }
+        .centralize {
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <script src="../vendor/JsBarcode/JsBarcode.all.min.js"></script>
+    <body>
+        <div class="title1 centralize">THUYTITVU SHOP</div>
+        <div class="title2 centralize">XÁCH TAY HÀNG Ý PHÁP ĐỨC MỸ</div>
+        <div class="normal centralize">Mã GHTK:</div>
+        <svg id="barcode" class="centralize"></svg>
+        <div class="normal">Người nhận hàng: Lê Văn Thanh</div>
+        <div class="normal">ĐT: 0376180193</div>
+        <div class="normal">ĐC: 34 Trường chinh, Xuân Hòa, Phúc Yên, Vĩnh Phúc</div>
+        <div class="normal">Ghi chú: Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách mở hàng</div>
+        <div class="hidden" id="fullLabel">123456788</div>
+    </body>
+    <script>
+        // JsBarcode("#barcode", "1294818381");
+        JsBarcode("#barcode")
+            .options({font: "OCR-B"}) // Will affect all barcodes
+            .code128a("1294818381", {height: 55})
+            .render();
+    </script>
+</html>

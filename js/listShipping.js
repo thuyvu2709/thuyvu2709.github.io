@@ -876,7 +876,16 @@ function startPreparingFn(){
     } else {
       console.log("prepare done")
       $(".modal-body").empty();
-      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ đếm lại<br/> => chụp 2 bức ảnh hàng: <br/> - 1 bức là hàng trong hộp <br/>- 1 bức là vỏ hộp đã bọc";
+      var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ đếm lại<br/> => chụp 2 bức ảnh hàng: <br/> - 1 bức là hàng trong hộp <br/>- 1 bức là vỏ hộp đã bọc <br/>";
+      try{
+        console.log(lsOrderDetail[lsOrder[orderIndex][0]].otherInfor);
+        if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
+          content+='<div class="btn btn-default btnNormal startToPrint">In đơn hàng</div>';
+        }
+      }catch(eprint) {
+
+      }
+
       $(".modal-body").html(content);
     }
     $('.prepareNext').click(function(){
@@ -884,6 +893,52 @@ function startPreparingFn(){
     });
     $('.prepareBack').click(function(){
       getItem(index-1);
+    });
+    $('.startToPrint').click(function(){
+      try{
+        if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
+          var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
+          var content = makePrintWindowTemplate(orderDetail);
+          var w = window.open('', 'width=80, height=80');
+          
+          w.document.body.innerHTML = content;
+
+          var script1 = w.document.createElement('script');
+          script1.type = "text/javascript";
+          // script1.src = '../vendor/JsBarcode/JsBarcode.all.min.js';
+          script1.src = "https://thuyvu2709.github.io/vendor/JsBarcode/JsBarcode.all.min.js"
+          w.document.body.appendChild(script1);
+
+          var script2 = w.document.createElement('script');
+
+          // script2.innerHTML = 'JsBarcode("#barcode")'+
+          // '            .options({font: "OCR-B"})'+
+          // '            .code128a("'+orderDetail.otherInfor.order.order.tracking_id+'", {height: 55})'+
+          // '            .render();';
+          script2.type = "text/javascript";
+          script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+
+          w.document.body.appendChild(script2);
+
+          // var checkForContent = function () {
+          //     setTimeout(function () {
+          //         var ckContent = w.document.querySelector('barcode').innerHTML
+
+          //         if (ckContent.length) {
+          //             w.print()
+          //             w.close()
+          //         } else {
+          //             checkForContent()
+          //         }
+          //     }, 1000)
+          // }
+
+          // checkForContent();
+          // w.print();
+        }
+      }catch(eprint) {
+
+      }
     });
   }
   $('#myModal').modal('show');
