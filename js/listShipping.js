@@ -970,6 +970,7 @@ function startPreparingPrintingFormFn(){
   '        <div class="normal">Ghi chú: Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách mở hàng</div>';
 
   $(".modal-body").html(content);
+  $("#myModal").css("background-color","white");
 
   JsBarcode("#barcode").options({font: "OCR-B"}).code128a(orderDetail.otherInfor.order.order.tracking_id, {height: 55}).render();
 
