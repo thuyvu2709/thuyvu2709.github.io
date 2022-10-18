@@ -593,6 +593,7 @@ function loadOrderShippingListHtml() {
               // datetime +
 
               '<div class="btn btn-default btnNormal5px detail order_'+e+'">Xem chi tiết</div>'+
+              '<div class="btn btn-default btnNormal5px startPreparingPrintingForm order_'+e+'" >Mẫu In</div><br/>'+
               // preparedButton +
               // packageImageBtn+
               completeButton +
@@ -681,6 +682,7 @@ function loadOrderShippingListHtml() {
   $(".btnChooseShippingSchedule").hide();
   $(".btnChooseShippingSchedule").click(chooseShippingScheduleFn);
   $(".startPreparing").click(startPreparingFn);
+  $(".startPreparingPrintingForm").click(startPreparingPrintingFormFn);
 
   // $('.datetimepicker').change(function(){
   //   // console.log($(this).attr("class"));
@@ -877,14 +879,14 @@ function startPreparingFn(){
       console.log("prepare done")
       $(".modal-body").empty();
       var content = "Xong ! Tổng cộng "+lsOrderDetail[lsOrder[orderIndex][0]].numOfProd+" cái, nhớ đếm lại<br/> => chụp 2 bức ảnh hàng: <br/> - 1 bức là hàng trong hộp <br/>- 1 bức là vỏ hộp đã bọc <br/>";
-      try{
-        console.log(lsOrderDetail[lsOrder[orderIndex][0]].otherInfor);
-        if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
-          content+='<div class="btn btn-default btnNormal startToPrint">In đơn hàng</div>';
-        }
-      }catch(eprint) {
+      // try{
+      //   console.log(lsOrderDetail[lsOrder[orderIndex][0]].otherInfor);
+      //   if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
+      //     content+='<div class="btn btn-default btnNormal startToPrint">In đơn hàng</div>';
+      //   }
+      // }catch(eprint) {
 
-      }
+      // }
 
       $(".modal-body").html(content);
     }
@@ -894,57 +896,86 @@ function startPreparingFn(){
     $('.prepareBack').click(function(){
       getItem(index-1);
     });
-    $('.startToPrint').click(function(){
-      try{
-        if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
-          var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
-          var content = makePrintWindowTemplate(orderDetail);
-          var w = window.open('', 'width=80, height=80');
+    // $('.startToPrint').click(function(){
+    //   try{
+    //     if (lsOrderDetail[lsOrder[orderIndex][0]].otherInfor.order.order.label) {
+    //       var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
+    //       var content = makePrintWindowTemplate(orderDetail);
+    //       var w = window.open('', 'width=80, height=80');
           
-          w.document.body.innerHTML = content;
+    //       w.document.body.innerHTML = content;
 
-          // var script1 = w.document.createElement('script');
-          // script1.type = "text/javascript";
-          // // script1.src = '../vendor/JsBarcode/JsBarcode.all.min.js';
-          // script1.src = "https://thuyvu2709.github.io/vendor/JsBarcode/JsBarcode.all.min.js"
-          // w.document.body.appendChild(script1);
+    //       // var script1 = w.document.createElement('script');
+    //       // script1.type = "text/javascript";
+    //       // // script1.src = '../vendor/JsBarcode/JsBarcode.all.min.js';
+    //       // script1.src = "https://thuyvu2709.github.io/vendor/JsBarcode/JsBarcode.all.min.js"
+    //       // w.document.body.appendChild(script1);
 
-          var script2 = w.document.createElement('script');
+    //       var script2 = w.document.createElement('script');
 
-          // script2.innerHTML = 'JsBarcode("#barcode")'+
-          // '            .options({font: "OCR-B"})'+
-          // '            .code128a("'+orderDetail.otherInfor.order.order.tracking_id+'", {height: 55})'+
-          // '            .render();';
-          script2.type = "text/javascript";
-          // script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
-          script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+    //       // script2.innerHTML = 'JsBarcode("#barcode")'+
+    //       // '            .options({font: "OCR-B"})'+
+    //       // '            .code128a("'+orderDetail.otherInfor.order.order.tracking_id+'", {height: 55})'+
+    //       // '            .render();';
+    //       script2.type = "text/javascript";
+    //       // script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
+    //       script2.src = "https://thuyvu2709.github.io/js/printerAPI-genBarcode.js";
 
-          w.document.body.appendChild(script2);
+    //       w.document.body.appendChild(script2);
 
-          // var checkForContent = function () {
-          //     setTimeout(function () {
-          //         var ckContent = w.document.querySelector('barcode').innerHTML
+    //       // var checkForContent = function () {
+    //       //     setTimeout(function () {
+    //       //         var ckContent = w.document.querySelector('barcode').innerHTML
 
-          //         if (ckContent.length) {
-          //             w.print()
-          //             w.close()
-          //         } else {
-          //             checkForContent()
-          //         }
-          //     }, 1000)
-          // }
+    //       //         if (ckContent.length) {
+    //       //             w.print()
+    //       //             w.close()
+    //       //         } else {
+    //       //             checkForContent()
+    //       //         }
+    //       //     }, 1000)
+    //       // }
 
-          // checkForContent();
-          w.print();
-        }
-      }catch(eprint) {
+    //       // checkForContent();
+    //       w.print();
+    //     }
+    //   }catch(eprint) {
 
-      }
-    });
+    //   }
+    // });
   }
+  
   $('#myModal').modal('show');
   getItem(0);
 }
+
+function startPreparingPrintingFormFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  orderIndex = parseInt(orderIndex);
+  var prodListOrder = lsOrderDetail[lsOrder[orderIndex][0]].prodListOrder;
+
+  $(".modal-body").empty();
+
+
+  var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
+
+  var content = '        <div class="ptitle1 pcentralize">THUYTITVU SHOP</div>'+
+  '        <div class="ptitle2 pcentralize">XÁCH TAY HÀNG Ý PHÁP ĐỨC MỸ</div>'+
+  '        <div class="pcentralize">~❀~</div>'+
+  '        <div class="normal pcentralize">Mã GHTK:'+orderDetail.otherInfor.order.order.label+'</div>'+
+  '        <svg id="barcode" class="centralize"></svg>'+
+  '        <div class="normal">Người nhận hàng:'+orderDetail.customerName+'</div>'+
+  '        <div class="normal">ĐT:'+orderDetail.customerPhone+'</div>'+
+  '        <div class="normal">ĐC:'+orderDetail.customerAddress+'</div>'+
+  '        <div class="normal">Ghi chú: Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách mở hàng</div>';
+
+  $(".modal-body").html(content);
+
+  JsBarcode("#barcode").options({font: "OCR-B"}).code128a(orderDetail.otherInfor.order.order.tracking_id, {height: 55}).render();
+
+  $('#myModal').modal('show');
+}
+
 
 function chooseShippingScheduleFn(){
   var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();

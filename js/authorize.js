@@ -152,7 +152,7 @@ function checkRole() {
     if (window.location.hostname == "localhost" ||
         window.location.hostname == "172.20.10.6" ||
         window.location.hostname == "172.20.10.11"||
-        window.location.hostname == "192.168.100.12"
+        window.location.hostname == "192.168.100.10"
         ) {
         currentUser = {
             email : "kenkreck1004@gmail.com",
