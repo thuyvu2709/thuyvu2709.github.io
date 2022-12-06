@@ -1,4 +1,4 @@
-var herokuPrefix = "https://kenkreck1004.onrender.com";
+var herokuPrefix = "https://kenkreck1004.onrender.com/";
 
 function createAnGHTKOrder(dataOrder, callback){
 	// var dataOrder = {
