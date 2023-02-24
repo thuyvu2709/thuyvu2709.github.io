@@ -1,5 +1,7 @@
 // var herokuPrefix = "http://kenkreck1004.herokuapp.com/";
-var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+// var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+var herokuPrefix = "https://dark-lime-barracuda-hat.cyclic.app/"
+
 
 // var viettelpostToken = localStorage.getItem("viettelpostToken");
 
