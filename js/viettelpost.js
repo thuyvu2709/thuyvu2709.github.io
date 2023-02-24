@@ -1,5 +1,4 @@
-// var herokuPrefix = "http://kenkreck1004.herokuapp.com/";
-// var herokuPrefix = "https://kenkreck1004.herokuapp.com/";
+
 var herokuPrefix = "https://dark-lime-barracuda-hat.cyclic.app/"
 
 
@@ -174,7 +173,7 @@ function findPlaceProvince(callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -190,7 +189,7 @@ function findPlaceProvinceById(provinceId,callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -206,7 +205,7 @@ function findPlaceDistrict(provinceId, callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -222,7 +221,7 @@ function findPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": "https://kenkreck1004.herokuapp.com/https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
 	  "method": "GET",
 	  "headers": {
 	  },
