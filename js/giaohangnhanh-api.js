@@ -47,38 +47,6 @@ function ghnGetPickAddress(callback){
 // 	})
 // }
 
-function tracking(orderId){
-// 	// https://old.viettelpost.com.vn/Tracking?KEY=1606216637308
-// var settings = {
-// 	    "url": "https://buucuc.com/tracking?vid=1606216637308",
-// 	    "method": "POST",
-// 	    "headers": {
-// 	        "Content-Type": "application/json",
-// 	    }
-// 	}
-// 	$.ajax(settings).done(function(response) {
-//     	console.log(response);
-// 	});
-
-
-var link = "https://old.viettelpost.com.vn/Tracking?KEY=1606216637308";
-$.ajax({
-  // url: "http://cors-anywhere.herokuapp.com/"+link, //For local
-  url: "https://cors-anywhere.herokuapp.com/"+link, //For code push
-  type: 'GET',
-  crossDomain: true,
-  success: function(res) {
-    // console.log(res)
-    var data = $.parseHTML(res);  //<----try with $.parseHTML().
-    $(data).find('div.trackingItem').each(function(){
-    	console.log($(this).find("ul"))
-    });
-    // console.log(data);
-  }
-});
-
-}
-
 function vietttelPostCreateABill(dataOrder,callback){
 	var settings = {
 	    "async": true,
@@ -147,23 +115,7 @@ function vietttelPostCalculateShippingCost(infor){
 	});
 }
 
-function findPlaceProvince(callback){
-	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
-	  "method": "GET",
-	  "headers": {
-	  },
-	}
-
-	$.ajax(settings).done(function (response) {
-	  console.log(response);
-	  callback(response);
-	});
-}
-
-function findPlaceProvinceById(callback){
+function ghnFindPlaceProvinceById(callback){
 	var settings = {
 	  "url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
 	  "method": "GET",
@@ -179,7 +131,7 @@ function findPlaceProvinceById(callback){
 	});
 }
 
-function findPlaceDistrict(provinceId, callback){
+function ghnFindPlaceDistrict(provinceId, callback){
 	var settings = {
 		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
 		"method": "GET",
@@ -196,7 +148,7 @@ function findPlaceDistrict(provinceId, callback){
 	});
 }
 
-function findPlaceWard(districtId, callback){ //Tim xa
+function ghnFindPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
 		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id",
 		"method": "GET",
@@ -263,7 +215,7 @@ function calculateTransportFeeAPIViettelPost(feeObj,callback){
 	});
 }
 
-function addressChecking(addressString, callback) {
+function ghnAddressChecking(addressString, callback) {
 	var aix = strToAddr(addressString);
 	var addressObj = {};
 	addressObj["PROVINCE_NAME"]=aix.province;
@@ -272,7 +224,7 @@ function addressChecking(addressString, callback) {
 	addressObj["OTHER"]=aix.address;
 	
 
-	findPlaceProvinceById(function(resProvince){
+	ghnFindPlaceProvinceById(function(resProvince){
 		var listProvince = resProvince.data;
 		var ckProvince = false;
 
@@ -286,7 +238,7 @@ function addressChecking(addressString, callback) {
 				
 				// console.log(selectedProvince)
 
-				findPlaceDistrict(listProvince[p]["ProvinceID"], function(resProvince){
+				ghnFindPlaceDistrict(listProvince[p]["ProvinceID"], function(resProvince){
 					var listDistrict = resProvince.data;
 					// console.log(listDistrict)
 					var ckDistrict = false;
@@ -301,7 +253,7 @@ function addressChecking(addressString, callback) {
 
 							// console.log(selectedDistrict);
 
-							findPlaceWard(listDistrict[e]["DistrictID"], function(resWard){
+							ghnFindPlaceWard(listDistrict[e]["DistrictID"], function(resWard){
 								var ckWard = false;
 
 								var listWards = resWard.data;
