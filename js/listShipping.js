@@ -11,6 +11,8 @@ var lsTask;
 var lsOrderDetail;
 var ghtkToken = "";
 
+var ghnToken = "";
+
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
 // $(".orderFilter").val("Need_Schedule");
@@ -91,6 +93,12 @@ var triggerAfterLoad = function(){
           ghtkToken = rs["ghtkToken"];
         }
         localStorage.setItem("ghtkToken",ghtkToken);
+      })
+      getGhnAccess(function(rs){
+        if (rs) {
+          ghnToken = rs["ghnToken"];
+        }
+        localStorage.setItem("ghnToken",ghnToken);
       })
       loginViettelPost(function(){
       })
@@ -562,7 +570,8 @@ function loadOrderShippingListHtml() {
       if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD") {
         ghtkBtn = '<br/>'
           +'<div class="btn btn-default btnNormal5px ghtkLink order_'+e+'">Liên kết GHTK</div>'
-          +'<div class="btn btn-default btnNormal5px viettelpostLink order_'+e+'">Liên kết ViettelPost</div>';
+          +'<div class="btn btn-default btnNormal5px viettelpostLink order_'+e+'">Liên kết ViettelPost</div>'
+          +'<div class="btn btn-default btnNormal5px ghnLink order_'+e+'">Liên kết GHN</div>';
       }
     }
 
@@ -699,6 +708,7 @@ function loadOrderShippingListHtml() {
   // });
   $(".ghtkLink").click(ghtkLinkFn);
   $(".viettelpostLink").click(viettelpostLinkFn);
+  $(".ghnLink").click(ghnLinkFn);
   $(".shipperReceiveMonney").click(shipperReceiveMonney);
   $(".packedOrder").click(packedFn);
   $(".ghtkCode").click(ghtkShowOrderFn);
@@ -1035,6 +1045,29 @@ function ghtkLinkFn(){
   })
 
   window.location = "ghtkLink.html";  
+}
+
+function ghnLinkFn(){
+  var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+  var actualOrderIndex = parseInt(orderIndex) + 1;
+
+  var orderJs = JSON.parse(lsOrder[orderIndex][3]);
+  orderJs.shipIndex = parseInt(orderIndex);
+
+  localStorage.setItem("currentOrder",JSON.stringify(orderJs));
+
+  $("#loadingSpin").show();
+
+  // loginViettelPost(function(){
+  //   $("#loadingSpin").hide();
+
+  saveHistory({
+    orderFilter : $(".orderFilter").val(),
+    goToClass : $(this).attr("class")
+  })
+
+  window.location = "giaohangnhanhLink.html";  
+  // })
 }
 
 function viettelpostLinkFn(){

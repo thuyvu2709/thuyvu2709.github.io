@@ -2,38 +2,16 @@
 // var herokuPrefix = "https://dark-lime-barracuda-hat.cyclic.app/"
 
 
-// var viettelpostToken = localStorage.getItem("viettelpostToken");
+var ghnToken = localStorage.getItem("ghnToken");
 
-function loginViettelPost(callback){
-	var settings = {
-	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/Login",
-	    "method": "POST",
-	    "headers": {
-	        "Content-Type": "application/json",
-	    },
-	    "data": ''
-	}
-
-	getViettelPostAccess(function(data){
-		console.log(data);
-
-		settings["data"]=JSON.stringify(data);
-		$.ajax(settings).done(function(response) {
-		    console.log(response);
-	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
-	        viettelpostToken = response["data"]["token"];
-	        callback(response["data"]["token"]);
-		});
-	})
-}
-
-function viettelPostGetPickAddress(callback){
+function ghnGetPickAddress(callback){
 	// console.log("getPickAddress:"+ghtkToken);
 	$.ajax({
-	  url: herokuPrefix+"https://partner.viettelpost.vn/v2/user/listInventory", 
+	  url: herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/v2/shop/all", 
 	  headers : {
-	  	"Token": viettelpostToken
+	  	"Token": ghnToken
 	  },
+	  data: JSON.stringify({"offset": 0,"limit": 50,"client_phone": ""}),
 	  type: 'GET',
 	  success: function(res) {
 	  	// console.log(res)
@@ -41,7 +19,7 @@ function viettelPostGetPickAddress(callback){
 	    	callback(undefined)
 	    	return;
 	    }
-	    callback(res.data);
+	    callback(res.data["shops"]);
 	  }
 	});
 }
@@ -185,14 +163,14 @@ function findPlaceProvince(callback){
 	});
 }
 
-function findPlaceProvinceById(provinceId,callback){
+function findPlaceProvinceById(callback){
 	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
+	  "url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/province",
 	  "method": "GET",
 	  "headers": {
-	  },
+		"Content-Type": "application/json",
+		"Token": localStorage.getItem("ghnToken")
+	  }
 	}
 
 	$.ajax(settings).done(function (response) {
@@ -203,12 +181,13 @@ function findPlaceProvinceById(provinceId,callback){
 
 function findPlaceDistrict(provinceId, callback){
 	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
-	  "method": "GET",
-	  "headers": {
-	  },
+		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
+		"method": "GET",
+		"headers": {
+		  "Content-Type": "application/json",
+		  "Token": localStorage.getItem("ghnToken")
+		},
+		"data": JSON.stringify({"province_id": provinceId})
 	}
 
 	$.ajax(settings).done(function (response) {
@@ -219,12 +198,13 @@ function findPlaceDistrict(provinceId, callback){
 
 function findPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
-	  "async": true,
-	  "crossDomain": true,
-	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
-	  "method": "GET",
-	  "headers": {
-	  },
+		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id",
+		"method": "GET",
+		"headers": {
+		  "Content-Type": "application/json",
+		  "Token": localStorage.getItem("ghnToken")
+		},
+		"data": JSON.stringify({"district_id": district_id})
 	}
 
 	$.ajax(settings).done(function (response) {
@@ -291,68 +271,71 @@ function addressChecking(addressString, callback) {
 	addressObj["WARDS_NAME"]=aix.ward;
 	addressObj["OTHER"]=aix.address;
 	
-	// console.log("addressChecking");
-	// console.log(addressObj);
-	// DISTRICT_NAME: "HUYỆN BA VÌ"
-	// OTHER: "35 Nguyễn Trãi"
-	// PROVINCE_NAME: "Hà Nội"
-	// RECEIVER_DISTRICT: "2"
-	// RECEIVER_PROVINCE: "1"
-	// RECEIVER_WARD: "31"
-	// WARDS_NAME: "XÃ PHÚ PHƯƠNG"
 
-	findPlaceProvinceById(-1, function(resProvince){
+	findPlaceProvinceById(function(resProvince){
 		var listProvince = resProvince.data;
+		var ckProvince = false;
+
 		for (p in listProvince) {
-			if (listProvince[p]["PROVINCE_NAME"].toUpperCase() == addressObj["PROVINCE_NAME"].toUpperCase()) {
+			if (listProvince[p]["ProvinceName"].toUpperCase() == addressObj["PROVINCE_NAME"].toUpperCase()) {
+				ckProvince = true;
 				
-				addressObj["RECEIVER_PROVINCE"] = listProvince[p]["PROVINCE_ID"];
-				
+				addressObj["PROVINCE_ID"] = listProvince[p]["ProvinceID"];
+
 				var selectedProvince = listProvince[p];
 				
 				// console.log(selectedProvince)
 
-				findPlaceDistrict(addressObj["RECEIVER_PROVINCE"], function(resProvince){
+				findPlaceDistrict(listProvince[p]["ProvinceID"], function(resProvince){
 					var listDistrict = resProvince.data;
 					// console.log(listDistrict)
+					var ckDistrict = false;
+
 					for (e in listDistrict) {
 						// console.log(listDistrict[e])
 						// console.log(listDistrict[e]["DISTRICT_ID"]+" "+addressObj.districtId+" "+(listDistrict[e]["DISTRICT_ID"] == addressObj.districtId))
-						if (listDistrict[e]["DISTRICT_NAME"].toUpperCase() == addressObj["DISTRICT_NAME"].toUpperCase()) {
+						if (listDistrict[e]["DISTRICT_NAME"].toUpperCase() == addressObj["DistrictName"].toUpperCase()) {
+							ckDistrict = true;
 
-							var selectedDistrict = listDistrict[e]
-
-							addressObj["RECEIVER_DISTRICT"] = listDistrict[e]["DISTRICT_ID"];
+							addressObj["DISTRICT_ID"] = listDistrict[e]["DistrictID"];
 
 							// console.log(selectedDistrict);
 
-							findPlaceWard(addressObj["RECEIVER_DISTRICT"], function(resWard){
+							findPlaceWard(listDistrict[e]["DistrictID"], function(resWard){
+								var ckWard = false;
+
 								var listWards = resWard.data;
 								// console.log(listWards);
 								for (w in listWards) {
-									if (listWards[w]["WARDS_NAME"].toUpperCase() == addressObj["WARDS_NAME"].toUpperCase()) {
+									if (listWards[w]["WardName"].toUpperCase() == addressObj["WARDS_NAME"].toUpperCase()) {
+										ckWard = true;
 										var selectedWard = listWards[w]
 										// console.log(selectedWard);
-										addressObj.wardsName = selectedWard["WARDS_NAME"];
-										addressObj.districtValue = selectedDistrict["DISTRICT_VALUE"]
-										addressObj.districtName = selectedDistrict["DISTRICT_NAME"]
-										addressObj.provinceCode = selectedProvince["PROVINCE_CODE"]
-										addressObj.provinceName = selectedProvince["PROVINCE_NAME"]
-										addressObj.province = selectedProvince["PROVINCE_NAME"]
-										addressObj["RECEIVER_WARD"] = selectedWard["WARDS_ID"];
+										addressObj["WARDS_ID"] = listWards[w]["WardCode"]
 
-										callback(addressObj);
+										callback(addressObj, undefined);
 										break;
 									}
+								}
+
+								if (!ckWard) {
+									callback({}, "Thông tin phường/xã bị sai");
 								}
 							})
 
 							break;
 						}
 					}
+					if (!ckProvince) {
+						callback({}, "Thông tin quận/huyện bị sai");
+					}
 				})
 				break;
 			}
+		}
+
+		if (!ckProvince) {
+			callback({}, "Thông tin tỉnh bị sai");
 		}
 	})
 }
