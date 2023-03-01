@@ -102,7 +102,7 @@
             </div>
 
             <div class="row">
-              <h5>Tổng tiền : </h5>
+              <h5>Tổng tiền: </h5>
               <input id="totalPay" class="form-control"></input>
             </div>
 
@@ -188,7 +188,10 @@
               </span>
             </div>
             <div class="row">
-              <span>Hình thức giao:</span>
+              <span>
+                Dịch vụ:
+                <span class="fas fa-sync" id="transportTypeForce"></span>
+              </span>
               <select id="transportType">
                 <option value="fly">Đang tính...</option>
               </select>
@@ -199,7 +202,7 @@
               <h5 id="shippingType" class="textBlue"></h5>
             </div>
       
-            <div class="row">
+            <!-- <div class="row">
               <span>Hình thức thu tiền:</span>
               <select id="collectMoneyType">
                 <option value="1">Không thu tiền</option>
@@ -207,26 +210,31 @@
                 <option value="3">Chỉ thu tiền hàng</option>
                 <option value="4">Chỉ thu phí ship</option>
               </select>
-            </div>
-<!--             <div class="row">
-              <span>Thông tin thanh toán:
-                <span class="fas fa-sync" id="calculateFeeLoadForce">
-              </span>
-              <span id="paymentSummary">
-              </span>
             </div> -->
-<!--             <div class="row">
-              <span>Phí bảo hiểm (dự kiến-shop trả):
+            <div class="row">
+              <span>Phí ship:
+                <!-- <span class="fas fa-sync" id="calculateFeeLoadForce"> -->
+              </span>
+              <span id="shippingFee">
+              </span>
+            </div>
+            <div class="row">
+              <span>Phí bảo hiểm cho giá trị hàng hóa:
               </span>
               <span id="insuranceFee" class="textMustard">....</span>
-            </div> -->
+            </div>
+            <div class="row">
+              <span>Tổng phí ship:
+              </span>
+              <span id="paymentSummary" class="textMustard">....</span>
+            </div>
             <hr/>
 <!--           <textarea id="textareaCopy"></textarea>
  -->
             <div class="row" id="showOrderPush">
 
             </div>
-           <div class="btn btn-primary mb-2" id="ghtkPost">Yêu cầu đơn hàng lên ViettelPost</div>
+           <div class="btn btn-primary mb-2" id="ghnPost">Yêu cầu đơn hàng lên Giaohangnhanh</div>
            <!-- <div class="btn btn-primary mb-2" id="saveRequest">Lưu yêu cầu</div> -->
 
          </form>

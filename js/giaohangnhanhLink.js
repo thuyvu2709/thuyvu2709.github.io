@@ -2,8 +2,10 @@
 $("#footerInclude").load("../common/footer.html");
 
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
-var pickList = JSON.parse(localStorage.getItem("viettelPostPickList"));
-var viettelpostToken = localStorage.getItem("viettelpostToken");
+var pickList = JSON.parse(localStorage.getItem("ghnPickList"));
+var ghnToken = localStorage.getItem("ghnToken");
+
+var services = [];
 
 var sheetOrder = "Order";
 
@@ -26,6 +28,8 @@ try{
 
 var dataOrder = {};
 dataOrder.order={};
+
+var pickAddressObj = {};
 
 
 // var triggerAfterLoad = function(){
@@ -75,12 +79,16 @@ function loadPickList() {
 
 		$("#loadingSpin").hide();
 		console.log(pickList);
-		localStorage.setItem("viettelPostPickList",JSON.stringify(pickList));
+		localStorage.setItem("ghnPickList",JSON.stringify(pickList));
 		var pickListHtml = '';
 		for (e in pickList){
-			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+			pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].address+'</option>'
 		}
 		$("#pickList").html(pickListHtml);
+
+		ghnAddressChecking(pickList[0].address, function(obj, errorText) {
+			pickAddressObj = obj;
+		})
 	}) 	
 }
 
@@ -89,9 +97,13 @@ if (!pickList) {
 } else {
 	var pickListHtml = '';
 	for (e in pickList){
-		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
+		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].address+'</option>'
 	}
 	$("#pickList").html(pickListHtml);
+
+	ghnAddressChecking(pickList[0].address, function(obj, errorText) {
+		pickAddressObj = obj;
+	})
 }
 
 // console.log(pickList);
@@ -142,12 +154,11 @@ $("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách
 
 var totalPay = parseFloat(currentOrder.totalPay);
 
-$("#insuranceFee").html(totalPay > 3000 ? (totalPay*1000)*0.5/100 : 0);
 
 $("#totalPay").change(function(){
 	var totalPay = parseFloat($("#totalPay").val());
 	currentOrder.totalPay = totalPay;
-	$("#insuranceFee").html(totalPay > 3000 ? (totalPay*1000)*0.5/100 : 0);
+	caluclateTransportFeeFn();
 })
 
 if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
@@ -235,12 +246,12 @@ $("#prodList").html("???????????");
 
 var customerAddressObj = {}
 
-addressChecking(currentOrder.customerAddress, function(obj, errorText) {
+ghnAddressChecking(currentOrder.customerAddress, function(obj, errorText) {
 	if (!errorText) {
 		customerAddressObj = obj;
 		// console.log(customerAddressObj);
-		$("#addressChecking").html(" > Địa  đã chuẩn :)");
-		caluclateTransportFeeFn(true);
+		$("#addressChecking").html(" > Địa chỉ đã chuẩn :)");
+		getTransportTypeFn(true);
 	} else {
 		$("#addressChecking").html(" > "+errorText);
 	}
@@ -292,12 +303,26 @@ $("#updateAddress").click(function(){
 				'<a href="http://maps.google.com/maps?q='+address+'">'+currentOrder.customerAddress+'</a>'
 			);
 
-			$("#addressChecking").html("")
+			
+			
+			ghnAddressChecking(currentOrder.customerAddress, function(obj, errorText) {
+				if (!errorText) {
+					customerAddressObj = obj;
+					// console.log(customerAddressObj);
+					$("#addressChecking").html(" > Địa chỉ đã chuẩn :)");
+					loadAddressIntoUI();
+					saveAddressAsManager();
+					saveAddressAsShipper();
+					getTransportTypeFn(true);
 
-			loadAddressIntoUI();
-			saveAddressAsManager();
-			saveAddressAsShipper();
-			caluclateTransportFeeFn(true);//does not show loading
+				} else {
+					$("#addressChecking").html(" > "+errorText);
+				}
+			})
+
+			// $("#addressChecking").html("")
+
+			// caluclateTransportFeeFn(true);//does not show loading
 		}
 	})
 })
@@ -363,17 +388,28 @@ $('.datetimepicker').daterangepicker({
 // caluclateTransportFeeFn(true);//does not show loading
 
 $("#pickList").change(function(){
+	// var pickAddressObj = {};
+	caluclateTransportFeeFn(true);//does not show loading
+
+	ghnAddressChecking(pickList[$("#pickList").val()].address, function(obj, errorText) {
+		pickAddressObj = obj;
+	})
+})
+
+$("#transportType").change(function(){
 	caluclateTransportFeeFn(true);//does not show loading
 })
 
-// $("#transportType").change(function(){
-// 	caluclateTransportFeeFn(true);//does not show loading	
-// })
 
-function caluclateTransportFeeFn(notloadShow){//true mean does not show
+
+$("#transportTypeForce").click(function(){
+	getTransportTypeFn(false);//does not show loading	
+})
+
+function getTransportTypeFn(notloadShow){//true mean does not show
 	$("#transportFee").html($("#transportFee").html()+" - Đang tính...");
 	var pickIndex = $("#pickList").val();
-	// var dataFee = {};
+
 	// dataFee.pick_province = pickList[pickIndex].province;
 	// dataFee.pick_district = pickList[pickIndex].district;
 	
@@ -384,69 +420,89 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	// dataFee.value = currentOrder.totalPay;
 	// dataFee.transport = $("#transportType").val();
 
-	var pick_money = 0;
-	if (currentOrder.shippingType == "POST_COD") {
-		pick_money=currentOrder.willpay*1000;		
-	}
+	// console.log(pickList[pickIndex])
 
-	var feeObj = {
-	  "RECEIVER_PROVINCE":customerAddressObj["RECEIVER_PROVINCE"],
-	  "RECEIVER_DISTRICT":customerAddressObj["RECEIVER_DISTRICT"],
-  	  "SENDER_PROVINCE":pickList[pickIndex].provinceId,
-	  "SENDER_DISTRICT":pickList[pickIndex].districtId,
-  	  "PRODUCT_TYPE":"HH",
-	  "PRODUCT_WEIGHT":parseInt($("#totalWeight").html()),
-	  "PRODUCT_PRICE":currentOrder.totalPay,
-	  "MONEY_COLLECTION":pick_money,
-  	  "TYPE" :1
-	}
-	// console.log(feeObj);
+	// console.log(customerAddressObj);
 
 	if (!notloadShow) {
 		$("#loadingSpin").show();
-		$("#loading-text").html();
 	}
-	calculateTransportFeeAPIViettelPost(feeObj, function(feeLs){
-		console.log(feeLs);
-		var feeCt = "";
-		for (e in feeLs) {
-			feeCt = feeCt + "<option value='"+feeLs[e]["MA_DV_CHINH"]+"'>"
-				+feeLs[e]["MA_DV_CHINH"]+"-"+feeLs[e]["GIA_CUOC"]+"-"+feeLs[e]["TEN_DICHVU"]+"-"+feeLs[e]["THOI_GIAN"]
-				+"</option>"
+
+	ghnGetService(pickList[pickIndex]["_id"], pickList[pickIndex]["district_id"], customerAddressObj["DISTRICT_ID"], function(rs){
+		services = rs;
+		var feeCt;
+		for (e in services) {
+			feeCt = feeCt + "<option value='"+e+"'>"+services[e]["short_name"]+"</option>"
 		}
 		$("#transportType").html(feeCt);
 		$("#loadingSpin").hide();
-	});
+		caluclateTransportFeeFn();
+	})
+
 }
-  
-$("#calculateFeeLoadForce").click(function(){
-	caluclateTransportFeeDetailFn();
+
+$("#packHeight").change(function(){
+	caluclateTransportFeeFn();
 })
 
-function caluclateTransportFeeDetailFn(){
-	var pick_money = 0;
-	if (currentOrder.shippingType == "POST_COD") {
-		pick_money=currentOrder.willpay*1000;		
-	}
+$("#packWidth").change(function(){
+	caluclateTransportFeeFn();
+})
+
+$("#packLength").change(function(){
+	caluclateTransportFeeFn();
+})
+  
+// $("#calculateFeeLoadForce").click(function(){
+// 	caluclateTransportFeeFn();
+// })
+
+function caluclateTransportFeeFn(){
+
+	$("#paymentSummary").html("Đang tính...");
+
+	var serviceIndex = $("#transportType").val();
 	var pickIndex = $("#pickList").val();
 
-	var feeObj = {
-		"PRODUCT_WEIGHT":parseInt($("#totalWeight").html()),
-		"PRODUCT_PRICE":currentOrder.totalPay,
-		"MONEY_COLLECTION":pick_money,
-		"ORDER_SERVICE_ADD":"",
-		"ORDER_SERVICE":$("#transportType").val(),
-		"RECEIVER_PROVINCE":customerAddressObj["RECEIVER_PROVINCE"],
-		"RECEIVER_DISTRICT":customerAddressObj["RECEIVER_DISTRICT"],
-		"SENDER_PROVINCE":pickList[pickIndex].provinceId,
-		"SENDER_DISTRICT":pickList[pickIndex].districtId,
-		"PRODUCT_TYPE":"HH",
-		"NATIONAL_TYPE":1
+	if (parseInt($("#packHeight").val()) == 0 || !$("#packHeight").val()) {
+		$("#paymentSummary").html("Thiếu chiều cao hộp")
+		return;
 	}
-	// console.log(feeObj);
+	if (parseInt($("#totalWeight").html()) == 0 || !$("#totalWeight").html()) {
+		$("#paymentSummary").html("Thiếu cân nặng của hộp")
+		return;
+	}
+	if (parseInt($("#packWidth").val()) == 0 || !$("#packWidth").val()) {
+		$("#paymentSummary").html("Thiếu chiều rộng của hộp")
+		return;
+	}
+	if (parseInt($("#packLength").val()) == 0 || !$("#packLength").val()) {
+		$("#paymentSummary").html("Thiếu chiều dài của hộp")
+		return;
+	}
 
-	calculateTransportFeeAPIViettelPostDetail(feeObj, function(res){
+	var feeObj = {
+		"from_district_id":pickList[pickIndex].district_id,
+		"service_id":services[serviceIndex]["service_id"],
+		"service_type_id":services[serviceIndex]["service_type_id"],
+		"to_district_id":customerAddressObj["DISTRICT_ID"],
+		"to_ward_code": customerAddressObj["WARDS_ID"],
+		"height":parseInt($("#packHeight").val()),
+		"length":parseInt($("#packLength").val()),
+		"weight":parseInt($("#totalWeight").html()),
+		"width":parseInt($("#packWidth").val()),
+		"insurance_value": parseInt($("#totalPay").val()) * 1000,
+		"coupon": null
+	}
+
+	var shopId = pickList[pickIndex]["_id"];
+
+	calculateTransportFeeAPIGHNDetail(shopId, feeObj, function(res){
 		console.log(res);
+		$("#shippingFee").html(res["data"]["service_fee"]);
+		$("#paymentSummary").html(res["data"]["total"])
+		$("#insuranceFee").html(res["data"]["insurance_fee"]);
+
 	})
 }
 
@@ -621,8 +677,11 @@ showOrderPush();
 // 	$('#myModal').modal('toggle');
 // })
 
-$("#ghtkPost").click(function(){
+$("#ghnPost").click(function(){
+	var serviceIndex = $("#transportType").val();
 	var pickIndex = $("#pickList").val();
+	var shopId = pickList[pickIndex]["_id"];
+
 	var totalQuantity = 0;
 	// for (e in currentOrder.prodListOrder) {
 	// 	totalQuantity = totalQuantity + parseInt(currentOrder.prodListOrder[e].productCount)
@@ -633,111 +692,131 @@ $("#ghtkPost").click(function(){
 	} else {
 		pick_money=0;
 	}
+	// var dataOrder = {
+	// 	"ORDER_NUMBER": currentOrder.orderCode,
+	// 	"GROUPADDRESS_ID": pickList[pickIndex].groupaddressId,
+	// 	"CUS_ID": pickList[pickIndex].cusId,
+	// 	// "DELIVERY_DATE": "11/10/2018 15:09:52",
+	// 	"SENDER_FULLNAME": pickList[pickIndex].name,
+	// 	"SENDER_ADDRESS": pickList[pickIndex].address+","+ pickList[pickIndex].wardsName+","+ pickList[pickIndex].districtName+","+ pickList[pickIndex].provinceName,
+	// 	"SENDER_PHONE": pickList[pickIndex].phone,
+	// 	"SENDER_EMAIL": "Levanthanh3005@icloud.com",
+	// 	"SENDER_WARD": pickList[pickIndex].wardsId,
+	// 	"SENDER_DISTRICT": pickList[pickIndex].districtId,
+	// 	"SENDER_PROVINCE": pickList[pickIndex].provinceId,
+	// 	"SENDER_LATITUDE": 0,
+	// 	"SENDER_LONGITUDE": 0,
+	// 	"RECEIVER_FULLNAME": $("#customerName").val(),
+	// 	"RECEIVER_ADDRESS": currentOrder.customerAddress,
+	// 	"RECEIVER_PHONE": currentOrder.customerPhone,
+	// 	"RECEIVER_EMAIL": "Levanthanh3005@icloud.com",
+	// 	"RECEIVER_WARD": customerAddressObj["RECEIVER_WARD"],
+	// 	"RECEIVER_DISTRICT": customerAddressObj["RECEIVER_DISTRICT"],
+	// 	"RECEIVER_PROVINCE": customerAddressObj["RECEIVER_PROVINCE"],
+	// 	"RECEIVER_LATITUDE": 0,
+	// 	"RECEIVER_LONGITUDE": 0,
+	// 	"PRODUCT_NAME": "Hàng Thuỷ gửi",
+	// 	"PRODUCT_DESCRIPTION": "Hàng Thuỷ gửi",
+	// 	"PRODUCT_QUANTITY": count,
+	// 	"PRODUCT_PRICE": $("#totalPay").val(),
+	// 	"PRODUCT_WEIGHT": $("#totalWeight").val(),
+	// 	"PRODUCT_LENGTH": $("#packLength").val(),
+	// 	"PRODUCT_WIDTH": $("#packWidth").val(),
+	// 	"PRODUCT_HEIGHT": $("#packHeight").val(),
+	// 	"PRODUCT_TYPE": "HH",
+	// 	"ORDER_PAYMENT": $("#collectMoneyType").val(),
+	// 	"ORDER_SERVICE": $("#transportType").val(),
+	// 	"ORDER_SERVICE_ADD": "",
+	// 	"ORDER_VOUCHER": "",
+	// 	"ORDER_NOTE": $("#orderNodeGHTK").val(),
+	// 	"MONEY_COLLECTION": pick_money,
+	// 	"LIST_ITEM": [{
+	// 	    "PRODUCT_NAME": "Máy xay sinh tố Philips HR2118 2.0L ",
+	// 	    "PRODUCT_PRICE": 2150000,
+	// 	    "PRODUCT_WEIGHT": 2500,
+	// 	    "PRODUCT_QUANTITY": 1
+	// 	}]
+	// }
+
 	var dataOrder = {
-		"ORDER_NUMBER": currentOrder.orderCode,
-		"GROUPADDRESS_ID": pickList[pickIndex].groupaddressId,
-		"CUS_ID": pickList[pickIndex].cusId,
-		// "DELIVERY_DATE": "11/10/2018 15:09:52",
-		"SENDER_FULLNAME": pickList[pickIndex].name,
-		"SENDER_ADDRESS": pickList[pickIndex].address+","+ pickList[pickIndex].wardsName+","+ pickList[pickIndex].districtName+","+ pickList[pickIndex].provinceName,
-		"SENDER_PHONE": pickList[pickIndex].phone,
-		"SENDER_EMAIL": "Levanthanh3005@icloud.com",
-		"SENDER_WARD": pickList[pickIndex].wardsId,
-		"SENDER_DISTRICT": pickList[pickIndex].districtId,
-		"SENDER_PROVINCE": pickList[pickIndex].provinceId,
-		"SENDER_LATITUDE": 0,
-		"SENDER_LONGITUDE": 0,
-		"RECEIVER_FULLNAME": $("#customerName").val(),
-		"RECEIVER_ADDRESS": currentOrder.customerAddress,
-		"RECEIVER_PHONE": currentOrder.customerPhone,
-		"RECEIVER_EMAIL": "Levanthanh3005@icloud.com",
-		"RECEIVER_WARD": customerAddressObj["RECEIVER_WARD"],
-		"RECEIVER_DISTRICT": customerAddressObj["RECEIVER_DISTRICT"],
-		"RECEIVER_PROVINCE": customerAddressObj["RECEIVER_PROVINCE"],
-		"RECEIVER_LATITUDE": 0,
-		"RECEIVER_LONGITUDE": 0,
-		"PRODUCT_NAME": "Hàng Thuỷ gửi",
-		"PRODUCT_DESCRIPTION": "Hàng Thuỷ gửi",
-		"PRODUCT_QUANTITY": count,
-		"PRODUCT_PRICE": $("#totalPay").val(),
-		"PRODUCT_WEIGHT": $("#totalWeight").val(),
-		"PRODUCT_LENGTH": $("#packLength").val(),
-		"PRODUCT_WIDTH": $("#packWidth").val(),
-		"PRODUCT_HEIGHT": $("#packHeight").val(),
-		"PRODUCT_TYPE": "HH",
-		"ORDER_PAYMENT": $("#collectMoneyType").val(),
-		"ORDER_SERVICE": $("#transportType").val(),
-		"ORDER_SERVICE_ADD": "",
-		"ORDER_VOUCHER": "",
-		"ORDER_NOTE": $("#orderNodeGHTK").val(),
-		"MONEY_COLLECTION": pick_money,
-		"LIST_ITEM": [{
-		    "PRODUCT_NAME": "Máy xay sinh tố Philips HR2118 2.0L ",
-		    "PRODUCT_PRICE": 2150000,
-		    "PRODUCT_WEIGHT": 2500,
-		    "PRODUCT_QUANTITY": 1
-		}]
+		"payment_type_id": 2, //1: Shop/Seller; 2: Buyer/Consignee.
+		"note": $("#orderNodeGHTK").val(),
+		"from_name": pickList[pickIndex]["name"],
+		"from_phone": pickList[pickIndex]["phone"],
+		"from_address": pickAddressObj["OTHER"],
+		"from_ward_name": pickAddressObj["WARDS_NAME"],
+		"from_district_name": pickAddressObj["DISTRICT_NAME"],
+		"from_province_name": pickAddressObj["PROVINCE_NAME"],
+		"required_note": "KHONGCHOXEMHANG",// CHOTHUHANG, CHOXEMHANGKHONGTHU, KHONGCHOXEMHANG 
+		"return_name": pickList[pickIndex]["name"],
+		"return_phone": pickList[pickIndex]["phone"],
+		"return_address": pickAddressObj["OTHER"],
+		"return_ward_name": pickAddressObj["WARDS_NAME"],
+		"return_district_name": pickAddressObj["DISTRICT_NAME"],
+		"return_province_name": pickAddressObj["PROVINCE_NAME"],
+		"client_order_code": currentOrder.orderCode,
+		"to_name": currentOrder.customerName,
+		"to_phone": currentOrder.customerPhone,
+		"to_address": customerAddressObj["OTHER"],
+		"to_ward_name": customerAddressObj["WARDS_NAME"],
+		"to_district_name":customerAddressObj["DISTRICT_NAME"],
+		"to_province_name": customerAddressObj["PROVINCE_NAME"],
+		"cod_amount": currentOrder.willpay,
+		"content": "Do Thuy gui",
+		"weight": parseInt($("#totalWeight").html()),
+		"length": parseInt($("#packLength").val()),
+		"width": parseInt($("#packWidth").val()),
+		"height": parseInt($("#packHeight").val()),
+		// "pick_station_id": 1444,
+		// "deliver_station_id": null,
+		"insurance_value": parseInt($("#totalPay").val()) * 1000,
+		"service_id":services[serviceIndex]["service_id"],
+		"service_type_id":services[serviceIndex]["service_type_id"],
+		// "coupon":null,
+		// "pick_shift":null,
+		// "pickup_time": 1665272576,
+		"items": []
 	}
-	// console.log(pickIndex);
-	// dataOrder.order.pick_address = pickList[pickIndex].address;
-	// dataOrder.order.pick_province = pickList[pickIndex].province;
-	// dataOrder.order.pick_district = pickList[pickIndex].district;
-	// dataOrder.order.pick_ward = pickList[pickIndex].ward;
-	// dataOrder.order.pick_name = pickList[pickIndex].name;
-	// dataOrder.order.pick_tel = pickList[pickIndex].tel;
 
-	// dataOrder.order.province = $("#province").html();
-	// dataOrder.order.district = $("#district").html();
-	// dataOrder.order.ward = $("#ward").html();
-	// dataOrder.order.address = $("#address").html();
-	// dataOrder.order.hamlet = "Khác";
-	// dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
-	// dataOrder.order.tel = currentOrder.customerPhone;
-	// dataOrder.order.name = $("#customerName").val();
-
-	// dataOrder.order.deliver_work_shift = $("input[type='radio'][name='deliverShift']:checked").val();
-
-
-	// dataOrder.order.is_freeship = currentOrder.otherInfor.isFreeShip==true ? "1" : "0";
-	// dataOrder.order.note = $("#orderNodeGHTK").val();
-	// dataOrder.order.value = currentOrder.totalPay*1000;
-	// dataOrder.order.transport = $("#transportType").val();
-	// dataOrder.products = [{
-	// 	"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
- //        "weight": parseFloat($("#totalWeight").val())/1000,
- //        "quantity": 1
-	// }]
-	// console.log(dataOrder);
 	var totalQuantity = 0;
 	var totalWeight = 0;
-	dataOrder["LIST_ITEM"] = [];
+
 	for (i in prodListOrder){
 		if (prodListOrder[i].delete) {
 			continue;
 		}
-		dataOrder["LIST_ITEM"].push({
-			// "name": $(".prodName_"+i).val(),
-			// "weight": (parseFloat($(".prodWeight_"+i).val())*parseFloat(prodListOrder[i].productCount)),
-			// "quantity": parseFloat(prodListOrder[i].productCount)
+		// dataOrder["LIST_ITEM"].push({
+		// 	// "name": $(".prodName_"+i).val(),
+		// 	// "weight": (parseFloat($(".prodWeight_"+i).val())*parseFloat(prodListOrder[i].productCount)),
+		// 	// "quantity": parseFloat(prodListOrder[i].productCount)
 
-			 "PRODUCT_NAME": $(".prodName_"+i).val(),
-		     "PRODUCT_PRICE": parseInt($(".prodPrice_"+i).html())*1000,
-		     "PRODUCT_WEIGHT": parseInt($(".prodWeight_"+i).val())*1000,
-		     "PRODUCT_QUANTITY": parseInt($(".prodQuantity_"+i).html())
+		// 	 "PRODUCT_NAME": $(".prodName_"+i).val(),
+		//      "PRODUCT_PRICE": parseInt($(".prodPrice_"+i).html())*1000,
+		//      "PRODUCT_WEIGHT": parseInt($(".prodWeight_"+i).val())*1000,
+		//      "PRODUCT_QUANTITY": parseInt($(".prodQuantity_"+i).html())
+		// })
+
+		dataOrder["items"].push({
+			"name": $(".prodName_"+i).val(),
+			"quantity": parseInt($(".prodQuantity_"+i).html()),
+			"price": parseInt($(".prodPrice_"+i).html())*1000,
+			"weight": parseInt($(".prodWeight_"+i).val())*1000
+			// "length": 12,
+			// "width": 12,
+			// "height": 12,
+			// "category": 
+			// {
+			// 	"level1":"Áo"
+			// }
 		})
-		totalQuantity = totalQuantity + parseInt($(".prodQuantity_"+i).html());
-		totalWeight = totalWeight + parseInt(parseFloat($(".prodWeight_"+i).val())*1000);
+		// totalQuantity = totalQuantity + parseInt($(".prodQuantity_"+i).html());
+		// totalWeight = totalWeight + parseInt(parseFloat($(".prodWeight_"+i).val())*1000);
 	}
 
-	dataOrder["PRODUCT_WEIGHT"] = totalWeight;
-	dataOrder["PRODUCT_QUANTITY"] = totalQuantity;
-
-	// console.log(dataOrder);
-	// return;
 	
 	$("#loadingSpin").show();
 
-	vietttelPostCreateABill(dataOrder, function(data){
+	ghnCreateABill(shopId, dataOrder, function(data){
 
 		$("#loadingSpin").hide();
 
@@ -767,8 +846,9 @@ $("#ghtkPost").click(function(){
 //  },
 //  "viettelPostlabel": "14696431294"
 // }
+		console.log(data);
 
-		if (data["error"]==false) {
+		if (data["code"]==200) {
 			currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
 
 			console.log("Copy");
@@ -785,12 +865,12 @@ $("#ghtkPost").click(function(){
 			saveOtherInforAsManager();
 			saveOtherInforAsShipper();
 		} else {
-			try{
-				data = JSON.parse(data);
-			}catch(e) {
+			// try{
+			// 	data = JSON.parse(data);
+			// }catch(e) {
 
-			}
-			$("#modelContent").html(jsonToHtml(data));
+			// }
+			$("#modelContent").html(data.code_message_value);
 			$('#myModal').modal('toggle');
 		}
 	})

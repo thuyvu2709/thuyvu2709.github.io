@@ -246,11 +246,15 @@ $("#prodList").html("???????????");
 
 var customerAddressObj = {}
 
-addressChecking(currentOrder.customerAddress, function(obj) {
-	customerAddressObj = obj;
-	// console.log(customerAddressObj);
-	$("#addressChecking").html(" > Địa  đã chuẩn :)")
-	caluclateTransportFeeFn(true);
+addressChecking(currentOrder.customerAddress, function(obj, errorText) {
+	if (!errorText) {
+		customerAddressObj = obj;
+		// console.log(customerAddressObj);
+		$("#addressChecking").html(" > Địa  đã chuẩn :)")
+		caluclateTransportFeeFn(true);
+	} else {
+		$("#addressChecking").html(" > "+errorText);
+	}
 })
 
 $(".productWeight").change(function(){

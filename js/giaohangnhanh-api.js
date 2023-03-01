@@ -24,6 +24,26 @@ function ghnGetPickAddress(callback){
 	});
 }
 
+function ghnGetService(shop_id, from_district, to_district, callback){
+	// console.log("getPickAddress:"+ghtkToken);
+	$.ajax({
+	  url: herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/available-services", 
+	  headers : {
+	  	"Token": ghnToken
+	  },
+	  data: {"shop_id":shop_id,"from_district": from_district,"to_district": to_district},
+	  type: 'GET',
+	  success: function(res) {
+	  	// console.log(res)
+	    if (res.error) {
+	    	callback(undefined)
+	    	return;
+	    }
+	    callback(res.data);
+	  }
+	});
+}
+
 // function loginViettelPost2(){
 // 	var settings = {
 // 	    "async": true,
@@ -47,21 +67,22 @@ function ghnGetPickAddress(callback){
 // 	})
 // }
 
-function vietttelPostCreateABill(dataOrder,callback){
+function ghnCreateABill(shopId, dataOrder,callback){
 	var settings = {
-	    "async": true,
-	    "crossDomain": true,
-	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/createOrder",
+	    "url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
-	        "Token": localStorage.getItem("viettelpostToken")
+	        "Token": localStorage.getItem("ghnToken"),
+			"ShopId": shopId
 	    },
 	    "data": JSON.stringify(dataOrder)
 	}
 	$.ajax(settings).done(function(response) {
 	    console.log(response);
 	    callback(response);
+	}).fail(function (errors, textStatus) {
+		callback(errors.responseJSON);
 	});
 }
 
@@ -150,13 +171,13 @@ function ghnFindPlaceDistrict(provinceId, callback){
 
 function ghnFindPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
-		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id",
+		"url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",
 		"method": "GET",
 		"headers": {
 		  "Content-Type": "application/json",
 		  "Token": localStorage.getItem("ghnToken")
 		},
-		"data": JSON.stringify({"district_id": district_id})
+		"data": {"district_id": districtId}
 	}
 
 	$.ajax(settings).done(function (response) {
@@ -165,15 +186,14 @@ function ghnFindPlaceWard(districtId, callback){ //Tim xa
 	});
 }
 
-function calculateTransportFeeAPIViettelPostDetail(feeObj,callback) {
+function calculateTransportFeeAPIGHNDetail(shopId, feeObj,callback) {
 	var settings = {
-		    "async": true,
-		    "crossDomain": true,
-		    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/getPrice",
+		    "url": herokuPrefix+"https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
 		    "method": "POST",
 		    "headers": {
 		        "Content-Type": "application/json",
-		        "Token": localStorage.getItem("viettelpostToken")
+		        "Token": localStorage.getItem("ghnToken"),
+				"ShopId": shopId
 		    },
 		    "data": JSON.stringify(feeObj)
 		}
@@ -183,7 +203,7 @@ function calculateTransportFeeAPIViettelPostDetail(feeObj,callback) {
 	});
 }
 
-function calculateTransportFeeAPIViettelPost(feeObj,callback){
+function calculateTransportFeeAPIGHN(feeObj,callback){
 	// feeObj = {
 	// 	MONEY_COLLECTION: 0,
 	// 	PRODUCT_PRICE: "3380",
@@ -246,12 +266,12 @@ function ghnAddressChecking(addressString, callback) {
 					for (e in listDistrict) {
 						// console.log(listDistrict[e])
 						// console.log(listDistrict[e]["DISTRICT_ID"]+" "+addressObj.districtId+" "+(listDistrict[e]["DISTRICT_ID"] == addressObj.districtId))
-						if (listDistrict[e]["DISTRICT_NAME"].toUpperCase() == addressObj["DistrictName"].toUpperCase()) {
+						if (listDistrict[e]["DistrictName"].toUpperCase() == addressObj["DISTRICT_NAME"].toUpperCase()) {
 							ckDistrict = true;
 
 							addressObj["DISTRICT_ID"] = listDistrict[e]["DistrictID"];
 
-							// console.log(selectedDistrict);
+							// callback(addressObj, undefined);
 
 							ghnFindPlaceWard(listDistrict[e]["DistrictID"], function(resWard){
 								var ckWard = false;
@@ -261,7 +281,6 @@ function ghnAddressChecking(addressString, callback) {
 								for (w in listWards) {
 									if (listWards[w]["WardName"].toUpperCase() == addressObj["WARDS_NAME"].toUpperCase()) {
 										ckWard = true;
-										var selectedWard = listWards[w]
 										// console.log(selectedWard);
 										addressObj["WARDS_ID"] = listWards[w]["WardCode"]
 
@@ -278,7 +297,7 @@ function ghnAddressChecking(addressString, callback) {
 							break;
 						}
 					}
-					if (!ckProvince) {
+					if (!ckDistrict) {
 						callback({}, "Thông tin quận/huyện bị sai");
 					}
 				})

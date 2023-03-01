@@ -303,9 +303,12 @@ function addressChecking(addressString, callback) {
 
 	findPlaceProvinceById(-1, function(resProvince){
 		var listProvince = resProvince.data;
+		var ckProvince = false;
+
 		for (p in listProvince) {
 			if (listProvince[p]["PROVINCE_NAME"].toUpperCase() == addressObj["PROVINCE_NAME"].toUpperCase()) {
-				
+				ckProvince = true;
+
 				addressObj["RECEIVER_PROVINCE"] = listProvince[p]["PROVINCE_ID"];
 				
 				var selectedProvince = listProvince[p];
@@ -315,10 +318,13 @@ function addressChecking(addressString, callback) {
 				findPlaceDistrict(addressObj["RECEIVER_PROVINCE"], function(resProvince){
 					var listDistrict = resProvince.data;
 					// console.log(listDistrict)
+					var ckDistrict = false;
+
 					for (e in listDistrict) {
 						// console.log(listDistrict[e])
 						// console.log(listDistrict[e]["DISTRICT_ID"]+" "+addressObj.districtId+" "+(listDistrict[e]["DISTRICT_ID"] == addressObj.districtId))
 						if (listDistrict[e]["DISTRICT_NAME"].toUpperCase() == addressObj["DISTRICT_NAME"].toUpperCase()) {
+							ckDistrict = true;
 
 							var selectedDistrict = listDistrict[e]
 
@@ -327,6 +333,8 @@ function addressChecking(addressString, callback) {
 							// console.log(selectedDistrict);
 
 							findPlaceWard(addressObj["RECEIVER_DISTRICT"], function(resWard){
+								var ckWard = false;
+
 								var listWards = resWard.data;
 								// console.log(listWards);
 								for (w in listWards) {
@@ -345,15 +353,26 @@ function addressChecking(addressString, callback) {
 										break;
 									}
 								}
+								if (!ckWard) {
+									callback({}, "Thông tin phường/xã bị sai");
+								}
 							})
 
 							break;
 						}
 					}
+					if (!ckDistrict) {
+						callback({}, "Thông tin quận/huyện bị sai");
+					}
 				})
 				break;
 			}
 		}
+
+		if (!ckProvince) {
+			callback({}, "Thông tin tỉnh bị sai");
+		}
+
 	})
 }
 

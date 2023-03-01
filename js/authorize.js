@@ -16,6 +16,7 @@ var authorizeButton = document.getElementById('authorize_button');
 // var signoutButton = document.getElementById('signout_button');
 
 var herokuPrefix = "https://dark-lime-barracuda-hat.cyclic.app/"
+// var herokuPrefix = "http://localhost:8080/"
 
 var dataset = [];
 
