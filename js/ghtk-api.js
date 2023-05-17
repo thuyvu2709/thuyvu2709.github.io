@@ -1,5 +1,3 @@
-// var herokuPrefix = "https://kenkreck1004.onrender.com/";
-// var herokuPrefix = "https://dark-lime-barracuda-hat.cyclic.app/"
 
 function createAnGHTKOrder(dataOrder, callback){
 	// var dataOrder = {
@@ -50,7 +48,9 @@ function createAnGHTKOrder(dataOrder, callback){
 }
 
 function getPickAddress(callback){
-	// console.log("getPickAddress:"+ghtkToken);
+	console.log(herokuPrefix);
+	console.log(ghtkUrl);
+	console.log(herokuPrefix+ghtkUrl+"/services/shipment/list_pick_add");
 	$.ajax({
 	  url: herokuPrefix+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {
