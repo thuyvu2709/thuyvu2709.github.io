@@ -2,7 +2,12 @@
 $("#footerInclude").load("../common/footer.html");
 
 var currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
-var pickList = JSON.parse(localStorage.getItem("pickList"));
+var pickList = []
+try{
+	pickList = JSON.parse(localStorage.getItem("pickList"));
+}catch(e) {
+
+}
 var ghtkToken = localStorage.getItem("ghtkToken");
 var sheetOrder = "Order";
 
