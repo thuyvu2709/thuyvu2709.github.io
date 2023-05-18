@@ -48,9 +48,7 @@ function createAnGHTKOrder(dataOrder, callback){
 }
 
 function getPickAddress(callback){
-	console.log(herokuPrefix);
-	console.log(ghtkUrl);
-	console.log(herokuPrefix+ghtkUrl+"/services/shipment/list_pick_add");
+
 	$.ajax({
 	  url: herokuPrefix+ghtkUrl+"/services/shipment/list_pick_add", 
 	  headers : {

@@ -27,3 +27,7 @@ table {
 .productWeight {
 	width: 60px
 }
+
+#pickAddressDetail {
+  font-size: 10px;
+}

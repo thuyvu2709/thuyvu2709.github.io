@@ -95,6 +95,7 @@ if (!pickList) {
 		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
 	}
 	$("#pickList").html(pickListHtml);
+	$("#pickAddressDetail").html("("+pickList[0].address+";"+pickList[0].ward+";"+pickList[0].district+";"+pickList[0].province+";"+pickList[0].tel+")");
 }
 
 // console.log(pickList);
@@ -339,6 +340,9 @@ $('.datetimepicker').daterangepicker({
 caluclateTransportFeeFn(true);//does not show loading
 
 $("#pickList").change(function(){
+	var pickIndex = $("#pickList").val();
+	console.log(pickList[pickIndex]);
+	$("#pickAddressDetail").html("("+pickList[pickIndex].address+";"+pickList[pickIndex].ward+";"+pickList[pickIndex].district+";"+pickList[pickIndex].province+";"+pickList[pickIndex].tel+")");
 	caluclateTransportFeeFn(true);//does not show loading
 })
 
