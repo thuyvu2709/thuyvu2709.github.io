@@ -15,7 +15,7 @@ var SCOPES = "https://www.googleapis.com/auth/spreadsheets "+
 var authorizeButton = document.getElementById('authorize_button');
 // var signoutButton = document.getElementById('signout_button');
 
-var herokuPrefix = "https://exuberant-plum-nightshirt.cyclic.app/"
+var herokuPrefix = "https://repulsive-vestments-foal.cyclic.app/"
 // var herokuPrefix = "https://micro-cors.vercel.app/"
 // var herokuPrefix = "http://localhost:8080/"
 
