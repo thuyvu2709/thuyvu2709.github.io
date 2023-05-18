@@ -29,7 +29,7 @@ var storeAddress = {
   "SENDER_WARD_NAME": "PHƯỜNG PHÚ ĐÔ"
 }
 
-var ghtkUrl="services.giaohangtietkiem.vn"
+var ghtkUrl="https://services.giaohangtietkiem.vn"
 
 datasetName = localStorage.getItem("datasetName");
 if (!datasetName) {

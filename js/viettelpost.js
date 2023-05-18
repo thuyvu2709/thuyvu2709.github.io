@@ -1,10 +1,7 @@
 
-
-// var viettelpostToken = localStorage.getItem("viettelpostToken");
-
 function loginViettelPost(callback){
 	var settings = {
-	    "url": herokuPrefix+"partner.viettelpost.vn/v2/user/Login",
+	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/Login",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
@@ -28,7 +25,7 @@ function loginViettelPost(callback){
 function viettelPostGetPickAddress(callback){
 	// console.log("getPickAddress:"+ghtkToken);
 	$.ajax({
-	  url: herokuPrefix+"partner.viettelpost.vn/v2/user/listInventory", 
+	  url: herokuPrefix+"https://partner.viettelpost.vn/v2/user/listInventory", 
 	  headers : {
 	  	"Token": viettelpostToken
 	  },
@@ -44,9 +41,41 @@ function viettelPostGetPickAddress(callback){
 	});
 }
 
+// function loginViettelPost2(){
+// 	var settings = {
+// 	    "async": true,
+//   "crossDomain": true,
+//   "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/ownerconnect",
+//   "method": "POST",
+//   "headers": {
+//     "Content-Type": "application/json",
+//     "Token": "eyJhbGciOiJFUzI1NiJ9.eyJzdWIiOiIwMzc2MTgwMTkzIiwiVXNlcklkIjo3MDk0ODQ5LCJGcm9tU291cmNlIjo1LCJUb2tlbiI6IjlPVFFMQldNRUxXIiwiZXhwIjoxNjgwMjg5MjY5LCJQYXJ0bmVyIjo3MDk0ODQ5fQ.o0g6EtmVq6Ixx_V5W4bp3IYgeFZ9hNozyn934SEdnej2F9I4FngYoYpGZA3MMIoaAvXlZEZfGgCAjjUU2i2_4g"
+//   },
+// 	    "data": ''
+// 	}
+
+// 	getViettelPostAccess(function(data){
+// 		console.log(data);
+// 		settings["data"]=JSON.stringify(data);
+// 		$.ajax(settings).done(function(response) {
+// 		    console.log(response);
+// 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
+// 		});
+// 	})
+// }
 
 function tracking(orderId){
-
+// 	// https://old.viettelpost.com.vn/Tracking?KEY=1606216637308
+// var settings = {
+// 	    "url": "https://buucuc.com/tracking?vid=1606216637308",
+// 	    "method": "POST",
+// 	    "headers": {
+// 	        "Content-Type": "application/json",
+// 	    }
+// 	}
+// 	$.ajax(settings).done(function(response) {
+//     	console.log(response);
+// 	});
 
 
 var link = "https://old.viettelpost.com.vn/Tracking?KEY=1606216637308";
@@ -71,7 +100,7 @@ function vietttelPostCreateABill(dataOrder,callback){
 	var settings = {
 	    "async": true,
 	    "crossDomain": true,
-	    "url": herokuPrefix+"partner.viettelpost.vn/v2/order/createOrder",
+	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/createOrder",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
@@ -89,7 +118,7 @@ function updateBillStatus(){
 	var settings = {
 	    "async": true,
 	    "crossDomain": true,
-	    "url": "partner.viettelpost.vn/v2/order/UpdateOrder",
+	    "url": "https://partner.viettelpost.vn/v2/order/UpdateOrder",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
@@ -122,7 +151,7 @@ function vietttelPostCalculateShippingCost(infor){
 	var settings = {
 	    "async": true,
 	    "crossDomain": true,
-	    "url": "partner.viettelpost.vn/v2/user/Login",
+	    "url": "https://partner.viettelpost.vn/v2/user/Login",
 	    "method": "POST",
 	    "headers": {
 	        "Content-Type": "application/json",
@@ -139,7 +168,7 @@ function findPlaceProvince(callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": herokuPrefix+"partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId=-1",
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -155,7 +184,7 @@ function findPlaceProvinceById(provinceId,callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": herokuPrefix+"partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listProvinceById?provinceId="+provinceId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -171,7 +200,7 @@ function findPlaceDistrict(provinceId, callback){
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": herokuPrefix+"partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listDistrict?provinceId="+provinceId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -187,7 +216,7 @@ function findPlaceWard(districtId, callback){ //Tim xa
 	var settings = {
 	  "async": true,
 	  "crossDomain": true,
-	  "url": herokuPrefix+"partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
+	  "url": herokuPrefix+"https://partner.viettelpost.vn/v2/categories/listWards?districtId="+districtId,
 	  "method": "GET",
 	  "headers": {
 	  },
@@ -203,7 +232,7 @@ function calculateTransportFeeAPIViettelPostDetail(feeObj,callback) {
 	var settings = {
 		    "async": true,
 		    "crossDomain": true,
-		    "url": herokuPrefix+"partner.viettelpost.vn/v2/order/getPrice",
+		    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/getPrice",
 		    "method": "POST",
 		    "headers": {
 		        "Content-Type": "application/json",
@@ -235,7 +264,7 @@ function calculateTransportFeeAPIViettelPost(feeObj,callback){
 	var settings = {
 		    "async": true,
 		    "crossDomain": true,
-		    "url": herokuPrefix+"partner.viettelpost.vn/v2/order/getPriceAll",
+		    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/order/getPriceAll",
 		    "method": "POST",
 		    "headers": {
 		        "Content-Type": "application/json",
