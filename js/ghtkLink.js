@@ -95,7 +95,15 @@ if (!pickList) {
 		pickListHtml += '<option value="'+e+'">'+pickList[e].name+'-'+pickList[e].province+'</option>'
 	}
 	$("#pickList").html(pickListHtml);
-	$("#pickAddressDetail").html("("+pickList[0].address+";"+pickList[0].ward+";"+pickList[0].district+";"+pickList[0].province+";"+pickList[0].tel+")");
+	var pickIndex = 0;
+	try {
+		pickIndex = parseInt(localStorage.getItem("pickIndex") || "0");
+		$("#pickList").val(pickIndex);
+	}catch(e) {
+
+	}
+
+	$("#pickAddressDetail").html("("+pickList[pickIndex].address+";"+pickList[pickIndex].ward+";"+pickList[pickIndex].district+";"+pickList[pickIndex].province+";"+pickList[pickIndex].tel+")");
 }
 
 // console.log(pickList);
@@ -341,7 +349,9 @@ caluclateTransportFeeFn(true);//does not show loading
 
 $("#pickList").change(function(){
 	var pickIndex = $("#pickList").val();
-	console.log(pickList[pickIndex]);
+	// console.log(pickList[pickIndex]);
+	// console.log(pickIndex);
+	localStorage.setItem("pickIndex", pickIndex);
 	$("#pickAddressDetail").html("("+pickList[pickIndex].address+";"+pickList[pickIndex].ward+";"+pickList[pickIndex].district+";"+pickList[pickIndex].province+";"+pickList[pickIndex].tel+")");
 	caluclateTransportFeeFn(true);//does not show loading
 })
