@@ -1306,12 +1306,26 @@ function shipComplete(){
     sendToManagerViaEmail(currentOrder, "Sent via "+lsOrder[orderIndex][8]);
   }
 
-  dataUpdateShipping = [
-    [nextStep, 
-      otherCost, 
-      dateTime
-      ]
-  ];
+  if (userRole=="manager") {
+    sheetrange = 'Shipping!E'+actualOrderIndex+':J'+actualOrderIndex;
+    dataUpdateShipping = [
+      [nextStep, //E
+        otherCost, //F
+        dateTime, // G
+        lsOrder[orderIndex][7],// H
+        lsOrder[orderIndex][8],// I
+        1// J
+        ]
+    ];
+  } else {
+    sheetrange = 'Shipping!E'+actualOrderIndex+':G'+actualOrderIndex;
+    dataUpdateShipping = [
+      [nextStep, 
+        otherCost, 
+        dateTime
+        ]
+    ];
+  }
 
   // console.log(dataUpdateShipping);
 
