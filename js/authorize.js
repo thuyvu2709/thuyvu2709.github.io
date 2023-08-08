@@ -323,6 +323,7 @@ function handleAuthClick(event) {
         // document.getElementById('signout_button').style.visibility = 'visible';
         // document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
+        updateSigninStatus(true);
       };
 
       if (gapi.client.getToken() === null) {
@@ -340,7 +341,12 @@ function handleAuthClick(event) {
  */
 function handleSignoutClick(event) {
     // console.log("Signout");
-    gapi.auth2.getAuthInstance().signOut();
+    const token = gapi.client.getToken();
+    if (token !== null) {
+      google.accounts.oauth2.revoke(token.access_token);
+      gapi.client.setToken('');
+    }
+
     window.location = "/";
 }
 
