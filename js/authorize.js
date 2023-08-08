@@ -351,3 +351,6 @@ function handleSignoutClick(event) {
     window.location = "/";
 }
 
+function afterSignIn(resp) {
+    console.log(resp);
+}
