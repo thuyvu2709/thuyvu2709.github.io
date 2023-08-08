@@ -61,8 +61,31 @@ function appendPre(log) {
 /**
  *  On load, called to load the auth2 library and API client library.
  */
-function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
+// function handleClientLoad() {
+//     gapi.load('client:auth2', initClient);
+// }
+
+let tokenClient;
+
+function gapiLoaded() {
+    gapi.load('client', initializeGapiClient);
+}
+
+async function initializeGapiClient() {
+    await gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: [DISCOVERY_DOC],
+    });
+}
+
+function gisLoaded() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: '', // defined later
+    });
+    gisInited = true;
+    console.log("gisLoaded");
 }
 
 // var triggerAfterLoad = function(){
@@ -276,7 +299,25 @@ function updateTitle(){
  *  Sign in the user upon button click.
  */
 function handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
+    // gapi.auth2.getAuthInstance().signIn();
+
+    tokenClient.callback = async (resp) => {
+        if (resp.error !== undefined) {
+          throw (resp);
+        }
+        // document.getElementById('signout_button').style.visibility = 'visible';
+        // document.getElementById('authorize_button').innerText = 'Refresh';
+        // await listMajors();
+      };
+
+      if (gapi.client.getToken() === null) {
+        // Prompt the user to select a Google Account and ask for consent to share their data
+        // when establishing a new session.
+        tokenClient.requestAccessToken({prompt: 'consent'});
+      } else {
+        // Skip display of account chooser and consent dialog for an existing session.
+        tokenClient.requestAccessToken({prompt: ''});
+      }
 }
 
 /**
