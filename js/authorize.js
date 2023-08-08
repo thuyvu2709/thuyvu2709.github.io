@@ -66,6 +66,8 @@ function appendPre(log) {
 // }
 
 let tokenClient;
+let gapiInited = false;
+let gisInited = false;
 
 function gapiLoaded() {
     gapi.load('client', initializeGapiClient);
@@ -77,6 +79,10 @@ async function initializeGapiClient() {
         discoveryDocs: DISCOVERY_DOCS,
     });
     console.log("initializeGapiClient");
+    gapiInited = true;
+
+    maybeEnableButtons();
+
 }
 
 function gisLoaded() {
@@ -86,8 +92,14 @@ function gisLoaded() {
         callback: '', // defined later
     });
     gisInited = true;
-    console.log("gisLoaded");
+    maybeEnableButtons();
 }
+
+function maybeEnableButtons() {
+    if (gapiInited && gisInited) {
+        authorizeButton.onclick = handleAuthClick;
+    }
+  }
 
 // var triggerAfterLoad = function(){
 //     console.log("triggerAfterLoad")
@@ -303,7 +315,7 @@ function handleAuthClick(event) {
     // gapi.auth2.getAuthInstance().signIn();
     console.log("handleAuthClick");
     console.log(tokenClient);
-    
+
     tokenClient.callback = async (resp) => {
         if (resp.error !== undefined) {
           throw (resp);
