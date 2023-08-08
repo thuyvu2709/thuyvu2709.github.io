@@ -86,8 +86,9 @@ function triggerAfterLoading() {
     // afterSignIn();
 }
 
-function initClient() {
+function initClient(response) {
     console.log("initClient")
+    console.log(response);
     
     $("#loadingSpin").show();
 
