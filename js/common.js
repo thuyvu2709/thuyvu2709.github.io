@@ -1283,7 +1283,7 @@ function getCurrentUser() {
     console.log("getCurrentUser");
     // var auth2 = gapi.auth2.getAuthInstance();
     
-    if (auth2.isSignedIn.get()) {
+    // if (auth2.isSignedIn.get()) {
       // var profile = auth2.currentUser.get().getBasicProfile();
       // console.log('ID: ' + profile.getId());
       // console.log('Full Name: ' + profile.getName());
@@ -1300,10 +1300,10 @@ function getCurrentUser() {
         // imageUrl : profile.getImageUrl(),
         email : "thuy.vtlminhlong@gmail.com"
       })
-    };
-    return {
-      status :false
-    }
+    // };
+    // return {
+    //   status :false
+    // }
 }
 
 function appendShipping(dataAppendShipping, callback, callbackError) {
