@@ -76,6 +76,7 @@ async function initializeGapiClient() {
         apiKey: API_KEY,
         discoveryDocs: DISCOVERY_DOCS,
     });
+    console.log("initializeGapiClient");
 }
 
 function gisLoaded() {
@@ -300,7 +301,9 @@ function updateTitle(){
  */
 function handleAuthClick(event) {
     // gapi.auth2.getAuthInstance().signIn();
-
+    console.log("handleAuthClick");
+    console.log(tokenClient);
+    
     tokenClient.callback = async (resp) => {
         if (resp.error !== undefined) {
           throw (resp);
