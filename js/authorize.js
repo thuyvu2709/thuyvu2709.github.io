@@ -89,47 +89,49 @@ function triggerAfterLoading() {
 function initClient(response) {
     console.log("initClient")
     console.log(response);
-    console.log(console.log(jwt_decode(response.credential)));
+    var currentUser = jwt_decode(response.credential);
+    localStorage.setItem("currentUser",JSON.stringify(currentUser));
+    updateSigninStatus(true);
     
-    $("#loadingSpin").show();
+    // $("#loadingSpin").show();
 
-    gapi.client.init({
-        apiKey: API_KEY,
-        clientId: CLIENT_ID,
-        discoveryDocs: DISCOVERY_DOCS,
-        scope: SCOPES
-    }).then(function() {
-        // Listen for sign-in state changes.
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+    // gapi.client.init({
+    //     apiKey: API_KEY,
+    //     clientId: CLIENT_ID,
+    //     discoveryDocs: DISCOVERY_DOCS,
+    //     scope: SCOPES
+    // }).then(function() {
+    //     // Listen for sign-in state changes.
+    //     gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-        gapi.client.load('gmail', 'v1', function(){
-            console.log("Loaded email api");
-        });
+    //     gapi.client.load('gmail', 'v1', function(){
+    //         console.log("Loaded email api");
+    //     });
 
-        // Handle the initial sign-in state.
-        updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-        if (authorizeButton) {
-            authorizeButton.onclick = handleAuthClick;
-        }
-        // signoutButton.onclick = handleSignoutClick;
-        // $("#loadingSpin").hide();
+    //     // Handle the initial sign-in state.
+    //     updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+    //     if (authorizeButton) {
+    //         authorizeButton.onclick = handleAuthClick;
+    //     }
+    //     // signoutButton.onclick = handleSignoutClick;
+    //     // $("#loadingSpin").hide();
 
-        // if (typeof triggerAfterLoad !== 'undefined' && $.isFunction(triggerAfterLoad)) {
-        //     triggerAfterLoad();
-        // };
-        // triggerAfterLoading();
-        // checkRole();
+    //     // if (typeof triggerAfterLoad !== 'undefined' && $.isFunction(triggerAfterLoad)) {
+    //     //     triggerAfterLoad();
+    //     // };
+    //     // triggerAfterLoading();
+    //     // checkRole();
 
-    }, function(error) {
-        console.log("Problem with sign in");
+    // }, function(error) {
+    //     console.log("Problem with sign in");
 
-        appendPre(JSON.stringify(error, null, 2));
+    //     appendPre(JSON.stringify(error, null, 2));
 
-        // triggerAfterLoading();
-        checkRole();
-        // comeBackHomeToAuthorize();
+    //     // triggerAfterLoading();
+    //     checkRole();
+    //     // comeBackHomeToAuthorize();
 
-    });
+    // });
 }
 
 /**
