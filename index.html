@@ -96,23 +96,6 @@
     </div>
   </header>
 
-<div id="g_id_onload"
-     data-client_id="729860036739-i1ihr5qbim6llcplhe0rglska8ft2nu8.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-callback="initClient"
-     data-itp_support="true">
-</div>
-
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="rectangular"
-     data-theme="outline"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
-</div>
-
 <!--   <div id="loadingSpin"></div>
   <textarea id="textarea"></textarea> -->
 
@@ -137,11 +120,9 @@
   <script type="text/javascript" src="js/authorize.js"></script>
 
   <script async defer src="https://apis.google.com/js/api.js"
-  >
+  onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
   </script>
-  
-  <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async></script>
 
 </body>
 
