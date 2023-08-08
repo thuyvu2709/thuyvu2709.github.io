@@ -323,6 +323,7 @@ function handleAuthClick(event) {
         // document.getElementById('signout_button').style.visibility = 'visible';
         // document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
+        console.log(resp);
         updateSigninStatus(true);
       };
 
