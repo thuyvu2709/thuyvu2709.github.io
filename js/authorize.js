@@ -89,7 +89,7 @@ function triggerAfterLoading() {
 function initClient(response) {
     console.log("initClient")
     console.log(response);
-    console.log(console.log(jwt_decode(response.credential));
+    console.log(console.log(jwt_decode(response.credential)));
     
     $("#loadingSpin").show();
 
