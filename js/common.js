@@ -1281,10 +1281,10 @@ function loadOtherFee(callback) {
 
 function getCurrentUser() {
     console.log("getCurrentUser");
-    var auth2 = gapi.auth2.getAuthInstance();
+    // var auth2 = gapi.auth2.getAuthInstance();
     
     if (auth2.isSignedIn.get()) {
-      var profile = auth2.currentUser.get().getBasicProfile();
+      // var profile = auth2.currentUser.get().getBasicProfile();
       // console.log('ID: ' + profile.getId());
       // console.log('Full Name: ' + profile.getName());
       // console.log('Given Name: ' + profile.getGivenName());
@@ -1293,12 +1293,12 @@ function getCurrentUser() {
       // console.log('Email: ' + profile.getEmail());
       return ({
         status : true,
-        id : profile.getId(),
-        name : profile.getName(),
-        givenName : profile.getGivenName(),
-        familyName : profile.getFamilyName(),
-        imageUrl : profile.getImageUrl(),
-        email : profile.getEmail()
+        // id : profile.getId(),
+        // name : profile.getName(),
+        // givenName : profile.getGivenName(),
+        // familyName : profile.getFamilyName(),
+        // imageUrl : profile.getImageUrl(),
+        email : "thuy.vtlminhlong@gmail.com"
       })
     };
     return {
