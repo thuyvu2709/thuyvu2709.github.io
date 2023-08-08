@@ -61,9 +61,9 @@ function appendPre(log) {
 /**
  *  On load, called to load the auth2 library and API client library.
  */
-function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
-}
+// function handleClientLoad() {
+//     gapi.load('client:auth2', initClient);
+// }
 
 // var triggerAfterLoad = function(){
 //     console.log("triggerAfterLoad")
@@ -279,16 +279,16 @@ function updateTitle(){
 /**
  *  Sign in the user upon button click.
  */
-function handleAuthClick(event) {
-    gapi.auth2.getAuthInstance().signIn();
-}
+// function handleAuthClick(event) {
+//     gapi.auth2.getAuthInstance().signIn();
+// }
 
 /**
  *  Sign out the user upon button click.
  */
-function handleSignoutClick(event) {
-    // console.log("Signout");
-    gapi.auth2.getAuthInstance().signOut();
-    window.location = "/";
-}
+// function handleSignoutClick(event) {
+//     // console.log("Signout");
+//     gapi.auth2.getAuthInstance().signOut();
+//     window.location = "/";
+// }
 
