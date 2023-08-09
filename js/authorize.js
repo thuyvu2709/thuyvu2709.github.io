@@ -96,7 +96,7 @@ function gisLoaded() {
 }
 
 function maybeEnableButtons() {
-    if (gapiInited && gisInited) {
+    if (gapiInited && gisInited && pageName == "index") {
         authorizeButton.onclick = handleAuthClick;
     }
   }
@@ -350,3 +350,4 @@ function handleSignoutClick(event) {
 
     window.location = "/";
 }
+
