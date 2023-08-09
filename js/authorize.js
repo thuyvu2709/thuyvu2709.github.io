@@ -124,14 +124,13 @@ function triggerAfterLoading() {
 
     // console.log(window.location);
 
-    if (typeof triggerAfterLoad !== 'undefined' && $.isFunction(triggerAfterLoad)) {
-
         // localStorage.setItem("clientToken", JSON.stringify(gapi.client.getToken()));
-        var clientToken = localStorage.getItem("clientToken");
-        if (clientToken) {
-            gapi.client.setToken( JSON.parse(localStorage.getItem("clientToken")));
-        }
-
+    var clientToken = localStorage.getItem("clientToken");
+    if (clientToken) {
+        gapi.client.setToken( JSON.parse(localStorage.getItem("clientToken")));
+    }
+    
+    if (typeof triggerAfterLoad !== 'undefined' && $.isFunction(triggerAfterLoad)) {
         triggerAfterLoad();
     };
 
