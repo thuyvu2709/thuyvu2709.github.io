@@ -27,9 +27,11 @@ function handleFileSelect(event) {
 	const reader = new FileReader()
 	reader.onload = function(event2) {
 
-		var data = event2.target.result;
-
+		var data = JSON.parse(event2.target.result);
+		localStorage.clear();
+		
 		for(var e in data) {
+			console.log(e);
 			localStorage.setItem(e, data[e]);
 	    }
 
