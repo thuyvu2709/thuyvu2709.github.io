@@ -29,7 +29,7 @@ function handleFileSelect(event) {
 
 		var data = JSON.parse(event2.target.result);
 		localStorage.clear();
-		
+
 		for(var e in data) {
 			console.log(e);
 			localStorage.setItem(e, data[e]);
@@ -271,3 +271,89 @@ function addData(targetMainSheet,data, tableName, callback) {
       appendPre('Error: ' + response.result.error.message);
   });
 }
+
+
+function fullMergeMainSheet() {
+	var targetMainSheet = "1GDYy_fy2xix4JqkWOIarvPOeFh7v2NNmA2efT-uJMs8"
+	
+	console.log("mergeProcessing");
+
+	var warehouseData = JSON.parse(localStorage.getItem("warehouse"));
+	var warehouseSheetData = [];
+
+    for (var w in warehouseData) {
+		warehouseSheetData.push(warehouseData[w]);
+    }
+
+	var orderDetailData = JSON.parse(localStorage.getItem("orderListDetail"));
+	var orderDetailSheetData = [];
+
+    for (var i in orderDetailData) {
+		orderDetailSheetData.push(orderDetailData[i])
+    }
+
+	var orderData = JSON.parse(localStorage.getItem("orderList"));
+	var orderSheetData = [];
+
+    for (var i in orderData) {
+		orderSheetData.push(orderData[i])
+    }
+
+	var productData = JSON.parse(localStorage.getItem("productList"));
+	var productSheetData = [];
+
+    for (var p in productData) {
+		productSheetData.push(productData[p]);
+    }
+
+    // console.log(warehouseSheetData);
+    // console.log(orderSheetData);
+	// console.log(orderDetailSheetData);
+    // console.log(productSheetData);
+    addData(targetMainSheet,warehouseSheetData,"Warehouse", function(){
+		console.log("warehouseSheetData : Done");
+	    addData(targetMainSheet,orderSheetData,"Order", function(){
+			console.log("orderSheetData : Done");
+		    addData(targetMainSheet,orderDetailSheetData,"OrderDetail", function(){
+				console.log("orderDetailSheetData : Done");
+			    addData(targetMainSheet,productSheetData,"Product", function(){
+    				console.log("Done");
+    			});		
+    		});
+    	});
+    });
+};
+
+function fullMergeShippingSheet() {
+	var targetShippping = "1kkXyG5HaSHdkuPGMxj31rOibztYIVKlgfWJHoUtDyZs"
+	
+	console.log("mergeProcessing");
+
+	var shippingData = JSON.parse(localStorage.getItem("ordershipping"));
+	var shippingSheetData = [];
+
+    for (var i in shippingData) {
+		shippingSheetData.push(shippingData[i]);
+    }
+
+    addData(targetShippping,shippingSheetData,"Shipping", function(){
+		console.log("shippingSheetData : Done");
+    });
+};
+
+function fullMergeCustomerSheet() {
+	var targetSheet = "11dq9d1UQ8PlDYQbIencMX71JlLk09HugE2hDpDaKhgk"
+	
+	console.log("mergeProcessing");
+
+	var customerData = JSON.parse(localStorage.getItem("customerList"));
+	var customerSheetData = [];
+
+    for (var i in customerSheetData) {
+		customerData.push(customerSheetData[i]);
+    }
+
+    addData(targetSheet,customerData,"Customer", function(){
+		console.log("Customer : Done");
+    });
+};

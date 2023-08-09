@@ -1576,6 +1576,7 @@ function appendDataInSheet(spreadsheets, sheetrange, data, callback, callbackErr
 }
 
 function sendEmail(headers_obj, message, callback){
+    
     var email = '';
 
     for(var header in headers_obj) {

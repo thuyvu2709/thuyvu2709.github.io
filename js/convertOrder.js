@@ -167,6 +167,9 @@ function sendToManagerViaEmail(currentOrder, status) {
 }
 
 function notiOrderViaEmail(receiver,cc, currentOrder, status) {
+	console.log("Block notiOrderViaEmail");
+	
+	return;
 	// currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
 	var address = currentOrder.customerAddress.replace(/[|&;$%@"<>()+,]/g, "").trim().replace(" ","+");
 
