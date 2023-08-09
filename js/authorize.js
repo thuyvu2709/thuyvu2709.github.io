@@ -247,8 +247,9 @@ function checkRole() {
 
         $("#loadingSpin").hide();
 
-        routing(page);
         triggerAfterLoading();
+        routing(page);
+
     }    
 
     if (pageName == "index") {
