@@ -547,15 +547,15 @@ function addDetailOrder() {
 			orderCode,
 			$(".productCode_"+i).val(),
 			prodListOrder[i].importCode,
-			'=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+			'=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();2)))',
 			$(".productName_"+i).val(),
 			$(".productCount_"+i).val(),
 			$(".productEstimateSellingVND_"+i).val(),
-			"=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
-			"=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
-			"=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-			"=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
-			'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
+			"=INDIRECT(ADDRESS(ROW();6)) *  INDIRECT(ADDRESS(ROW();7))",
+			"=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)",
+			"=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))",
+			"=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)",
+			'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * F3'
 		])
 	}
 
@@ -667,11 +667,11 @@ $("#addNewOrder").click(function(){
                 customerName,
                 customerAddress,
                 "'"+customerPhone,
-                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+                "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!H:H)",
 				shippingCost,
 				"=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
                 "ORDERED",
-                "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+                "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))",
 				orderNode,
 				shippingType,
 				JSON.stringify(otherInfor),

@@ -1745,35 +1745,21 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
   function prepareProdListOrder(){
     for (var e in prodListOrder) {
       if (prodListOrder[e].available == 1) {
-        // prodListOrderReady.push(prodListOrder[e]);
-        // dataProdListOrderReady.push([
-        //   orderCode,
-        //   prodListOrder[e].productCode,
-        //   prodListOrder[e].importCode,
-        //   '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
-        //   prodListOrder[e].productName,
-        //   prodListOrder[e].productCount,
-        //   prodListOrder[e].productEstimateSellingVND,
-        //   "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
-        //   "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
-        //   "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-        //   "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)"
-        // ])
 
         dataProdListOrderReady.push([
           orderCode,
           prodListOrder[e].productCode,
           prodListOrder[e].importCode,
-          '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+          '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();2)))',
           prodListOrder[e].productName,
           prodListOrder[e].productCount,
           prodListOrder[e].productEstimateSellingVND,
-          "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
-          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
-          "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
-          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
-        ])  
+          "=INDIRECT(ADDRESS(ROW();6)) *  INDIRECT(ADDRESS(ROW();7))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)",
+          "=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)",
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * F3'
+          ])  
 
         // dataProfListOrderRemoveSplit.push([
         //   "","","","","","","","","","",""
@@ -1788,24 +1774,6 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
 
   var splitAddNewOrder = function (callbackSplitAddNew) {
 
-    // var submitOrderData = [
-    //     [
-    //       orderCode,
-    //       currentOrder.orderDate,
-    //       currentOrder.customerName,
-    //       currentOrder.customerAddress,
-    //       "'"+currentOrder.customerPhone,
-    //       "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
-    //       currentOrder.shippingCost,
-    //       "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
-    //       "ORDERED",
-    //       "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
-    //       currentOrder.orderNode,
-    //       "",
-    //       currentOrder.otherCost
-    //     ]
-    // ]
-
     var submitOrderData = [
         [
           orderCode,
@@ -1813,11 +1781,11 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
           currentOrder.customerName,
           currentOrder.customerAddress,
           "'"+currentOrder.customerPhone,
-          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+          "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!H:H)",
           currentOrder.shippingCost,
           "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
           "ORDERED",
-          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+          "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))",
           currentOrder.orderNode,
           currentOrder.shippingType,
           currentOrder.otherCost,
@@ -1850,16 +1818,16 @@ function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
           orderCode,
           prod.productCode,
           prod.importCode,
-          '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),2)))',
+          '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();2)))',
           prod.productName,
           prod.productCount,
           prod.productEstimateSellingVND,
-          "=INDIRECT(ADDRESS(ROW(),6)) *  INDIRECT(ADDRESS(ROW(),7))",
-          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),4)),Product!B:U,11,FALSE)",
-          "=(INDIRECT(ADDRESS(ROW(),7)) - INDIRECT(ADDRESS(ROW(),9))) * INDIRECT(ADDRESS(ROW(),6))",
-          "=VLOOKUP(INDIRECT(ADDRESS(ROW(),3)),Warehouse!A:C,3,0)",
-          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW(),1)), IMPORTRANGE("'+shippingSheet+'","Shipping!A:A"),1,false),"")="",0,1) * F3'
-        ])  
+          "=INDIRECT(ADDRESS(ROW();6)) *  INDIRECT(ADDRESS(ROW();7))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)",
+          "=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))",
+          "=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)",
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * F3'
+          ])  
 
         // dataProfListOrderRemoveSplit.push([
         //   "","","","","","","","","","",""
@@ -1880,11 +1848,11 @@ function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
           currentOrder.customerName,
           currentOrder.customerAddress,
           "'"+currentOrder.customerPhone,
-          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!H:H)",
+          "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!H:H)",
           currentOrder.shippingCost,
           "=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))",
           "ORDERED",
-          "=SUMIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)),OrderDetail!K:K) / COUNTIF(OrderDetail!A:A,INDIRECT(ADDRESS(ROW(),1)))",
+          "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))",
           currentOrder.orderNode+(currentOrder.prepaid > 0 ? " Note Trả trước: "+currentOrder.prepaid+"k ở đơn hàng "+currentOrder.orderCode +" "+currentOrder.customerName : ""),
           currentOrder.shippingType,
           currentOrder.otherCost,

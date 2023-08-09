@@ -198,7 +198,7 @@ function editProductFn(){
 
 	var dataEditP = [
                 [productCode, //0 A
-                '=CONCATENATE(INDIRECT(ADDRESS(ROW(),3)),"_",INDIRECT(ADDRESS(ROW(),1)))',//1 B
+                '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();1)))',//1 B
                 importCode,
                 productName, //1 B
                 productCount, //2 C
@@ -210,15 +210,15 @@ function editProductFn(){
                 otherFee, //8 I
                 productEstimateVND, //9 J
                 productEstimateSellingVND, //10 K
-				"=INDIRECT(ADDRESS(ROW(),13)) - INDIRECT(ADDRESS(ROW(),12))", //11 L
-				"=INDIRECT(ADDRESS(ROW(),13))*INDIRECT(ADDRESS(ROW(),5))", //12 M
-				"=INDIRECT(ADDRESS(ROW(),12))*INDIRECT(ADDRESS(ROW(),5))", //13 N
-				"=INDIRECT(ADDRESS(ROW(),15)) - INDIRECT(ADDRESS(ROW(),16))", //14 O
-				"=INDIRECT(ADDRESS(ROW(),5)) - SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F)", //15 P
-				"=INDIRECT(ADDRESS(ROW(),12)) * INDIRECT(ADDRESS(ROW(),18))", //16 Q
+				"=INDIRECT(ADDRESS(ROW();13)) - INDIRECT(ADDRESS(ROW();12))", //13 N
+				"=INDIRECT(ADDRESS(ROW();13))*INDIRECT(ADDRESS(ROW();5))", //14 O
+				"=INDIRECT(ADDRESS(ROW();12))*INDIRECT(ADDRESS(ROW();5))", //15 P
+				"=INDIRECT(ADDRESS(ROW();15)) - INDIRECT(ADDRESS(ROW();16))", //16 Q
+				"=INDIRECT(ADDRESS(ROW();5)) - SUMIF(OrderDetail!D:D;INDIRECT(ADDRESS(ROW();2));OrderDetail!F:F)", //17 R
+				"=INDIRECT(ADDRESS(ROW();12)) * INDIRECT(ADDRESS(ROW();18))", //18 S
 				prodImageLink,
 				productEstimateSellingCTV,
-				'=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!L:L)'
+				'=SUMIF(OrderDetail!D:D; INDIRECT(ADDRESS(ROW();2)); OrderDetail!L:L)'
                 ]
             ];
     
