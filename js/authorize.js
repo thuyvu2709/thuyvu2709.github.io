@@ -111,6 +111,7 @@ function maybeEnableButtons() {
  */
 
 function triggerAfterLoading() {
+    console.log("triggerAfterLoading");
     $("#loadingSpin").hide();
 
     // console.log(window.location);
@@ -228,6 +229,8 @@ function checkRole() {
     }
 
     var finishCheckRole = function(page){
+        console.log("finishCheckRole");
+
         $("#loadingSpin").hide();
 
         routing(page);
