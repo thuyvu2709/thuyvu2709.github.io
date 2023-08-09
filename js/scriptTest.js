@@ -21,6 +21,26 @@ $("#ImportData").click(function(){
 	})
 })
 
+document.getElementById('ImportDataFromFile').addEventListener('change', handleFileSelect, false);
+
+function handleFileSelect(event) {
+	const reader = new FileReader()
+	reader.onload = function(event2) {
+
+		var data = event2.target.result;
+
+		for(var e in data) {
+			localStorage.setItem(e, data[e]);
+	    }
+
+	};
+	reader.readAsText(event.target.files[0])
+}
+  
+//   function handleFileLoad(event) {
+// 	console.log(event);
+// 	document.getElementById('fileContent').textContent = event.target.result;
+//   }
 
 // ///////FOR MERGEING
 
