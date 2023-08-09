@@ -122,6 +122,13 @@ function triggerAfterLoading() {
     // console.log(window.location);
 
     if (typeof triggerAfterLoad !== 'undefined' && $.isFunction(triggerAfterLoad)) {
+
+        // localStorage.setItem("clientToken", JSON.stringify(gapi.client.getToken()));
+        var clientToken = localStorage.getItem("clientToken");
+        if (clientToken) {
+            gapi.client.setToken( JSON.parse(localStorage.getItem("clientToken")));
+        }
+
         triggerAfterLoad();
     };
 
@@ -332,6 +339,7 @@ function handleAuthClick(event) {
         // document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
         console.log(resp);
+        localStorage.setItem("clientToken", JSON.stringify(gapi.client.getToken()));
         updateSigninStatus(true);
       };
 
