@@ -86,6 +86,7 @@ async function initializeGapiClient() {
 }
 
 function gisLoaded() {
+    console.log("gisLoaded");
     tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES,
@@ -96,8 +97,12 @@ function gisLoaded() {
 }
 
 function maybeEnableButtons() {
-    if (gapiInited && gisInited && pageName == "index") {
-        authorizeButton.onclick = handleAuthClick;
+    if (gapiInited && gisInited ) {
+        if (pageName == "index") {
+            authorizeButton.onclick = handleAuthClick;
+        } else {
+            checkRole();
+        }
     }
   }
 
@@ -211,8 +216,8 @@ function checkRole() {
     var roles = JSON.parse(localStorage.getItem("roles"));
 
     var continueWithRoles = function(roles) {
-        // console.log("Role list")
-        // console.log(roles);
+        console.log("Role list")
+        console.log(roles);
         for (e in roles) {
             if (e == 0) {
                 continue;
