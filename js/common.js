@@ -1758,7 +1758,7 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
           "=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)",
           "=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))",
           "=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)",
-          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * F3'
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * INDIRECT(ADDRESS(ROW();6))'
           ])  
 
         // dataProfListOrderRemoveSplit.push([
@@ -1826,7 +1826,7 @@ function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
           "=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)",
           "=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))",
           "=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)",
-          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * F3'
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1) * INDIRECT(ADDRESS(ROW();6))'
           ])  
 
         // dataProfListOrderRemoveSplit.push([
