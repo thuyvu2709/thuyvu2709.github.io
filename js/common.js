@@ -7,14 +7,14 @@
 
 var datasetName = 2020;
 
-var roleSheet = '15y7rVe9z9O1y1ISNxQMQbx-rVTY9hU7ePlEO86kpMd0';
+var roleSheet = '1VAolcxUn4Zp9Xmqck_b4m8d1LAGX7xesgqGiNxctA3s';
 //roleSheet always keep
 
-var mainSheetForProduct = '1DD-wAE56uwKK_7Q7rZ5zigPAiMXwoqHKpiyBa6XJLk8';
-var shippingSheet = '1iSGH0EXjdFOeZYDxWcy98Gv3d9CkvlcrraUZuaTR5ZY';
+var mainSheetForProduct = '1u6eIlj1JUaNjDb0bjSueW5EeCjWMmQPquwUXADQc_p0';
+var shippingSheet = '1_s-3RUe6oHb0mPISZWFSnrafP7MMt1D7iJnqXYR3tqw';
 
-var customerSheet = '1adxYebta3iQ_pwDaa_RTphWAo3z1uIdluTdEcqJK-mQ';
-var bscSheet = '16UKch39mTWBvvyxyrH_KiEBHP7y2l_cQrRpFN8NvMmQ';
+var customerSheet = '11dq9d1UQ8PlDYQbIencMX71JlLk09HugE2hDpDaKhgk';
+// var bscSheet = '16UKch39mTWBvvyxyrH_KiEBHP7y2l_cQrRpFN8NvMmQ';
 
 var storeAddress = {
   "SENDER_FULLNAME": "Lê Phan Xuân An",
@@ -1194,7 +1194,6 @@ function getRoleList(callback) {
       spreadsheetId: spreadsheetId,
       range: sheetrange,
   }).then(function(response) {
-      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       roleset = response.result.values;
       // showList(dataset);
       localStorage.setItem("roles",JSON.stringify(roleset));
