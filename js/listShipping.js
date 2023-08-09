@@ -94,12 +94,12 @@ var triggerAfterLoad = function(){
         }
         localStorage.setItem("ghtkToken",ghtkToken);
       })
-      getGhnAccess(function(rs){
-        if (rs) {
-          ghnToken = rs["ghnToken"];
-        }
-        localStorage.setItem("ghnToken",ghnToken);
-      })
+      // getGhnAccess(function(rs){
+      //   if (rs) {
+      //     ghnToken = rs["ghnToken"];
+      //   }
+      //   localStorage.setItem("ghnToken",ghnToken);
+      // })
       loginViettelPost(function(){
       })
     }
