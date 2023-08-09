@@ -347,13 +347,30 @@ function fullMergeCustomerSheet() {
 	console.log("mergeProcessing");
 
 	var customerData = JSON.parse(localStorage.getItem("customerList"));
-	var customerSheetData = [];
+	// var customerSheetData = [];
 
-    for (var i in customerSheetData) {
-		customerData.push(customerSheetData[i]);
-    }
+    // for (var i in customerSheetData) {
+	// 	customerData.push(customerSheetData[i]);
+    // }
 
     addData(targetSheet,customerData,"Customer", function(){
 		console.log("Customer : Done");
     });
 };
+
+function fullMergeProductCatalogList() {
+	var targetSheet = "11dq9d1UQ8PlDYQbIencMX71JlLk09HugE2hDpDaKhgk"
+	
+	console.log("mergeProcessing");
+
+	var data = JSON.parse(localStorage.getItem("productCatalogList"));
+	// var sheetData = [];
+
+    // for (var i in customerSheetData) {
+	// 	shet.push(customerSheetData[i]);
+    // }
+
+    addData(targetSheet,data,"ProductCatalog", function(){
+		console.log("ProductCatalog : Done");
+    });
+}
