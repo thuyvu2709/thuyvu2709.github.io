@@ -166,7 +166,6 @@ function loadProductList(callback) {
       spreadsheetId: spreadsheetId,
       range: sheetrange,
   }).then(function(response) {
-      // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
       // showList(dataset);
       localStorage.setItem("productList",JSON.stringify(dataset));

@@ -98,7 +98,7 @@ function gisLoaded() {
 
 function maybeEnableButtons() {
     if (gapiInited && gisInited ) {
-        if (pageName == "index") {
+        if (pageName == "index" || pageName == "test") {
             authorizeButton.onclick = handleAuthClick;
         } else {
             checkRole();
