@@ -98,9 +98,12 @@ function gisLoaded() {
 
 function maybeEnableButtons() {
     if (gapiInited && gisInited ) {
-        if (pageName == "index" || pageName == "test") {
+        if (pageName == "index") {
             authorizeButton.onclick = handleAuthClick;
-        } else {
+        } else if (pageName == "test") {
+            authorizeButton.onclick = handleAuthClick;
+            checkRole();
+        } else 
             checkRole();
         }
     }
