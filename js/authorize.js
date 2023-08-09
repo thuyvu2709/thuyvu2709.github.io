@@ -103,7 +103,7 @@ function maybeEnableButtons() {
         } else if (pageName == "test") {
             authorizeButton.onclick = handleAuthClick;
             checkRole();
-        } else 
+        } else {
             checkRole();
         }
     }
