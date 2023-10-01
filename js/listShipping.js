@@ -545,6 +545,16 @@ function loadOrderShippingListHtml() {
 
         }
 
+        try {
+          logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.ghnLabel;
+          if (logiticCodice){
+            orderDetailBrief+= "GHN Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+          }
+          // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
+        } catch (e) {
+
+        }
+
         if (!logiticCodice) {
           // if (userRole=="manager"){
             try {

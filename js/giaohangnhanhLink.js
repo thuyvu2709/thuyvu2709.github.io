@@ -858,11 +858,11 @@ $("#ghnPost").click(function(){
 		console.log(data);
 
 		if (data["code"]==200) {
-			currentOrder.otherInfor.order.viettelPostlabel = data["data"]["ORDER_NUMBER"];
+			currentOrder.otherInfor.order.ghnLabel = data["data"]["order_code"];
 
 			console.log("Copy");
 			$("#textareaBanking").show();
-			$("#textareaBanking").val(data["data"]["ORDER_NUMBER"]);
+			$("#textareaBanking").val(data["data"]["order_code"]);
 			var copyText = document.getElementById("textareaBanking");
 			copyText.select(); 
 			copyText.setSelectionRange(0, 99999); /*For mobile devices*/
