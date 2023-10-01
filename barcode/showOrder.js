@@ -24,8 +24,21 @@ $("#customerPhone").html(
 );
 
 $("#shippingCost").html(currentOrder.shippingCost);
+
+var otherInfor = {}
+try{
+	otherInfor = JSON.parse(currentOrder.otherInfor)
+}catch(e) {
+
+}
+
 // $("#shippingCost").html("Khách thanh  a a a toán với bên vận chuyển");
-$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);	
+if (otherInfor.isFreeShip == false && (currentOrder.shippingType == "POST_COD" || currentOrder.shippingType == "POST_NO_COD" )) {
+	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip + " (+ Phí Ship)");	
+} else {
+	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);
+}
+
 $("#totalPay").html(currentOrder.totalPay);
 
 $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED" ? "Đã giao" : "Chưa giao hàng"));
