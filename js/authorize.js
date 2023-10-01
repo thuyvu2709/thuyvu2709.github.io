@@ -74,6 +74,15 @@ function gapiLoaded() {
 }
 
 async function initializeGapiClient() {
+
+    if (window.location.hostname == "localhost") {
+        console.log("initializeGapiClient");
+        gapiInited = true;
+        gisInited = true;
+        maybeEnableButtons();
+        return;
+    }
+
     await gapi.client.init({
         apiKey: API_KEY,
         discoveryDocs: DISCOVERY_DOCS,
@@ -204,13 +213,9 @@ function checkRole() {
 
     var currentUser = getCurrentUser();
     
-    if (window.location.hostname == "localhost" ||
-        window.location.hostname == "172.20.10.6" ||
-        window.location.hostname == "172.20.10.11"||
-        window.location.hostname == "192.168.100.10"
-        ) {
+    if (window.location.hostname == "localhost") {
         currentUser = {
-            email : "kenkreck1004@gmail.com",
+            email : "levanthanh3005@gmail.com",
             status : true
         }
     }

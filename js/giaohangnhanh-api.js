@@ -198,8 +198,13 @@ function calculateTransportFeeAPIGHNDetail(shopId, feeObj,callback) {
 		    "data": JSON.stringify(feeObj)
 		}
 	$.ajax(settings).done(function(response) {
-	    // console.log(response);
-	    callback(response)
+	    callback(response, undefined)
+	}).fail(function (jqXHR, textStatus) {
+		try{
+			callback(undefined, jqXHR.responseJSON.code_message_value)
+		}catch(e) {
+			callback(undefined, "Không tính được, thử cái khác đi nhé")
+		}
 	});
 }
 

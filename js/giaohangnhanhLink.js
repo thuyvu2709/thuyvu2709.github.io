@@ -429,6 +429,8 @@ function getTransportTypeFn(notloadShow){//true mean does not show
 	}
 
 	ghnGetService(pickList[pickIndex]["_id"], pickList[pickIndex]["district_id"], customerAddressObj["DISTRICT_ID"], function(rs){
+		console.log("ghnGetService");
+		console.log(rs);
 		services = rs;
 		var feeCt;
 		for (e in services) {
@@ -497,11 +499,18 @@ function caluclateTransportFeeFn(){
 
 	var shopId = pickList[pickIndex]["_id"];
 
-	calculateTransportFeeAPIGHNDetail(shopId, feeObj, function(res){
-		console.log(res);
-		$("#shippingFee").html(res["data"]["service_fee"]);
-		$("#paymentSummary").html(res["data"]["total"])
-		$("#insuranceFee").html(res["data"]["insurance_fee"]);
+	calculateTransportFeeAPIGHNDetail(shopId, feeObj, function(res, errorText){
+		if (!errorText) {
+			console.log(res);
+			$("#shippingFee").html(res["data"]["service_fee"]);
+			$("#paymentSummary").html(res["data"]["total"])
+			$("#insuranceFee").html(res["data"]["insurance_fee"]);
+		} else {
+			$("#shippingFee").html(errorText);
+			$("#paymentSummary").html(errorText)
+			$("#insuranceFee").html(errorText);
+			
+		}
 
 	})
 }
