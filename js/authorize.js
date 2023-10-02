@@ -76,7 +76,7 @@ function gapiLoaded() {
 async function initializeGapiClient() {
 
     if (window.location.hostname == "localhost") {
-        console.log("initializeGapiClient");
+        console.log("initializeGapiClient skip");
         gapiInited = true;
         gisInited = true;
         maybeEnableButtons();
