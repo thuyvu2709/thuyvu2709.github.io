@@ -56,7 +56,7 @@ $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED
 
 if (currentOrder.paymentStatus == "PAID") {
 	if (otherInfor.isFreeShip == false && (currentOrder.shippingType == "POST_COD" || currentOrder.shippingType == "POST_NO_COD" )) {
-		$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng, Khách sẽ thanh toán phí ship với bên vận chuyển)</i>");
+		$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng - Khách chỉ thanh toán phí ship với bên vận chuyển)</i>");
 	} else {
 		$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
 	}
