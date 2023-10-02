@@ -29,7 +29,9 @@ var otherInfor = {}
 try{
 	otherInfor = JSON.parse(currentOrder.otherInfor)
 }catch(e) {
-
+	if (currentOrder.otherInfor.isFreeShip != undefined) {
+		otherInfor = currentOrder.otherInfor;
+	}
 }
 
 $("#prepaid").html(currentOrder.prepaid);
