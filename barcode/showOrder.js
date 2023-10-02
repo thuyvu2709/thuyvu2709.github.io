@@ -38,9 +38,13 @@ var restPay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentO
 
 if (otherInfor.isFreeShip == false && (currentOrder.shippingType == "POST_COD" || currentOrder.shippingType == "POST_NO_COD" )) {
 	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip + " (+ Phí Ship)");	
-	$("#willpay").html(restPay + " (+ Phí Ship)")
 } else {
 	$("#totalPayIncludeShip").html(currentOrder.totalPayIncludeShip);
+}
+
+if (otherInfor.isFreeShip == false) {
+	$("#willpay").html(restPay + " (+ Phí Ship)")
+} else {
 	$("#willpay").html(restPay)
 }
 
@@ -51,7 +55,11 @@ $("#shippingStatus").html("Giao hàng:"+(currentOrder.shippingStatus == "SHIPPED
 // $("#paymentStatus").html("Thanh toán:"+(currentOrder.paymentStatus == "PAID" ? "Đã thanh toán" : "Chưa thanh toán"));
 
 if (currentOrder.paymentStatus == "PAID") {
-	$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
+	if (otherInfor.isFreeShip == false && (currentOrder.shippingType == "POST_COD" || currentOrder.shippingType == "POST_NO_COD" )) {
+		$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng, Khách sẽ thanh toán phí ship với bên vận chuyển)</i>");
+	} else {
+		$("#paymentStatus").html("<i class='textRed'>(Khách đã thanh toán đủ tiền hàng)</i>");
+	}
 	$(".prepaid").hide();
 	$("#willpay").html("0");
 }
@@ -88,7 +96,9 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 		$("#shippingCost").html(currentOrder.shippingCost)
 	}
 	$("#shippingType").html("Dịch vụ vận chuyển (không COD) - Khách chuyển khoản trước qua:");
-}  else {
+} else if (currentOrder.shippingType == "SHIP_BY_THIRD_PARTY") {
+	$("#shippingType").html("Dịch vụ bên thứ 3");
+} else {
 	$("#shippingCost").html("");
 	$("#shippingType").html("");
 }

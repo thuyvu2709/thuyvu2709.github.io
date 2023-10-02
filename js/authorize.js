@@ -287,15 +287,15 @@ function updateTitle(){
     loadReport(function(){
         var s = "Xách tay Thuỷ Vũ - Góc Hàng Âu";
         // var s = "1234567890123456789"
-        data = JSON.parse(localStorage.getItem("report"));
+        var dataReport = JSON.parse(localStorage.getItem("report"));
 
-        if (!data[1][1] || !data[3][1]) {
+        if (!dataReport[1][1] || !dataReport[3][1]) {
             return;
         }
 
-        var totalTurnover =  parseFloat(data[1][1]);
-        var totalPay =  parseFloat(data[3][1]);
-        var totalRefund = parseInt(data[6][1]);
+        var totalTurnover =  parseFloat(dataReport[1][1]);
+        var totalPay =  parseFloat(dataReport[3][1]);
+        var totalRefund = parseInt(dataReport[6][1]);
         // console.log("totalTurnover:"+totalTurnover);
         // console.log("totalPay:"+totalPay);
         // console.log("totalRefund:"+totalRefund);
