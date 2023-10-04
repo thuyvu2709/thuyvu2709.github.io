@@ -5,9 +5,10 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="description" content="">
       <meta name="author" content="">
+      <title>Xách tay Thuỷ Vũ</title>
+
       <meta name="google-signin-client_id" content="729860036739-i1ihr5qbim6llcplhe0rglska8ft2nu8.apps.googleusercontent.com">
 
-      <title>Xách tay Thuỷ Vũ</title>
       <!-- Custom fonts for this theme -->
       <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -21,20 +22,22 @@
          var pageName = "showordershipping";
          var pageRole = "shipper"
       </script>
-      
-  <link rel="icon" href="../img/avatarfacebook.png" type="image/png" sizes="16x16"/>
-  <link rel="apple-touch-icon" href="../img/avatar150.png">
-  <!-- <meta name="apple-mobile-web-app-capable" content="yes" /> -->
-
-
-
+      <script src="../js/html2canvas.min.js"></script>
+      <script src="../js/canvas2image.js"></script>
+      <style type="text/css">
+        .row {
+          margin-left : 0px !important
+          /*margin-right : 2px !important*/
+        }
+      </style>
    </head>
    <body id="page-top">
 
+      <div id="headerInclude"></div>
       <header class="minihead">
       </header>
-      <h1 class="text-center">
-        <a href="/shipper/index.html">
+      <h1 class="text-center" id="orderPrintHeader" style="display: none">
+        <a href="/index.html">
           Xách tay Thuỷ Vũ - Góc Hàng Âu
         </a>  
       </h1>
@@ -42,110 +45,128 @@
       <!-- Portfolio Section -->
       <section class="page-section portfolio" id="portfolio">
          <form class="needs-validation container" novalidate>
-            <div class="form-group row">
-               <label for="orderCode" class="col-sm-2 col-form-label">Mã đơn hàng</label>
-               <div class="col-sm-10">
+
+            <h5 class="text-center">
+              <a href="/manager" class="textMustard">
+                ThuyTit ở Đức - Order Ý-Pháp-Đức-Mỹ
+              </a>
+            </h5>
+<!--             <div class="row">
+              <h6 class="text-center">Ngày 10/03/2020</h6>
+            </div> -->
+            <!-- <div class="row"> -->
+              <p class="text-center">Mã đơn hàng: 
+                <span id="orderCode">DONHANG_45</span></br>
+                Ngày đặt hàng :<span id="orderDate">10/03</span>
+              </p>
+            <!-- </div> -->
+<!--             <div class="row">
+               <label for="orderCode" class="col-sm-2 col-form-label simply">Mã đơn hàng</label>
+               <div class="col-sm">
                   <label id="orderCode" class="form-control"></label>
                </div>
+            </div> -->
+            <div class="row">
+               <!-- <label for="customerName" class="col-sm col-form-label simply"> -->
+                <span>Tên khách hàng : </span>
+                <span id="customerName" class="textMustard"></span>
+               <!-- </label> -->
             </div>
-            <div class="form-group row">
-               <label for="customerName" class="col-sm-2 col-form-label">Tên khách hàng</label>
-               <div class="col-sm-10">
-                  <label id="customerName" class="form-control"></label>
-               </div>
+            <div class="row">
+              <span>Địa chỉ : </span>
+              <span id="customerAddress" class="textMustard"></span>
             </div>
-            <div class="form-group row">
-               <label for="customerAddress" class="col-sm-2 col-form-label">Địa chỉ khách hàng</label>
-               <div class="col-sm-10">
-                  <label id="customerAddress" class="form-control"></label>
-               </div>
-            </div>
-            <div class="form-group row">
-               <label for="customerPhone" class="col-sm-2 col-form-label">Số điện thoại khách hàng</label>
-               <div class="col-sm-10">
-                  <label id="customerPhone" class="form-control"></label>
-               </div>
+            <div class="row">
+              <span>Số điện thoại : </span>
+              <span id="customerPhone" class="textMustard"></span>
             </div>
 
 <!-- table is here -->
-            <table style="width: 100%;border-collapse: collapse;">
-              <tr>
-                <th></th>
-                <th>STT</th>
-                <th>Tên hàng</th>
-                <th>Số lượng</th>
-                <th>Giá bán</th>
-              </tr>
-              <tbody id = "lsTable">
-                
-              </tbody>
-            </table>
+<!--             <div class="row simply">
+              <span class="btn btnNormal" id="showImgDivThumbnail">>>Hiển thị ảnh sản phẩm<<<</span>
+            </div> -->
+              <table id="tableWrap">
+                <tr>
+                  <th>STT</th>
+                  <th>Tên hàng</th>
+                  <th>SL</th>
+                  <th>Đơn giá</th>
+                  <th>Thành tiền</th>
+                  <!-- <th>Có hàng ?</th> -->
+                </tr>
+                <tbody id = "lsTable">
+                  
+                </tbody>
+              </table>
 <!-- end table -->
-            <br/>
-            <div class="form-group row">
-              <h5>Tổng tiền hàng : </h5>
-              <h5 id="totalPay">0</h5>
-            </div>
-            <br/>
-            <div class="form-group row shippingCost">
-               <label for="shippingCost" class="col-sm-2 col-form-label">Phí giao hàng</label>
-               <div class="col-sm-10">
-                  <label id="shippingCost" class="form-control"></label>
-               </div>
-            </div>
+            <!-- <div class="simply"> -->
+              <!-- <br/> -->
+            <!-- </div> -->
 
-            <div class="form-group row">
-               <label for="customerName" class="col-sm-2 col-form-label">Chi phí khác (Shop trả)</label>
+<!--             <div class="row simply">
+               <label for="customerName" class="col-sm-2 col-form-label">Chi phí khác</label>
                <div class="col-sm-10">
                   <label id="otherCost" class="form-control"></label>
                </div>
-            </div>
+            </div> -->
 
-            <div class="form-group row shippingCost">
-               <label for="node" class="col-sm-2 col-form-label">Ghi chú</label>
+            <div class="row simply">
+               <span>Ghi chú</span>
                <div class="col-sm-10">
-                  <textarea id="orderNode" class="field-textarea form-control" readonly/></textarea>
+                  <textarea id="orderNode" class="field-textarea form-control" readonly></textarea>
                </div>
             </div>
 
-            <div class="form-group row">
-              <h5>Phương thức giao hàng : </h5>
-              <h5 id="shippingType" class="textBlue"></h5>
+            <div class="row totalPay">
+              <span>Tổng tiền hàng : </span>
+              <span id="totalPay" class="textMustard">0</span>
             </div>
 
+            <div class="row shippingCost">
+               <span>Phí giao hàng : </span>
+               <span id="shippingCost" class="textMustard"></span>
+            </div>
+
+            <div class="row totalPayIncludeShip">
+              <span>Tổng tiền thanh toán : </span>
+              <span id="totalPayIncludeShip" style="background: yellow;">0</span>
+            </div>
             
-            <div class="form-group row">
-              <h5>Tổng tiền thanh toán : </h5>
-              <h5 id="totalPayIncludeShip">0</h5>
-            </div>
-
             <div class="row prepaid">
-              <h5>Khách đã cọc : </h5>
-              <h5 id="prepaid">0</h5>
+              <span>Khách đã cọc : </span>
+              <span id="prepaid" class="textMustard">0</span>
             </div>
 
             <div class="row willpay">
-              <h5 id="titleWillpay">Khách sẽ thanh toán : </h5>
-              <h5 id="willpay">0</h5>
+              <span id="titleWillpay">Khách sẽ thanh toán : </span>
+              <span id="willpay" style="background: yellow;">0</span>
             </div>
-
+            <div class="row" id="paymentStatus">
+            </div>
             <div class="row">
-              <h5>Chú ý: </h5>
-              <h5 id="otherInfor" class="textBlue"></h5>
+              <span>Cách ship: </span>
+              <span id="shippingType" class="textBlue"></span>
             </div>
-
-            <h3 class="text-center">
+            <!-- <br/> -->
+            <p class="text-center textMustard copyBank">
+              Thông tin chuyển khoản: <br/>
+              Le Van Thanh - 19034601990019 <br/> 
+              Techcombank chi nhánh Phúc Yên, Vĩnh Phúc
+            </p>
+            <h5 class="text-center">
               <span class="fa fa-star checked" id="zoomin"></span>
-              Cảm ơn quý khách đã mua hàng của chúng tôi
+              <span id="showController" class="copyThank">Cảm ơn quý khách</span>
               <span class="fa fa-star checked" id="zoomout"></span>
-            </h3>
+            </h5>
+            <h5 class="text-center">
+              <a href="../barcode/neworder.html" class="textMustard">
+                ~<i class="fas fa-spa"></i>~
+              </a>
+            </h5>
          </form>
 
          
       </section>
-
-      <div id="footerInclude"></div>
-
 
       <!-- Modal -->
       <div class="modal fade" id="myModal" role="dialog">
@@ -166,6 +187,7 @@
         </div>
       </div>
 
+
       <!-- Bootstrap core JavaScript -->
       <script src="../vendor/jquery/jquery.min.js"></script>
       <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -178,6 +200,7 @@
       <script type="text/javascript" src="../js/common.js"></script>
 
       <script type="text/javascript" src="../js/showOrderShipping.js"></script>
+
 
    </body>
 </html>
