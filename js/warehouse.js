@@ -335,7 +335,7 @@ function deleteWH(){
     
     console.log("delete Warehouse");
     $("#loadingSpin").hide();
-
+    $(".cardElement_"+importIndex).remove();
   })
 }
 
