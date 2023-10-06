@@ -416,6 +416,7 @@ function loadOrderListHtml() {
             // '<div class="btn orderelementdetail order_'+e+' " style="border: 1px solid black;margin-left:10px;">Báo cáo</div>'+
             // '<hr/>'+
             orderDetailBrief+
+            '<div class="btn btnNormal5px orderelementsimplified order_'+e+'" >Tối giản</div>'+
             '<div class="btn btnNormal5px orderelement order_'+e+'" >Chi tiết</div>'+
             '<div class="btn btnNormal5px deleteelement order_'+e+'" >Xoá đơn hàng</div>'+
             '<div class="btn btnNormal5px editorder order_'+e+'" >Sửa đơn hàng</div>'+
@@ -650,6 +651,19 @@ function loadOrderListHtml() {
     })
 
     window.location = "../barcode/showorder.html";
+  })
+
+  $(".orderelementsimplified").click(function(){
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    getOrder(orderIndex);
+
+    saveHistory({
+      searchText : $("#orderSearchInput").val(),
+      status : $("#orderFilter").val(),
+      goToClass : $(this).attr("class")
+    })
+
+    window.location = "../barcode/showorder.html?simplify=true";
   })
 
 
