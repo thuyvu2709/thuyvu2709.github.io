@@ -306,13 +306,29 @@ function deleteWH(){
   var importCode = warehouseData[importIndex][0];
   console.log(importCode);
 
+  if (!(warehouseData[importIndex][4] == "0" || warehouseData[importIndex][4] == "")) {
+    
+    var modalBody = '<div>Cảnh báo</div><br/>'+
+                '<div class="btn btn-default btnNormal">'+
+                '  Đợt hàng này vẫn còn hàng, xóa hàng trong đợt hàng này đi nhé'+
+                '</div>'
+                ;
+    $("#myModal .modal-body").html(modalBody);
+  
+    $(".banking").click(copyData);
+  
+    $('#myModal').modal('toggle');
+
+    return;
+  }
+
   $("#loadingSpin").show();
 
   var actualIndexInSheet = importIndex +1;
-  var range = "Warehouse!A"+actualIndexInSheet+":J"+actualIndexInSheet;
+  var range = "Warehouse!A"+actualIndexInSheet+":K"+actualIndexInSheet;
 
   var dataEditWarehouse = [
-    ["","","","","","","","","",""]
+    ["","","","","","","","","","",""]
   ]
 
   editWarehouse(dataEditWarehouse, range, function(){
