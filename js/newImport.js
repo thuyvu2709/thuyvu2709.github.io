@@ -34,10 +34,10 @@ function addNewImport(){
         $("#importShippingFee").val(),
         "=sumif(Product!C:C;INDIRECT(ADDRESS(ROW();1));Product!R:R)",
         "'"+$("#receiverPhone").val(),
-        $("#receiverAddress").val(),
-        $("#receiverName").val(),
-        $("#bankingAccountNumber").val(),
-        $("#bankingName").val(),
+        "'"+$("#receiverAddress").val(),
+        "'"+$("#receiverName").val(),
+        "'"+$("#bankingAccountNumber").val(),
+        "'"+$("#bankingName").val(),
         "=sumif(Product!C:C;INDIRECT(ADDRESS(ROW();1));Product!P:P)"
       ]
     ]
@@ -48,7 +48,7 @@ function addNewImport(){
         $("#loadingSpin").hide();
         // $("#modelContent").html("Đã lưu thông tin");
         // $('#myModal').modal('toggle');
-        window.location = "warehouse.html";
+        // window.location = "warehouse.html";
     })
 }
 
