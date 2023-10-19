@@ -167,7 +167,7 @@ function parseOrderShipping(){
     if (orderShipStatus[lsOrderShipping[e][0]]) {
       $(".modal-body").empty();
       $(".modal-body").html("<p id='modelContent'>Cảnh báo! Có 2 yêu cầu giao hàng cho đơn "+lsOrderShipping[e][0]+"</p>");
-      $('#myModal').modal('toggle');
+      $('#myModal').modal('show');
     }
 
     orderShipStatus[lsOrderShipping[e][0]] = {
@@ -214,7 +214,7 @@ function parseOrderDetail(){
     if (orderListDetail[e][8] == "#N/A" || orderListDetail[e][9] == "#N/A") {
       $(".modal-body").empty();
       $(".modal-body").html("<p id='modelContent'>Cảnh báo! Đơn hàng "+orderListDetail[e][0]+" mặt hàng "+ orderListDetail[e][4] +" mã "+orderListDetail[e][3] +" không tồn tại trong bảng sản phẩm, hãy thêm vào hoặc đổi mã</p>");
-      $('#myModal').modal('toggle');
+      $('#myModal').modal('show');
     }
   }
 }
@@ -550,7 +550,7 @@ function loadOrderListHtml() {
     $("#modalYes").click(function(){
       deleteTrigger();
     })
-    $('#myModal').modal('toggle');
+    $('#myModal').modal('show');
   })
 
   $(".refundBtn").click(function(){
@@ -578,7 +578,7 @@ function loadOrderListHtml() {
       });
 
     })
-    $('#myModal').modal('toggle');
+    $('#myModal').modal('show');
   })
 
   function getOrder(orderIndex) {
@@ -1057,7 +1057,7 @@ function loadOrderListHtml() {
 
     $("#modalYes").click(function(){
     })
-    $('#myModal').modal('toggle');
+    $('#myModal').modal('show');
   })
 
 };
@@ -1074,7 +1074,7 @@ function checkSystemConsistent(){
           // console.log(data[e]);
           $(".modal-body").empty();
           $(".modal-body").html("<p id='modelContent'>"+data[e][0]+" : "+data[e][11]+" đã thanh toán?</p>");
-          $('#myModal').modal('toggle');
+          $('#myModal').modal('show');
           return;
         } 
       }
@@ -1092,7 +1092,7 @@ $(".click-to-notify").click(function(){
 
   $(".modal-body").html(content);
 
-  $('#myModal').modal('toggle');
+  $('#myModal').modal('show');
 })
 
 // $(".click-to-select").click(function(){
