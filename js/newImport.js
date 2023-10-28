@@ -48,7 +48,7 @@ function addNewImport(){
         $("#loadingSpin").hide();
         // $("#modelContent").html("Đã lưu thông tin");
         // $('#myModal').modal('toggle');
-        // window.location = "warehouse.html";
+        window.location = "../manager/warehouse.html";
     })
 }
 
