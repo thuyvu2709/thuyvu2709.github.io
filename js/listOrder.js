@@ -984,9 +984,9 @@ function loadOrderListHtml() {
     }
 
     var fixPrepaid = function (callbackPrepaid) {
-      var totalPrepaid = keptOrder.prepaid;
+      var totalPrepaid = parseInt(keptOrder.prepaid);
       for (var e in lsRemoveOrderCode) {
-        totalPrepaid = totalPrepaid + lsRemoveOrderCode[e].prepaid;
+        totalPrepaid = totalPrepaid + parseInt(lsRemoveOrderCode[e].prepaid);
       }
       
       var dataEdit = [[totalPrepaid]];
