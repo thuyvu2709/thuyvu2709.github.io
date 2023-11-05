@@ -500,6 +500,8 @@ function showOrderPush(){
 
 showOrderPush();
 
+
+
 function prepareDataOrder(){
 	var pickIndex = $("#pickList").val();
 	// console.log(pickIndex);
@@ -513,8 +515,11 @@ function prepareDataOrder(){
 	dataOrder.order.province = $("#province").html();
 	dataOrder.order.district = $("#district").html();
 	dataOrder.order.ward = $("#ward").html();
-	dataOrder.order.address = $("#address").html();
-	dataOrder.order.hamlet = "Khác";
+	
+	var hamletPossible = splitHamlet($("#address").html());
+	dataOrder.order.address = hamletPossible.address;
+	dataOrder.order.hamlet = hamletPossible.hamlet;
+
 	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.order.tel = currentOrder.customerPhone;
 	dataOrder.order.name = $("#customerName").val();
@@ -558,6 +563,26 @@ $("#saveRequest").click(function(){
 	$("#modelContent").html("Đã lưu yêu cầu");
 	$('#myModal').modal('toggle');
 })
+
+function splitHamlet(restOfAddress) {
+	
+	var restOfAddress = "cửa hàng xe máy Nguyễn nam; ngã ba cửa rừng; thôn đoàn kết"
+	var st = restOfAddress.split(";")
+	if (st[st.length - 1].toLowerCase().includes("thôn")) {
+    	var hamlet = st[st.length - 1].trim();
+        st.splice(st.length - 1 , 1);
+        var address = st.toString()
+		return {
+			address,
+			hamlet
+		}
+	} else {
+		return {
+			address : restOfAddress,
+			hamlet : "Khác"
+		}
+	}
+}
 
 $("#ghtkPost").click(function(){
 	// var dataOrder = {
@@ -605,8 +630,9 @@ $("#ghtkPost").click(function(){
 	dataOrder.order.province = $("#province").html();
 	dataOrder.order.district = $("#district").html();
 	dataOrder.order.ward = $("#ward").html();
-	dataOrder.order.address = $("#address").html();
-	dataOrder.order.hamlet = "Khác";
+	var hamletPossible = splitHamlet($("#address").html());
+	dataOrder.order.address = hamletPossible.address;
+	dataOrder.order.hamlet = hamletPossible.hamlet;
 	dataOrder.order.id = "ThuyTitVu-"+currentOrder.orderCode+"-"+(new Date().getTime());
 	dataOrder.order.tel = currentOrder.customerPhone;
 	dataOrder.order.name = $("#customerName").val();
