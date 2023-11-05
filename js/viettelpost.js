@@ -452,7 +452,7 @@ function autocomplete(inp, arr, textAttr, idAttr, callback) {
           b.innerHTML += "<strong>" + arr[i][textAttr].substr(subIndex, val.length) + "</strong>";
           b.innerHTML += arr[i][textAttr].substr(subIndex+val.length);
           /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr[i][textAttr] + "' index='"+arr[i][idAttr]+"'>";
+          b.innerHTML += '<input type="hidden" value="' + arr[i][textAttr] + '" index="'+arr[i][idAttr]+'">';
           /*execute a function when someone clicks on the item value (DIV element):*/
           b.addEventListener("click", function(e) {
               /*insert the value for the autocomplete text field:*/
@@ -561,6 +561,12 @@ function triggerAutocompleteViettelpost(orginalAddress, callback){
 
 	$(".modal-body").empty();
 	$(".modal-body").html(content);
+
+	$("#myProvince").val(aix.province);
+	$("#myDistrict").val(aix.district);
+	$("#myWard").val(aix.ward)
+	$("#myDetail").val(aix.address);
+
 	$('#myModal').modal('toggle');
 
 	$(".fixAddress").click(function(){
