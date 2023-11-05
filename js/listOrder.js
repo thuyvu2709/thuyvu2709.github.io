@@ -924,6 +924,7 @@ function loadOrderListHtml() {
     var keepOrderCode = "DONHANG_"+$(".mergeByOrder").val();
     var sheetOrderDetail = "OrderDetail";
     var lsRemoveOrderCode = [];
+    var keptOrder = {};
     // console.log(lsChecked.length);
     // for (var e1=0;e1<lsChecked.length;e1++){
       // console.log($(lsChecked[e1]).attr("class").split(" ").pop().split("_").pop()+" "+e1+" "+$(lsChecked[e1]).is(":checked"))
@@ -946,7 +947,8 @@ function loadOrderListHtml() {
           // console.log(currentOrder);
           lsRemoveOrderCode.push({
             orderCode : currentOrder.orderCode,
-            orderIndex : currentOrder.orderIndex
+            orderIndex : currentOrder.orderIndex,
+            prepaid : currentOrder.prepaid
           });
 
           var prodListOrder = currentOrder.prodListOrder;
@@ -969,6 +971,11 @@ function loadOrderListHtml() {
             checkOneByOne(e1+1, callbackE1);
           });
         } else {
+          keptOrder = {
+            orderCode : currentOrder.orderCode,
+            orderIndex : currentOrder.orderIndex,
+            prepaid : currentOrder.prepaid
+          }
           checkOneByOne(e1+1, callbackE1);
         }
       } else {
@@ -976,6 +983,22 @@ function loadOrderListHtml() {
       }
     }
 
+    var fixPrepaid = function (callbackPrepaid) {
+      var totalPrepaid = keptOrder.prepaid;
+      for (var e in lsRemoveOrderCode) {
+        totalPrepaid = totalPrepaid + lsRemoveOrderCode[e].prepaid;
+      }
+      
+      var dataEdit = [[totalPrepaid]];
+      var orderRealIndex = parseInt(keptOrder.orderIndex)+1;
+      var rangeEdit = sheetOrder+'!N'+orderRealIndex+':N'+orderRealIndex;
+      // console.log("Cut e2:"+e2+" "+dataEditOD+ " "+rangeEdit);
+      $("#loading-text").html("Sửa đặt cọc:"+totalPrepaid);
+
+      editOrder(dataEdit, rangeEdit, function(){
+        callbackPrepaid();
+      })
+    }
 
     checkOneByOne(0, function(){
       // console.log("Remove orders:")
@@ -994,7 +1017,9 @@ function loadOrderListHtml() {
 
       removeOrderByMerge(0, function(){
         // $("#loadingSpin").hide();
-        location.reload();
+        fixPrepaid(function() {
+          location.reload();
+        })
       })
     });
   }
