@@ -23,7 +23,7 @@ var dataset = [];
 
 var numOfColumn = 14;   
 
-var EuroVndRate = 26;
+var EuroVndRate = 27;
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
