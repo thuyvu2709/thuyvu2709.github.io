@@ -710,7 +710,7 @@ $("#ghtkPost").click(function(){
 
 		currentOrder.otherInfor.order = data;
 
-		currentOrder.otherInfor.order.toAddress = dataOrder.order.name + ",sđt:"+dataOrder.order.tel+", Địa chỉ:"+dataOrder.order.address+" Thôn (nếu có):"+dataOrder.order.hamlet + ", Phường/Xã:"+dataOrder.order.ward+", Quận/Huyện:"+dataOrder.order.district+", Tỉnh/TP:"+dataOrder.order.province;
+		currentOrder.otherInfor.order.toAddress = dataOrder.order.name + "; sđt:"+dataOrder.order.tel+"; Địa chỉ:"+dataOrder.order.address+"; Thôn (nếu có):"+dataOrder.order.hamlet + "; Phường/Xã:"+dataOrder.order.ward+"; Quận/Huyện:"+dataOrder.order.district+"; Tỉnh/TP:"+dataOrder.order.province;
 
 		showOrderPush();
 
