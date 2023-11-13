@@ -494,7 +494,19 @@ function saveAddressAsShipper(){
 
 function showOrderPush(){
 	if (currentOrder.otherInfor.order) {
-		$("#showOrderPush").html("<h4>Thông tin vận đơn:</h4>"+jsonToHtml(currentOrder.otherInfor.order)+"<hr/>");
+		var ttvd = "<h4>Thông tin vận đơn:</h4>"+
+		+"<span>Message:"+currentOrder.otherInfor.order["message"]+"</span><br/>"+
+		+"<span>Nhãn:"+currentOrder.otherInfor.order["order"]["label"]+" (nhãn đã tự copy)</span><br/>"+
+		+"<span>Phí ship:"+currentOrder.otherInfor.order["order"]["fee"]+"</span><br/>"+
+		+"<span>Phí bảo hiểm:"+currentOrder.otherInfor.order["order"]["insurance_fee"]+"</span><br/>"+
+		+"<span>Dự kiến lấy hàng:"+currentOrder.otherInfor.order["order"]["estimated_pick_time"]+"</span><br/>"+
+		+"<span>Dự kiến giao hàng:"+currentOrder.otherInfor.order["order"]["estimated_deliver_time"]+"</span><br/>"+
+		+"<span>Địa chỉ giao:"+currentOrder.otherInfor.order.toAddress+"</span><br/>"+
+		+"<hr/>";
+
+
+
+		$("#showOrderPush").html(ttvd);
 	}
 }
 
@@ -696,6 +708,8 @@ $("#ghtkPost").click(function(){
 		$("#loadingSpin").hide();
 
 		currentOrder.otherInfor.order = data;
+
+		currentOrder.otherInfor.order.toAddress = dataOrder.order.name + ",sđt:"+dataOrder.order.tel+", Địa chỉ:"+dataOrder.order.address+" Thôn (nếu có):"+dataOrder.order.hamlet + ", Phường/Xã:"+dataOrder.order.ward+", Quận/Huyện:"+dataOrder.order.district+", Tỉnh/TP:"+dataOrder.order.province;
 
 		showOrderPush();
 
