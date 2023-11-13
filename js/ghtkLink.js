@@ -566,9 +566,9 @@ $("#saveRequest").click(function(){
 
 function splitHamlet(restOfAddress) {
 	
-	var restOfAddress = "cửa hàng xe máy Nguyễn nam; ngã ba cửa rừng; thôn đoàn kết"
+	// var restOfAddress = "cửa hàng xe máy Nguyễn nam; ngã ba cửa rừng; thôn đoàn kết"
 	var st = restOfAddress.split(";")
-	if (st[st.length - 1].toLowerCase().includes("thôn")) {
+	if (st.length > 0 && st[st.length - 1].toLowerCase().includes("thôn")) {
     	var hamlet = st[st.length - 1].trim();
         st.splice(st.length - 1 , 1);
         var address = st.toString()
