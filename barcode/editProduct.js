@@ -39,6 +39,7 @@ $("#imgThumbnail").attr("src",currentProduct.prodImageLink);
 
 var choosenProductCatalogIndex = -2;
 
+var chooseImportScheduleCode =  -1;
 
 $("#importSchedule").html("<option value='"+currentProduct.importCode+"'>"+currentProduct.importCode+"</option>")
 
@@ -49,17 +50,45 @@ var triggerAfterLoad = function(){
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
-		$("#importSchedule").empty();
+		// $("#importSchedule").empty();
+		// for (var e in importSLData) {
+		// 	if (e ==0) {
+		// 		continue;
+		// 	}
+		// 	if (importSLData[e][0] == currentProduct.importCode) {
+		// 		$("#importSchedule").append("<option value='"+importSLData[e][0]+"' selected>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+		// 	} else {
+		// 		$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+		// 	}
+		// }
+
+		lsAutoImportSchedule = [];
 		for (var e in importSLData) {
 			if (e ==0) {
 				continue;
 			}
 			if (importSLData[e][0] == currentProduct.importCode) {
-				$("#importSchedule").append("<option value='"+importSLData[e][0]+"' selected>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
-			} else {
-				$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
+				$("#importSchedule").val(importSLData[e][0]+" - "+importSLData[e][1]);
+				chooseImportScheduleCode = importSLData[e][0];
 			}
+			lsAutoImportSchedule.push({
+				label : importSLData[e][0]+" - "+importSLData[e][1],
+				value : importSLData[e][0]+" - "+importSLData[e][1],
+				data : importSLData[e],
+				importCode : importSLData[e][0]
+			});
 		}
+
+		$("#importSchedule").autocomplete({
+			source: function(request, response) {
+		        var results = $.ui.autocomplete.filter(lsAutoImportSchedule, request.term);
+
+		        response(results.slice(0, 20));
+		    },
+			select: function( event, ui ) {
+				chooseImportScheduleCode = ui.item.importCode;
+			}
+		});		
 	})
 
 	loadProductCatalogList(function(){
@@ -151,8 +180,9 @@ function editProductFn(){
 	var prodImageLink = $("#prodImageLink").val();
 	var productIndex = currentProduct.productIndex;
 
-	var importCode = document.getElementById("importSchedule").value;
+	// var importCode = document.getElementById("importSchedule").value;
 	// console.log("importCode:"+importCode);
+	var importCode = chooseImportScheduleCode;
 
 	productWeight = productWeight ? productWeight : 0;
 	shipInternationalFee = shipInternationalFee ? shipInternationalFee : 0;
@@ -222,6 +252,8 @@ function editProductFn(){
                 ]
             ];
     
+	// console.log(dataEditP);
+	
 	$("#loadingSpin").show();
 
 	var dataAppendCatalog = [[
