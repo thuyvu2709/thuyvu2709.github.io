@@ -67,6 +67,11 @@ var triggerAfterLoad = function(){
 			if (e ==0) {
 				continue;
 			}
+
+			if (!importSLData[e][0] || !importSLData[e][1]) {
+				continue;
+			}
+
 			if (importSLData[e][0] == currentProduct.importCode) {
 				$("#importSchedule").val(importSLData[e][0]+" - "+importSLData[e][1]);
 				chooseImportScheduleCode = importSLData[e][0];
@@ -83,7 +88,7 @@ var triggerAfterLoad = function(){
 			source: function(request, response) {
 		        var results = $.ui.autocomplete.filter(lsAutoImportSchedule, request.term);
 
-		        response(results.slice(0, 20));
+		        response(results.slice(0, 1000));
 		    },
 			select: function( event, ui ) {
 				chooseImportScheduleCode = ui.item.importCode;
