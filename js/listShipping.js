@@ -91,8 +91,11 @@ var triggerAfterLoad = function(){
       getGhtkAccess(function(rs){
         if (rs) {
           ghtkToken = rs["ghtkToken"];
+          ghtkAuthorization = rs["ghtkAuthorization"];
         }
         localStorage.setItem("ghtkToken",ghtkToken);
+        localStorage.setItem("ghtkAuthorization",ghtkAuthorization);
+
       })
       // getGhnAccess(function(rs){
       //   if (rs) {

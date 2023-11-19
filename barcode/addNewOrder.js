@@ -30,15 +30,39 @@ if (makeCopy) {
 	}
 }
 
-// var availableTutorials  =  [
-//    "ActionScript",
-//    "Bootstrap",
-//    "C",
-//    "C++",
-// ];
-// $( "#customerName" ).autocomplete({
-//    source: availableTutorials
-// });
+$("#customerPhone").change(function(){
+	console.log("phone:", $("#customerPhone").val())
+	var ghtkAuthorization = localStorage.getItem("ghtkAuthorization");
+	if (ghtkAuthorization) {
+		$("#customerPhoneAdditionLabel").css("color", "blue");
+		$("#customerPhoneAdditionLabel").html("(đang kiểm tra....)")
+		var settings = {
+			"url": "https://web.giaohangtietkiem.vn/api/v1/customer/tel-report?customer_tels[]="+$("#customerPhone").val(),
+			"method": "GET",
+			"timeout": 0,
+			"headers": {
+			"Authorization": ghtkAuthorization 
+			},
+		};
+		
+		$.ajax(settings).done(function (response) {
+			if (response.success == true) {
+				if (!response.data[0]) {
+					$("#customerPhoneAdditionLabel").html("(không tìm được thông tin về sđt này)")
+					$("#customerPhoneAdditionLabel").css("color", "red");
+				}else if (response.data[0]["isBlue"] == true) {
+					$("#customerPhoneAdditionLabel").html("(không thấy có vấn đề gì với sđt)")
+				} else {
+					$("#customerPhoneAdditionLabel").html("(có vấn đề với sđt, gọi thanh đi!)")
+					$("#customerPhoneAdditionLabel").css("color", "red");
+				}
+			} else {
+				$("#customerPhoneAdditionLabel").html("(....kiểm tra thất bại! gọi thanh đi)")
+				$("#customerPhoneAdditionLabel").css("color", "red");
+			}
+		});
+	}
+})
 
 var triggerAfterLoad = function(){
 	
@@ -59,6 +83,15 @@ var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
+	})
+
+	getGhtkAccess(function(rs){
+        if (rs) {
+          ghtkToken = rs["ghtkToken"];
+          ghtkAuthorization = rs["ghtkAuthorization"];
+		  localStorage.setItem("ghtkToken",ghtkToken);
+		  localStorage.setItem("ghtkAuthorization",ghtkAuthorization);
+        }
 	})
 
 	loadCustomerList(function(){
@@ -88,6 +121,7 @@ var triggerAfterLoad = function(){
 				// $("#customerName").val(ui.item.);
 				$("#customerAddress").val(ui.item.data[2]);
 				$("#customerPhone").val(ui.item.data[0]);
+				$("#customerPhone").trigger("change");
 				choosenCustomerIndex = ui.item.cusIndex;
 				// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
 			}

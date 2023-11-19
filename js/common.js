@@ -540,6 +540,7 @@ function getGhtkAccess(callback) {
       dataset = response.result.values;
       callback({
         "ghtkToken": dataset[0][1],
+        "ghtkAuthorization": dataset[1][1]
       });
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
