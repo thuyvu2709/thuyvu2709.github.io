@@ -21,7 +21,21 @@ function loadWarehouseHtml() {
   warehouseData = data;
   $("#listSchedule").empty();
   // console.log(data);
+  var indexInTable = {};
   for(var e in data) {
+    indexInTable[data[e][0]] = e;
+  }
+
+  let sortableData = data.slice(0);
+  sortableData.sort(function(a,b) {
+    return parseInt(a[0]) - parseInt(b[0]);
+  });
+  // console.log(sortableData);
+
+
+  for(var es in sortableData) {
+    var e = indexInTable[sortableData[es][0]];
+    
     if (e == 0) {
       continue;
     }
