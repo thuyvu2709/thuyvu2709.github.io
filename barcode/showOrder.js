@@ -272,7 +272,7 @@ $("#simplify").click(function(){
 	}
 
 	$(".click-to-back").hide();
-	$(".controlOrder").hide();
+	// $(".controlOrder").hide();
 	$("#headerInclude").hide();
 	$("#footerInclude").hide();
 
