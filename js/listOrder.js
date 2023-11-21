@@ -237,7 +237,29 @@ function loadOrderListHtml() {
   // console.log(data);
   var status = $("#orderFilter").val();
 
+  var indexInTable = {};
   for(var e in data) {
+    indexInTable[data[e][0]] = e;
+  }
+
+  let sortableData = data.slice(0);
+  
+  sortableData.sort(function(a,b) {    
+    if (a[0] && b[0]) {
+      if ((a[0]).split("_").length > 0 && (b[0]).split("_").length > 0) {
+        return parseInt((a[0]).split("_")[1]) - parseInt((b[0]).split("_")[1]);
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  });
+
+
+  for(var es in sortableData) {
+
+    var e = indexInTable[sortableData[es][0]];
     if (e == 0) {
       continue;
     }
