@@ -175,7 +175,8 @@ function parseOrderShipping(){
       stype : lsOrderShipping[e][8],
       paidStatus : lsOrderShipping[e][9],
       completeTime : lsOrderShipping[e][6],
-      sindex : (parseInt(e)+1)
+      sindex : (parseInt(e)+1),
+      orderDetail : JSON.parse(lsOrderShipping[e][3])
     }
 
     /*
@@ -338,10 +339,13 @@ function loadOrderListHtml() {
     var shippingType = data[e][11];
     var iconShip = "";
 
+    var btnShopReceiveMoney = "";
     if (orderShipStatus[data[e][0]]) {
       if(orderShipStatus[data[e][0]].status == "SHIPPER_RECEIVED_MONEY") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Shipper received money)</i>';
         optionShip = '<option value="COMPLETED" selected>Shop đã nhận tiền</option><option value="Requested">Chưa giao hàng</option>';
+        btnShopReceiveMoney = '<div class="btn btn-default btnNormal5px shopReceiveMoney order_'+e+'" >SHOP đã nhận tiền ('+orderShipStatus[data[e][0]].orderDetail.willpay+')</div>';
+
       } else if(orderShipStatus[data[e][0]].status == "SENT_POST") {
         iconShip = ' | <i class="fas fa-motorcycle" style="color:red">'+orderShipStatus[data[e][0]].stype+' (Sent Post)</i>';
         optionShip = '<option value="COMPLETED" selected>Đã hoàn thành</option><option value="Requested">Chưa giao hàng</option>';
@@ -447,6 +451,7 @@ function loadOrderListHtml() {
             '<div class="btn btnNormal5px splitorder order_'+e+'" >Tách đơn hàng</div>'+
             '<div class="btn btnNormal5px makecopy order_'+e+'" >Tạo mới y hệt</div>'+
             '<div class="btn btnNormal5px refundBtn order_'+e+'" >Hoàn tiền</div>'+
+            btnShopReceiveMoney+
           '</div>'+
         '</div>'+
       '</div>'
@@ -896,6 +901,40 @@ function loadOrderListHtml() {
       //   $("#loadingSpin").hide();
       // });
       //end updating
+
+      $("#loadingSpin").hide();
+
+    },function(){
+      console.log("Something wrong");
+    })
+
+  })
+
+  $(".shopReceiveMoney").click(function(){
+
+    console.log("shopReceiveMoney:"+$(this).attr("class").split(" ").pop().split("_").pop())
+    console.log(document.getElementsByClassName($(this).attr("class"))[0].value);
+    
+    var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+    var shipIndex = orderShipStatus[data[orderIndex][0]].sindex;
+
+    // var today = new Date();
+    // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // var dateTime = date+' '+time;
+
+    var dateTime = getCurrentDateTime().dateTime;//date+' '+time;
+
+    // var sheetrange = 'Task!D'+shipIndex+':E'+shipIndex;
+    var sheetrange = 'Shipping!E'+shipIndex+':G'+shipIndex;
+
+    var dataUpdateTask = [
+      ["COMPLETED",orderShipStatus[data[orderIndex][0]].otherCost, dateTime]
+    ];
+
+    $("#loadingSpin").show();
+
+    updateShipping(dataUpdateTask, sheetrange, function(){
 
       $("#loadingSpin").hide();
 
