@@ -38,6 +38,11 @@
     table {
       width: 100%
     }
+
+    .viewReport > table , th, td {
+      border: 1px solid #c57e0f;
+      border-collapse: collapse;
+    }
     .prodShippingImage {
       width: 100%
     }
@@ -126,10 +131,22 @@
     </a>
   </div>
 
+  <div class="click-to-view position-fixed ">
+    <a class="d-block text-white rounded">
+      <i class="fa fa-eye"></i>
+    </a>
+  </div>
+
+  <div class="click-to-select-all position-fixed ">
+    <a class="d-block text-white rounded">
+      <i class="fa fa-check-double"></i>
+    </a>
+  </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog modal-lg">
          <div class="modal-content">
             <!--           <div class="modal-header">
                <button type="button" class="close" data-dismiss="modal">&times;</button>

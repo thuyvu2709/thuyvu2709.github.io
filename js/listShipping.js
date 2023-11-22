@@ -19,6 +19,9 @@ var userRole = JSON.parse(localStorage.getItem("userRole"));
 $(".orderFilter").val("Requested");
 $(".maintitle").html("Quản lý đơn hàng - "+localStorage.getItem("datasetName"));
 
+$(".click-to-select-all").hide();
+$(".click-to-view").hide();
+
 //Load history
 
 //saveHistory({
@@ -1709,12 +1712,121 @@ $(".click-to-select").click(function(){
   if($(".checkbox").is(':visible') ) {
     $(".checkbox").hide();
     $("#controllMany").hide();
+    $(".click-to-select-all").hide();
+    $(".click-to-view").hide();
   } else {
     $(".checkbox").show();
     $("#controllMany").show();
+    $(".click-to-select-all").show();
+    $(".click-to-view").show();
   }
 })
 
+
+
+$(".click-to-select-all").click(function(){
+  // var lsChecked = $(".checkbox");
+  // for (e in lsChecked){
+  //   $(lsChecked[e]).attr("checked", true);
+  // }
+  var count = 0;
+  var check = false;
+  $('.checkbox').each(function(){ 
+    count++;
+    if (count == 1 && this.checked) {
+      check = true;
+    }
+    if (check){
+      this.checked = false; 
+    } else {
+      this.checked = true;
+    }
+  });
+
+})
+
+$(".click-to-view").click(function(){
+  var lsChecked = $(".checkbox");
+  var totalCost = 0;
+  var num = 0;
+  var requestedNum = 0;
+  var stillInStore = 0;
+  // for (e in lsChecked){
+  //   if ($(lsChecked[e]).is(":checked")){
+  var numOfOrder = 0;
+  var totalPay = 0;
+  var totalOwnerPay = 0;
+  var totalProfit = 0;
+  var numOfProd = 0;
+  var lsOrderCodeSelected = [];
+
+  // 0:SHIPPER_NO_COD
+  // 1:SHIPPER_COD
+  // 2:POST_COD
+  // 3:SHOPEE
+  // 4:POST_NO_COD
+  // 5:SHIP_BY_THIRD_PARTY
+
+  var groupsOfShipType = {};
+
+  var sumAllOfShipType = {
+    amount : 0,
+    willpay : 0,
+    totalPay : 0
+  }
+
+  $('.checkbox').each(function(){ 
+      // this.checked = true; });
+      if (this.checked){
+        numOfOrder = numOfOrder + 1
+        var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+        var currentOrder=lsOrder[orderIndex];
+        var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
+
+        // console.log(currentOrder);
+        // console.log(orderDetail);
+        if (!groupsOfShipType[orderDetail.shippingType]) {
+          groupsOfShipType[orderDetail.shippingType] = {
+            amount : 0,
+            willpay : 0,
+            totalPay : 0
+          }
+        }
+
+        groupsOfShipType[orderDetail.shippingType] = {
+          amount : groupsOfShipType[orderDetail.shippingType].amount + 1,
+          willpay : groupsOfShipType[orderDetail.shippingType].willpay + orderDetail.willpay,
+          totalPay : groupsOfShipType[orderDetail.shippingType].totalPay + parseInt(orderDetail.totalPay),
+        }
+        
+        sumAllOfShipType = {
+          amount : sumAllOfShipType.amount + 1,
+          willpay : sumAllOfShipType.willpay + orderDetail.willpay,
+          totalPay : sumAllOfShipType.totalPay + parseInt(orderDetail.totalPay),
+        }
+      }
+    }
+  )
+
+  var contentDetail = "<div class='viewReport'><table><tr><th>Method</th><th>Count</th><th>Will Pay</th><th>Total Pay</th></tr>";
+  for (var e in groupsOfShipType) {
+    contentDetail += "<tr> <td>"+e+"</td> <td>"+groupsOfShipType[e].amount+"</td> <td>"+groupsOfShipType[e].willpay+"</td> <td>"+groupsOfShipType[e].totalPay+"</td> </tr>"
+  }
+  contentDetail +="</table></div>"
+
+
+  var content = "<h4>Báo cáo</h4><br/>"+
+                contentDetail+"<br/>"+
+                "Số đơn hàng:"+sumAllOfShipType.amount+"<br/>"+
+                "Tổng tiền sẽ thanh toán (willpay):"+sumAllOfShipType.willpay+"<br/>"+
+                "Tổng tiền thanh toán (totalpay):"+sumAllOfShipType.totalPay+"<br/>"
+                ;
+  $("#modelContent").html(content);
+
+  $("#modalYes").click(function(){
+  })
+  $('#myModal').modal('show');
+})
 
 $(".completeMany").click(function(){
   var lsChecked = $(".checkbox");
