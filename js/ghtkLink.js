@@ -494,6 +494,11 @@ function saveAddressAsShipper(){
 
 function showOrderPush(){
 	if (currentOrder.otherInfor.order) {
+		if (currentOrder.otherInfor.order["success"] == false) {
+			$("#showOrderPush").html(JSON.stringify(currentOrder.otherInfor.order, null, 4));
+			return;
+		};
+
 		var ttvd = "<div><h4>Thông tin vận đơn:</h4>"
 		+"<div><b>Message: </b>"+currentOrder.otherInfor.order["message"]+"</div>"
 		+"<div><b>Nhãn: </b>"+currentOrder.otherInfor.order["order"]["label"]+" (nhãn đã tự copy)</div>"
@@ -504,9 +509,6 @@ function showOrderPush(){
 		+"<div><b>Địa chỉ giao: </b>"+currentOrder.otherInfor.order.toAddress+"</div>"
 		+"</div>"
 		+"<hr/>";
-
-
-
 		$("#showOrderPush").html(ttvd);
 	}
 }

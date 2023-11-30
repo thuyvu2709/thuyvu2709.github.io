@@ -43,7 +43,17 @@ function createAnGHTKOrder(dataOrder, callback){
 	  data : JSON.stringify(dataOrder),
 	  success: function(res) {
 	    callback(res);
-	  }
+	  },
+	  error: function (ajaxContext) {
+		try {
+        	callback(JSON.parse(ajaxContext.responseText))
+		}catch(e){
+			callback({
+				success : false,
+				error: e
+			})
+		}
+      }
 	});
 }
 
