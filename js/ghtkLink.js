@@ -71,6 +71,8 @@ dataOrder.order={};
 // 	})
 // };
 
+$(".extFees").hide();
+
 function loadPickList() {
 	$("#loadingSpin").show();
 	getPickAddress(function(rs){
@@ -360,6 +362,31 @@ $("#transportType").change(function(){
 	caluclateTransportFeeFn(true);//does not show loading	
 })
 
+$('#tags').filterMultiSelect({
+	selectAllText: 'Tất cả...',
+	placeholderText: 'Chọn tags',
+	filterText: 'Chọn tags',
+	labelText: 'Tags',
+	caseSensitive: true,
+});
+
+function readTags() {
+	try {
+		var rs = $("#tags").filterMultiSelect.applied
+		.map((e) => JSON.parse(e.getSelectedOptionsAsJson(true)))
+		.reduce((prev,curr) => {
+		prev = {
+			...prev,
+			...curr,
+		};
+		return prev;
+		});
+		return rs["tags"];
+	}catch(e) {
+		return [];
+	}
+}
+
 function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	$("#transportFee").html($("#transportFee").html()+" - Đang tính...");
 	var pickIndex = $("#pickList").val();
@@ -373,13 +400,28 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.weight = parseInt($("#totalWeight").html());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
-	
+	dataFee.tags = readTags();
+
 	if (!notloadShow) {
 		$("#loadingSpin").show();
 		$("#loading-text").html();
 	}
-	calculateTransportFeeAPI(dataFee, function(fee){
-		$("#transportFee").html(fee);
+	calculateTransportFeeAPI(dataFee, function(status, fee){
+		if (status == false) {
+			$("#transportFee").html(fee);
+		} else{
+			$("#transportFee").html(fee.fee);
+			$("#insuranceFee").html(fee.insurance_fee);
+
+			var extFees = "";
+			if (fee.extFees) {
+				for (var e in fee.extFees) {
+					extFees = extFees + fee.extFees[e]["title"]+":"+fee.extFees[e]["display"]+","
+				}
+				$(".extFees").show();
+				$("#extFees").html(extFees);
+			}
+		}
 		$("#loadingSpin").hide();
 	});
 }
@@ -550,6 +592,9 @@ function prepareDataOrder(){
 	dataOrder.order.note = $("#orderNodeGHTK").val();
 	dataOrder.order.value = currentOrder.totalPay*1000;
 	dataOrder.order.transport = $("#transportType").val();
+
+	dataOrder.order.tags = readTags();
+
 	// dataOrder.products = [{
 	// 	"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
  //        "weight": parseFloat($("#totalWeight").val())/1000,

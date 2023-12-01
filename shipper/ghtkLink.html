@@ -18,6 +18,7 @@
       <link href="../css/ghtk.css" rel="stylesheet">
       <link href="../css/autocomplete.css" rel="stylesheet">
       <link href="../css/jquery-ui.css" rel="stylesheet">
+      <link rel="stylesheet" href="../css/filter_multi_select.css" />
 
       <script type="text/javascript">
          var pageName = "showordershipping";
@@ -191,6 +192,25 @@
                 <label>Tối</label>
               </span>
             </div>
+
+            <div class="row">
+              <span>Thêm tags:</span>
+              <label class="col-2 col-form-label" for="tags"></label>
+              <div class="col-10">
+                <select multiple name="tags" id="tags">
+                  <option value="1">Dễ vỡ</option>
+                  <option value="10">Cho xem hàng</option>
+                  <option value="19">Không giao được thu tiền (pải điền là thu bao nhiêu)</option>
+                  <option value="11">Cho thử hàng/ đồng kiểm</option>
+                  <option value="7">Nông sản/thực phẩm khô</option>
+                  <option value="13">Gọi shop khi khách không nhận hàng, không liên lạc</option>
+                  <option value="17">Giao hàng 1 phần chọn sản phẩm</option>
+                  <option value="20">Hàng nguyên hộp, yêu cầu được bảo quản nguyên vẹn trong quá trình vận chuyển, phụ phí 1,000đ/ đơn hàng</option>
+                  <option value="22">Thư tín, tài liệu</option>
+                </select>
+              </div>
+            </div>
+
             <div class="row">
               <span>Hình thức giao:</span>
               <select id="transportType">
@@ -198,6 +218,8 @@
                 <option value="road">Đường bộ</option>
               </select>
             </div>
+
+
             <div class="row">
               <span>Phí ship (dự kiến):
                 <span class="fas fa-sync" id="calculateFeeLoadForce">
@@ -209,9 +231,15 @@
               </span>
               <span id="insuranceFee" class="textMustard">....</span>
             </div>
+
+            <div class="row extFees">
+              <span>Phụ phí thêm:
+              </span>
+              <span id="extFees" class="textMustard"></span>
+            </div>
+
             <hr/>
-<!--           <textarea id="textareaCopy"></textarea>
- -->
+
             <div class="row" id="showOrderPush">
 
             </div>
@@ -260,6 +288,8 @@
 
       <script type="text/javascript" src="../js/common.js"></script>
       <script type="text/javascript" src="../js/authorize.js"></script>
+
+      <script src="../js/filter-multi-select-bundle.min.js"></script>
 
       <script type="text/javascript" src="../js/moment.min.js"></script>
 

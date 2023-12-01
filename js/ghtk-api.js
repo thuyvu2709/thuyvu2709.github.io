@@ -153,11 +153,11 @@ function calculateTransportFeeAPI(data,callback){
 		// message: ""
 		// success: true
 	    if (!res) {
-	    	callback("Không tính được, ktr lại thông tin");
+	    	callback(false, "Không tính được, ktr lại thông tin");
 	    } else if (!res.success) {
-	    	callback("Không tính được, ktr lại thông tin");
+	    	callback(false, "Không tính được, ktr lại thông tin");
 	    } else {
-	    	callback(res.fee.fee);
+	    	callback(true, res.fee);
 	    }
 	  }
 	});
