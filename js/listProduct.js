@@ -83,6 +83,10 @@ var triggerAfterLoad = function(){
   loadProductList(function(){
       console.log("Gooo");
       loadProductListHtml();
+      
+      loadOrderListDetail(function(){
+        console.log("loadOrderListDetail");
+      });
 
       loadImportScheduleList(function(){
           var importSLData = JSON.parse(localStorage.getItem("warehouse"));
