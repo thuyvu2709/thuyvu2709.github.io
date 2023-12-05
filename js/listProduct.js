@@ -76,6 +76,8 @@ var afterLoadHTML = function(){
 }
 /////////////
 
+lsAutoImportSchedule = [];
+
 var triggerAfterLoad = function(){
 
   $("#loadingSpin").show();
@@ -101,6 +103,14 @@ var triggerAfterLoad = function(){
             if (!importSLData[e][0]) {
               continue;
             }
+
+            lsAutoImportSchedule.push({
+              label : importSLData[e][0]+" - "+importSLData[e][1],
+              value : importSLData[e][0]+" - "+importSLData[e][1],
+              data : importSLData[e],
+              importCode : importSLData[e][0]
+            });
+
             var importSLDateStr = importSLData[e][0]+" - "+importSLData[e][1];
             // if (importSLDateStr.length > 50) {
             importSLDateStr = importSLDateStr.substring(0,39);
@@ -558,7 +568,7 @@ $(".click-to-view").click(function(){
                 "<div class='btn btn-primary mb-2 viewProds'>Xem bảng</div>"+
                 "<hr/>"+
                 "<div class='btn btn-primary mb-2 changeImport'>Sửa đợt hàng</div>"+
-                "<input type='text' class='changeToNewImportInput'/>"+
+                "<input type='text' class='form-control changeToNewImportInput' id='changeToNewImportInput' />"+
                 " <br/>";
 
   $("#modelContent").html(content);
@@ -581,8 +591,26 @@ $(".click-to-view").click(function(){
   })
   
 
+  var chooseImportScheduleCodeToChange = "";
+
+  $(".changeToNewImportInput").empty();
+
+  $(".changeToNewImportInput").autocomplete({
+    source: function(request, response) {
+          console.log("filter")
+          console.log(request);
+          console.log(lsAutoImportSchedule);
+          var results = $.ui.autocomplete.filter(lsAutoImportSchedule, request.term);
+          console.log(results);
+          response(results.slice(0, 1000));
+      },
+    select: function( event, ui ) {
+      chooseImportScheduleCodeToChange = ui.item.importCode;
+    }
+  });
+
   $(".changeImport").click(function(){
-    var newImport = $(".changeToNewImportInput").val();
+    var newImport = chooseImportScheduleCodeToChange; //$(".changeToNewImportInput").val();
     console.log("newImport:",newImport);
     if (newImport) {
       var lsProductIndex = [];
