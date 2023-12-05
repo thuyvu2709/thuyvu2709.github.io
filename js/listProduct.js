@@ -626,11 +626,18 @@ $(".click-to-view").click(function(){
           }
         }
 
+        console.log(prodIndexInDetailList);
+
         function fixOneByOneOrderDetail(index, callback) {
           if (index < prodIndexInDetailList.length) {
             var sheetOrderDetail = "OrderDetail";
             var rangeEdit = sheetOrderDetail+'!C'+prodIndexInDetailList[index].index+':C'+prodIndexInDetailList[index].index;
             var dataEditOD  = [[newImport]]
+            console.log("ready to push");
+            console.log(prodIndexInDetailList[index]);
+            console.log(dataEditOD);
+            console.log(rangeEdit);
+
             editOrderDetail(dataEditOD, rangeEdit, function(){
 
               $("#loading-text").html("Cập nhật đợt hàng:"+prodIndexInDetailList[index].orderCode+" cho "+prodIndexInDetailList[index].productName);
