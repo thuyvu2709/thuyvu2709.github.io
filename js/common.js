@@ -688,6 +688,9 @@ function loadReport(callback) {
       callback();
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
+      if ( response.result.error.code == 401) {
+        window.location="/";
+      }
   });
 }
 
