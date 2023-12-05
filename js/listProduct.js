@@ -616,7 +616,7 @@ $(".click-to-view").click(function(){
         for (var e in orderListDetail) {
           if (orderListDetail[e][3] == referedProductCode) {
             prodIndexInDetailList.push({
-              index : (e+1),
+              index : (parseInt(e)+1),
               productCode : orderListDetail[e][1],
               productRefCode : orderListDetail[e][3],
               importCode : orderListDetail[e][2],
