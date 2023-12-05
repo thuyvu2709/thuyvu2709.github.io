@@ -550,8 +550,11 @@ $(".click-to-view").click(function(){
                 // "Tổng số lượng đã yêu cầu giao: "+requestedNum+" <br/>"+
                 "Tổng tiền vốn cho hàng tồn:"+stillInStoreTotalCost+"<br/>"+
                 "Số lượng hàng tồn: "+stillInStore+" <br/>"+
-                "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file</div>"+
+                "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file</div>&nbsp;"+
                 "<div class='btn btn-primary mb-2 viewProds'>Xem bảng</div>"+
+                "<hr/>"+
+                "<div class='btn btn-primary mb-2 changeImport'>Sửa đợt hàng</div>"+
+                "<input type='text' class='changeToNewImportInput'/>"+
                 " <br/>";
 
   $("#modelContent").html(content);
@@ -571,6 +574,110 @@ $(".click-to-view").click(function(){
     localStorage.setItem("tmp",JSON.stringify(ls2));
     window.location = "../manager/viewtmp.html";
 
+  })
+  
+
+  $(".changeImport").click(function(){
+    var newImport = $(".changeToNewImportInput").val();
+    console.log("newImport:",newImport);
+    if (newImport) {
+      var lsProductIndex = [];
+      $('.checkbox').each(function(){ 
+          // this.checked = true; });
+          if (this.checked){
+            var productIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
+            console.log(data[productIndex])
+            var proIndex = parseInt(productIndex) + 1;
+            lsProductIndex.push({
+              index : proIndex,
+              productCode : data[productIndex][0],
+              productRefCode : data[productIndex][1],
+              importCode : data[productIndex][2],
+              productName : data[productIndex][3]
+            });
+          }
+        }
+      )
+      console.log(lsProductIndex);
+
+      $("#loadingSpin").show();
+
+
+      function changeOrderDetailBasedOnReferedProductCode(referedProductCode, orderDetailCallback) {
+        console.log("changeOrderDetailBasedOnReferedProductCode:",referedProductCode);
+        $("#loading-text").html("Sửa mặt hàng:"+referedProductCode+" trong bảng đơn hàng chi tiết");
+
+        var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+        var prodIndexInDetailList = [];
+        for (var e in orderListDetail) {
+          if (orderListDetail[e][3] == referedProductCode) {
+            prodIndexInDetailList.push({
+              index : e,
+              productCode : orderListDetail[e][1],
+              productRefCode : orderListDetail[e][3],
+              importCode : orderListDetail[e][2],
+              orderCode : orderListDetail[e][0],
+              productName : orderListDetail[e][4],
+            });
+          }
+        }
+
+        function fixOneByOneOrderDetail(index, callback) {
+          if (index < prodIndexInDetailList.length) {
+            var sheetOrderDetail = "OrderDetail";
+            var rangeEdit = sheetOrderDetail+'!C'+prodIndexInDetailList[index].index+':C'+prodIndexInDetailList[index].index;
+            var dataEditOD  = [[newImport]]
+            editOrderDetail(dataEditOD, rangeEdit, function(){
+
+              $("#loading-text").html("Cập nhật đợt hàng:"+prodIndexInDetailList[index].orderCode+" cho "+prodIndexInDetailList[index].productName);
+  
+              fixOneByOneOrderDetail(index+1, callback);
+            })
+
+            
+          } else {
+            callback();
+          }
+        }
+
+        // console.log(prodIndexInDetailList);
+        fixOneByOneOrderDetail(0, orderDetailCallback);
+      }
+      function changeImport(index, importCallback) {
+        if (index < lsProductIndex.length) {
+          var proIndex = lsProductIndex[index].index;
+          var sheetrange = 'Product!C'+proIndex+':'+ 'C'+proIndex;
+          var dataEditP = [[newImport]]
+          console.log("Change Import:",lsProductIndex[index].productRefCode, "   index:",index)
+          $("#loading-text").html("Sửa mặt hàng:"+lsProductIndex[index].productRefCode+" trong bảng danh sách hàng");
+
+          editProduct(dataEditP, sheetrange,function(){
+            setTimeout(function(){
+              changeOrderDetailBasedOnReferedProductCode(lsProductIndex[index].productRefCode,function(){
+                // console.log("Done changeOrderDetailBasedOnReferedProductCode");
+                changeImport(index + 1, importCallback);
+              })
+            
+            },2000)
+          }, function(){
+              $("#loadingSpin").hide();
+      
+              $("#modelContent").html("Có lỗi, không thể lưu, dừng việc thay đổi");
+              $('#myModal').modal('toggle');
+              importCallback();
+            }
+          )
+    
+        } else {
+          $("#loadingSpin").hide();
+          importCallback();
+        }
+      }
+
+      changeImport(0, function() {
+        console.log("CHange Import done");
+      });
+    }
   })
 })
 

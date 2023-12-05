@@ -954,6 +954,7 @@ function editOrderDetail(dataEditOD, range, callback) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
@@ -1144,6 +1145,7 @@ function editProduct(dataEditP, range,callback, callbackError) {
 
   if (passDataLocalhost) {
     callback();
+    return;
   }
 
   if(!gapi.client.sheets) {
