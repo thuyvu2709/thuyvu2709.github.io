@@ -1,4 +1,4 @@
-console.log(window.location);
+// console.log(window.location);
 var url = new URL(window.location.href);
 var importCode = url.searchParams.get("importCode");
 var lsNotifications = [];
@@ -64,7 +64,7 @@ var afterLoadHTML = function(){
     var orderIndex = historicalData.goToClass.split(" ").pop().split("_").pop();
     var btnOrder = "btnProd_"+orderIndex;
 
-    console.log("goToClass:"+btnOrder);
+    // console.log("goToClass:"+btnOrder);
 
     var $scrollTo = $('.'+btnOrder);
 
@@ -626,17 +626,17 @@ $(".click-to-view").click(function(){
           }
         }
 
-        console.log(prodIndexInDetailList);
+        // console.log(prodIndexInDetailList);
 
         function fixOneByOneOrderDetail(index, callback) {
           if (index < prodIndexInDetailList.length) {
             var sheetOrderDetail = "OrderDetail";
             var rangeEdit = sheetOrderDetail+'!C'+prodIndexInDetailList[index].index+':C'+prodIndexInDetailList[index].index;
             var dataEditOD  = [[newImport]]
-            console.log("ready to push");
-            console.log(prodIndexInDetailList[index]);
-            console.log(dataEditOD);
-            console.log(rangeEdit);
+            // console.log("ready to push");
+            // console.log(prodIndexInDetailList[index]);
+            // console.log(dataEditOD);
+            // console.log(rangeEdit);
 
             editOrderDetail(dataEditOD, rangeEdit, function(){
 
@@ -659,7 +659,7 @@ $(".click-to-view").click(function(){
           var proIndex = lsProductIndex[index].index;
           var sheetrange = 'Product!C'+proIndex+':'+ 'C'+proIndex;
           var dataEditP = [[newImport]]
-          console.log("Change Import:",lsProductIndex[index].productRefCode, "   index:",index)
+          // console.log("Change Import:",lsProductIndex[index].productRefCode, "   index:",index)
           $("#loading-text").html("Sửa mặt hàng:"+lsProductIndex[index].productRefCode+" trong bảng danh sách hàng");
 
           editProduct(dataEditP, sheetrange,function(){
