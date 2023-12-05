@@ -676,6 +676,8 @@ $(".click-to-view").click(function(){
 
       changeImport(0, function() {
         console.log("CHange Import done");
+        $("#modelContent").html("Hoàn thành, việc cập nhật này không cập nhật bên giao hàng, hãy yêu cầu giao hàng lại");
+        $('#myModal').modal('show');
       });
     }
   })
