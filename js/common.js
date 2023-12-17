@@ -608,11 +608,14 @@ function getLatestImportCode(callback) {
   }).then(function(response) {
       // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
-      // showList(dataset);
-      // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
-      var latestCode = parseFloat(dataset[dataset.length-1][0])+1;
 
-      // localStorage.setItem("taskCode","DONHANG_"+latestCode);
+      var latestCode = 0;
+      for (var e in dataset) {
+        var c = parseFloat(dataset[e][0])+1;
+        if (latestCode < c) {
+          latestCode = c;
+        }
+      }
 
       callback(latestCode);
   }, function(response) {
