@@ -1772,15 +1772,18 @@ $(".click-to-view").click(function(){
   var sumAllOfShipType = {
     amount : 0,
     willpay : 0,
-    totalPay : 0
+    totalPay : 0,
+    prepaid: 0
   }
+
+  var detailReport = "Đơn Hàng, Khách, Cách Ship, Ship Thu, Cọc, Tổng Tiền Hàng\n";
 
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
         numOfOrder = numOfOrder + 1
         var orderIndex =  $(this).attr("class").split(" ").pop().split("_").pop();
-        var currentOrder=lsOrder[orderIndex];
+        // var currentOrder=lsOrder[orderIndex];
         var orderDetail = lsOrderDetail[lsOrder[orderIndex][0]];
 
         // console.log(currentOrder);
@@ -1789,28 +1792,35 @@ $(".click-to-view").click(function(){
           groupsOfShipType[orderDetail.shippingType] = {
             amount : 0,
             willpay : 0,
-            totalPay : 0
+            totalPay : 0,
+            prepaid: 0
           }
         }
+
+        // console.log(orderDetail);
+        detailReport = detailReport + orderDetail.orderCode+","+orderDetail.customerName+","+orderDetail.shippingType+","+orderDetail.willpay+","+orderDetail.prepaid+","+orderDetail.totalPay +  "\n"
 
         groupsOfShipType[orderDetail.shippingType] = {
           amount : groupsOfShipType[orderDetail.shippingType].amount + 1,
           willpay : groupsOfShipType[orderDetail.shippingType].willpay + orderDetail.willpay,
           totalPay : groupsOfShipType[orderDetail.shippingType].totalPay + parseInt(orderDetail.totalPay),
+          prepaid : groupsOfShipType[orderDetail.shippingType].prepaid + parseInt(orderDetail.prepaid)
         }
         
         sumAllOfShipType = {
           amount : sumAllOfShipType.amount + 1,
           willpay : sumAllOfShipType.willpay + orderDetail.willpay,
           totalPay : sumAllOfShipType.totalPay + parseInt(orderDetail.totalPay),
+          prepaid : sumAllOfShipType.prepaid + parseInt(orderDetail.prepaid)
         }
+        // console.log(sumAllOfShipType.prepaid);
       }
     }
   )
 
-  var contentDetail = "<div class='viewReport'><table><tr><th>Method</th><th>Count</th><th>Will Pay</th><th>Total Pay</th></tr>";
+  var contentDetail = "<div class='viewReport'><table><tr><th>Method</th><th>Số lượng</th><th>Ship thu</th><th>Cọc</th><th>Tổng tiền hàng</th></tr>";
   for (var e in groupsOfShipType) {
-    contentDetail += "<tr> <td>"+e+"</td> <td>"+groupsOfShipType[e].amount+"</td> <td>"+groupsOfShipType[e].willpay+"</td> <td>"+groupsOfShipType[e].totalPay+"</td> </tr>"
+    contentDetail += "<tr> <td>"+e+"</td> <td>"+groupsOfShipType[e].amount+"</td> <td>"+groupsOfShipType[e].willpay+"</td> <td>"+groupsOfShipType[e].prepaid+"</td> <td>"+groupsOfShipType[e].totalPay+"</td> </tr>"
   }
   contentDetail +="</table></div>"
 
@@ -1818,13 +1828,17 @@ $(".click-to-view").click(function(){
   var content = "<h4>Báo cáo</h4><br/>"+
                 contentDetail+"<br/>"+
                 "Số đơn hàng:"+sumAllOfShipType.amount+"<br/>"+
-                "Tổng tiền sẽ thanh toán (willpay):"+sumAllOfShipType.willpay+"<br/>"+
-                "Tổng tiền thanh toán (totalpay):"+sumAllOfShipType.totalPay+"<br/>"
+                "Tổng tiền khách đã cọc:"+sumAllOfShipType.prepaid+"<br/>"+
+                "Tổng tiền khách sẽ thanh toán cho bên giao hàng (willpay):"+sumAllOfShipType.willpay+"<br/>"+
+                "Tổng tiền thanh toán (totalpay):"+sumAllOfShipType.totalPay+"<hr/>"+
+                "<div class='btn btn-primary mb-2 reportDetail'>Xem báo cáo chi tiết</div>&nbsp;"
                 ;
   $("#modelContent").html(content);
 
-  $("#modalYes").click(function(){
+  $(".reportDetail").click(function(){
+    downloadFile("shippingreport.csv", detailReport);
   })
+
   $('#myModal').modal('show');
 })
 
