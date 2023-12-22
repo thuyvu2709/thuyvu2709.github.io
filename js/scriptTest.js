@@ -202,6 +202,7 @@ function mergeProcessing(targetMainSheet) {
 				orderListDetail[f][8] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)';
 				orderListDetail[f][9] = '=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))';
 				orderListDetail[f][10] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)';
+				
 				orderDetailSheetData.push(orderListDetail[f]);
 				warehouseIdLs.push(orderListDetail[f][2]);
 			}
@@ -228,6 +229,15 @@ function mergeProcessing(targetMainSheet) {
 			var totalCount = parseInt(productData[p][17]) + (productCountInOrderDetail[productData[p][1]] ? productCountInOrderDetail[productData[p][1]] : 0);
 			// console.log(productData[p][1], " >", totalCount,"<", parseInt(productData[p][17]), "+",productCountInOrderDetail[productData[p][1]]);
 			productData[p][4] = totalCount;
+			productData[p][1] = '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();1)))';
+			productData[p][13] = '=INDIRECT(ADDRESS(ROW();13)) - INDIRECT(ADDRESS(ROW();12))';
+			productData[p][14] = '=INDIRECT(ADDRESS(ROW();13))*INDIRECT(ADDRESS(ROW();5))';
+			productData[p][15] = '=INDIRECT(ADDRESS(ROW();12))*INDIRECT(ADDRESS(ROW();5))';
+			productData[p][16] = '=INDIRECT(ADDRESS(ROW();15)) - INDIRECT(ADDRESS(ROW();16))';
+			productData[p][17] = '=INDIRECT(ADDRESS(ROW();5)) - SUMIF(OrderDetail!D:D;INDIRECT(ADDRESS(ROW();2));OrderDetail!F:F)';
+			productData[p][18] = '=INDIRECT(ADDRESS(ROW();12)) * INDIRECT(ADDRESS(ROW();18))';
+			productData[p][21] = '=SUMIF(OrderDetail!D:D;INDIRECT(ADDRESS(ROW();2));OrderDetail!L:L)';
+
 			productSheetData.push(productData[p]);
 		}
     }
