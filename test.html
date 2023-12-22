@@ -57,9 +57,9 @@
 	  <br/>
 	  Sau đó thì sửa hàng tồn, chủ yếu trong table product:
 	  <br/>
-	  Số lượng hiện tại = Hàng tồn thực tế + Số lượng đã yêu cầu (=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F))
+	  Số lượng hiện tại = Hàng tồn thực tế + Số lượng đã trong đơn hàng (=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F))
 	  <br/>
-	  Sau đó check lại số hàng tồn trong warehouse là ok, và nhớ xử lý phần công thức của tất cả các bảng
+	  Sau đó check lại số hàng tồn trong warehouse là ok, và nhớ xử lý phần công thức của tất cả các bảng, đặc biệt là phải sửa cái ID của ship sheet trong OrderDetail:L:L
 	</div>
 
 	<hr/>

@@ -153,6 +153,7 @@ function mergeProcessing(targetMainSheet) {
 
 	var warehouseIdLs = [];
 	var productIdLs = [];
+	var productCountInOrderDetail = {};
 
 	for(var e in data) {
 		if (e == 0) {
@@ -176,6 +177,9 @@ function mergeProcessing(targetMainSheet) {
 		// } 
 
 		// console.log(data[e]);
+		data[e][5] = '=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!H:H)';
+		data[e][7] = '=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))';
+		data[e][9] = '=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))';
 		orderSheetData.push(data[e]);
 		for (var f in orderListDetail) {
 			if (f == 0) {
@@ -185,6 +189,18 @@ function mergeProcessing(targetMainSheet) {
 				continue;
 			}
 			if (orderListDetail[f][0]==data[e][0]){
+
+				if (!productCountInOrderDetail[orderListDetail[f][3]]) {
+					productCountInOrderDetail[orderListDetail[f][3]] = 0;
+				}
+				productCountInOrderDetail[orderListDetail[f][3]] = productCountInOrderDetail[orderListDetail[f][3]] + parseInt(orderListDetail[f][5])
+
+
+				orderListDetail[f][3] = '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();2)))';
+				orderListDetail[f][7] = '=INDIRECT(ADDRESS(ROW();6)) *  INDIRECT(ADDRESS(ROW();7))';
+				orderListDetail[f][8] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)';
+				orderListDetail[f][9] = '=(INDIRECT(ADDRESS(ROW();7)) - INDIRECT(ADDRESS(ROW();9))) * INDIRECT(ADDRESS(ROW();6))';
+				orderListDetail[f][10] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)';
 				orderDetailSheetData.push(orderListDetail[f]);
 				warehouseIdLs.push(orderListDetail[f][2]);
 				productIdLs.push(orderListDetail[f][3]);
@@ -197,13 +213,21 @@ function mergeProcessing(targetMainSheet) {
 	var productSheetData = [];
 	productSheetData.push(productData[0]);
 
+	// console.log(productCountInOrderDetail);
+
     for (var p in productData) {
+		var ckP = false;
     	if (productIdLs.includes(productData[p][1])) {
-    		productSheetData.push(productData[p]);
+    		ckP  = true;
     	} else if (parseInt(productData[p][17]) > 0) {
-    		productSheetData.push(productData[p]);
     		warehouseIdLs.push(productData[p][2]);
     	}
+
+		if (ckP == true) {
+			var totalCount = parseInt(productData[p][17]) + productCountInOrderDetail(productData[p][1]);
+			productData[p][4] = totalCount;
+			productSheetData.push(productData[p]);
+		}
     }
 
 	var warehouseData = JSON.parse(localStorage.getItem("warehouse"));
@@ -212,10 +236,10 @@ function mergeProcessing(targetMainSheet) {
 
     for (var w in warehouseData) {
     	if (warehouseIdLs.includes(warehouseData[w][0])) {
+			warehouseData[w][4] = "=sumif(Product!C:C;INDIRECT(ADDRESS(ROW();1));Product!R:R)";
     		warehouseSheetData.push(warehouseData[w]);
     	}
     }
-
 
     // console.log(warehouseSheetData);
     // console.log(orderSheetData);
