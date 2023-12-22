@@ -220,6 +220,7 @@ function mergeProcessing(targetMainSheet) {
     	if (productIdLs.includes(productData[p][1])) {
     		ckP  = true;
     	} else if (parseInt(productData[p][17]) > 0) {
+			ckP  = true;
     		warehouseIdLs.push(productData[p][2]);
     	}
 
