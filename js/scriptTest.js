@@ -194,8 +194,9 @@ function mergeProcessing(targetMainSheet) {
 					productCountInOrderDetail[orderListDetail[f][3]] = 0;
 				}
 				productCountInOrderDetail[orderListDetail[f][3]] = productCountInOrderDetail[orderListDetail[f][3]] + parseInt(orderListDetail[f][5])
+				productIdLs.push(orderListDetail[f][3]);
 
-
+				//Change the calculation
 				orderListDetail[f][3] = '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();2)))';
 				orderListDetail[f][7] = '=INDIRECT(ADDRESS(ROW();6)) *  INDIRECT(ADDRESS(ROW();7))';
 				orderListDetail[f][8] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();4));Product!B:U;11;FALSE)';
@@ -203,7 +204,6 @@ function mergeProcessing(targetMainSheet) {
 				orderListDetail[f][10] = '=VLOOKUP(INDIRECT(ADDRESS(ROW();3));Warehouse!A:C;3;0)';
 				orderDetailSheetData.push(orderListDetail[f]);
 				warehouseIdLs.push(orderListDetail[f][2]);
-				productIdLs.push(orderListDetail[f][3]);
 			}
 		}
 	}
@@ -213,7 +213,7 @@ function mergeProcessing(targetMainSheet) {
 	var productSheetData = [];
 	productSheetData.push(productData[0]);
 
-	// console.log(productCountInOrderDetail);
+	console.log(productIdLs);
 
     for (var p in productData) {
 		var ckP = false;
