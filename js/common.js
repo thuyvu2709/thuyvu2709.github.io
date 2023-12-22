@@ -2002,3 +2002,53 @@ function strToAddr(addr){
 
   return aix;
 }
+
+function fetchEuroRate(callback) {
+  fetch(herokuPrefix+"https://portal.vietcombank.com.vn/UserControls/TVPortal.TyGia/pListTyGia.aspx", {
+    "headers": {
+      "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+      "accept-language": "en-GB,en;q=0.9",
+      "cache-control": "no-cache",
+      "pragma": "no-cache",
+      "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Brave\";v=\"120\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "sec-fetch-dest": "document",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-site": "none",
+      "sec-fetch-user": "?1",
+      "sec-gpc": "1",
+      "upgrade-insecure-requests": "1"
+    },
+    "referrerPolicy": "strict-origin-when-cross-origin",
+    "body": null,
+    "method": "GET",
+    "mode": "cors",
+    "credentials": "omit"
+  }).then(function(test){
+    new Response(test.body).text().then(function(text) {
+      // console.log(text);
+      var data = $.parseHTML(text);
+      var lsCurrency = {};
+      $(data).find('tr.odd').each(function(){
+          // console.log($(this))
+          var eachCurrency = [];
+          $(this).find('td').each(function(){
+              eachCurrency.push($(this).html().trim());
+          })
+          lsCurrency[eachCurrency[1]] = {
+              name : eachCurrency[0],
+              code : eachCurrency[1],
+              buyWithCash : eachCurrency[2].replace(".","").replace(",","."),
+              buyWithBankTransfer: eachCurrency[3].replace(".","").replace(",","."),
+              sell : eachCurrency[4].replace(".","").replace(",",".")
+          }
+      })
+
+      callback({
+          html : data,
+          lsCurrency
+      });
+    });
+  });
+}

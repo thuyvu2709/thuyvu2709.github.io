@@ -47,6 +47,11 @@ var mode = "edit";//"duplicate"
 
 var triggerAfterLoad = function(){
 
+	fetchEuroRate(function(currencyRates) {
+		EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
+		$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
+	})
+
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
