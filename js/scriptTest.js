@@ -225,7 +225,7 @@ function mergeProcessing(targetMainSheet) {
     	}
 
 		if (ckP == true) {
-			var totalCount = parseInt(productData[p][17]) + productCountInOrderDetail(productData[p][1]);
+			var totalCount = parseInt(productData[p][17]) + productCountInOrderDetail[productData[p][1]];
 			productData[p][4] = totalCount;
 			productSheetData.push(productData[p]);
 		}
