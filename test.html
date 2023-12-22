@@ -55,11 +55,9 @@
 	  <h3>Guideline to merge data:</h3>
 	  Đầu tiên, hãy load full data sau đó mới merge, chú ý đến data source và data target
 	  <br/>
-	  Sau đó thì sửa hàng tồn, chủ yếu trong table product:
+	  Sau đó hãy tạo bản sao từ bên template, rồi sửa thông tin ở bảng role
 	  <br/>
-	  Số lượng hiện tại = Hàng tồn thực tế + Số lượng đã trong đơn hàng (=SUMIF(OrderDetail!D:D,INDIRECT(ADDRESS(ROW(),2)),OrderDetail!F:F))
-	  <br/>
-	  Sau đó check lại số hàng tồn trong warehouse là ok, và nhớ xử lý phần công thức của tất cả các bảng, đặc biệt là phải sửa cái ID của ship sheet trong OrderDetail:L:L
+	  Kiểm tra lại hàng tồn và công thức 1 lần nữa
 	</div>
 
 	<hr/>
