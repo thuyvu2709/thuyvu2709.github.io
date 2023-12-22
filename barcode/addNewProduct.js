@@ -452,8 +452,8 @@ function recalculateProdEstVND(){
 	productWeight = parseFloat(productWeight);
 	shipInternationalFee = parseFloat(shipInternationalFee);
 	otherFee = parseFloat(otherFee);
-	
-	var productEstimateVND = Math.round(productOriginalCostEur*EuroVndRate + productWeight * 
+		
+	var productEstimateVND = Math.ceil( productOriginalCostEur*EuroVndRate + productWeight * 
 		( shipInternationalFee * EuroVndRate ))+ otherFee;
 
 	$("#productEstimateVND").val(productEstimateVND);
