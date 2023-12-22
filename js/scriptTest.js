@@ -213,7 +213,7 @@ function mergeProcessing(targetMainSheet) {
 	var productSheetData = [];
 	productSheetData.push(productData[0]);
 
-	console.log(productIdLs);
+	// console.log(productIdLs);
 
     for (var p in productData) {
 		var ckP = false;
@@ -225,7 +225,8 @@ function mergeProcessing(targetMainSheet) {
     	}
 
 		if (ckP == true) {
-			var totalCount = parseInt(productData[p][17]) + productCountInOrderDetail[productData[p][1]];
+			var totalCount = parseInt(productData[p][17]) + (productCountInOrderDetail[productData[p][1]] ? productCountInOrderDetail[productData[p][1]] : 0);
+			// console.log(productData[p][1], " >", totalCount,"<", parseInt(productData[p][17]), "+",productCountInOrderDetail[productData[p][1]]);
 			productData[p][4] = totalCount;
 			productSheetData.push(productData[p]);
 		}
