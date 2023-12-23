@@ -400,7 +400,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.weight = parseInt($("#totalWeight").html());
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
-	dataFee.tags = readTags();
+	dataFee["tags[]"] = readTags();
 	console.log(dataFee);
 
 	if (!notloadShow) {
@@ -594,7 +594,7 @@ function prepareDataOrder(){
 	dataOrder.order.value = currentOrder.totalPay*1000;
 	dataOrder.order.transport = $("#transportType").val();
 
-	dataOrder.order.tags = readTags();
+	dataOrder.order["tags[]"] = readTags();
 
 	// dataOrder.products = [{
 	// 	"name": "Hàng ThuyTitVu - "+count+" mặt hàng",
