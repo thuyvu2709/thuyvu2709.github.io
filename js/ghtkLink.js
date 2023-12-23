@@ -401,7 +401,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	dataFee.value = currentOrder.totalPay;
 	dataFee.transport = $("#transportType").val();
 	dataFee["tags[]"] = readTags();
-	console.log(dataFee);
+	// console.log(dataFee);
 
 	if (!notloadShow) {
 		$("#loadingSpin").show();
