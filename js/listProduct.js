@@ -505,6 +505,7 @@ $(".click-to-view").click(function(){
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
   var downloadContent = "STT, Tên hàng, SL, Giá, Thành tiền\n";
+  var detailReport = "STT, Tên hàng, Tổng số lượng, Giá, Tổng tiền vốn, số lượng đã lên đơn, doanh thu, lợi nhuận\n";
   var count = 0;
 
   // --------In page product
@@ -528,6 +529,11 @@ $(".click-to-view").click(function(){
   // Tổng tiền hoàn:8406
 
   var rcount = 0;
+  var totalRevenue = 0;
+  var totalInterest = 0;
+
+  var orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
+
   $('.checkbox').each(function(){ 
       // this.checked = true; });
       if (this.checked){
@@ -547,17 +553,49 @@ $(".click-to-view").click(function(){
         // console.log(data[productIndex][0] +data[productIndex][21]+" "+requestedNum);
 
         rcount++;
+
         downloadContent += rcount+","
-        +data[productIndex][3]+","
-        +count+","
-        +eachCost+","
-        +(count * eachCost)
-        +"\n";
+          +data[productIndex][3]+","
+          +count+","
+          +eachCost+","
+          +(count * eachCost)
+          +"\n";
+
+        var revenue = 0;
+        var interest = 0;
+        var orderedCount = 0;
+        for (var oldi in orderListDetail) {
+          if (orderListDetail[oldi][3] == data[productIndex][1]) { // kiem tra trong OrderDetail
+            revenue += parseInt(orderListDetail[oldi][7]) // Tong Tien cot 7
+            interest +=  parseInt(orderListDetail[oldi][9]) // lai - Cot 9
+            orderedCount += parseInt(orderListDetail[oldi][5]) // So luong - Cot 5
+          }
+        }
+
+        detailReport += rcount+","
+          +data[productIndex][3]+","
+          +count+","
+          +eachCost+","
+          +(count * eachCost)+","
+          +orderedCount+","
+          +revenue+","
+          +interest
+          +"\n";
+
+        totalRevenue += revenue;
+        totalInterest += interest;
       }
     }
   )
   downloadContent += "-, Tổng số lượng, "+num+"\n";
   downloadContent += "-, Tổng tiền, "+totalCost;
+
+  detailReport += "-, Tổng số lượng hàng, "+num+"\n";
+  detailReport += "-, Tổng vốn, "+totalCost+"\n";
+  detailReport += "-, Tổng doanh thu, "+totalRevenue+"\n";
+  detailReport += "-, Tổng lợi nhuận, "+totalInterest+"\n";
+  detailReport += "-, Tổng tiền vốn cho hàng tồn,"+stillInStoreTotalCost+"\n";
+  detailReport += "-, Số lượng hàng tồn,"+stillInStore;
 
   var content = "Tổng tiền vốn: "+totalCost+" <br/>"+
                 "Tổng số lượng (toàn bộ): "+num+" <br/>"+
@@ -565,7 +603,8 @@ $(".click-to-view").click(function(){
                 "Tổng tiền vốn cho hàng tồn:"+stillInStoreTotalCost+"<br/>"+
                 "Số lượng hàng tồn: "+stillInStore+" <br/>"+
                 "<div class='btn btn-primary mb-2 downloadProds'>Tải CSV file</div>&nbsp;"+
-                "<div class='btn btn-primary mb-2 viewProds'>Xem bảng</div>"+
+                "<div class='btn btn-primary mb-2 viewProds'>Xem bảng (gửi cho bên bán hàng)</div>"+
+                "<div class='btn btn-primary mb-2 viewProdsReport'>Xem báo cáo doanh thu/lợi nhuận</div>"+
                 "<hr/>"+
                 "<div class='btn btn-primary mb-2 changeImport'>Sửa đợt hàng</div>"+
                 "<input type='text' class='form-control changeToNewImportInput' id='changeToNewImportInput' />"+
@@ -580,6 +619,18 @@ $(".click-to-view").click(function(){
   })
   $(".viewProds").click(function(){
     var ls1 = downloadContent.split("\n");
+    var ls2 = [];
+    for (s in ls1) {
+      ls2.push(ls1[s].split(","));
+    }
+    console.log(ls2);
+    localStorage.setItem("tmp",JSON.stringify(ls2));
+    window.location = "../manager/viewtmp.html";
+
+  })
+
+  $(".viewProdsReport").click(function(){
+    var ls1 = detailReport.split("\n");
     var ls2 = [];
     for (s in ls1) {
       ls2.push(ls1[s].split(","));
