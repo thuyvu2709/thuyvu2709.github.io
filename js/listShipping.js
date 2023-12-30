@@ -521,6 +521,8 @@ function loadOrderShippingListHtml() {
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode+"<br/>" : "");
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].otherInfor ? lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip==true ? "<span class='text-mustard'>Shop thanh toán ship, free ship cho khách</span><br/>" : "" : "")
 
+    var mark = "";
+    var bgMarkAsLogiticCodice = ""
     if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD" ){
       if (lsOrderDetail[lsOrder[e][0]].otherInfor) {
         try {
@@ -535,6 +537,8 @@ function loadOrderShippingListHtml() {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
           if (logiticCodice){
             orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            mark = "textRed";
+            bgMarkAsLogiticCodice = "bgBisque"
           }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
@@ -545,6 +549,8 @@ function loadOrderShippingListHtml() {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.viettelPostlabel;
           if (logiticCodice){
             orderDetailBrief+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            mark = "textRed";
+            bgMarkAsLogiticCodice = "bgBisque"
           }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
@@ -555,6 +561,8 @@ function loadOrderShippingListHtml() {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.ghnLabel;
           if (logiticCodice){
             orderDetailBrief+= "GHN Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            mark = "textRed";
+            bgMarkAsLogiticCodice = "bgBisque"
           }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
@@ -580,9 +588,9 @@ function loadOrderShippingListHtml() {
 
     orderDetailBrief+="<hr/>";
     var ghtkBtn = "";
-    var mark = "";
+    
     if (userRole=="manager"){
-      mark = (next2days < new Date() ? "textRed" : "");
+      // mark = (next2days < new Date() ? "textRed" : "");
       if (lsOrder[e][8] == "POST_COD" || lsOrder[e][8] == "POST_NO_COD") {
         ghtkBtn = '<br/>'
           +'<div class="btn btn-default btnNormal5px ghtkLink order_'+e+'">Liên kết GHTK</div>'
@@ -593,7 +601,7 @@ function loadOrderShippingListHtml() {
 
     $("#listShippingOrder").append(
         // '<a href="#" class="list-group-item list-group-item-action orderelement order_'+e+'">'+lsOrder[e][0]+' | '+lsOrder[e][2]+' | '+lsOrder[e][5]+'</a>'
-        '<div class="card cardElement_'+e+'">'+
+        '<div class="card cardElement_'+e+' '+bgMarkAsLogiticCodice+'">'+
           '<div class="card-header" id="heading_'+e+'">'+
             '<h5 class="mb-0">'+
               '<input type="checkbox" class="checkbox check_'+e+'"/>'+
