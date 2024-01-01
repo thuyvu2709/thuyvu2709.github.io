@@ -249,6 +249,7 @@ function mergeProcessing(targetMainSheet) {
     for (var w in warehouseData) {
     	if (warehouseIdLs.includes(warehouseData[w][0])) {
 			warehouseData[w][4] = "=sumif(Product!C:C;INDIRECT(ADDRESS(ROW();1));Product!R:R)";
+			warehouseData[w][10] = "=sumif(Product!C:C;INDIRECT(ADDRESS(ROW();1));Product!P:P)";
     		warehouseSheetData.push(warehouseData[w]);
     	}
     }

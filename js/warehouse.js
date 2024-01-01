@@ -28,10 +28,14 @@ function loadWarehouseHtml() {
 
   let sortableData = data.slice(0);
   sortableData.sort(function(a,b) {
+    if (isNaN(parseInt(a[0]))) {
+			return -1;
+    }
+    if (isNaN(parseInt(b[0]))) {
+      return 1;
+    }
     return parseInt(a[0]) - parseInt(b[0]);
   });
-  // console.log(sortableData);
-
 
   for(var es in sortableData) {
     var e = indexInTable[sortableData[es][0]];
@@ -39,9 +43,11 @@ function loadWarehouseHtml() {
     if (e == 0) {
       continue;
     }
-    if (!data[e][0]){
+    
+    if (!data[e][0] || !data[e][1] || isNaN(data[e][0])) {
       continue;
     }
+
     if (importType==0) {
       if (data[e][4]==0) {
         continue;

@@ -119,6 +119,12 @@ allText = "Mã đơn hàng: "+currentOrder.orderCode +"\n"+
 
 var prodListOrder = currentOrder.prodListOrder;
 
+var importSLData = JSON.parse(localStorage.getItem("warehouse"));
+var importSLDataParse = {}
+for (var e in importSLData) {
+	importSLDataParse[importSLData[e][0]] = importSLData[e];
+}
+
 // console.log(prodListOrder.size);
 
 // console.log(prodListOrder)
@@ -137,7 +143,7 @@ for (i in prodListOrder){
     "<td>"+(parseInt(i)+1)+"</td>"+
     // "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
     "<td class='showImage image_"+i+"'>"+prodListOrder[i].productName+
-   	"   <span class='simply'>(Đh "+prodListOrder[i].importCode+")</span>"+
+   	"   <span class='simply'>(Đh "+prodListOrder[i].importCode+":"+importSLDataParse[prodListOrder[i].importCode][1] +")</span>"+
    	"	<div class='divImgThumbnail simply'><img class='imgThumbnail' src='"+prodListOrder[i].productImage+"' /></div>"+
 	"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+

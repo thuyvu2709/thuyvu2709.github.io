@@ -65,20 +65,28 @@ var triggerAfterLoad = function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
 		$("#importSchedule").empty();
-		// $("#importSchedule").append("<option disabled selected>Chọn đợt hàng</option>");
-		// for (var e in importSLData) {
-		// 	if (e ==0) {
-		// 		continue;
-		// 	}
-		// 	$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
-		// }
+
+		var indexInTable = {};
+		for(var e in importSLData) {
+			indexInTable[importSLData[e][0]] = e;
+		}
+
+		let sortableData = importSLData.slice(0);
+		sortableData.sort(function(a,b) {
+		  if (isNaN(parseInt(a[0]))) {
+			return -1;
+		  }
+		  if (isNaN(parseInt(b[0]))) {
+			return 1;
+		  }
+		  return parseInt(a[0]) - parseInt(b[0]);
+		});
 
 		lsAutoImportSchedule = [];
-		for (var e in importSLData) {
-			if (e ==0) {
-				continue;
-			}
-			if (!importSLData[e][0] || !importSLData[e][1]) {
+		for (var es in sortableData) {
+			var e = indexInTable[sortableData[es][0]];
+
+			if (!importSLData[e][0] || !importSLData[e][1] || isNaN(importSLData[e][0])) {
 				continue;
 			}
 			lsAutoImportSchedule.push({

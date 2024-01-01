@@ -36,18 +36,25 @@ if (!currentOrder.shippingType) {
 }
 
 var productList = JSON.parse(localStorage.getItem("productList"));
+var importSLData;
+var importSLDataParse;
 
 var triggerAfterLoad = function(){
 	
 	// console.log("triggerAfterLoad");
 
 	$("#loadingSpin").show();
-	loadProductList(function(){
-		$("#loadingSpin").hide();
-	});
 
 	loadImportScheduleList(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
+		importSLDataParse = {}
+		for (var e in importSLData) {
+			importSLDataParse[importSLData[e][0]] = importSLData[e];
+		}
+		loadProductList(function(){
+			fillListOfProduct(prodListOrder);
+			$("#loadingSpin").hide();
+		});
 	})
 
 	loadCustomerList(function(){
@@ -106,7 +113,7 @@ $("#btnPrintOrder").hide();
 
 var prodListOrder = currentOrder.prodListOrder;
 // console.log(prodListOrder);
-fillListOfProduct(prodListOrder);
+// fillListOfProduct(prodListOrder);
 
 function fillListOfProduct(prodListOrder) {
 
@@ -169,7 +176,7 @@ function fillListOfProduct(prodListOrder) {
 			'    <div class="col-sm-10">'+
 			'      <select class="mdb-select md-form importScheduleGeneral importSchedule_'+e+'"'+
 			'        style="width: 100%">'+
-			'        <option selected value="'+productIndexInStore+'">'+prodListOrder[e].importCode+'</option>'+
+			'        <option selected value="'+productIndexInStore+'">'+prodListOrder[e].importCode+' - '+importSLDataParse[prodListOrder[e].importCode][1]+'</option>'+
 			'      </select>'+
 			'    </div>'+
 			'</div>'+

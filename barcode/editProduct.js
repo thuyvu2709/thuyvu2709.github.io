@@ -54,18 +54,22 @@ var triggerAfterLoad = function(){
 
 	loadImportScheduleList(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
-		// console.log(importSLData);
-		// $("#importSchedule").empty();
-		// for (var e in importSLData) {
-		// 	if (e ==0) {
-		// 		continue;
-		// 	}
-		// 	if (importSLData[e][0] == currentProduct.importCode) {
-		// 		$("#importSchedule").append("<option value='"+importSLData[e][0]+"' selected>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
-		// 	} else {
-		// 		$("#importSchedule").append("<option value='"+importSLData[e][0]+"'>"+importSLData[e][0]+" - "+importSLData[e][1]+"</option>")
-		// 	}
-		// }
+
+		var indexInTable = {};
+		for(var e in importSLData) {
+			indexInTable[importSLData[e][0]] = e;
+		}
+
+		let sortableData = importSLData.slice(0);
+		sortableData.sort(function(a,b) {
+		  if (isNaN(parseInt(a[0]))) {
+			return -1;
+		  }
+		  if (isNaN(parseInt(b[0]))) {
+			return 1;
+		  }
+		  return parseInt(a[0]) - parseInt(b[0]);
+		});
 
 		lsAutoImportSchedule = [];
 		for (var e in importSLData) {
@@ -73,7 +77,7 @@ var triggerAfterLoad = function(){
 				continue;
 			}
 
-			if (!importSLData[e][0] || !importSLData[e][1]) {
+			if (!importSLData[e][0] || !importSLData[e][1] || isNaN(importSLData[e][0])) {
 				continue;
 			}
 
