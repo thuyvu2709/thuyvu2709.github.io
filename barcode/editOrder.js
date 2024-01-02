@@ -146,9 +146,9 @@ function fillListOfProduct(prodListOrder) {
 				prodListOrder[e].turnover +
 
             '</button>'+
-            '<div class="btn deleteelement delprof_'+e+'" style="border : 1px solid black">'+
+            '<button class="btn deleteelement delprof_'+e+'" style="border : 1px solid black">'+
             	"Xoá sản phẩm"+
-            '</div>'+
+            '</button>'+
           '</h5>'+
         '</div>'+
 
@@ -215,7 +215,7 @@ function fillListOfProduct(prodListOrder) {
 
 		$(".btnSearchProduct_"+e).click(searchForm);
 		$(".btnAddMiniProduct_"+e).click(addMiniProduct)
-
+		$(".delprof_"+e).click(deleteProductFn);
 	}
 
 
@@ -972,7 +972,8 @@ $("#btnPrintOrder").click(function(){
 	window.location = "showorder.html";
 })
 
-$(".deleteelement").click(function(){
+// $(".deleteelement").click(function(){
+function deleteProductFn() {
 	// console.log("delete");
 	var cardIndex = $(this).attr("class").split(" ").pop().split("_").pop();
 	// $(".btnProductName_"+cardIndex).click();
@@ -1004,7 +1005,8 @@ $(".deleteelement").click(function(){
 	$(".btnProductName_"+cardIndex).prop('disabled', true);
 	$("#collapse_"+cardIndex).collapse();
 	$("#collapse_"+cardIndex).empty();
-})
+	$(".delprof_"+cardIndex).prop('disabled', true);
+}
 
 
 function saveCustomerInforFn(callback){
