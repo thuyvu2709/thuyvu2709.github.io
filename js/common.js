@@ -808,7 +808,7 @@ function appendOrderDetail(submitData,callback) {
 }
 
 function appendOrder(submitOrderData,callback) {
-  var numOfColumn = 14;
+  var numOfColumn = 15;
   var sheetrange = 'Order!A1:'+ String.fromCharCode(65+numOfColumn)+'1';
   var spreadsheetId = mainSheetForProduct;
 
@@ -1799,7 +1799,8 @@ function splitOrderAvailable(currentOrder,callbackSplitOrderMain){
           currentOrder.shippingType,
           currentOrder.otherCost,
           currentOrder.prepaid,
-          0
+          0,
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1)'
         ]
     ]
 
@@ -1864,9 +1865,10 @@ function splitOrderAsRequested(currentOrder,lsProdIndex,callbackSplitOrderMain){
           "=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))",
           currentOrder.orderNode+(currentOrder.prepaid > 0 ? " Note Trả trước: "+currentOrder.prepaid+"k ở đơn hàng "+currentOrder.orderCode +" "+currentOrder.customerName : ""),
           currentOrder.shippingType,
-          currentOrder.otherCost,
+          JSON.stringify(currentOrder.otherInfor),
+          currentOrder.prepaid,
           0,
-          0
+          '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1)'
         ]
     ]
 

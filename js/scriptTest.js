@@ -21,6 +21,8 @@ $("#ImportData").click(function(){
 	})
 })
 
+var shippingSheet = "";
+
 document.getElementById('ImportDataFromFile').addEventListener('change', handleFileSelect, false);
 
 function handleFileSelect(event) {
@@ -99,6 +101,9 @@ var triggerAfterLoad = function(){
 	    console.log("mainSheetForProduct"+datasetList[setIndex][1]);
 	    console.log("shippingSheet"+datasetList[setIndex][2]);
 	    console.log("datasetName"+datasetList[setIndex][0]);
+
+		shippingSheet = datasetList[setIndex][2];
+		
 	    mergeProcessing(datasetList[setIndex][1]);
 	    // window.location = "/";
 	  })
@@ -180,6 +185,7 @@ function mergeProcessing(targetMainSheet) {
 		data[e][5] = '=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!H:H)';
 		data[e][7] = '=INDIRECT(ADDRESS(ROW();6)) + INDIRECT(ADDRESS(ROW();7))';
 		data[e][9] = '=SUMIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1));OrderDetail!K:K) / COUNTIF(OrderDetail!A:A;INDIRECT(ADDRESS(ROW();1)))';
+		data[e][15] = '=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1)'
 		orderSheetData.push(data[e]);
 		for (var f in orderListDetail) {
 			if (f == 0) {

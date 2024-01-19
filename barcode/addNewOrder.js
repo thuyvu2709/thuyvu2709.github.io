@@ -713,7 +713,8 @@ $("#addNewOrder").click(function(){
 				shippingType,
 				JSON.stringify(otherInfor),
 				prepaid,
-				0
+				0,
+				'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1)'
                 ]
             ]
  	$("#loading-text").html("Thêm thông tin chung đơn hàng");

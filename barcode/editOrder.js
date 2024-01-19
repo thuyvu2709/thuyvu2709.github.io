@@ -931,13 +931,14 @@ $("#editOrder").click(function(){
 				shippingType,
 				JSON.stringify(otherInfor),
 				prepaid,
-				0
+				0,
+				'=IF(IFERROR(VLOOKUP(INDIRECT(ADDRESS(ROW();1)); IMPORTRANGE("'+shippingSheet+'";"Shipping!A:A");1;false);"")="";0;1)'
                 ]
             ];
     // console.log(dataEditOrder);
     // console.log(otherInfor);
 
-    var numOfColumn = 14;
+    var numOfColumn = 15;
 	var sheetrange = sheetOrder+'!A'+realOrderIndex +":"+ String.fromCharCode(65+numOfColumn) + realOrderIndex;
 
 	$("#loading-text").html("Cập nhật thông tin chung");
