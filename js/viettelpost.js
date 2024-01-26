@@ -1,5 +1,11 @@
 
 function loginViettelPost(callback){
+
+	if (new Date().getDate() == localStorage.getItem("viettelpostTokenDate"))  {
+		callback(localStorage.setItem("viettelpostToken"));
+		return;
+	}
+	
 	var settings = {
 	    "url": herokuPrefix+"https://partner.viettelpost.vn/v2/user/Login",
 	    "method": "POST",
@@ -16,6 +22,7 @@ function loginViettelPost(callback){
 		$.ajax(settings).done(function(response) {
 		    console.log(response);
 	        localStorage.setItem("viettelpostToken",response["data"]["token"]);
+			localStorage.setItem("viettelpostTokenDate",new Date().getDate());
 	        viettelpostToken = response["data"]["token"];
 	        callback(response["data"]["token"]);
 		});

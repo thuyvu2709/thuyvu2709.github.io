@@ -106,8 +106,8 @@ var triggerAfterLoad = function(){
       //   }
       //   localStorage.setItem("ghnToken",ghnToken);
       // })
-      loginViettelPost(function(){
-      })
+        loginViettelPost(function(){
+        })
     }
 
     getShippingReport(function(shippingRpData){
@@ -1080,7 +1080,7 @@ function ghnLinkFn(){
 
   localStorage.setItem("currentOrder",JSON.stringify(orderJs));
 
-  $("#loadingSpin").show();
+  // $("#loadingSpin").show();
 
   // loginViettelPost(function(){
   //   $("#loadingSpin").hide();
@@ -1103,7 +1103,7 @@ function viettelpostLinkFn(){
 
   localStorage.setItem("currentOrder",JSON.stringify(orderJs));
 
-  $("#loadingSpin").show();
+  // $("#loadingSpin").show();
 
   // loginViettelPost(function(){
   //   $("#loadingSpin").hide();
