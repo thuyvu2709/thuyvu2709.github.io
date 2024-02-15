@@ -2,7 +2,7 @@
 function loginViettelPost(callback){
 
 	if (new Date().getTime() < parseInt(localStorage.getItem("viettelpostTokenDate")))  {
-		callback(localStorage.setItem("viettelpostToken"));
+		callback(localStorage.getItem("viettelpostToken"));
 		return;
 	}
 

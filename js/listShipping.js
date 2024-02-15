@@ -343,7 +343,7 @@ function loadOrderShippingListHtml() {
         continue;
       }
     }
-    
+    var shippingCodeDescription  = "";
     var shipIcon = '[<i class="fas fa-motorcycle">'+lsOrder[e][8]+'</i>]';
 
     var mark = "";
@@ -361,7 +361,7 @@ function loadOrderShippingListHtml() {
         try {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label;
           if (logiticCodice){
-            orderDetailBrief+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            shippingCodeDescription+= "GHTK Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
             mark = "textGreen";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/ghtk.png" class="shippingLogo">'+lsOrder[e][8]+'</img> ]';
@@ -374,7 +374,7 @@ function loadOrderShippingListHtml() {
         try {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.viettelPostlabel;
           if (logiticCodice){
-            orderDetailBrief+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            shippingCodeDescription+= "ViettelPost Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
             mark = "textRed";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/viettelpost.png" class="shippingLogo">'+lsOrder[e][8]+'</img> ]';
@@ -387,7 +387,7 @@ function loadOrderShippingListHtml() {
         try {
           logiticCodice = lsOrderDetail[lsOrder[e][0]].otherInfor.order.ghnLabel;
           if (logiticCodice){
-            orderDetailBrief+= "GHN Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
+            shippingCodeDescription+= "GHN Code: <b><span class='textRed ghtkCode'>" + logiticCodice + "</span></b><br/>";
             mark = "textRed";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/ghn.png" class="shippingLogo">'+lsOrder[e][8]+'</img> ]';
@@ -404,7 +404,7 @@ function loadOrderShippingListHtml() {
               savedGHTKRequest = lsOrderDetail[lsOrder[e][0]].otherInfor.savedRequest;
               // console.log(savedGHTKRequest);
               if (savedGHTKRequest) {
-                orderDetailBrief+= '<div class="btn btn-default btnNormal5px getGHTKCodeFromSavedRequest getGHTKCodeFromSavedRequest_'+e+'" >Lấy mã GHTK</div><br/><br/>';
+                shippingCodeDescription+= '<div class="btn btn-default btnNormal5px getGHTKCodeFromSavedRequest getGHTKCodeFromSavedRequest_'+e+'" >Lấy mã GHTK</div><br/><br/>';
               }
               // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
             } catch (e) {
@@ -579,7 +579,8 @@ function loadOrderShippingListHtml() {
       next2days.setDate(requestedDate.getDate()+3);
     }
 
-    orderDetailBrief+="Requested at:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
+    orderDetailBrief+="Yêu câù lúc:"+getCurrentDateTime(requestedDate).date+" Deadline:"+getCurrentDateTime(next2days).date+"<br/>";
+    orderDetailBrief+=shippingCodeDescription;
 
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].orderNode ? "Note:"+lsOrderDetail[lsOrder[e][0]].orderNode+"<br/>" : "");
     orderDetailBrief+=(lsOrderDetail[lsOrder[e][0]].otherInfor ? lsOrderDetail[lsOrder[e][0]].otherInfor.isFreeShip==true ? "<span class='text-mustard'>Shop thanh toán ship, free ship cho khách</span><br/>" : "" : "")
