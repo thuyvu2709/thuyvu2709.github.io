@@ -11094,6 +11094,11 @@ form .row:first-child .floating-label-form-group {
 .textRed {
     color: red;
 }
+
+.textGreen {
+  color: green;
+}
+
 .textBlue {
     color: blue;
 }
@@ -11113,4 +11118,9 @@ form .row:first-child .floating-label-form-group {
 }
 #pageIcon {
   color: #c57e0f;
+}
+
+.shippingLogo {
+  width: 25px;
+  height: 25px;
 }
