@@ -542,16 +542,22 @@ function showOrderPush(){
 			return;
 		};
 
-		var ttvd = "<div><h4>Thông tin vận đơn:</h4>"
-		+"<div><b>Message: </b>"+currentOrder.otherInfor.order["message"]+"</div>"
-		+"<div><b>Nhãn: </b>"+currentOrder.otherInfor.order["order"]["label"]+" (nhãn đã tự copy)</div>"
-		+"<div><b>Phí ship: </b>"+currentOrder.otherInfor.order["order"]["fee"]+"</div>"
-		+"<div><b>Phí bảo hiểm: </b>"+currentOrder.otherInfor.order["order"]["insurance_fee"]+"</div>"
-		+"<div><b>Dự kiến lấy hàng: </b>"+currentOrder.otherInfor.order["order"]["estimated_pick_time"]+"</div>"
-		+"<div><b>Dự kiến giao hàng: </b>"+currentOrder.otherInfor.order["order"]["estimated_deliver_time"]+"</div>"
-		+"<div><b>Địa chỉ giao: </b>"+currentOrder.otherInfor.order.toAddress+"</div>"
-		+"</div>"
-		+"<hr/>";
+		var ttvd = "";
+		try {
+			ttvd = "<div><h4>Thông tin vận đơn:</h4>"
+				+"<div><b>Message: </b>"+currentOrder.otherInfor.order["message"]+"</div>"
+				+"<div><b>Nhãn: </b>"+currentOrder.otherInfor.order["order"]["label"]+" (nhãn đã tự copy)</div>"
+				+"<div><b>Phí ship: </b>"+currentOrder.otherInfor.order["order"]["fee"]+"</div>"
+				+"<div><b>Phí bảo hiểm: </b>"+currentOrder.otherInfor.order["order"]["insurance_fee"]+"</div>"
+				+"<div><b>Dự kiến lấy hàng: </b>"+currentOrder.otherInfor.order["order"]["estimated_pick_time"]+"</div>"
+				+"<div><b>Dự kiến giao hàng: </b>"+currentOrder.otherInfor.order["order"]["estimated_deliver_time"]+"</div>"
+				+"<div><b>Địa chỉ giao: </b>"+currentOrder.otherInfor.order.toAddress+"</div>"
+				+"</div>"
+				+"<hr/>";
+		}catch(e) {
+			ttvd = "<div><h4>Thông tin vận đơn:</h4>"
+				+"<div><b>Đơn đã lên có thể không phải là GHTK</b></div>"
+		}
 		$("#showOrderPush").html(ttvd);
 	}
 }
