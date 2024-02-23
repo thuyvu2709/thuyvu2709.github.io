@@ -1,5 +1,0 @@
-ssh vanle@10.7.20.89
-
-docker run -it -p 3000:3000 -v "$(pwd):/home/project:cached" theiaide/theia:next theia browsertheia desktop 
-
-http://10.7.20.89:3333/levanthanh3005.github.io/index.html
