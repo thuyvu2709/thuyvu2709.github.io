@@ -56,44 +56,45 @@
     // $(function(){
     $("#textareaBanking").hide();
     $(".footerMain").click(function(){
-        var allText =  
-        //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
-        //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-        "Thông tin tài khoản ngân hàng:\n"+
-        "- Chủ tài khoản: Le Van Thanh \n"+
-        "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
-        "- Số tài khoản : 19034601990019 \n"+
-        "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
-        "Cảm ơn bạn đã ủng hộ !\n\n"+
-        "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
-        "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
-        "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
-        "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
-        console.log("Copy");
-        $("#textareaBanking").show();
+        copyBank();
+        // var allText =  
+        // //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
+        // //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
+        // "Thông tin tài khoản ngân hàng:\n"+
+        // "- Chủ tài khoản: Le Van Thanh \n"+
+        // "- Ngân hàng: Techcombank chi nhánh Phúc Yên, Vĩnh Phúc \n"+
+        // "- Số tài khoản : 19034601990019 \n"+
+        // "- Chuyển khoản ghi rõ: tên người gửi - mặt hàng mua\n"+
+        // "Cảm ơn bạn đã ủng hộ !\n\n"+
+        // "Bạn có thể tham khảo thêm các mặt hàng tại:\n"+
+        // "❌ Fanpage: https://www.facebook.com/thuyvu.gochangau/ \n"+
+        // "❌ Group săn deal siêu giảm giá: https://www.facebook.com/groups/thuyvu.gochangau/ \n"+
+        // "❌ Fb cá nhân: https://www.facebook.com/thuyvu2709";
+        // console.log("Copy");
+        // $("#textareaBanking").show();
 
-        $("#textareaBanking").val(allText);
+        // $("#textareaBanking").val(allText);
 
-        // $("#textareaBanking").select(); 
-        // if ($("#textareaBanking").setSelectionRange) {
-        //   $("#textareaBanking").setSelectionRange(0, 99999); 
-        // }
-        var copyText = document.getElementById("textareaBanking");
+        // // $("#textareaBanking").select(); 
+        // // if ($("#textareaBanking").setSelectionRange) {
+        // //   $("#textareaBanking").setSelectionRange(0, 99999); 
+        // // }
+        // var copyText = document.getElementById("textareaBanking");
 
-        /* Select the text field */
-        copyText.select(); 
-        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-        /*For mobile devices*/
-        document.execCommand("copy");
+        // /* Select the text field */
+        // copyText.select(); 
+        // copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+        // /*For mobile devices*/
+        // document.execCommand("copy");
 
-        $("#textareaBanking").hide();
+        // $("#textareaBanking").hide();
     })
 
     function copyBank() {
       var allText =  
         //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
         //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-        "Le Van Thanh - 19034601990019 \n Techcombank Vĩnh Phúc \n Nội Dung: CHỈ GHI TÊN FB ( Không ghi cọc hàng hay gì cả)"
+        "Em gửi stk ạ\nLe Van Thanh - 19034601990019 \nTechcombank Vĩnh Phúc \nNội Dung: CHỈ GHI TÊN FB (KHÔNG GHI MUA HÀNG, HAY CỌC giúp em)\nĐây là stk tên chồng em - Các anh/chị yên tâm nhé"
         // Le Van Thanh - 19034601990019 
         // Techcombank Vĩnh Phúc 
         // Nội Dung: CHỈ GHI TÊN FB ( Không ghi cọc hàng hay gì cả)
