@@ -105,6 +105,11 @@ if (currentOrder.shippingType == "SHIPPER_NO_COD" || !currentOrder.shippingType)
 	$("#shippingType").html("");
 }
 
+if (otherInfor && otherInfor.isFreeShip) {
+	$(".shippingCost").hide();
+	// $("#shippingCost").html("Đã thanh toán ship");
+}
+
 $("#orderNode").html((currentOrder.orderNode ? currentOrder.orderNode : ""));
 $("#orderNode").height( $("#orderNode")[0].scrollHeight );
 $("#otherCost").html(currentOrder.otherCost);
