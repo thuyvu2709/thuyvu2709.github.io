@@ -174,8 +174,13 @@ if (currentOrder.otherInfor && currentOrder.otherInfor.isFreeShip!=undefined) {
 currentOrder.willpay = parseFloat(currentOrder.totalPayIncludeShip) - parseFloat(currentOrder.prepaid ? currentOrder.prepaid : 0);
 
 if (currentOrder.shippingType == "POST_COD") {
-	// $("#collectMoneyType").val("1").change();
-	$("#collectMoneyType").prop("selectedIndex", 1);
+	$("#collectMoneyType").prop("selectedIndex", 1); //selectedIndex=1 => <option value="2">
+
+	if (currentOrder.otherInfor) {
+		if (currentOrder.otherInfor.isFreeShip) {
+			$("#collectMoneyType").prop("selectedIndex", 2);
+		}
+	}
 
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#titleWillpay").html("Thu COD:");
@@ -184,6 +189,12 @@ if (currentOrder.shippingType == "POST_COD") {
 } else if (currentOrder.shippingType == "POST_NO_COD") {
 
 	$("#collectMoneyType").prop("selectedIndex", 3);
+
+	if (currentOrder.otherInfor) {
+		if (currentOrder.otherInfor.isFreeShip) {
+			$("#collectMoneyType").prop("selectedIndex", 0);
+		}
+	}
 	
 	$("#shippingCost").html("Khách thanh toán với bên vận chuyển");
 	$("#shippingType").html("Ship Dịch Vụ Vận Chuyển không COD");
@@ -418,7 +429,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 		$("#loading-text").html();
 	}
 	calculateTransportFeeAPIViettelPost(feeObj, function(feeLs){
-		console.log(feeLs);
+		// console.log(feeLs);
 		var feeCt = "";
 		for (e in feeLs) {
 			feeCt = feeCt + "<option value='"+feeLs[e]["MA_DV_CHINH"]+"'>"

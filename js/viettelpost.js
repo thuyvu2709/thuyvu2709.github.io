@@ -198,7 +198,7 @@ function findPlaceProvinceById(provinceId,callback){
 	}
 
 	$.ajax(settings).done(function (response) {
-	  console.log(response);
+	//   console.log(response);
 	  callback(response);
 	});
 }
@@ -341,6 +341,7 @@ function addressChecking(addressString, callback) {
 								// console.log(listWards);
 								for (w in listWards) {
 									if (listWards[w]["WARDS_NAME"].toUpperCase() == addressObj["WARDS_NAME"].toUpperCase()) {
+										ckWard = true;
 										var selectedWard = listWards[w]
 										// console.log(selectedWard);
 										addressObj.wardsName = selectedWard["WARDS_NAME"];
