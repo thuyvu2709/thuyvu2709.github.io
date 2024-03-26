@@ -548,7 +548,10 @@ function triggerAutocompleteViettelpost(orginalAddress, callback){
 	choosenAddressData["WARDS_NAME"]=aix.ward;
 	choosenAddressData["OTHER"]=aix.address;
 
-	var content = '<h3>Tìm địa điểm</h3><br/>'
+	var content = '<h4>Tìm địa điểm'
+	+'<span class="fixAddress textRed">'
+	+'[Save]'
+	+'</span></h4>'
 	+(orginalAddress ? '<div>Đến:'+orginalAddress+'</div>' : '')
 	+'<div class="autocomplete">'
 	+'	<input class="form-control" id="myProvince" type="text" name="myProvince" placeholder="Tỉnh" value="'+aix.province+'"/>'
@@ -561,9 +564,6 @@ function triggerAutocompleteViettelpost(orginalAddress, callback){
 	+'</div>'
 	+'<div class="autocomplete">'
 	+'	<input class="form-control" id="myDetail" type="text" name="myDetail" placeholder="Thông tin cụ thể khác" value="'+aix.address+'">'
-	+'</div>'
-	+'<div class="autocomplete btn btn-link fixAddress">'
-	+'Đồng ý'
 	+'</div>'
 	;
 
