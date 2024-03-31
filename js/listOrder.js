@@ -295,15 +295,16 @@ function loadOrderListHtml() {
         continue;
       }
     } else if (status == 'READY') {
-      if (data[e][9]<1) {
+      if (parseFloat(data[e][9])<1) {
         continue;
       }
+      
       if (data[e][8] == "PAID" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       };
-      if (data[e][11]=="SHOPEE" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
-        continue;
-      }
+      // if (data[e][11]=="SHOPEE" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+      //   continue;
+      // }
       if (data[e][11]=="POST_COD" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
         continue;
       }
