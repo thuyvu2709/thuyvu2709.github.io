@@ -113,9 +113,10 @@ var triggerAfterLoad = function(){
 		})
 	})
 
-	loadProductCatalogList(function(){
-		productCatalogList = JSON.parse(localStorage.getItem("productCatalogList"));
-
+	loadProductCatalogList(function(productCatalogList){
+		if (!productCatalogList) {
+			productCatalogList = JSON.parse(localStorage.getItem("productCatalogList"));
+		}
 		var lsPCName = [];
 		for (var e in productCatalogList) {
 			if (e==0) {

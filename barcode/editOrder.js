@@ -57,9 +57,12 @@ var triggerAfterLoad = function(){
 		});
 	})
 
-	loadCustomerList(function(){
-		console.log("customerList");
-		customerList = JSON.parse(localStorage.getItem("customerList"));
+	
+	loadCustomerList(function(customerList){
+		if (!customerList) {
+			customerList = JSON.parse(localStorage.getItem("customerList"));
+		}
+		
 		var lsCusName = [];
 		for (var e in customerList) {
 			if (e==0) {
