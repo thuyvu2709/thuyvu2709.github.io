@@ -1684,13 +1684,13 @@ function updateOrderStatus(line, column, value, callback) {
 }
 
 
-function getOrderShipping(callback) {
+function getOrderShippingByLine(startLine, endLine, callback) {
   var spreadsheetId = shippingSheet;
 
   // console.log("getOrderShipping");
 
   var indexColumnOfAllData = 14;
-  var sheetrange = 'Shipping!A:' + String.fromCharCode(65 + indexColumnOfAllData);
+  var sheetrange = 'Shipping!A' + startLine + ':' + String.fromCharCode(65 + indexColumnOfAllData)+ '' + endLine;
   var dataset = [];
 
   if (passDataLocalhost) {
@@ -1710,13 +1710,43 @@ function getOrderShipping(callback) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
     dataset = response.result.values;
 
-    localStorage.setItem("ordershipping", JSON.stringify(dataset));
+    // localStorage.setItem("ordershipping", JSON.stringify(dataset));
 
 
     callback(dataset);
   }, function (response) {
     console.log('Error: ' + response.result.error.message);
   });
+}
+
+function getOrderShipping(callback) {
+  rs = [];
+  var batchNum = 1000;
+  var startLine = 1;
+  var endLine = startLine + batchNum;
+
+  console.log("getOrderShipping");
+
+  var callEachBacht = function (startLine, endLine) {
+    getOrderShippingByLine(startLine, endLine, function (rsb) {
+      rs = rs.concat(rsb)
+
+      if (rsb.length < batchNum) {
+        // localStorage.setItem("customerList",JSON.stringify(dataset));
+        // localStorage.setItem("warehouse", JSON.stringify(rs));
+        localStorage.setItem("ordershipping", JSON.stringify(rs));
+        callback(rs);
+        return;
+      } else {
+        startLine = endLine + 1;
+        endLine = startLine + batchNum;
+        setTimeout(function () {
+          callEachBacht(startLine, endLine)
+        }, 500);
+      }
+    })
+  }
+  callEachBacht(startLine, endLine);
 }
 
 function getTaskList(callback) {
