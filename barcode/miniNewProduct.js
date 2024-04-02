@@ -226,7 +226,7 @@ function newMiniProduct(index){
 	    })
 	})
 
-	loadImportScheduleList(function(){
+	loadWarehouse(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
 		$("#miniimportSchedule").empty();

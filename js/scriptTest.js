@@ -54,7 +54,7 @@ $("#loadDataToMerge").click(function(){
 	loadOrderList(function(){
 		loadOrderListDetail(function(){
 			loadProductList(function(){
-				loadImportScheduleList(function(){
+				loadWarehouse(function(){
 					  $("#currentDataInfor").html("Order:"+JSON.parse(localStorage.getItem("orderList")).length+" lines<br/>"+
 					  	"OrderDetail:"+JSON.parse(localStorage.getItem("orderListDetail")).length+" lines<br/>"+
 					  	"Product:"+JSON.parse(localStorage.getItem("productList")).length+" lines<br/>"+

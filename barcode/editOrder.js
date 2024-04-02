@@ -45,7 +45,7 @@ var triggerAfterLoad = function(){
 
 	$("#loadingSpin").show();
 
-	loadImportScheduleList(function(){
+	loadWarehouse(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		importSLDataParse = {}
 		for (var e in importSLData) {

@@ -52,7 +52,7 @@ var triggerAfterLoad = function(){
 		$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
 	})
 
-	loadImportScheduleList(function(){
+	loadWarehouse(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 
 		var indexInTable = {};

@@ -81,7 +81,7 @@ var triggerAfterLoad = function(){
 		$("#orderCode").val(orderCode);
 	})
 
-	loadImportScheduleList(function(){
+	loadWarehouse(function(){
 		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 	})
 
