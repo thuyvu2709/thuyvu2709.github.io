@@ -854,10 +854,7 @@ function loadOrderListDetail(callback) {
   });
 }
 
-function loadWarehouse(callback) {
-
-  console.log("loadWarehouse");
-
+function loadWarehouseByLine(startLine, endLine, callback) {
   var spreadsheetId = mainSheetForProduct;
 
 
@@ -873,7 +870,7 @@ function loadWarehouse(callback) {
   }
 
   var indexColumnOfAllData = 10;
-  var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
+  var sheetrange = 'Warehouse!A'+startLine+':'+String.fromCharCode(65+indexColumnOfAllData)+''+endLine;
 
   gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
@@ -882,12 +879,74 @@ function loadWarehouse(callback) {
       // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
       dataset = response.result.values;
       // showList(dataset);
-      localStorage.setItem("warehouse",JSON.stringify(dataset));
+      // localStorage.setItem("warehouse",JSON.stringify(dataset));
 
-      callback();
+      callback(dataset);
   }, function(response) {
       console.log('Error: ' + response.result.error.message);
   });
+}
+
+function loadWarehouse(callback) {
+
+  rs = [];
+  var batchNum = 1000;
+  var startLine = 1;
+  var endLine = startLine+batchNum;
+
+  console.log("loadWarehouse");
+
+  var callEachBacht = function(startLine, endLine) {
+    loadWarehouseByLine(startLine, endLine, function(rsb){
+        rs = rs.concat(rsb)
+
+        if (rsb.length < batchNum) {
+            // localStorage.setItem("customerList",JSON.stringify(dataset));
+            localStorage.setItem("warehouse",JSON.stringify(rs));
+
+            callback(rs);
+            return;
+        } else {
+            startLine = endLine + 1;
+            endLine = startLine+batchNum;
+            setTimeout(function(){
+                callEachBacht(startLine, endLine)
+            }, 500);
+        }
+    })
+}
+callEachBacht(startLine, endLine);
+
+  // var spreadsheetId = mainSheetForProduct;
+
+
+  // if (passDataLocalhost) {
+  //   callback();
+  //   return;
+  // }
+
+  // if(!gapi.client.sheets) {
+  //   callback();
+  //   comeBackHomeToAuthorize();
+  //   return;
+  // }
+
+  // var indexColumnOfAllData = 10;
+  // var sheetrange = 'Warehouse!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+  // gapi.client.sheets.spreadsheets.values.get({
+  //     spreadsheetId: spreadsheetId,
+  //     range: sheetrange,
+  // }).then(function(response) {
+  //     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
+  //     dataset = response.result.values;
+  //     // showList(dataset);
+  //     localStorage.setItem("warehouse",JSON.stringify(dataset));
+
+  //     callback();
+  // }, function(response) {
+  //     console.log('Error: ' + response.result.error.message);
+  // });
 }
 
 
