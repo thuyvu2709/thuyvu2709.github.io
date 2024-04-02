@@ -90,7 +90,7 @@ var triggerAfterLoad = function(){
         console.log("loadOrderListDetail");
       });
 
-      loadImportScheduleList(function(){
+      loadWarehouse(function(){
           var importSLData = JSON.parse(localStorage.getItem("warehouse"));
           // console.log(importSLData);
           $("#importFilter").empty();

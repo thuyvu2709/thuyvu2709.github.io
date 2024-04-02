@@ -991,6 +991,7 @@ function loadWarehouse(callback) {
 
       if (rsb.length < batchNum) {
         // localStorage.setItem("customerList",JSON.stringify(dataset));
+        console.log("Done loadWarehouse");
         localStorage.setItem("warehouse", JSON.stringify(rs));
 
         callback(rs);
