@@ -179,7 +179,7 @@ function loadProductListByLine(startLine, endLine, callback) {
 
 function loadProductList(callback) {
   rs = [];
-  var batchNum = 500;
+  var batchNum = 1000;
   var startLine = 1;
   var endLine = startLine + batchNum;
 
@@ -190,6 +190,7 @@ function loadProductList(callback) {
       rs = rs.concat(rsb)
 
       if (rsb.length < batchNum) {
+        console.log("done loadProductList");
         localStorage.setItem("productList", JSON.stringify(rs));
         callback(rs);
         return;
