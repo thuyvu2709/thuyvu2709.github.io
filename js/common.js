@@ -179,7 +179,7 @@ function loadProductListByLine(startLine, endLine, callback) {
 
 function loadProductList(callback) {
   rs = [];
-  var batchNum = 1000;
+  var batchNum = 500;
   var startLine = 1;
   var endLine = startLine + batchNum;
 
