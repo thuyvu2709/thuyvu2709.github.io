@@ -179,6 +179,10 @@ function mergeProcessing(targetMainSheet) {
 		  if (data[e][11]=="POST_COD" && orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
 		    continue;
 		  }
+		  if (data[e][11]=="SHIPPER_COD" || data[e][11]=="SHIPPER_NO_COD" ) {
+		   if(orderShipStatus[data[e][0]] && orderShipStatus[data[e][0]].status == "COMPLETED") {
+		    continue;
+		  }
 		// } 
 
 		// console.log(data[e]);
