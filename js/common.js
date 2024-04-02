@@ -811,7 +811,7 @@ function loadOrderListByLine(startLine, endLine, callback) {
 
 function loadOrderList(callback) {
   rs = [];
-  var batchNum = 1000;
+  var batchNum = 500;
   var startLine = 1;
   var endLine = startLine + batchNum;
   console.log("loadOrderList");
@@ -1721,7 +1721,7 @@ function getOrderShippingByLine(startLine, endLine, callback) {
 
 function getOrderShipping(callback) {
   rs = [];
-  var batchNum = 1000;
+  var batchNum = 500;
   var startLine = 1;
   var endLine = startLine + batchNum;
 
