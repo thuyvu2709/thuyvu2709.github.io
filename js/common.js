@@ -153,12 +153,12 @@ function loadProductListByLine(startLine, endLine, callback) {
   // console.log("loadProductList:"+sheetrange);
 
   if (passDataLocalhost) {
-    callback();
+    callback([]);
     return;
   }
 
   if (!gapi.client.sheets) {
-    callback();
+    callback([]);
     comeBackHomeToAuthorize();
     return;
   }
@@ -191,7 +191,9 @@ function loadProductList(callback) {
 
       if (rsb.length < batchNum) {
         console.log("done loadProductList");
-        localStorage.setItem("productList", JSON.stringify(rs));
+        if (rs.length > 0 ) {
+          localStorage.setItem("productList", JSON.stringify(rs));
+        }
         callback(rs);
         return;
       } else {

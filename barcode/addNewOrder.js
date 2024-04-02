@@ -74,15 +74,53 @@ var triggerAfterLoad = function(){
 		productList = JSON.parse(localStorage.getItem("productList"));
 
 		$("#loadingSpin").hide();
+		
+		loadWarehouse(function(){
+			importSLData = JSON.parse(localStorage.getItem("warehouse"));
+
+			loadCustomerList(function(customerList){
+				if (!customerList) {
+					customerList = JSON.parse(localStorage.getItem("customerList"));
+				}
+				// customerList = JSON.parse(localStorage.getItem("customerList"));
+				var lsCusName = [];
+				for (var e in customerList) {
+					if (e==0) {
+						continue;
+					}
+					lsCusName.push({
+						label : customerList[e][1],
+						value : customerList[e][1],
+						data : customerList[e],
+						cusIndex : e
+					});
+				}
+				// console.log(lsCusName);
+				$( "#customerName" ).autocomplete({
+					source: function(request, response) {
+						var results = $.ui.autocomplete.filter(lsCusName, request.term);
+		
+						response(results.slice(0, 20));
+					},
+					select: function( event, ui ) {
+						// console.log(event);
+						// console.log(ui);
+						// $("#customerName").val(ui.item.);
+						$("#customerAddress").val(ui.item.data[2]);
+						$("#customerPhone").val(ui.item.data[0]);
+						$("#customerPhone").trigger("change");
+						choosenCustomerIndex = ui.item.cusIndex;
+						// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
+					}
+				});
+			})
+
+		})
 	});
 
 	getLatestOrderCode(function(){
 		orderCode = localStorage.getItem("orderCode");
 		$("#orderCode").val(orderCode);
-	})
-
-	loadWarehouse(function(){
-		importSLData = JSON.parse(localStorage.getItem("warehouse"));
 	})
 
 	getGhtkAccess(function(rs){
@@ -92,43 +130,6 @@ var triggerAfterLoad = function(){
 		  localStorage.setItem("ghtkToken",ghtkToken);
 		  localStorage.setItem("ghtkAuthorization",ghtkAuthorization);
         }
-	})
-
-	loadCustomerList(function(customerList){
-		if (!customerList) {
-			customerList = JSON.parse(localStorage.getItem("customerList"));
-		}
-		// customerList = JSON.parse(localStorage.getItem("customerList"));
-		var lsCusName = [];
-		for (var e in customerList) {
-			if (e==0) {
-				continue;
-			}
-			lsCusName.push({
-				label : customerList[e][1],
-				value : customerList[e][1],
-				data : customerList[e],
-				cusIndex : e
-			});
-		}
-		// console.log(lsCusName);
-		$( "#customerName" ).autocomplete({
-			source: function(request, response) {
-		        var results = $.ui.autocomplete.filter(lsCusName, request.term);
-
-		        response(results.slice(0, 20));
-		    },
-			select: function( event, ui ) {
-				// console.log(event);
-				// console.log(ui);
-				// $("#customerName").val(ui.item.);
-				$("#customerAddress").val(ui.item.data[2]);
-				$("#customerPhone").val(ui.item.data[0]);
-				$("#customerPhone").trigger("change");
-				choosenCustomerIndex = ui.item.cusIndex;
-				// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
-			}
-		});
 	})
 };
 
