@@ -336,6 +336,7 @@ function updateTitle(){
  */
 function handleAuthClick(event) {
     // gapi.auth2.getAuthInstance().signIn();
+    localStorage.clear();
     console.log("handleAuthClick");
     console.log(tokenClient);
 
