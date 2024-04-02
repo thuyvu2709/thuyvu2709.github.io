@@ -143,10 +143,11 @@ function comeBackHomeToAuthorize() {
   }
 }
 
-function loadProductList(callback) {
+function loadProductListByLine(startLine, endLine, callback) {
+
   var spreadsheetId = mainSheetForProduct;
   var indexColumnOfAllData = 22;
-  var sheetrange = 'Product!A:' + String.fromCharCode(65 + indexColumnOfAllData);
+  var sheetrange = 'Product!A' + startLine + ':' + String.fromCharCode(65 + indexColumnOfAllData)+ '' + endLine;
   var dataset = [];
 
   // console.log("loadProductList:"+sheetrange);
@@ -168,12 +169,40 @@ function loadProductList(callback) {
   }).then(function (response) {
     dataset = response.result.values;
     // showList(dataset);
-    localStorage.setItem("productList", JSON.stringify(dataset));
+    // localStorage.setItem("productList", JSON.stringify(dataset));
 
     callback(dataset);
   }, function (response) {
     console.log('Error: ' + response.result.error.message);
   });
+}
+
+function loadProductList(callback) {
+  rs = [];
+  var batchNum = 1000;
+  var startLine = 1;
+  var endLine = startLine + batchNum;
+
+  console.log("loadProductList");
+
+  var callEachBacht = function (startLine, endLine) {
+    loadProductListByLine(startLine, endLine, function (rsb) {
+      rs = rs.concat(rsb)
+
+      if (rsb.length < batchNum) {
+        localStorage.setItem("productList", JSON.stringify(rs));
+        callback(rs);
+        return;
+      } else {
+        startLine = endLine + 1;
+        endLine = startLine + batchNum;
+        setTimeout(function () {
+          callEachBacht(startLine, endLine)
+        }, 500);
+      }
+    })
+  }
+  callEachBacht(startLine, endLine);
 }
 
 // function loadCustomerList(callback) {
