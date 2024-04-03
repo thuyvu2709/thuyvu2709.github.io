@@ -70,7 +70,9 @@ var triggerAfterLoad = function(){
           parseProduct();
           $("#loadingSpin").hide();
           // console.log("Gooo");
-          loadOrderListHtml();
+          loadWarehouse(function(){
+            loadOrderListHtml();
+          })
         })
 
       })
