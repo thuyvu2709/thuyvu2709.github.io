@@ -138,7 +138,7 @@ for (var e in importSLData) {
 
 var totalCount = 0;
 $("#lsTable").empty();
-for (i in prodListOrder){
+for (var i in prodListOrder){
 	if (prodListOrder[i].delete) {
 		continue;
 	}
