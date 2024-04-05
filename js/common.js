@@ -178,6 +178,12 @@ function loadProductListByLine(startLine, endLine, callback) {
 }
 
 function loadProductList(callback) {
+
+  if (passDataLocalhost) {
+    callback([]);
+    return;
+  }
+
   rs = [];
   var batchNum = 1000;
   var startLine = 1;
@@ -787,12 +793,12 @@ function loadOrderListByLine(startLine, endLine, callback) {
   var sheetrange = 'Order!A'+startLine+':' + String.fromCharCode(65 + indexColumnOfAllData)+ '' + endLine;
 
   if (passDataLocalhost) {
-    callback();
+    callback([]);
     return;
   }
 
   if (!gapi.client.sheets) {
-    callback();
+    callback([]);
     comeBackHomeToAuthorize();
     return;
   }
@@ -813,6 +819,12 @@ function loadOrderListByLine(startLine, endLine, callback) {
 }
 
 function loadOrderList(callback) {
+
+  if (passDataLocalhost) {
+    callback([]);
+    return;
+  }
+
   rs = [];
   var batchNum = 1000;
   var startLine = 1;
@@ -886,12 +898,12 @@ function loadOrderListDetailByLine(startLine, endLine, callback) {
 
 
   if (passDataLocalhost) {
-    callback();
+    callback([]);
     return;
   }
 
   if (!gapi.client.sheets) {
-    callback();
+    callback([]);
     comeBackHomeToAuthorize();
     return;
   }
@@ -916,6 +928,12 @@ function loadOrderListDetailByLine(startLine, endLine, callback) {
 }
 
 function loadOrderListDetail(callback) {
+
+  if (passDataLocalhost) {
+    callback([]);
+    return;
+  }
+
   rs = [];
   var batchNum = 1000;
   var startLine = 1;
@@ -950,12 +968,12 @@ function loadWarehouseByLine(startLine, endLine, callback) {
 
 
   if (passDataLocalhost) {
-    callback();
+    callback([]);
     return;
   }
 
   if (!gapi.client.sheets) {
-    callback();
+    callback([]);
     comeBackHomeToAuthorize();
     return;
   }
@@ -979,6 +997,12 @@ function loadWarehouseByLine(startLine, endLine, callback) {
 }
 
 function loadWarehouse(callback) {
+
+
+  if (passDataLocalhost) {
+    callback([]);
+    return;
+  }
 
   rs = [];
   var batchNum = 1000;
@@ -1698,11 +1722,12 @@ function getOrderShippingByLine(startLine, endLine, callback) {
   var dataset = [];
 
   if (passDataLocalhost) {
-    callback();
+    callback([]);
+    return;
   }
 
   if (!gapi.client.sheets) {
-    callback();
+    callback([]);
     comeBackHomeToAuthorize();
     return;
   }
@@ -1724,6 +1749,12 @@ function getOrderShippingByLine(startLine, endLine, callback) {
 }
 
 function getOrderShipping(callback) {
+
+  if (passDataLocalhost) {
+    callback([]);
+    return;
+  }
+
   rs = [];
   var batchNum = 1000;
   var startLine = 1;

@@ -53,6 +53,31 @@
   </div>
 
   <script>
+    function copyTextGeneral(textToCopy) {
+      // console.log(textToCopy);
+      // return;
+      // // Lấy nội dung của phần tử div
+      // var textToCopy = document.getElementById("contentToCopy").innerText;
+
+      // Tạo một thẻ textarea ẩn để copy văn bản vào clipboard
+      var textarea = document.createElement("textarea");
+      textarea.value = textToCopy;
+      textarea.style.position = "fixed"; // Đảm bảo thẻ textarea không hiển thị trên trang web
+      document.body.appendChild(textarea);
+
+      // Chọn toàn bộ nội dung của thẻ textarea
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); // Hỗ trợ cho các trình duyệt khác nhau
+
+      // Copy nội dung vào clipboard
+      document.execCommand("copy");
+
+      // Xóa thẻ textarea
+      document.body.removeChild(textarea);
+
+      // Thông báo cho người dùng biết rằng nội dung đã được sao chép
+    }
+
     // $(function(){
     $("#textareaBanking").hide();
     $(".footerMain").click(function(){
@@ -373,18 +398,47 @@
       var supportDiv = "<div class='model-body' style='margin:auto'>"+
         "<div style='font-size:25px'>Hỗ trợ</div>"+
         "<div class='btn btnNormal copyBank'>TK ngân hàng</div><br/>"+
-        "<div class='btn btnNormal shipVinhPhuc'>Ship Vĩnh Phúc</div><br/>"+
         "<div class='btn btnNormal shipMeLinh'>Ship Mê Linh </div><br/>"+
+
+        "<div class='btn btnNormal requestDaInbox'>Đã ib</div><br/>"+
+        "<div class='btn btnNormal requestHoiDiaChi'>Hỏi địa chỉ</div><br/>"+
+        "<div class='btn btnNormal requestCOC'>CỌC 25/4</div><br/>"+
+        "<div class='btn btnNormal requestLuuDon'>Lưu đơn</div><br/>"+
+        "<div class='btn btnNormal requestHangVe'>Hàng về</div><br/>"+
+
+
         "<div class='btn btnNormal guestInfor'>Infor khách</div><br/>"+
-        "<div class='btn btnNormal copyThank'>Cảm ơn</div><br/>"+
-        "<div class='btn btnNormal pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
+        // "<div class='btn btnNormal copyThank'>Cảm ơn</div><br/>"+
+        // "<div class='btn btnNormal pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
         "<div class='btn btnNormal sendCTV'>Chính sách CTV</div><br/>"+
         "<div class='btn btnNormal sendOrderPolicy'>Chính sách Order</div><br/>"+
-        "<div class='btn btnNormal thuyIbanPoste'>Iban Poste Thuy</div><br/>"+
-        "<div class='btn btnNormal thuyIbanUnicredit'>Iban Unicredit Thuy</div><br/>"+
+        // "<div class='btn btnNormal thuyIbanPoste'>Iban Poste Thuy</div><br/>"+
+        // "<div class='btn btnNormal thuyIbanUnicredit'>Iban Unicredit Thuy</div><br/>"+
+        "<div class='btn btnNormal shipVinhPhuc'>Ship Vĩnh Phúc</div><br/>"+
         "</div>"
       $(".modal-content").html(supportDiv);
       $('#simpleModal').modal('toggle');
+
+      $(".requestDaInbox").click(function(){
+        copyTextGeneral("Vâng. C nhắn tin em địa chỉ sdt nhé ạ. Em cũng đã gửi tin nhắn cho c r ạ. C check tin nhắn chờ của em ạ ( có thể rơi vào mục spam - nên chị kiểm tra cả ở đó ạ)")
+      })
+
+      $(".requestHoiDiaChi").click(function(){
+        copyTextGeneral("Em chào c. C lấy 1 món này đúng k ạ?\nChị gửi em tên ng nhận, sdt, địa chỉ ( đủ phường/xã - quận/huyện) để em lưu đơn ạ")
+      })
+
+      $(".requestCOC").click(function(){
+        copyTextGeneral("Hàng này order em cầm về tầm 25/4 đáp. Hàng order chị cọc giúp em 2️⃣0️⃣0️⃣K đơn này ạ - Còn lại về em sẽ thu nốt khi ship ạ")
+      })
+
+      $(".requestLuuDon").click(function(){
+        copyTextGeneral("Em lưu đơn ạ. Đã ghi cọc. C kiểm tra kỹ lại địa chỉ và sdt ở đơn giúp em nha ạ\nHàng về tầm gần cuối tháng 4, hàng về em ship nha c. \nHàng order k đổi/huỷ giúp em ạ.\nThank c ạ")
+      })
+
+      $(".requestHangVe").click(function(){
+        copyTextGeneral("C ơi hàng về. E đi đơn nha ạ\n\n‼️Chú ý: \nKHI NHẬN HÀNG KHÁCH QUAY PHIM VIDEO BÓC HÀNG. \n- Bên em chỉ nhận khiếu nại về hàng hoá trong 24h kể từ khi khách nhận được hàng (Cần kèm theo clip khi bóc hàng, hình ảnh sp hỏng hóc...). - Sau 24h hoặc không có clip, hình ảnh thì em không chịu trách nhiệm. \n- Hàng điện tử xách tay bên em không bảo hành, nếu khách cần bảo hành với hãng thì chịu phí ship sang Đức và ship về VN")
+      })
+
       $(".copyThank").click(function(){
         copyThank();
       })
