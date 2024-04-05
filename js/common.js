@@ -2153,6 +2153,11 @@ function splitOrderAsRequested(currentOrder, lsProdIndex, callbackSplitOrderMain
 
   var splitAddNewOrder = function (callbackSplitAddNew) {
 
+    try {
+      currentOrder.otherInfor = JSON.parse(currentOrder.otherInfor)
+    } catch (error) {
+      currentOrder.otherInfor = {};
+    }
     var submitOrderData = [
       [
         orderCode,
