@@ -504,7 +504,7 @@ $(".click-to-view").click(function(){
   var stillInStoreTotalCost = 0;
   // for (e in lsChecked){
   //   if ($(lsChecked[e]).is(":checked")){
-  var downloadContent = "STT, Tên hàng, SL, Giá, Thành tiền\n";
+  var downloadContent = "STT, Tên hàng, SL, Hàng tồn, Giá, Thành tiền\n";
   var detailReport = "STT, Tên hàng, Tổng số lượng, Giá, Tổng tiền vốn, số lượng đã lên đơn, doanh thu, lợi nhuận\n";
   var count = 0;
 
@@ -557,6 +557,7 @@ $(".click-to-view").click(function(){
         downloadContent += rcount+","
           +data[productIndex][3]+","
           +count+","
+          +data[productIndex][17]+","
           +eachCost+","
           +(count * eachCost)
           +"\n";
@@ -574,6 +575,7 @@ $(".click-to-view").click(function(){
 
         detailReport += rcount+","
           +data[productIndex][3]+","
+          +data[productIndex][4]+","
           +count+","
           +eachCost+","
           +(count * eachCost)+","
