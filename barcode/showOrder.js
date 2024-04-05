@@ -285,7 +285,7 @@ $("#simplify").click(function(){
 	$(".click-to-back").hide();
 	// $(".controlOrder").hide();
 	$("#headerInclude").hide();
-	$("#footerInclude").hide();
+	// $("#footerInclude").hide();
 
 	// if (parseFloat(currentOrder.totalPayIncludeShip) == parseFloat(currentOrder.prepaid)
 	// 	|| currentOrder.paymentStatus == "PAID"
