@@ -47,12 +47,14 @@ var mode = "edit";//"duplicate"
 
 var triggerAfterLoad = function(){
 
-	fetchEuroRate(function(currencyRates) {
-		EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
-		$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
-	})
 
 	loadWarehouse(function(){
+
+		fetchEuroRate(function(currencyRates) {
+			EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
+			$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
+		})
+
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 
 		var indexInTable = {};

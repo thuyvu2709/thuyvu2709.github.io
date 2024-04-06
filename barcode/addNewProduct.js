@@ -55,12 +55,6 @@ if (makeCopy) {
 
 var triggerAfterLoad = function(){
 
-
-	fetchEuroRate(function(currencyRates) {
-		EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
-		$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
-	})
-
 	loadWarehouse(function(){
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
@@ -110,6 +104,12 @@ var triggerAfterLoad = function(){
 
 		getLatestProductCode(function(code){
 			$("#productCode").val(code);
+
+			fetchEuroRate(function(currencyRates) {
+				EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
+				$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
+			})
+			
 		})
 	})
 

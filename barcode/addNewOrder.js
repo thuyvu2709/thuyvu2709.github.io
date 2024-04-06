@@ -113,24 +113,25 @@ var triggerAfterLoad = function(){
 						// $("#saveCustomerInfor").html("Cập nhật T.T Khách")
 					}
 				});
+
+				getLatestOrderCode(function(){
+					orderCode = localStorage.getItem("orderCode");
+					$("#orderCode").val(orderCode);
+				})
+			
+				getGhtkAccess(function(rs){
+					if (rs) {
+					  ghtkToken = rs["ghtkToken"];
+					  ghtkAuthorization = rs["ghtkAuthorization"];
+					  localStorage.setItem("ghtkToken",ghtkToken);
+					  localStorage.setItem("ghtkAuthorization",ghtkAuthorization);
+					}
+				})
+				
 			})
 
 		})
 	});
-
-	getLatestOrderCode(function(){
-		orderCode = localStorage.getItem("orderCode");
-		$("#orderCode").val(orderCode);
-	})
-
-	getGhtkAccess(function(rs){
-        if (rs) {
-          ghtkToken = rs["ghtkToken"];
-          ghtkAuthorization = rs["ghtkAuthorization"];
-		  localStorage.setItem("ghtkToken",ghtkToken);
-		  localStorage.setItem("ghtkAuthorization",ghtkAuthorization);
-        }
-	})
 };
 
 
