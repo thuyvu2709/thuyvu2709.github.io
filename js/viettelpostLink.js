@@ -149,7 +149,7 @@ $("#otherCost").html(currentOrder.otherCost);
 
 $("#prepaid").html(currentOrder.prepaid);
 
-$("#orderNodeGHTK").val("Hàng dễ vỡ, vui lòng nhẹ tay, không cho khách mở hàng")
+$("#orderNodeGHTK").val("Cho xem hàng, không cho thử | Giao hàng vào giờ hành chính | Hàng dễ vỡ, nhẹ tay")
 
 var totalPay = parseFloat(currentOrder.totalPay);
 
