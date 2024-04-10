@@ -95,10 +95,28 @@ var triggerAfterLoad = function () {
         $("#importFilter").empty();
         $("#importFilter").append("<option value='-1'>Hàng có sẵn</option>");
 
-        for (var e in importSLData) {
-          if (e == 0) {
-            continue;
+
+        var indexInTable = {};
+        for(var e in importSLData) {
+          indexInTable[importSLData[e][0]] = e;
+        }
+    
+        let sortableData = importSLData.slice(0);
+        sortableData.sort(function(a,b) {
+          if (isNaN(parseInt(a[0]))) {
+          return -1;
           }
+          if (isNaN(parseInt(b[0]))) {
+          return 1;
+          }
+          return parseInt(a[0]) - parseInt(b[0]);
+        });
+    
+
+        // for (var e in importSLData) {
+        for (var es in sortableData) {
+          var e = indexInTable[sortableData[es][0]];
+
           if (!importSLData[e][0]) {
             continue;
           }
