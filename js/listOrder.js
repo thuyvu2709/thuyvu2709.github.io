@@ -235,7 +235,7 @@ function loadOrderListHtml() {
   data = JSON.parse(localStorage.getItem("orderList"));
   orderListDetail = JSON.parse(localStorage.getItem("orderListDetail"));
   lsOrderShipping = JSON.parse(localStorage.getItem("ordershipping"));;
-  $("#controllMany").hide();
+  // $("#controllMany").hide();
   $("#listOrder").empty();
   // console.log(data);
   var status = $("#orderFilter").val();
@@ -966,7 +966,8 @@ function loadOrderListHtml() {
 
   })
 
-  $(".requestshippingMany").click(function () {
+  // $(".requestshippingMany").click(function () {
+  function requestshippingManyFn() {
     var lsChecked = $(".checkbox");
     $("#loadingSpin").show();
 
@@ -983,21 +984,26 @@ function loadOrderListHtml() {
         // console.log($(lsChecked[index]));
         // requestshipping order_'+e+'
         var currentOrder = getOrder(orderIndex);
+
         // console.log(orderIndex);
         // console.log(currentOrder);
 
         $("#loading-text").html("Request ship " + currentOrder.orderCode);
-
+        console.log("Request ship " + currentOrder.orderCode);
         requestShipping(currentOrder, function () {
-          requestShip(index + 1);
+          setTimeout(function () {
+            requestShip(index + 1);
+          }, 500);
         });
+
 
       } else {
         requestShip(index + 1);
       }
     }
     requestShip(0);
-  })
+  }
+  // })
 
   $("#loadingSpin").hide();
 
@@ -1107,6 +1113,110 @@ function loadOrderListHtml() {
     });
   }
 
+  function showDetailReportAsShipping() {
+    var lsChecked = $(".checkbox");
+    var totalCost = 0;
+    var num = 0;
+    var requestedNum = 0;
+    var stillInStore = 0;
+    // for (e in lsChecked){
+    //   if ($(lsChecked[e]).is(":checked")){
+    var numOfOrder = 0;
+    var totalPay = 0;
+    var totalOwnerPay = 0;
+    var totalProfit = 0;
+    var numOfProd = 0;
+    var lsOrderCodeSelected = [];
+  
+    // 0:SHIPPER_NO_COD
+    // 1:SHIPPER_COD
+    // 2:POST_COD
+    // 3:SHOPEE
+    // 4:POST_NO_COD
+    // 5:SHIP_BY_THIRD_PARTY
+  
+    var groupsOfShipType = {};
+  
+    var sumAllOfShipType = {
+      amount: 0,
+      willpay: 0,
+      totalPay: 0,
+      prepaid: 0
+    }
+  
+    var detailReport = "Đơn Hàng, Khách, Cách Ship, Ship Thu, Cọc, Tổng Tiền Hàng\n";
+  
+    $('.checkbox').each(function () {
+      // this.checked = true; });
+      if (this.checked) {
+        numOfOrder = numOfOrder + 1
+        var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+        // var currentOrder=lsOrder[orderIndex];
+        // var orderDetail = listOrderDetailParse[lsOrder[orderIndex][0]];
+        var orderDetail = getOrder(orderIndex);
+        orderDetail.willpay = parseFloat(orderDetail.totalPayIncludeShip) - parseFloat(orderDetail.prepaid ? orderDetail.prepaid : 0);
+        // console.log(currentOrder);
+        // console.log(orderDetail);
+        if (!groupsOfShipType[orderDetail.shippingType]) {
+          groupsOfShipType[orderDetail.shippingType] = {
+            amount: 0,
+            willpay: 0,
+            totalPay: 0,
+            prepaid: 0
+          }
+        }
+  
+        // console.log(orderDetail);
+        detailReport = detailReport + orderDetail.orderCode + "," + orderDetail.customerName + "," + orderDetail.shippingType + "," + orderDetail.willpay + "," + orderDetail.prepaid + "," + orderDetail.totalPay + "\n"
+  
+        groupsOfShipType[orderDetail.shippingType] = {
+          amount: groupsOfShipType[orderDetail.shippingType].amount + 1,
+          willpay: groupsOfShipType[orderDetail.shippingType].willpay + orderDetail.willpay,
+          totalPay: groupsOfShipType[orderDetail.shippingType].totalPay + parseInt(orderDetail.totalPay),
+          prepaid: groupsOfShipType[orderDetail.shippingType].prepaid + parseInt(orderDetail.prepaid)
+        }
+  
+        sumAllOfShipType = {
+          amount: sumAllOfShipType.amount + 1,
+          willpay: sumAllOfShipType.willpay + orderDetail.willpay,
+          totalPay: sumAllOfShipType.totalPay + parseInt(orderDetail.totalPay),
+          prepaid: sumAllOfShipType.prepaid + parseInt(orderDetail.prepaid)
+        }
+        // console.log(sumAllOfShipType.prepaid);
+      }
+    }
+    )
+  
+    var contentDetail = "<div class='viewReport'><table><tr><th>Method</th><th>Số lượng</th><th>Ship thu</th><th>Cọc</th><th>Tổng tiền hàng</th></tr>";
+    for (var e in groupsOfShipType) {
+      contentDetail += "<tr> <td>" + e + "</td> <td>" + groupsOfShipType[e].amount + "</td> <td>" + groupsOfShipType[e].willpay + "</td> <td>" + groupsOfShipType[e].prepaid + "</td> <td>" + groupsOfShipType[e].totalPay + "</td> </tr>"
+    }
+    contentDetail += "</table></div>"
+  
+    // var content = showDetailReportAsShipping();
+  
+    var content = "<h4>Báo cáo</h4><br/>" +
+      contentDetail + "<br/>" +
+      "Số đơn hàng:" + sumAllOfShipType.amount + "<br/>" +
+      "Tổng tiền khách đã cọc:" + sumAllOfShipType.prepaid + "<br/>" +
+      "Tổng tiền khách sẽ thanh toán cho bên giao hàng (willpay):" + sumAllOfShipType.willpay + "<br/>" +
+      "Tổng tiền thanh toán (totalpay):" + sumAllOfShipType.totalPay + "<hr/>"
+  
+      // "<div class='btn btn-primary mb-2 reportDetail'>Xem báo cáo chi tiết</div>&nbsp;"
+      ;
+    // $("#modelContent").html(content);
+  
+    // $(".reportDetail").click(function () {
+    //   downloadFile("shippingreport.csv", detailReport);
+    // })
+  
+    // $('#myModal').modal('show');
+    return {
+      content,
+      detailReport
+    }
+  }
+
   $(".click-to-view").click(function () {
     var lsChecked = $(".checkbox");
     var totalCost = 0;
@@ -1140,11 +1250,19 @@ function loadOrderListHtml() {
     }
     )
 
-    var content = "Số đơn hàng:" + numOfOrder + "<br/>" +
-      "Số mặt hàng:" + numOfProd + "<br/>" +
-      "Tổng doanh thu:" + totalPay + "<br/>" +
-      "Tổng vốn:" + totalOwnerPay + "<br/>" +
-      "Tổng lãi:" + totalProfit + "<br/>" +
+    var viewDetailReport = showDetailReportAsShipping();
+    var content =
+      viewDetailReport.content +
+      // "<h4>Báo cáo</h4>" +
+      // "Số đơn hàng:" + numOfOrder + "<br/>" +
+      // "Số mặt hàng:" + numOfProd + "<br/>" +
+      // "Tổng doanh thu:" + totalPay + "<br/>" +
+      // "Tổng vốn:" + totalOwnerPay + "<br/>" +
+      // "Tổng lãi:" + totalProfit + "<br/>" +
+      "<div class='btn btn-primary mb-2 reportDetail'>Xem báo cáo chi tiết</div>&nbsp;"+
+      "<hr/>" +
+      "<h4>Xử lý hàng loạt</h4>" +
+      "<div class='btn btnNormal5px requestshippingMany' >Yêu cầu giao hàng</div>" +
       "<hr/>" +
       "<div>" +
       "<span class='btn btnNormal5px mergeOrder'>Gộp đơn theo order:</span>" +
@@ -1152,6 +1270,12 @@ function loadOrderListHtml() {
       "</div>"
       ;
     $("#modelContent").html(content);
+
+    $(".reportDetail").click(function () {
+      downloadFile("shippingreport.csv", viewDetailReport.detailReport);
+    })
+
+    $(".requestshippingMany").click(requestshippingManyFn);
 
     $(".mergeOrder").click(function () {
       // console.log(lsOrderCodeSelected);
@@ -1237,14 +1361,14 @@ $(".click-to-select").click(function () {
     $(".checkbox").hide();
     $(".prodExtend").hide();
     $(".click-to-select-all").hide();
-    $("#controllMany").hide();
+    // $("#controllMany").hide();
     $(".click-to-view").hide();
 
   } else {
     $(".checkbox").show();
     $(".prodExtend").show();
     $(".click-to-select-all").show();
-    $("#controllMany").show();
+    // $("#controllMany").show();
     $(".click-to-view").show();
 
   }
@@ -1270,4 +1394,3 @@ $(".click-to-select-all").click(function () {
   });
 
 })
-
