@@ -851,6 +851,13 @@ function finishOrder(){
 }
 
 $("#editOrder").click(function(){
+
+	var ckInput = validateInputData();
+
+	if (!ckInput) {
+		return;
+	}
+	
 	$("#loadingSpin").show();
 
 	// console.log("editOrder");
@@ -1050,3 +1057,31 @@ function saveCustomerInforFn(callback){
 // 		console.log("saveCustomerInfor")
 // 	})
 // })
+
+
+function validateInputData() {
+	$("#myModal2 .modal-body").empty();
+
+	var orderCode = $("#orderCode").val()
+
+	var customerName = $("#customerName").val();
+	var warningContent = undefined;
+	if (!orderCode) {
+		warningContent = "Không có mã đơn hàng!"
+	}
+	if (!customerName) {
+		warningContent = "Không có tên khách hàng kìa!"
+	}
+	if (warningContent) {
+		$("#myModal2 .modal-title").html("Cảnh báo")
+
+		$("#myModal2 .modal-body").append('<div class="card">' +
+			warningContent +
+			'</div>')
+
+		$('#myModal2').modal('show');
+		return false;
+	} else {
+		return true;
+	}
+}

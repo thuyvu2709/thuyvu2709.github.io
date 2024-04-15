@@ -26,6 +26,12 @@ var triggerAfterLoad = function(){
 
 
 function addNewImport(){
+  var ckValidate = validateInputData();
+
+  if (!ckValidate) {
+    return false;
+  }
+  
 	var submitImportData = [
       [
         $("#importCode").val(),
@@ -53,3 +59,25 @@ function addNewImport(){
 }
 
 $("#addNewImport").click(addNewImport);
+
+function validateInputData() {
+	
+  var importCode = $("#importCode").val();
+  var importName = $("#importName").val();
+
+	var warningContent = undefined;
+	if (!importCode) {
+		warningContent = "Không có mã đợt hàng!"
+	}
+	if (!importName) {
+		warningContent = "Không có tên đợt hàng kìa!"
+	}
+	if (warningContent) {
+      $("#modelContent").html(warningContent);
+      $('#myModal').modal('toggle');
+		return false;
+	} else {
+		return true;
+	}
+}
+

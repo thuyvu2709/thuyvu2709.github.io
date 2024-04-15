@@ -763,7 +763,7 @@ function loadOrderListHtml() {
     content += '<div class="btn btnNormal5px btnSplitNow" >Tách</div>';
 
     $("#simpleModal .modal-content").html(content);
-    $("#simpleModal").modal('toggle');
+    $("#simpleModal").modal('show');
 
     $(".checksubdiv").click(function () {
       var objInput = $($(this).find("input")[0]);
