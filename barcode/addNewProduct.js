@@ -9,7 +9,7 @@ var makeCopy = url.searchParams.get("makeCopy");
 
 var choosenProductCatalogIndex = -1;
 
-var chooseImportScheduleCode =  -1;
+var chooseImportScheduleCode = -1;
 
 console.log(makeCopy);
 if (makeCopy) {
@@ -48,32 +48,32 @@ if (makeCopy) {
 	$("#totalProfit").html(currentProduct.totalProfit);
 
 	$("#prodImageLink").val(currentProduct.prodImageLink);
-	
-	$("#imgThumbnail").attr("src",currentProduct.prodImageLink);
+
+	$("#imgThumbnail").attr("src", currentProduct.prodImageLink);
 	choosenProductCatalogIndex = -2;
 }
 
-var triggerAfterLoad = function(){
+var triggerAfterLoad = function () {
 
-	loadWarehouse(function(){
+	loadWarehouse(function () {
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 		// console.log(importSLData);
 		$("#importSchedule").empty();
 
 		var indexInTable = {};
-		for(var e in importSLData) {
+		for (var e in importSLData) {
 			indexInTable[importSLData[e][0]] = e;
 		}
 
 		let sortableData = importSLData.slice(0);
-		sortableData.sort(function(a,b) {
-		  if (isNaN(parseInt(a[0]))) {
-			return -1;
-		  }
-		  if (isNaN(parseInt(b[0]))) {
-			return 1;
-		  }
-		  return parseInt(a[0]) - parseInt(b[0]);
+		sortableData.sort(function (a, b) {
+			if (isNaN(parseInt(a[0]))) {
+				return -1;
+			}
+			if (isNaN(parseInt(b[0]))) {
+				return 1;
+			}
+			return parseInt(a[0]) - parseInt(b[0]);
 		});
 
 		lsAutoImportSchedule = [];
@@ -84,65 +84,65 @@ var triggerAfterLoad = function(){
 				continue;
 			}
 			lsAutoImportSchedule.push({
-				label : importSLData[e][0]+" - "+importSLData[e][1],
-				value : importSLData[e][0]+" - "+importSLData[e][1],
-				data : importSLData[e],
-				importCode : importSLData[e][0]
+				label: importSLData[e][0] + " - " + importSLData[e][1],
+				value: importSLData[e][0] + " - " + importSLData[e][1],
+				data: importSLData[e],
+				importCode: importSLData[e][0]
 			});
 		}
 
 		$("#importSchedule").autocomplete({
-			source: function(request, response) {
-		        var results = $.ui.autocomplete.filter(lsAutoImportSchedule, request.term);
+			source: function (request, response) {
+				var results = $.ui.autocomplete.filter(lsAutoImportSchedule, request.term);
 
-		        response(results.slice(0, 1000));
-		    },
-			select: function( event, ui ) {
+				response(results.slice(0, 1000));
+			},
+			select: function (event, ui) {
 				chooseImportScheduleCode = ui.item.importCode;
 			}
 		});
 
-		getLatestProductCode(function(code){
+		getLatestProductCode(function (code) {
 			$("#productCode").val(code);
 
-			fetchEuroRate(function(currencyRates) {
+			fetchEuroRate(function (currencyRates) {
 				EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
-				$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
+				$(".euroVndRate").html("(tỉ giá EUR/VND: " + EuroVndRate + ")");
 			})
-			
+
 		})
 	})
 
-	loadProductCatalogList(function(productCatalogList){
+	loadProductCatalogList(function (productCatalogList) {
 		if (!productCatalogList) {
 			productCatalogList = JSON.parse(localStorage.getItem("productCatalogList"));
 		}
 		var lsPCName = [];
 		for (var e in productCatalogList) {
-			if (e==0) {
+			if (e == 0) {
 				continue;
 			}
 			lsPCName.push({
-				label : productCatalogList[e][0],
-				value : productCatalogList[e][0],
-				data : productCatalogList[e],
-				pcIndex : e
+				label: productCatalogList[e][0],
+				value: productCatalogList[e][0],
+				data: productCatalogList[e],
+				pcIndex: e
 			});
 		}
 		// console.log(lsPCName);
-		$( "#productName" ).autocomplete({
-			max:10,
-			source: function(request, response) {
-		        var results = $.ui.autocomplete.filter(lsPCName, request.term);
+		$("#productName").autocomplete({
+			max: 10,
+			source: function (request, response) {
+				var results = $.ui.autocomplete.filter(lsPCName, request.term);
 
-		        response(results.slice(0, 10));
-		    },
-			select: function( event, ui ) {
+				response(results.slice(0, 10));
+			},
+			select: function (event, ui) {
 				// console.log(event);
 				console.log(ui);
 
 				$("#productName").val(ui.item.data[0]);
-				
+
 				$("#productOriginalCostEur").val(ui.item.data[1]);
 
 				$("#productWeight").val(ui.item.data[2]);
@@ -155,7 +155,7 @@ var triggerAfterLoad = function(){
 
 				$("#prodImageLink").val(ui.item.data[5]);
 
-				$("#imgThumbnail").attr("src",ui.item.data[5]);
+				$("#imgThumbnail").attr("src", ui.item.data[5]);
 
 				choosenProductCatalogIndex = ui.item.pcIndex;
 
@@ -164,10 +164,16 @@ var triggerAfterLoad = function(){
 	})
 }
 
-function addNewProduct(){
+function addNewProduct() {
+
+	var ckValidate = validateInputData();
+	if (!ckValidate) {
+		return false;
+	}
+
 	$("#loadingSpin").show();
 
-	
+
 	var dataset = [];
 
 	var productCode = $("#productCode").val();
@@ -214,121 +220,121 @@ function addNewProduct(){
 	productOriginalCostEur = productOriginalCostEur ? productOriginalCostEur : 0;
 	otherFee = otherFee ? otherFee : 0;
 	productEstimateVND = productEstimateVND ? productEstimateVND : 0;
-	
+
 	productEstimateSellingCTV = productEstimateSellingCTV ? productEstimateSellingCTV : productEstimateVND;
 
 	prodImageLink = prodImageLink ? prodImageLink : "";
 	// console.log(productCode)
 
 	var dataAppendProduct = [
-                [productCode, //0 A
-                '=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();1)))',//1 B
-                importCode, //2 C
-                productName, //3 D
-                productCount, //4 E
-                productOriginalCostEur, //5 F
-                productWeight, //6 G
-                shipInternationalFee, //7 H
-                productUrl, //8 I
-                shipVietnamFee, //9 J
-                otherFee, //10 K
-                productEstimateVND, //11 L
-                productEstimateSellingVND, //12 M
-				"=INDIRECT(ADDRESS(ROW();13)) - INDIRECT(ADDRESS(ROW();12))", //13 N
-				"=INDIRECT(ADDRESS(ROW();13))*INDIRECT(ADDRESS(ROW();5))", //14 O
-				"=INDIRECT(ADDRESS(ROW();12))*INDIRECT(ADDRESS(ROW();5))", //15 P
-				"=INDIRECT(ADDRESS(ROW();15)) - INDIRECT(ADDRESS(ROW();16))", //16 Q
-				"=INDIRECT(ADDRESS(ROW();5)) - SUMIF(OrderDetail!D:D;INDIRECT(ADDRESS(ROW();2));OrderDetail!F:F)", //17 R
-				"=INDIRECT(ADDRESS(ROW();12)) * INDIRECT(ADDRESS(ROW();18))", //18 S
-				prodImageLink, //19 T
-				productEstimateSellingCTV,
-				'=SUMIF(OrderDetail!D:D; INDIRECT(ADDRESS(ROW();2)); OrderDetail!L:L)'
-                ]
-            ];
-	
+		[productCode, //0 A
+			'=CONCATENATE(INDIRECT(ADDRESS(ROW();3));"_";INDIRECT(ADDRESS(ROW();1)))',//1 B
+			importCode, //2 C
+			productName, //3 D
+			productCount, //4 E
+			productOriginalCostEur, //5 F
+			productWeight, //6 G
+			shipInternationalFee, //7 H
+			productUrl, //8 I
+			shipVietnamFee, //9 J
+			otherFee, //10 K
+			productEstimateVND, //11 L
+			productEstimateSellingVND, //12 M
+			"=INDIRECT(ADDRESS(ROW();13)) - INDIRECT(ADDRESS(ROW();12))", //13 N
+			"=INDIRECT(ADDRESS(ROW();13))*INDIRECT(ADDRESS(ROW();5))", //14 O
+			"=INDIRECT(ADDRESS(ROW();12))*INDIRECT(ADDRESS(ROW();5))", //15 P
+			"=INDIRECT(ADDRESS(ROW();15)) - INDIRECT(ADDRESS(ROW();16))", //16 Q
+			"=INDIRECT(ADDRESS(ROW();5)) - SUMIF(OrderDetail!D:D;INDIRECT(ADDRESS(ROW();2));OrderDetail!F:F)", //17 R
+			"=INDIRECT(ADDRESS(ROW();12)) * INDIRECT(ADDRESS(ROW();18))", //18 S
+			prodImageLink, //19 T
+			productEstimateSellingCTV,
+			'=SUMIF(OrderDetail!D:D; INDIRECT(ADDRESS(ROW();2)); OrderDetail!L:L)'
+		]
+	];
+
 	// console.log(dataAppendProduct);
 
 	// gapi.client.sheets.spreadsheets.values.append({
- //        spreadsheetId: spreadsheetId,
- //        range: sheetrange,
- //        valueInputOption: "USER_ENTERED",
- //        resource: {
- //            "majorDimension": "ROWS",
- //            "values": dataAppendProduct
- //        }
- //    }).then(function(response) {
- //        var result = response.result;
- //        console.log(`${result.updatedCells} cells updated.`);
+	//        spreadsheetId: spreadsheetId,
+	//        range: sheetrange,
+	//        valueInputOption: "USER_ENTERED",
+	//        resource: {
+	//            "majorDimension": "ROWS",
+	//            "values": dataAppendProduct
+	//        }
+	//    }).then(function(response) {
+	//        var result = response.result;
+	//        console.log(`${result.updatedCells} cells updated.`);
 
 	// 	$("#loadingSpin").hide();
 
- //        $(".btnModal").click(function(){
- //        	location.reload();
- //        })
+	//        $(".btnModal").click(function(){
+	//        	location.reload();
+	//        })
 	//     $("#modelContent").html("Đã lưu mặt hàng");
 	//     $('#myModal').modal('toggle');
 
- //    }, function(response) {
- //        appendPre('Error: ' + response.result.error.message);
+	//    }, function(response) {
+	//        appendPre('Error: ' + response.result.error.message);
 	//     $("#modelContent").html("Có lỗi, không thể lưu");
 	//     $('#myModal').modal('toggle');
- //    });
+	//    });
 
 	var dataAppendCatalog = [[
-        productName, //3 D
-        productOriginalCostEur, //5 F
-        productWeight, //6 G
-        productEstimateVND, //11 L
-        productEstimateSellingVND, //12 M
+		productName, //3 D
+		productOriginalCostEur, //5 F
+		productWeight, //6 G
+		productEstimateVND, //11 L
+		productEstimateSellingVND, //12 M
 		prodImageLink, //19 T
 		productEstimateSellingCTV
-    ]]
+	]]
 
-    updateProductCatalog(dataAppendCatalog,function(){
-    	appendProduct(dataAppendProduct, function(){
+	updateProductCatalog(dataAppendCatalog, function () {
+		appendProduct(dataAppendProduct, function () {
 			$("#loadingSpin").hide();
 
-			$(".btnModal").click(function(){
+			$(".btnModal").click(function () {
 				location.reload();
 			})
 			$("#modelContent").html("Đã lưu mặt hàng");
 			$('#myModal').modal('toggle');
-		}, function(){
+		}, function () {
 			$("#loadingSpin").hide();
 
 			$("#modelContent").html("Có lỗi, không thể lưu");
 			$('#myModal').modal('toggle');
-		}); 
-    });	
+		});
+	});
 }
 
 function updateProductCatalog(data, callback) {
 	var indexColumnOfAllData = 7;
-	
-	var range = 'ProductCatalog!A:'+String.fromCharCode(65+indexColumnOfAllData);
+
+	var range = 'ProductCatalog!A:' + String.fromCharCode(65 + indexColumnOfAllData);
 
 	if (choosenProductCatalogIndex == -1) { //=>Add into catalog
-		addCommonData(customerSheet, data,range,function(){
+		addCommonData(customerSheet, data, range, function () {
 			callback();
 		})
-    } else if (choosenProductCatalogIndex >= 0) { //=>Edit into catalog
-	 	realPCIndex = (parseInt(choosenProductCatalogIndex)+1);
+	} else if (choosenProductCatalogIndex >= 0) { //=>Edit into catalog
+		realPCIndex = (parseInt(choosenProductCatalogIndex) + 1);
 		// console.log("realCusIndex:"+realCusIndex);
-		range = 'ProductCatalog!A'+realPCIndex+":"+String.fromCharCode(65+indexColumnOfAllData)+realPCIndex;
+		range = 'ProductCatalog!A' + realPCIndex + ":" + String.fromCharCode(65 + indexColumnOfAllData) + realPCIndex;
 		// console.log(range);
-		editCommonData(customerSheet, data,range,function(){
+		editCommonData(customerSheet, data, range, function () {
 			callback();
 		})
-    } else {
-    	callback();
-    }
+	} else {
+		callback();
+	}
 }
 
-$("#addNewProduct").click(function(){
-     addNewProduct();
+$("#addNewProduct").click(function () {
+	addNewProduct();
 })
 
-$("#btnRefresh").click(function(){
+$("#btnRefresh").click(function () {
 	location.reload();
 });
 
@@ -336,7 +342,7 @@ $("#btnRefresh").click(function(){
 // 	var idClass = $(this).attr('id');
 
 // 	if (idClass == "productEstimateSellingVND" || idClass == "productEstimateVND") {
-		
+
 // 		return;
 // 	};
 
@@ -390,33 +396,33 @@ $("#btnRefresh").click(function(){
 
 // });
 
-$( "#productCount" ).keyup(function() {
+$("#productCount").keyup(function () {
 	recalculateRefValues();
 })
 
-$("#productOriginalCostEur").keyup(function(){
+$("#productOriginalCostEur").keyup(function () {
 	recalculateProdEstVND();
 })
-$("#productWeight").keyup(function(){
+$("#productWeight").keyup(function () {
 	recalculateProdEstVND();
 })
-$("#shipInternationalFee").keyup(function(){
-	recalculateProdEstVND();
-})
-
-$( "#otherFee" ).keyup(function() {
+$("#shipInternationalFee").keyup(function () {
 	recalculateProdEstVND();
 })
 
-$( "#productEstimateVND" ).keyup(function() {
+$("#otherFee").keyup(function () {
+	recalculateProdEstVND();
+})
+
+$("#productEstimateVND").keyup(function () {
 	recalculateRefValues();
 })
 
-$( "#productEstimateSellingVND" ).keyup(function() {
+$("#productEstimateSellingVND").keyup(function () {
 	recalculateRefValues();
 })
 
-function recalculateRefValues(){
+function recalculateRefValues() {
 	var productEstimateVND = $("#productEstimateVND").val();
 	var productCount = $("#productCount").val();
 
@@ -434,10 +440,10 @@ function recalculateRefValues(){
 	$("#profitPerOneProduct").html(productEstimateSellingVND - productEstimateVND);
 	$("#turnover").html(productEstimateSellingVND * productCount);
 	$("#totalCost").html(productEstimateVND * productCount);
-	$("#totalProfit").html((productEstimateSellingVND - productEstimateVND)*productCount);
+	$("#totalProfit").html((productEstimateSellingVND - productEstimateVND) * productCount);
 }
 
-function recalculateProdEstVND(){
+function recalculateProdEstVND() {
 	var productOriginalCostEur = $("#productOriginalCostEur").val();
 
 	var productWeight = $("#productWeight").val();
@@ -461,70 +467,99 @@ function recalculateProdEstVND(){
 	productWeight = parseFloat(productWeight);
 	shipInternationalFee = parseFloat(shipInternationalFee);
 	otherFee = parseFloat(otherFee);
-		
-	var productEstimateVND = Math.ceil( productOriginalCostEur*EuroVndRate + productWeight * 
-		( shipInternationalFee * EuroVndRate ))+ otherFee;
+
+	var productEstimateVND = Math.ceil(productOriginalCostEur * EuroVndRate + productWeight *
+		(shipInternationalFee * EuroVndRate)) + otherFee;
 
 	$("#productEstimateVND").val(productEstimateVND);
 
 	recalculateRefValues();
 }
 
-$('#btnAddImage').click(function() {
+$('#btnAddImage').click(function () {
 	// $("#picture").css.visibility = "visible";
 	document.getElementById("prodScanImage").click();
 })
 
-$("#prodScanImage").on("change", function() {
+$("#prodScanImage").on("change", function () {
 	$("#loadingSpin").show();
 
-    var $files = $(this).get(0).files;
+	var $files = $(this).get(0).files;
 
-    if ($files.length) {
+	if ($files.length) {
 
-      // Reject big files
-      if ($files[0].size > $(this).data("max-size") * 1024) {
-        console.log("Please select a smaller file");
-        return false;
-      }
+		// Reject big files
+		if ($files[0].size > $(this).data("max-size") * 1024) {
+			console.log("Please select a smaller file");
+			return false;
+		}
 
-      // Begin file upload
-      console.log("Uploading file to Imgur..");
+		// Begin file upload
+		console.log("Uploading file to Imgur..");
 
-      // Replace ctrlq with your own API key
-      var apiUrl = 'https://api.imgur.com/3/image';
-      var apiKey = 'bddc38af21c5d9a';
+		// Replace ctrlq with your own API key
+		var apiUrl = 'https://api.imgur.com/3/image';
+		var apiKey = 'bddc38af21c5d9a';
 
-      var settings = {
-        async: false,
-        crossDomain: true,
-        processData: false,
-        contentType: false,
-        type: 'POST',
-        url: apiUrl,
-        headers: {
-          Authorization: 'Client-ID ' + apiKey,
-          Accept: 'application/json'
-        },
-        mimeType: 'multipart/form-data'
-      };
+		var settings = {
+			async: false,
+			crossDomain: true,
+			processData: false,
+			contentType: false,
+			type: 'POST',
+			url: apiUrl,
+			headers: {
+				Authorization: 'Client-ID ' + apiKey,
+				Accept: 'application/json'
+			},
+			mimeType: 'multipart/form-data'
+		};
 
-      var formData = new FormData();
-      formData.append("image", $files[0]);
-      settings.data = formData;
+		var formData = new FormData();
+		formData.append("image", $files[0]);
+		settings.data = formData;
 
-      // Response contains stringified JSON
-      // Image URL available at response.data.link
-      $.ajax(settings).done(function(response) {
-        console.log(response);
-        console.log("link:"+JSON.parse(response).data.link);
-        $("#prodImageLink").val(JSON.parse(response).data.link);
+		// Response contains stringified JSON
+		// Image URL available at response.data.link
+		$.ajax(settings).done(function (response) {
+			console.log(response);
+			console.log("link:" + JSON.parse(response).data.link);
+			$("#prodImageLink").val(JSON.parse(response).data.link);
 
-		$("#imgThumbnail").attr("src",JSON.parse(response).data.link);
+			$("#imgThumbnail").attr("src", JSON.parse(response).data.link);
 
-    	$("#loadingSpin").hide();
+			$("#loadingSpin").hide();
 
-      });
+		});
 
-    }
-  });
+	}
+});
+
+function validateInputData() {
+
+	var productCode = $("#productCode").val();
+	var productName = $("#productName").val();
+	var importCode = chooseImportScheduleCode;
+
+	var warningContent = undefined;
+	
+	if (!importCode) {
+		warningContent = "Không có mã đợt hàng!"
+	}
+
+	if (!productCode) {
+		warningContent = "Không có mã hàng!"
+	}
+
+	if (!productName) {
+		warningContent = "Không có tên hàng!"
+	}
+
+	if (warningContent) {
+		$("#modelContent").html(warningContent);
+		$('#myModal').modal('show');
+		return false;
+	} else {
+		return true;
+	}
+}

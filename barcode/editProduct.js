@@ -163,6 +163,12 @@ var triggerAfterLoad = function(){
 }
 
 function editProductFn(){
+
+	var ckValidate = validateInputData();
+	if (!ckValidate) {
+		return false;
+	}
+	
 	var dataset = [];
 
 	var productCode = $("#productCode").val();
@@ -584,3 +590,33 @@ $("#prodScanImage").on("change", function() {
 
     }
   });
+
+
+  function validateInputData() {
+
+	var productCode = $("#productCode").val();
+	var productName = $("#productName").val();
+	var importCode = chooseImportScheduleCode;
+
+	var warningContent = undefined;
+	
+	if (!importCode) {
+		warningContent = "Không có mã đợt hàng!"
+	}
+
+	if (!productCode) {
+		warningContent = "Không có mã hàng!"
+	}
+
+	if (!productName) {
+		warningContent = "Không có tên hàng!"
+	}
+
+	if (warningContent) {
+		$("#modelContent").html(warningContent);
+		$('#myModal').modal('show');
+		return false;
+	} else {
+		return true;
+	}
+}
