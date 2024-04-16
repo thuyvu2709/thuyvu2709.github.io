@@ -167,7 +167,10 @@ function loadProductListByLine(startLine, endLine, callback) {
     spreadsheetId: spreadsheetId,
     range: sheetrange,
   }).then(function (response) {
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("productList", JSON.stringify(dataset));
 
@@ -272,7 +275,10 @@ function loadCustomerListByLine(startLine, endLine, callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("customerList", JSON.stringify(dataset));
 
@@ -367,7 +373,10 @@ function loadProductCatalogListByLine(startLine, endLine, callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
 
     callback(dataset);
@@ -495,7 +504,10 @@ function loadImportScheduleList(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     localStorage.setItem("warehouse", JSON.stringify(dataset));
 
@@ -575,7 +587,10 @@ function getLatestOrderCode(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
     var maxCode = 0;
@@ -623,7 +638,10 @@ function getLatestTaskCode(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("orderCode","DONHANG_"+dataset.length);
     var latestCode = parseFloat(dataset[dataset.length - 1][0]) + 1;
@@ -916,7 +934,10 @@ function loadOrderListDetailByLine(startLine, endLine, callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("orderListDetail", JSON.stringify(dataset));
 
@@ -986,7 +1007,10 @@ function loadWarehouseByLine(startLine, endLine, callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     // localStorage.setItem("warehouse",JSON.stringify(dataset));
 
@@ -1510,7 +1534,10 @@ function getDatasetList(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     localStorage.setItem("DatasetList", JSON.stringify(dataset));
 
@@ -1541,7 +1568,10 @@ function loadOtherFee(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
     // showList(dataset);
     localStorage.setItem("otherFees", JSON.stringify(dataset));
 
@@ -1678,7 +1708,10 @@ function getLatestShippingIndex(callback) {
     range: sheetrange,
   }).then(function (response) {
     console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
 
     callback(dataset.length);
   }, function (response) {
@@ -1737,7 +1770,10 @@ function getOrderShippingByLine(startLine, endLine, callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
 
     // localStorage.setItem("ordershipping", JSON.stringify(dataset));
 
@@ -1808,7 +1844,10 @@ function getTaskList(callback) {
     range: sheetrange,
   }).then(function (response) {
     // console.log(response.result.values); //[["Sản phẩm", "Giá"], ["Kcm", "100"]]
-    dataset = response.result.values;
+     dataset = response.result.values;
+  if (!dataset) {
+    dataset = []
+  } 
 
     localStorage.setItem("tasklist", JSON.stringify(dataset));
 
