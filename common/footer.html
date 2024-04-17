@@ -119,7 +119,7 @@
       var allText =  
         //"Bạn gửi giúp mình thông tin nhận hàng gồm: số điện thoại, dịa chỉ, thời gian giao hàng mong muốn \n"+
         //"Và để thanh toán thì bạn gửi đến thông tin chuyển khoản sau:\n"+
-        "Em gửi stk ạ - STK tên chồng em\n- Le Van Thanh - 19034601990019 \n Techcombank Vĩnh Phúc \n Nội Dung: CHỈ GHI TÊN FB ( KHÔNG GHI MUA HÀNG , HAY CỌC giúp em)"
+        "Em gửi stk ạ - STK tên chồng em\n- Le Van Thanh - 19034601990019 \n Techcombank Vĩnh Phúc \n Nội Dung: CHỈ GHI TÊN FB ( GHI NGẮN GỌN- KHÔNG GHI MUA HÀNG, HAY CỌC giúp em để bên em dễ kiểm tra - Cảm ơn khách ạ)"
         // Le Van Thanh - 19034601990019 
         // Techcombank Vĩnh Phúc 
         // Nội Dung: CHỈ GHI TÊN FB ( Không ghi cọc hàng hay gì cả)
@@ -408,8 +408,11 @@
         "<div class='btn btnNormal5px requestLuuDon'>Lưu đơn</div><br/>"+
         
         "<div class='btn btnNormal5px requestHangVe'>Hàng về</div><br/>"+
+        
         "<div class='btn btnNormal5px requestMoiThamGiaNhom'>Mời tham gia nhóm</div><br/>"+
         
+        "<div class='btn btnNormal5px requestCocThem'>Cọc Thêm</div><br/>"+
+
         "<div class='btn btnNormal5px shipMeLinh'>Ship Mê Linh </div><br/>"+
 
         // "<div class='btn btnNormal5px guestInfor'>Infor khách</div><br/>"+
@@ -428,9 +431,12 @@
         copyTextGeneral("19034601990019")
       })
 
+      $(".requestCocThem").click(function(){
+        copyTextGeneral("Giá trị đơn tăng lên, nên c cọc thêm giúp em 2️⃣0️⃣0️⃣K để tổng cọc thành 500k nha ạ")
+      })
 
       $(".requestMoiThamGiaNhom").click(function(){
-        copyTextGeneral("Em đang cập nhật nhiều deal giá shock tại nhóm hàng xách tay nội địa Đức của em tại đây, em mời chị tham gia ạ. \n\n https://www.facebook.com/groups/thuyvu.gochangau/ \n\nNếu c cần gì có thể nhắn tin cho em nick fanpage hoặc nick cá nhân Thuỷ Tít Vũ nha ạ")
+        copyTextGeneral("Em đang cập nhật nhiều deal hàng Đức giá tốt tại nhóm hàng xách tay nội địa Đức của em, em mời chị tham gia ạ:\n https://www.facebook.com/groups/thuyvu.gochangau/")
       })
 
       $(".requestDaInbox").click(function(){

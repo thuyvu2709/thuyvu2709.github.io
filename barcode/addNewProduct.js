@@ -540,19 +540,20 @@ function validateInputData() {
 	var productCode = $("#productCode").val();
 	var productName = $("#productName").val();
 	var importCode = chooseImportScheduleCode;
+	console.log(importCode);
 
 	var warningContent = undefined;
 	
-	if (!importCode) {
+	if (!importCode || importCode=="-1") {
 		warningContent = "Không có mã đợt hàng!"
 	}
 
 	if (!productCode) {
-		warningContent = "Không có mã hàng!"
+		warningContent = "Không có mã sản phẩm!"
 	}
 
 	if (!productName) {
-		warningContent = "Không có tên hàng!"
+		warningContent = "Không có tên sản phẩm!"
 	}
 
 	if (warningContent) {
