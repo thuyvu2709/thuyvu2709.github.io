@@ -389,7 +389,7 @@ function loadOrderListHtml() {
 
     var searchText = $("#orderSearchInput").val();
     var titleString = data[e][0] + ' | ' + data[e][2] + ' | ' + data[e][5];
-    var searchContent = data[e][0] + " " + data[e][2] + " " + data[e][3];
+    var searchContent = data[e][0] + " " + data[e][2] + " " + data[e][4];
     if (searchText) {
       if (!searchContent.toUpperCase().includes(searchText.toUpperCase())) {
         continue;
