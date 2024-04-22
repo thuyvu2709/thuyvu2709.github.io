@@ -307,7 +307,7 @@ function loadOrderListHtml() {
   if (shortByMoney == "1") {
     sortableData.sort(function (a, b) {
       if (a[5] && b[5]) {
-        return (parseInt(a[5]) - parseInt(b[5]))
+        return (parseInt(b[5]) - parseInt(a[5]))
       } else {
         return false;
       }
