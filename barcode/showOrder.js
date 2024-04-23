@@ -143,7 +143,7 @@ for (var i in prodListOrder){
 		continue;
 	}
 	var isAvailable = prodListOrder[i].available == 1 ? "borderMustard" : "";
-	var totalUnit = parseFloat(prodListOrder[i].productCount)*parseFloat(prodListOrder[i].productEstimateSellingVND)
+	var totalUnit = parseFloat(prodListOrder[i].productCount)*parseFloat(prodListOrder[i].productEstimateSellingVND || 0)
 	$("#lsTable").append("<tr>"+
     "<td>"+(parseInt(i)+1)+"</td>"+
     // "<td class='showImage "+isAvailable+" image_"+i+"'>"+prodListOrder[i].productName+
@@ -152,7 +152,7 @@ for (var i in prodListOrder){
    	"	<div class='divImgThumbnail simply'><img class='imgThumbnail' src='"+prodListOrder[i].productImage+"' /></div>"+
 	"</td>"+
     "<td>"+prodListOrder[i].productCount+"</td>"+
-    "<td>"+prodListOrder[i].productEstimateSellingVND+"</td>"+
+    "<td>"+(prodListOrder[i].productEstimateSellingVND || 0)+"</td>"+
     "<td>"+totalUnit+"</td>"+
     // "<td>"+prodListOrder[i].available+"</td>"+
   "</tr>")
