@@ -367,11 +367,10 @@ function loadOrderShippingListHtml() {
             mark = "textGreen";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/ghtk.png" class="shippingLogo">' + lsOrder[e][8] + '</img> ]';
+            lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "GHTK";
+            lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
           }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
-
-          lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "GHTK";
-          lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
         } catch (e) {
 
         }
@@ -383,11 +382,10 @@ function loadOrderShippingListHtml() {
             mark = "textRed";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/viettelpost.png" class="shippingLogo">' + lsOrder[e][8] + '</img> ]';
+            lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "ViettelPost";
+            lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
           }
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
-
-          lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "ViettelPost";
-          lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
         } catch (e) {
 
         }
@@ -399,10 +397,9 @@ function loadOrderShippingListHtml() {
             mark = "textRed";
             bgMarkAsLogiticCodice = "bgBisque"
             shipIcon = '[<img src="../img/ghn.png" class="shippingLogo">' + lsOrder[e][8] + '</img> ]';
-
+            lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "GHN";
+            lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
           }
-          lsOrderDetail[lsOrder[e][0]].otherInfor.shippingProvider = "GHN";
-          lsOrderDetail[lsOrder[e][0]].otherInfor.logiticCodice = logiticCodice;
           // console.log(lsOrder[e][0]+" "+lsOrderDetail[lsOrder[e][0]].otherInfor.order.order.label);
         } catch (e) {
 
