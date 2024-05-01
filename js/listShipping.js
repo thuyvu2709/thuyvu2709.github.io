@@ -15,6 +15,10 @@ var ghnToken = "";
 
 var userRole = JSON.parse(localStorage.getItem("userRole"));
 
+var startDateFilter = undefined;
+var endDateFilter = undefined;
+$('.datetimepicker').hide();
+
 // $(".orderFilter").val("Need_Schedule");
 $(".orderFilter").val("Requested");
 $(".maintitle").html("Quản lý đơn hàng - " + localStorage.getItem("datasetName"));
@@ -76,7 +80,7 @@ var triggerAfterLoad = function () {
     getOrderShipping(function (lsOrderset) {
       $("#loadingSpin").hide();
       lsOrder = lsOrderset;
-      if (!lsOrder) {
+      if (!lsOrder || lsOrder.length == 0) {
         lsOrder = JSON.parse(localStorage.getItem("ordershipping"));
       }
       readOrderDetail(function () {
@@ -343,6 +347,19 @@ function loadOrderShippingListHtml() {
     if (searchText) {
       if (!searchContent.toUpperCase().includes(searchText.toUpperCase())) {
         continue;
+      }
+    }
+
+    if (mode == "COMPLETED") {
+      if (startDateFilter) {
+        if (new Date(lsOrder[e][6]) < startDateFilter) {
+          continue;
+        }
+      }
+      if (endDateFilter) {
+        if (new Date(lsOrder[e][6]) > endDateFilter) {
+          continue;
+        }
       }
     }
     var shippingCodeDescription = "";
@@ -1749,6 +1766,9 @@ $(".orderFilter").change(function () {
     || mode == "PACKED"
   ) {
     $(".maintitle").html("Quản lý đơn hàng - " + localStorage.getItem("datasetName"));
+    if (mode == "COMPLETED") {
+      $('.datetimepicker').show();
+    }
     loadOrderShippingListHtml(lsOrder);
   } else if (mode == "TASK"
     || mode == "TASKALL"
@@ -2035,3 +2055,13 @@ function clickToShowImage(imageLink, classname) {
   })
 }
 
+
+
+$('.datetimepicker').daterangepicker({
+}, function (start, end, label) {
+  console.log("A new date selection was made: " + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD'));
+  // reportByDate(start.format('YYYY/MM/DD'),end.format('YYYY/MM/DD'));
+  startDateFilter = start;
+  endDateFilter = end;
+  loadOrderShippingListHtml();
+});
