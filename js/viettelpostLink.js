@@ -817,3 +817,43 @@ $("#ghtkPost").click(function(){
 		}
 	})
 })
+
+$("#startPreparingPrintingForm").click(startPreparingPrintingFormFn);
+
+function startPreparingPrintingFormFn() {
+  
+	$("#loadingSpin").show();
+	// var orderIndex = $(this).attr("class").split(" ").pop().split("_").pop();
+	// orderIndex = parseInt(orderIndex);
+	// var prodListOrder = lsOrder[orderIndex][3].prodListOrder;
+
+	var orderDetail = currentOrder;
+	var shippingProvider = "Viettelpost";
+	var logiticCodice = currentOrder.otherInfor.order.viettelPostlabel;
+
+	// console.log(lsOrder[orderIndex][3]);
+  
+	fetch(herokuPrefix + 'https://easy-teal-cobra-belt.cyclic.app/data', {
+	  method: 'POST',
+	  headers: {
+		'Content-Type': 'application/json'
+	  },
+	  body: JSON.stringify(
+		{
+		  "orderCode": orderDetail.orderCode,
+		  "receiverName": orderDetail.customerName,
+		  "receiverPhone": orderDetail.customerPhone,
+		  "receiverAddress": orderDetail.customerAddress,
+		  "shipperProvider": shippingProvider,
+		  "receiverBarcode": logiticCodice,
+		}
+	  )
+	}).then(data => {
+	  $("#loadingSpin").hide();
+	})
+	  .catch(error => {
+		console.error('Lỗi:', error);
+		$("#loadingSpin").hide();
+	  });
+  
+  }
