@@ -833,7 +833,7 @@ function startPreparingPrintingFormFn() {
 
 	// console.log(lsOrder[orderIndex][3]);
   
-	fetch(herokuPrefix + 'https://easy-teal-cobra-belt.cyclic.app/data', {
+	fetch(herokuPrefix + 'https://pi-to-esc-pos.vercel.app/data', {
 	  method: 'POST',
 	  headers: {
 		'Content-Type': 'application/json'
