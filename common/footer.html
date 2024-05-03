@@ -403,8 +403,14 @@
 
         "<div class='btn btnNormal5px requestCOC'>CỌC</div><br/>"+
 
-        "<div class='btn btnNormal5px copyBank'>TK NGÂN HÀNG</div><br/>"+
-        "<div class='btn btnNormal5px requestChiSoTK'>CHỈ STK</div><br/>"+
+        "<div class='btn btnNormal5px copyBank'>TK NGÂN HÀNG Thanh</div><br/>"+
+
+        "<div class='btn btnNormal5px requestChiSoTK'>CHỈ STK Thanh</div><br/>"+
+
+        "<div class='btn btnNormal5px copyBankThuy'>TK NGÂN HÀNG Thủy</div><br/>"+
+        "<div class='btn btnNormal5px requestChiSoTKThuy'>CHỈ STK Thủy</div><br/>"+
+
+
         "<div class='btn btnNormal5px requestLuuDon'>Lưu đơn</div><br/>"+
 
         "<div class='btn btnNormal5px requestGhepDon'>Ghép đơn</div><br/>"+
@@ -432,6 +438,14 @@
         "</div>"
       $(".modal-content").html(supportDiv);
       $('#simpleModal').modal('toggle');
+
+      $(".copyBankThuy").click(function(){
+        copyTextGeneral("Em gửi stk ạ\n- Vũ Thị Lệ Thủy - 19038327341012 \n Techcombank Vĩnh Phúc \n Nội Dung: CHỈ GHI TÊN FB ( GHI NGẮN GỌN- KHÔNG GHI MUA HÀNG, HAY CỌC giúp em để bên em dễ kiểm tra - Cảm ơn khách ạ)")
+      })
+
+      $(".requestChiSoTKThuy").click(function(){
+        copyTextGeneral("19038327341012")
+      })
 
       $(".requestChiSoTK").click(function(){
         copyTextGeneral("19034601990019")
