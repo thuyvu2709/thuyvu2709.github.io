@@ -396,49 +396,52 @@
 
     $(".supportPopup").click(function(){
       var supportDiv = "<div class='model-body' style='margin:auto'>"+
-        "<div style='font-size:25px'>Hỗ trợ</div>"+
-        "<div class='btn btnNormal5px requestDaInbox'>Chị check Tin Nhắn</div><br/>"+
+        "<div style='font-size:25px'>Hỗ trợ <span class='btn btnNormal5px textRed requestCloseModal'>X</span> </div>"+
+        "<div class='btn btnNormal5px requestDaInbox'>Chị check Tin Nhắn</div>"+
         "<div class='btn btnNormal5px requestHoiDiaChi'>Lấy địa chỉ khách</div><br/>"+
-        "<div class='btn btnNormal5px requestPhiShip'>PHÍ SHIP</div><br/>"+
+        "<div class='btn btnNormal5px requestPhiShip'>PHÍ SHIP</div>"+
 
         "<div class='btn btnNormal5px requestCOC'>CỌC</div><br/>"+
 
-        "<div class='btn btnNormal5px copyBank'>TK NGÂN HÀNG Thanh</div><br/>"+
+        "<div class='btn btnNormal5px copyBank'>TK NGÂN HÀNG Thanh</div>"+
 
         "<div class='btn btnNormal5px requestChiSoTK'>CHỈ STK Thanh</div><br/>"+
 
-        "<div class='btn btnNormal5px copyBankThuy'>TK NGÂN HÀNG Thủy</div><br/>"+
+        "<div class='btn btnNormal5px copyBankThuy'>TK NGÂN HÀNG Thủy</div>"+
         "<div class='btn btnNormal5px requestChiSoTKThuy'>CHỈ STK Thủy</div><br/>"+
 
 
-        "<div class='btn btnNormal5px requestLuuDon'>Lưu đơn</div><br/>"+
+        "<div class='btn btnNormal5px requestLuuDon'>Lưu đơn</div>"+
 
         "<div class='btn btnNormal5px requestGhepDon'>Ghép đơn</div><br/>"+
         
-        "<div class='btn btnNormal5px requestHangVe'>Hàng về</div><br/>"+
+        "<div class='btn btnNormal5px requestHangVe'>Hàng về</div>"+
 
         "<div class='btn btnNormal5px requestKhongLienHeDuoc'>Không Liên Hệ Được</div><br/>"+
 
-        "<div class='btn btnNormal5px requestCocKhachMoi'>Cọc Khách Mới</div><br/>"+
+        "<div class='btn btnNormal5px requestCocKhachMoi'>Cọc Khách Mới</div>"+
         
         "<div class='btn btnNormal5px requestMoiThamGiaNhom'>Mời tham gia nhóm</div><br/>"+
         
-        "<div class='btn btnNormal5px requestCocThem'>Cọc Thêm</div><br/>"+
+        "<div class='btn btnNormal5px requestCocThem'>Cọc Thêm</div>"+
 
         "<div class='btn btnNormal5px shipMeLinh'>Ship Mê Linh </div><br/>"+
 
         // "<div class='btn btnNormal5px guestInfor'>Infor khách</div><br/>"+
         // "<div class='btn btnNormal5px copyThank'>Cảm ơn</div><br/>"+
         // "<div class='btn btnNormal5px pickupAddress'>Địa chỉ qua lấy đồ</div><br/>"+
-        "<div class='btn btnNormal5px sendCTV'>Chính sách CTV</div><br/>"+
+        "<div class='btn btnNormal5px sendCTV'>Chính sách CTV</div>"+
         "<div class='btn btnNormal5px sendOrderPolicy'>Chính sách Order</div><br/>"+
         // "<div class='btn btnNormal5px thuyIbanPoste'>Iban Poste Thuy</div><br/>"+
         // "<div class='btn btnNormal5px thuyIbanUnicredit'>Iban Unicredit Thuy</div><br/>"+
         "<div class='btn btnNormal5px shipVinhPhuc'>Ship Vĩnh Phúc</div><br/>"+
         "</div>"
       $(".modal-content").html(supportDiv);
-      $('#simpleModal').modal('toggle');
+      $('#simpleModal').modal('show');
 
+      $(".requestCloseModal").click(function(){
+        $('#simpleModal').modal('hide');
+      })
       $(".copyBankThuy").click(function(){
         copyTextGeneral("Em gửi stk ạ\n- Vũ Thị Lệ Thủy - 19038327341012 \n Techcombank Vĩnh Phúc \n Nội Dung: CHỈ GHI TÊN FB ( GHI NGẮN GỌN- KHÔNG GHI MUA HÀNG, HAY CỌC giúp em để bên em dễ kiểm tra - Cảm ơn khách ạ)")
       })
