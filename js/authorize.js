@@ -19,7 +19,7 @@ var authorizeButton = document.getElementById('authorize_button');
 // var herokuPrefix = "https://micro-cors.vercel.app/"
 // var herokuPrefix = "http://localhost:8080/"
 
-var herokuPrefix = "https://thingproxy.freeboard.io/fetch/"
+var herokuPrefix = "https://thingproxy.freeboard.io/fetch/" //https://nordicapis.com/10-free-to-use-cors-proxies/
 
 var dataset = [];
 
