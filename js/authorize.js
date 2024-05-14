@@ -15,12 +15,12 @@ var SCOPES = "https://www.googleapis.com/auth/spreadsheets "+
 var authorizeButton = document.getElementById('authorize_button');
 // var signoutButton = document.getElementById('signout_button');
 
-// var herokuPrefix = "https://cors-anywhere-2-c194.onrender.com/" // render need to go with https://console.cron-job.org/dashboard
+var herokuPrefix = "https://cors-anywhere-2-c194.onrender.com/" // render need to go with https://console.cron-job.org/dashboard
 // var herokuPrefix = "https://micro-cors.vercel.app/"
 // var herokuPrefix = "http://localhost:8080/"
 
 // var herokuPrefix = "https://thingproxy.freeboard.io/fetch/" //https://nordicapis.com/10-free-to-use-cors-proxies/
-var herokuPrefix = "https://cors-anywhere-vercel-beta.vercel.app/proxy/"
+// var herokuPrefix = "https://cors-anywhere-vercel-beta.vercel.app/proxy/"
 
 var dataset = [];
 
