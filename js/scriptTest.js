@@ -51,15 +51,18 @@ function handleFileSelect(event) {
 $("#loadDataToMerge").click(function () {
 	console.log("loadDataToMerge");
 	$("#currentDataInfor").html("");
-	loadOrderList(function () {
-		loadOrderListDetail(function () {
-			loadProductList(function () {
-				loadWarehouse(function () {
-					$("#currentDataInfor").html("Order:" + JSON.parse(localStorage.getItem("orderList")).length + " lines<br/>" +
-						"OrderDetail:" + JSON.parse(localStorage.getItem("orderListDetail")).length + " lines<br/>" +
-						"Product:" + JSON.parse(localStorage.getItem("productList")).length + " lines<br/>" +
-						"Warehouse:" + JSON.parse(localStorage.getItem("warehouse")).length + " lines<br/>"
-					)
+	
+	getOrderShipping(function(){
+		loadOrderList(function () {
+			loadOrderListDetail(function () {
+				loadProductList(function () {
+					loadWarehouse(function () {
+						$("#currentDataInfor").html("Order:" + JSON.parse(localStorage.getItem("orderList")).length + " lines<br/>" +
+							"OrderDetail:" + JSON.parse(localStorage.getItem("orderListDetail")).length + " lines<br/>" +
+							"Product:" + JSON.parse(localStorage.getItem("productList")).length + " lines<br/>" +
+							"Warehouse:" + JSON.parse(localStorage.getItem("warehouse")).length + " lines<br/>"
+						)
+					})
 				})
 			})
 		})
