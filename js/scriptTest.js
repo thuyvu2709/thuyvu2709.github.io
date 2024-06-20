@@ -21,7 +21,7 @@ $("#ImportData").click(function () {
 	})
 })
 
-var shippingSheet = "";
+// var shippingSheet = "";
 
 document.getElementById('ImportDataFromFile').addEventListener('change', handleFileSelect, false);
 
@@ -105,9 +105,9 @@ var triggerAfterLoad = function () {
 			console.log("shippingSheet" + datasetList[setIndex][2]);
 			console.log("datasetName" + datasetList[setIndex][0]);
 
-			shippingSheet = datasetList[setIndex][2];
+			// shippingSheet = datasetList[setIndex][2];
 
-			mergeProcessing(datasetList[setIndex][1]);
+			mergeProcessing(datasetList[setIndex][1], datasetList[setIndex][2]);
 			// window.location = "/";
 		})
 
@@ -145,7 +145,7 @@ function parseOrderShipping() {
 	return orderShipStatus;
 }
 
-function mergeProcessing(targetMainSheet) {
+function mergeProcessing(targetMainSheet, shippingSheet) {
 	console.log("mergeProcessing");
 	var orderShipStatus = parseOrderShipping();
 
