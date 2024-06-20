@@ -1254,7 +1254,7 @@ function loadOrderListHtml() {
       "Số đơn hàng:" + sumAllOfShipType.amount + "<br/>" +
       "Tổng tiền khách đã cọc:" + sumAllOfShipType.prepaid + "<br/>" +
       "Tổng tiền khách sẽ thanh toán cho bên giao hàng (willpay):" + sumAllOfShipType.willpay + "<br/>" +
-      "Tổng tiền thanh toán (totalpay):" + sumAllOfShipType.totalPay + "<hr/>"
+      "Tổng tiền thanh toán (totalpay):" + sumAllOfShipType.totalPay + "<br/>"
 
       // "<div class='btn btn-primary mb-2 reportDetail'>Xem báo cáo chi tiết</div>&nbsp;"
       ;
@@ -1309,12 +1309,12 @@ function loadOrderListHtml() {
       viewDetailReport.content +
       // "<h4>Báo cáo</h4>" +
       // "Số đơn hàng:" + numOfOrder + "<br/>" +
-      // "Số mặt hàng:" + numOfProd + "<br/>" +
+      "Số mặt hàng:" + numOfProd + "<br/>" +
       // "Tổng doanh thu:" + totalPay + "<br/>" +
-      // "Tổng vốn:" + totalOwnerPay + "<br/>" +
-      // "Tổng lãi:" + totalProfit + "<br/>" +
+      "Tổng vốn:" + totalOwnerPay + "<br/>" +
+      "Tổng lãi:" + totalProfit + "<br/>" +
       "<div class='btn btn-primary mb-2 reportDetail'>Xem báo cáo chi tiết</div>&nbsp;" +
-      "<hr/>" +
+      "<br/>" +
       "<h4>Xử lý hàng loạt</h4>" +
       "<div class='btn btnNormal5px requestshippingMany' >Yêu cầu giao hàng</div>" +
       "<hr/>" +
