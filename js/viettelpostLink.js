@@ -418,7 +418,7 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	  "SENDER_DISTRICT":pickList[pickIndex].districtId,
   	  "PRODUCT_TYPE":"HH",
 	  "PRODUCT_WEIGHT":parseInt($("#totalWeight").html()),
-	  "PRODUCT_PRICE":currentOrder.totalPay,
+	  "PRODUCT_PRICE":currentOrder.totalPay * 1000,
 	  "MONEY_COLLECTION":pick_money,
   	  "TYPE" :1
 	}
@@ -454,7 +454,7 @@ function caluclateTransportFeeDetailFn(){
 
 	var feeObj = {
 		"PRODUCT_WEIGHT":parseInt($("#totalWeight").html()),
-		"PRODUCT_PRICE":currentOrder.totalPay,
+		"PRODUCT_PRICE":currentOrder.totalPay * 1000,
 		"MONEY_COLLECTION":pick_money,
 		"ORDER_SERVICE_ADD":"",
 		"ORDER_SERVICE":$("#transportType").val(),
@@ -681,7 +681,7 @@ $("#ghtkPost").click(function(){
 		"PRODUCT_NAME": "Hàng Thuỷ gửi",
 		"PRODUCT_DESCRIPTION": "Hàng Thuỷ gửi",
 		"PRODUCT_QUANTITY": count,
-		"PRODUCT_PRICE": $("#totalPay").val(),
+		"PRODUCT_PRICE": parseInt($("#totalPay").val()) * 1000,
 		"PRODUCT_WEIGHT": $("#totalWeight").val(),
 		"PRODUCT_LENGTH": $("#packLength").val(),
 		"PRODUCT_WIDTH": $("#packWidth").val(),
@@ -694,10 +694,6 @@ $("#ghtkPost").click(function(){
 		"ORDER_NOTE": $("#orderNodeGHTK").val(),
 		"MONEY_COLLECTION": pick_money,
 		"LIST_ITEM": [{
-		    "PRODUCT_NAME": "Máy xay sinh tố Philips HR2118 2.0L ",
-		    "PRODUCT_PRICE": 2150000,
-		    "PRODUCT_WEIGHT": 2500,
-		    "PRODUCT_QUANTITY": 1
 		}]
 	}
 	// console.log(pickIndex);
@@ -744,11 +740,11 @@ $("#ghtkPost").click(function(){
 
 			 "PRODUCT_NAME": $(".prodName_"+i).val(),
 		     "PRODUCT_PRICE": parseInt($(".prodPrice_"+i).html())*1000,
-		     "PRODUCT_WEIGHT": parseInt($(".prodWeight_"+i).val())*1000,
+		     "PRODUCT_WEIGHT": parseInt(parseFloat($(".prodWeight_"+i).val())*1000),
 		     "PRODUCT_QUANTITY": parseInt($(".prodQuantity_"+i).html())
 		})
 		totalQuantity = totalQuantity + parseInt($(".prodQuantity_"+i).html());
-		totalWeight = totalWeight + parseInt(parseFloat($(".prodWeight_"+i).val())*1000);
+		totalWeight = totalWeight + parseInt(parseFloat($(".prodWeight_"+i).val())*1000) * parseInt($(".prodQuantity_"+i).html());
 	}
 
 	dataOrder["PRODUCT_WEIGHT"] = totalWeight;
