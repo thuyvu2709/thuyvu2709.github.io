@@ -438,8 +438,8 @@ var myvar = '<div lang="en">'+
 '            <label>Tổng tiền thanh toán : 180</label>'+
 '          </li>'+
 '          <li>'+
-'            <label class="title">Thông tin chuyển khoản: Le Van Thanh - 19034601990019 - Techcombank chi nhánh Phúc Yên, Vĩnh Phúc</label>'+
-'            <!-- <label class="inputField">Le Van Thanh </label> -->'+
+'            <label class="title">Thông tin chuyển khoản: VU THI LE THUY - 1772279305 - Techcombank chi nhánh Phúc Yên, Vĩnh Phúc</label>'+
+'            <!-- <label class="inputField">VU THI LE THUY </label> -->'+
 '          </li>'+
 '      </ul>'+
 '      <h2 class="text-center title">Cảm ơn quý khách đã mua hàng của chúng tôi</h2>'+
