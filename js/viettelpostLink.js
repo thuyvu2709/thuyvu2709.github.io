@@ -430,6 +430,11 @@ function caluclateTransportFeeFn(notloadShow){//true mean does not show
 	}
 	calculateTransportFeeAPIViettelPost(feeObj, function(feeLs){
 		// console.log(feeLs);
+		
+		feeLs.sort(function(a, b) { 
+			return parseFloat(a["GIA_CUOC"]) - parseFloat(b["GIA_CUOC"]) ;
+		})
+
 		var feeCt = "";
 		for (e in feeLs) {
 			feeCt = feeCt + "<option value='"+feeLs[e]["MA_DV_CHINH"]+"'>"
