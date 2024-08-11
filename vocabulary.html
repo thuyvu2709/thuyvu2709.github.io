@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table from Object List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* .speak-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            color: #4CAF50;
+            font-size: 1.2em;
+            margin-left: 10px;
+        } */
+    </style>
+</head>
+
+<body>
+
+    <h2>German - English - Vietnamese Translation Table</h2>
+    <table id="translationTable">
+        <thead>
+            <tr>
+                <th>no</th>
+                <th>no</th>
+                <th>German</th>
+                <th>English</th>
+                <th>Vietnamese</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be appended here by jQuery -->
+        </tbody>
+    </table>
+
+    <script>
+        var dataList = [
+            {
+                "index": 0,
+                "german": "Führerscheinstelle",
+                "english": "Competent Driving Licence Office",
+                "vietnam": "Văn phòng cấp giấy phép lái xe",
+                "no": ""
+            },
+            {
+                "index": 1,
+                "german": "Rathaus",
+                "english": "City Hall",
+                "vietnam": "Tòa thị chính",
+                "no": ""
+            },
+            {
+                "index": 2,
+                "german": "Bürgerbüro",
+                "english": "Local City Office",
+                "vietnam": "Văn phòng thành phố địa phương",
+                "no": ""
+            },
+            {
+                "index": 3,
+                "german": "Umschreibung",
+                "english": "Exchanging Licence",
+                "vietnam": "Đổi giấy phép lái xe",
+                "no": ""
+            },
+            {
+                "index": 4,
+                "german": "Führerschein",
+                "english": "Driving Licence, Driver's Licence",
+                "vietnam": "Giấy phép lái xe",
+                "no": ""
+            },
+            {
+                "index": 5,
+                "german": "Fahrerlaubnisklasse",
+                "english": "Category of your Licence",
+                "vietnam": "Hạng giấy phép lái xe",
+                "no": ""
+            },
+            {
+                "index": 6,
+                "german": "Erste Hilfe",
+                "english": "First Aid Course",
+                "vietnam": "Khóa học sơ cứu",
+                "no": ""
+            },
+            {
+                "index": 7,
+                "german": "Sehtest",
+                "english": "Eye-Test",
+                "vietnam": "Kiểm tra mắt",
+                "no": ""
+            },
+            {
+                "index": 8,
+                "german": "Aufenthaltsgenehmigung",
+                "english": "Residence Permit",
+                "vietnam": "Giấy phép cư trú",
+                "no": ""
+            },
+            {
+                "index": 9,
+                "german": "Straßenverkehrsordnung StVO",
+                "english": "Road Traffic Regulations",
+                "vietnam": "Quy định giao thông đường bộ",
+                "no": ""
+            },
+            {
+                "index": 10,
+                "german": "Fahrerlaubnisverordnung FEV",
+                "english": "Regulation on the Right to Drive",
+                "vietnam": "Quy định về quyền lái xe",
+                "no": ""
+            },
+            {
+                "index": 11,
+                "german": "Fahreignungsregister FAER",
+                "english": "Driver's Record",
+                "vietnam": "Hồ sơ lái xe",
+                "no": ""
+            },
+            {
+                "index": 12,
+                "german": "Probezeit",
+                "english": "Driver's Licence Probationary Period",
+                "vietnam": "Thời gian thử việc bằng lái",
+                "no": ""
+            },
+            {
+                "index": 13,
+                "german": "Links / Rechts",
+                "english": "To the Left / Right",
+                "vietnam": "Trái / Phải",
+                "no": "1"
+            },
+            {
+                "index": 14,
+                "german": "Nächste Straße links / rechts",
+                "english": "Next street / road left or right",
+                "vietnam": "Đường tiếp theo bên trái / phải",
+                "no": ""
+            },
+            {
+                "index": 15,
+                "german": "Halb links / rechts",
+                "english": "Turn halfway left or right",
+                "vietnam": "Rẽ nửa vòng trái / phải",
+                "no": ""
+            },
+            {
+                "index": 16,
+                "german": "Erste, Zweite, Dritte rechts abbiegen",
+                "english": "Turn First, second or third to the right. (Roundabout / Traffic Circle)",
+                "vietnam": "Rẽ phải ở lối ra thứ nhất, thứ hai hoặc thứ ba. (Vòng xoay)",
+                "no": ""
+            },
+            {
+                "index": 17,
+                "german": "Erste, zweite, dritte Ausfahrt nehmen",
+                "english": "Take the first, second or third exit (Roundabout / Traffic Circle)",
+                "vietnam": "Đi lối ra thứ nhất, thứ hai hoặc thứ ba (Vòng xoay)",
+                "no": ""
+            },
+            {
+                "index": 18,
+                "german": "Der Vorfahrtsstraße folgen",
+                "english": "Follow the main road / priority road",
+                "vietnam": "Đi theo đường ưu tiên",
+                "no": ""
+            },
+            {
+                "index": 19,
+                "german": "In Richtung .... fahren",
+                "english": "Drive in ..... direction.",
+                "vietnam": "Lái xe theo hướng ....",
+                "no": ""
+            },
+            {
+                "index": 20,
+                "german": "Wenn nichts gesagt wir, dann geht es geradeaus",
+                "english": "If it is nothing said you always drive straight ahead",
+                "vietnam": "Nếu không có gì được nói thì bạn luôn lái thẳng",
+                "no": ""
+            },
+            {
+                "index": 21,
+                "german": "Richtung Autobahn / Kraftfahrstraße",
+                "english": "In direction to motorway / highway",
+                "vietnam": "Hướng về đường cao tốc / xa lộ",
+                "no": "1.10"
+            },
+            {
+                "index": 22,
+                "german": "Anhalten",
+                "english": "Stopping",
+                "vietnam": "Dừng lại",
+                "no": "2.1"
+            },
+            {
+                "index": 23,
+                "german": "Rückwärts fahren links / rechts",
+                "english": "Reverse Driving to the left or right",
+                "vietnam": "Lùi xe sang trái / phải",
+                "no": ""
+            },
+            {
+                "index": 24,
+                "german": "Vorwärts fahren links / rechts",
+                "english": "Forward Driving to the left or right",
+                "vietnam": "Lái xe tiến lên trái / phải",
+                "no": ""
+            },
+            {
+                "index": 25,
+                "german": "Einparken längs/quer (vorwärts/rückwärts)",
+                "english": "Parking along/across (forward / reverse)",
+                "vietnam": "Đỗ xe dọc/ngang (tiến/lùi)",
+                "no": ""
+            },
+            {
+                "index": 26,
+                "german": "Umkehren / Wenden",
+                "english": "Turn back",
+                "vietnam": "Quay đầu",
+                "no": ""
+            },
+            {
+                "index": 27,
+                "german": "Hinter diesem Fahrzeug einparken",
+                "english": "Park behind this vehicle",
+                "vietnam": "Đỗ xe phía sau xe này",
+                "no": ""
+            },
+            {
+                "index": 28,
+                "german": "Zwischen den Fahrzeugen einparken",
+                "english": "Park between the vehicles",
+                "vietnam": "Đỗ xe giữa các xe",
+                "no": ""
+            },
+            {
+                "index": 29,
+                "german": "Gefahrbremsung/Abbremsen mit höchstmöglicher Verzögerung",
+                "english": "Panic break, Emergency break",
+                "vietnam": "Phanh gấp, Phanh khẩn cấp",
+                "no": "2.8"
+            },
+            {
+                "index": 30,
+                "german": "Funktion prüfen von",
+                "english": "Check function of ...",
+                "vietnam": "Kiểm tra chức năng của ...",
+                "no": "3.1"
+            },
+            {
+                "index": 31,
+                "german": "Ein- Ausschalten von",
+                "english": "Switch on - off -",
+                "vietnam": "Bật - Tắt -",
+                "no": ""
+            },
+            {
+                "index": 32,
+                "german": "Zeigen von",
+                "english": "Show something",
+                "vietnam": "Hiển thị cái gì đó",
+                "no": ""
+            },
+            {
+                "index": 33,
+                "german": "Standlicht",
+                "english": "Sidelight",
+                "vietnam": "Đèn xi-nhan",
+                "no": ""
+            },
+            {
+                "index": 34,
+                "german": "Abblendlicht",
+                "english": "Low Beam Lights",
+                "vietnam": "Đèn chiếu gần",
+                "no": ""
+            },
+            {
+                "index": 35,
+                "german": "Fernlicht",
+                "english": "High Beam",
+                "vietnam": "Đèn chiếu xa",
+                "no": ""
+            },
+            {
+                "index": 36,
+                "german": "Schlussleuchten",
+                "english": "Tail Lights",
+                "vietnam": "Đèn hậu",
+                "no": ""
+            },
+            {
+                "index": 37,
+                "german": "Kennzeichenbeleuchtung",
+                "english": "Licence-Plate Light",
+                "vietnam": "Đèn biển số",
+                "no": ""
+            },
+            {
+                "index": 38,
+                "german": "Nebelscheinwerfer",
+                "english": "Front Fog Light",
+                "vietnam": "Đèn sương mù trước",
+                "no": ""
+            },
+            {
+                "index": 39,
+                "german": "Nebelschlussleuchte",
+                "english": "Rear Fog Light",
+                "vietnam": "Đèn sương mù sau",
+                "no": ""
+            },
+            {
+                "index": 40,
+                "german": "Warnblinkanlage",
+                "english": "Hazard Lights",
+                "vietnam": "Đèn cảnh báo",
+                "no": ""
+            },
+            {
+                "index": 41,
+                "german": "Hupe",
+                "english": "Horn",
+                "vietnam": "Còi",
+                "no": ""
+            },
+            {
+                "index": 42,
+                "german": "Bremsleuchten",
+                "english": "Brake Lights",
+                "vietnam": "Đèn phanh",
+                "no": ""
+            },
+            {
+                "index": 43,
+                "german": "Kontrollleuchten benennen",
+                "english": "Show control lights",
+                "vietnam": "Hiển thị đèn kiểm soát",
+                "no": ""
+            },
+            {
+                "index": 44,
+                "german": "Rückstrahler",
+                "english": "Reflector, Cat's Eye",
+                "vietnam": "Đèn phản quang",
+                "no": ""
+            },
+            {
+                "index": 45,
+                "german": "Vorhanden sein",
+                "english": "Exist of ...",
+                "vietnam": "Tồn tại của ...",
+                "no": ""
+            },
+            {
+                "index": 46,
+                "german": "Beschädigung",
+                "english": "Damaging of...",
+                "vietnam": "Sự hư hỏng của...",
+                "no": ""
+            },
+            {
+                "index": 47,
+                "german": "Lenkung",
+                "english": "Steering",
+                "vietnam": "Hệ thống lái",
+                "no": ""
+            },
+            {
+                "index": 48,
+                "german": "Lenkschloss entriegeln",
+                "english": "Unlock Steering",
+                "vietnam": "Mở khóa tay lái",
+                "no": ""
+            },
+            {
+                "index": 49,
+                "german": "Bremsanlage",
+                "english": "Braking System",
+                "vietnam": "Hệ thống phanh",
+                "no": ""
+            },
+            {
+                "index": 50,
+                "german": "Betriebsbremse / Fußbremse",
+                "english": "Service Brake / Foot Brake",
+                "vietnam": "Phanh chính / Phanh chân",
+                "no": ""
+            },
+            {
+                "index": 51,
+                "german": "Feststellbremse",
+                "english": "Parking Brake",
+                "vietnam": "Phanh tay",
+                "no": ""
+            },
+            {
+                "index": 52,
+                "german": "Flüssigkeitsstände prüfen",
+                "english": "Check Liquid Level of ....",
+                "vietnam": "Kiểm tra mức chất lỏng của ....",
+                "no": ""
+            },
+            {
+                "index": 53,
+                "german": "Motoröl",
+                "english": "Engine Oil",
+                "vietnam": "Dầu động cơ",
+                "no": ""
+            },
+            {
+                "index": 54,
+                "german": "Kühlmittel",
+                "english": "Coolant",
+                "vietnam": "Nước làm mát",
+                "no": ""
+            },
+            {
+                "index": 55,
+                "german": "Scheibenwaschflüssigkeit",
+                "english": "Windshield Washing Fluid",
+                "vietnam": "Dung dịch rửa kính chắn gió",
+                "no": ""
+            },
+            {
+                "index": 56,
+                "german": "Reifen kontrollieren",
+                "english": "Check Tires",
+                "vietnam": "Kiểm tra lốp xe",
+                "no": ""
+            },
+            {
+                "index": 57,
+                "german": "Beschädigung",
+                "english": "Damaging",
+                "vietnam": "Hư hỏng",
+                "no": ""
+            },
+            {
+                "index": 58,
+                "german": "Profiltiefe",
+                "english": "Tire tread",
+                "vietnam": "Độ sâu gai lốp",
+                "no": ""
+            },
+            {
+                "index": 59,
+                "german": "Reifendruck",
+                "english": "Tire Pressure",
+                "vietnam": "Áp suất lốp",
+                "no": "3.29"
+            },
+            {
+                "index": 60,
+                "german": "Sicherheitsgurt",
+                "english": "Seat Belt",
+                "vietnam": "Dây an toàn",
+                "no": "4.1"
+            },
+            {
+                "index": 61,
+                "german": "Lenkrad",
+                "english": "Steering Wheel",
+                "vietnam": "Vô lăng",
+                "no": ""
+            },
+            {
+                "index": 62,
+                "german": "Kupplung",
+                "english": "Clutch",
+                "vietnam": "Bàn đạp côn",
+                "no": ""
+            },
+            {
+                "index": 63,
+                "german": "Bremse",
+                "english": "Brake",
+                "vietnam": "Phanh",
+                "no": ""
+            },
+            {
+                "index": 64,
+                "german": "Handbremse",
+                "english": "Parking Brake",
+                "vietnam": "Phanh tay",
+                "no": ""
+            },
+            {
+                "index": 65,
+                "german": "Schalthebel",
+                "english": "Gear Stick",
+                "vietnam": "Cần số",
+                "no": ""
+            },
+            {
+                "index": 66,
+                "german": "Gang/Gänge",
+                "english": "Gear",
+                "vietnam": "Số (của xe)",
+                "no": ""
+            },
+            {
+                "index": 67,
+                "german": "Scheibenwischer",
+                "english": "Windscreen Wiper",
+                "vietnam": "Gạt nước kính chắn gió",
+                "no": ""
+            },
+            {
+                "index": 68,
+                "german": "Lichtschalter",
+                "english": "Light Switch",
+                "vietnam": "Công tắc đèn",
+                "no": ""
+            },
+            {
+                "index": 69,
+                "german": "Heizung",
+                "english": "Heater",
+                "vietnam": "Máy sưởi",
+                "no": ""
+            },
+            {
+                "index": 70,
+                "german": "Gebläse",
+                "english": "Fan",
+                "vietnam": "Quạt",
+                "no": ""
+            },
+            {
+                "index": 71,
+                "german": "Motorhaube öffnen",
+                "english": "Open Engine Bonnet",
+                "vietnam": "Mở nắp capo",
+                "no": ""
+            },
+            {
+                "index": 72,
+                "german": "Räder kontrollien",
+                "english": "Check the Wheels",
+                "vietnam": "Kiểm tra bánh xe",
+                "no": ""
+            },
+            {
+                "index": 73,
+                "german": "Fenster öffnen / schließen",
+                "english": "Open / Close Windows",
+                "vietnam": "Mở / Đóng cửa sổ",
+                "no": ""
+            },
+            {
+                "index": 74,
+                "german": "Spiegel einstellen",
+                "english": "Adjust Mirrors",
+                "vietnam": "Điều chỉnh gương",
+                "no": ""
+            },
+            {
+                "index": 75,
+                "german": "Außenspiegel einstellen",
+                "english": "Adjust Exterior Mirrors",
+                "vietnam": "Điều chỉnh gương ngoài",
+                "no": ""
+            },
+            {
+                "index": 76,
+                "german": "Heckscheibenheizung einschalten",
+                "english": "Switch on Rear Window Heating",
+                "vietnam": "Bật sưởi kính sau",
+                "no": "4.18"
+            },
+            {
+                "index": 77,
+                "german": "Sicherung / Sichern gegen",
+                "english": "Protect against ...",
+                "vietnam": "Bảo vệ chống ...",
+                "no": "5.1"
+            },
+            {
+                "index": 78,
+                "german": "Wegrollen",
+                "english": "Roll Away",
+                "vietnam": "Lăn đi",
+                "no": "5.2"
+            },
+            {
+                "index": 79,
+                "german": "Unbefugte Benutzung",
+                "english": "Unauthorised Use",
+                "vietnam": "Sử dụng trái phép",
+                "no": "5.3"
+            },
+            {
+                "index": 80,
+                "german": "Umschau / Umsicht beim Aussteigen",
+                "english": "Caution while leaving or entering the car",
+                "vietnam": "Cẩn thận khi ra vào xe",
+                "no": "5.4"
+            },
+            {
+                "index": 81,
+                "german": "Prüfung bestanden",
+                "english": "Test passed",
+                "vietnam": "Đã qua bài kiểm tra",
+                "no": "6.1"
+            },
+            {
+                "index": 82,
+                "german": "Prüfung nicht bestanden wegen",
+                "english": "Test failed. Reasons ....",
+                "vietnam": "Không qua bài kiểm tra. Lý do ...",
+                "no": ""
+            },
+            {
+                "index": 83,
+                "german": "Erhebliches Fehlverhalten",
+                "english": "Gross Misconduct",
+                "vietnam": "Hành vi sai trái nghiêm trọng",
+                "no": ""
+            },
+            {
+                "index": 84,
+                "german": "Häufung / Wiederholung von Fehlern",
+                "english": "Repetition of Mistakes",
+                "vietnam": "Lặp lại lỗi",
+                "no": ""
+            },
+            {
+                "index": 85,
+                "german": "Grundfahraufgabe wiederholt fehlerhaft",
+                "english": "Basic Driving Tasks repeated wrong",
+                "vietnam": "Nhiệm vụ lái xe cơ bản lặp lại sai",
+                "no": ""
+            },
+            {
+                "index": 86,
+                "german": "Gefährdung",
+                "english": "Risk Situation",
+                "vietnam": "Tình huống nguy hiểm",
+                "no": ""
+            },
+            {
+                "index": 87,
+                "german": "Zu langsam",
+                "english": "Too Slow",
+                "vietnam": "Quá chậm",
+                "no": ""
+            },
+            {
+                "index": 88,
+                "german": "Zu schnell",
+                "english": "Too Fast",
+                "vietnam": "Quá nhanh",
+                "no": ""
+            },
+            {
+                "index": 89,
+                "german": "Unsicher",
+                "english": "Uncertain",
+                "vietnam": "Không chắc chắn",
+                "no": ""
+            },
+            {
+                "index": 90,
+                "german": "Fehlende Verkehrsbeobachtung bei ...",
+                "english": "Missing Traffic Observation in ....Situation(s)",
+                "vietnam": "Thiếu quan sát giao thông trong ... Tình huống",
+                "no": ""
+            },
+            {
+                "index": 91,
+                "german": "Fehlende oder ungenügende Spiegelbeobachtung",
+                "english": "Missing Mirror Observation",
+                "vietnam": "Thiếu quan sát gương",
+                "no": ""
+            },
+            {
+                "index": 92,
+                "german": "Fehlendes vorausschauendes Fahren",
+                "english": "Missing Anticipatory Driving",
+                "vietnam": "Thiếu lái xe dự đoán",
+                "no": ""
+            },
+            {
+                "index": 93,
+                "german": "Zu wenig Abstand beim Vorbeifahren / Überholen",
+                "english": "Not enough distance while Passing or Overtaking ...",
+                "vietnam": "Không đủ khoảng cách khi vượt qua hoặc vượt ...",
+                "no": ""
+            },
+            {
+                "index": 94,
+                "german": "Motorradfahrer",
+                "english": "Motorcyclist",
+                "vietnam": "Người đi xe máy",
+                "no": ""
+            },
+            {
+                "index": 95,
+                "german": "Radfahrer",
+                "english": "Bicyclist",
+                "vietnam": "Người đi xe đạp",
+                "no": ""
+            },
+            {
+                "index": 96,
+                "german": "Pkw",
+                "english": "Cars",
+                "vietnam": "Xe hơi",
+                "no": ""
+            },
+            {
+                "index": 97,
+                "german": "LKW",
+                "english": "Trucks",
+                "vietnam": "Xe tải",
+                "no": ""
+            },
+            {
+                "index": 98,
+                "german": "Straßenbahn",
+                "english": "Tram",
+                "vietnam": "Xe điện",
+                "no": ""
+            },
+            {
+                "index": 99,
+                "german": "Vorrang / Vorfahrt nicht beachte bei ...",
+                "english": "Ignoring of priority by ...",
+                "vietnam": "Không chú ý quyền ưu tiên tại ...",
+                "no": ""
+            },
+            {
+                "index": 100,
+                "german": "Rechts vor Links",
+                "english": "Right before Left",
+                "vietnam": "Phải trước Trái",
+                "no": ""
+            },
+            {
+                "index": 101,
+                "german": "Vorfahrt gewähren",
+                "english": "Give Way",
+                "vietnam": "Nhường đường",
+                "no": ""
+            },
+            {
+                "index": 102,
+                "german": "Stop Schild",
+                "english": "Stop Sign",
+                "vietnam": "Biển dừng lại",
+                "no": ""
+            },
+            {
+                "index": 103,
+                "german": "Ampel Rot - Gelb - Grün",
+                "english": "Traffic Light Signals Red - Yellow - Green",
+                "vietnam": "Đèn tín hiệu giao thông Đỏ - Vàng - Xanh",
+                "no": ""
+            },
+            {
+                "index": 104,
+                "german": "Rechtsabbiegepfeil",
+                "english": "Green Tin Arrow for turning right",
+                "vietnam": "Mũi tên xanh để rẽ phải",
+                "no": ""
+            },
+            {
+                "index": 105,
+                "german": "Kreisverkehr",
+                "english": "Roundabout, Traffic Circle",
+                "vietnam": "Vòng xoay, Bùng binh",
+                "no": ""
+            },
+            {
+                "index": 106,
+                "german": "Vorrang Fußgänger",
+                "english": "Priority Pedestrians",
+                "vietnam": "Ưu tiên người đi bộ",
+                "no": ""
+            },
+            {
+                "index": 107,
+                "german": "Nichtbeachten von Verkehrszeichen",
+                "english": "Ignoring of Road Signs",
+                "vietnam": "Không chú ý biển báo giao thông",
+                "no": ""
+            },
+            {
+                "index": 108,
+                "german": "Zu schnell an Bus vorbeigefahren",
+                "english": "To Fast while Passing a Bus",
+                "vietnam": "Đi quá nhanh khi vượt xe buýt",
+                "no": ""
+            },
+            {
+                "index": 109,
+                "german": "Verkehrsverbot",
+                "english": "General Prohibition of Traffic",
+                "vietnam": "Cấm giao thông chung",
+                "no": ""
+            },
+            {
+                "index": 110,
+                "german": "Verbot der Einfahrt",
+                "english": "No Entry",
+                "vietnam": "Cấm vào",
+                "no": ""
+            },
+            {
+                "index": 111,
+                "german": "Überholverbot",
+                "english": "Overtaking Prohibited",
+                "vietnam": "Cấm vượt",
+                "no": ""
+            },
+            {
+                "index": 112,
+                "german": "Fehler bei Wechsel des Fahrstreifens",
+                "english": "Error while Changing Lane",
+                "vietnam": "Lỗi khi chuyển làn",
+                "no": ""
+            },
+            {
+                "index": 113,
+                "german": "Fehlende Reaktion bei Kindern, Hilfsbedürftigen und älteren Menschen",
+                "english": "Errors by Children, Dependent and Older People",
+                "vietnam": "Lỗi phản ứng với trẻ em, người phụ thuộc và người già",
+                "no": ""
+            },
+            {
+                "index": 114,
+                "german": "Vermeidbare Behinderung",
+                "english": "Avoidable Obstruction",
+                "vietnam": "Cản trở có thể tránh được",
+                "no": ""
+            },
+            {
+                "index": 115,
+                "german": "Vermeidbare Belästigung",
+                "english": "Avoidable Disturbance",
+                "vietnam": "Làm phiền có thể tránh được",
+                "no": ""
+            },
+            {
+                "index": 116,
+                "german": "Falsch eingeordnet",
+                "english": "Driving in the Wrong Lane",
+                "vietnam": "Đi sai làn",
+                "no": ""
+            },
+            {
+                "index": 117,
+                "german": "Schädigung",
+                "english": "Damaging",
+                "vietnam": "Gây thiệt hại",
+                "no": "6.40"
+            }
+        ]
+        $(document).ready(function () {
+            var tableBody = $('#translationTable tbody');
+            $.each(dataList, function (index, item) {
+                var row = '<tr>' +
+                    '<td>' + item.index + '</td>' +
+                    '<td>' + item.no + '</td>' +
+                    '<td class="speak-button" data-text="' + item.german + '">' + item.german +
+                        // '<button class="speak-button" data-text="' + item.german + '"><i class="fas fa-volume-up"></i></button>' +
+                    '</td>' +
+                    '<td>' + item.english + '</td>' +
+                    '<td>' + item.vietnam + '</td>' +
+                    '</tr>';
+                tableBody.append(row);
+            });
+        });
+
+        // Add click event for speak buttons
+        $(document).on('click', '.speak-button', function () {
+            var text = $(this).data('text');
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = 'de-DE'; // German language
+            window.speechSynthesis.speak(msg);
+        });
+    </script>
+</body>
+
+</html>
