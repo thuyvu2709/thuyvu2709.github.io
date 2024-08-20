@@ -105,11 +105,12 @@ var triggerAfterLoad = function () {
 		getLatestProductCode(function (code) {
 			$("#productCode").val(code);
 
-			fetchEuroRate(function (currencyRates) {
-				EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
-				$(".euroVndRate").html("(tỉ giá EUR/VND: " + EuroVndRate + ")");
-			})
-
+			// fetchEuroRate(function (currencyRates) {
+			// 	EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
+			// 	$(".euroVndRate").html("(tỉ giá EUR/VND: " + EuroVndRate + ")");
+			// })
+			EuroVndRate = 29.3;
+			$(".euroVndRate").html("(tỉ giá EUR/VND: " + EuroVndRate + ")");
 		})
 	})
 
