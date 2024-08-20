@@ -50,10 +50,13 @@ var triggerAfterLoad = function(){
 
 	loadWarehouse(function(){
 
-		fetchEuroRate(function(currencyRates) {
-			EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
-			$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
-		})
+		// fetchEuroRate(function(currencyRates) {
+		// 	EuroVndRate = parseFloat(currencyRates.lsCurrency["EUR"].sell);
+		// 	$(".euroVndRate").html("(tỉ giá EUR/VND: "+EuroVndRate+")");
+		// })
+
+		EuroVndRate = 29.3;
+		$(".euroVndRate").html("(tỉ giá EUR/VND: " + EuroVndRate + ")");
 
 		var importSLData = JSON.parse(localStorage.getItem("warehouse"));
 
